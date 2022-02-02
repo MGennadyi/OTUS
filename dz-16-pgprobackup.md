@@ -9,12 +9,10 @@ apt install postgresql-14
 ```
 sudo sh -c 'echo "deb [arch=amd64] https://repo.postgrespro.ru/pg_probackup/deb/ $(lsb_release -cs) main-$(lsb_release -cs)" > /etc/apt/sources.list.d/pg_probackup.list'
 sudo wget -O - https://repo.postgrespro.ru/pg_probackup/keys/GPG-KEY-PG_PROBACKUP | sudo apt-key add - && sudo apt-get update
-sudo apt-get install pg-probackup-{14,13,12,11,10,9.6}
-sudo apt-get install pg-probackup-{14,13,12,11,10,9.6}-dbg
+sudo apt update
+sudo apt-get install pg-probackup-{14,13,12,11,10,9.6} -y
+sudo apt-get install pg-probackup-{14,13,12,11,10,9.6}-dbg -y
 apt install postgresql-contrib -y
-```
-###### По умолчанию postgresql без checksums, а pg-probackup работает с кластерами c checksums:
-```
 apt install postgresql-14-pg-checksums -y
 ```
 ###### Создаем каталог с бекапами:
