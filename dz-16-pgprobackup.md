@@ -10,7 +10,7 @@ apt install postgresql-contrib -y
 ```
 apt install postgresql-14-pg-checksums -y
 ```
-####### Создаем каталог с бекапами:
+###### Создаем каталог с бекапами:
 ```
 sudo rm -rf /home/backups && sudo mkdir /home/backups && sudo chmod 777 /home/backups
 ```
@@ -65,10 +65,15 @@ ls -la
 ```
 ###### Ответ:
 total 16
+
 drwxrwxrwx 4 root root 4096 фев  2 08:41 .
+
 drwxr-xr-x 4 root root 4096 фев  1 15:36 ..
+
 drwx------ 2 root root 4096 фев  2 08:41 backups
+
 drwx------ 2 root root 4096 фев  2 08:41 wal
+
 
 ###### Добавить инстанс в наш probackup:
 ```
