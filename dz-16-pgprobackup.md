@@ -19,8 +19,7 @@ apt install postgresql-14-pg-checksums -y
 ```
 sudo rm -rf /home/backups && sudo mkdir /home/backups && sudo chmod 777 /home/backups
 ```
-###### Есть баг: в каталоге по умолчанию var/lib/postgresql/14/main/backups/ создается только первый backup, следующие с error.
-###### Добавляем переменную BACKUP_PATH Что бы не указывать каждый раз куда делать бекапы:
+###### Добавляем переменную BACKUP_PATH, что бы не указывать каждый раз куда делать бекапы:
 ```
 echo "BACKUP_PATH=/home/backups/">>~/.bashrc
 echo "export BACKUP_PATH">>~/.bashrc
@@ -31,7 +30,6 @@ cd $HOME
 . .bashrc
 ```
 ###### Просмотр переменной:
-
 ```
 echo $BACKUP_PATH
 ```
@@ -54,12 +52,11 @@ GRANT EXECUTE ON FUNCTION pg_catalog.txid_current() TO backup;
 GRANT EXECUTE ON FUNCTION pg_catalog.txid_current_snapshot() TO backup;
 GRANT EXECUTE ON FUNCTION pg_catalog.txid_snapshot_xmax(txid_snapshot) TO backup;
 GRANT EXECUTE ON FUNCTION pg_catalog.pg_control_checkpoint() TO backup;
-exit
+\q
 ```
-###### Инициализируем наш probackup для v_13 или v_14 :
+###### Инициализируем наш probackup для v_14 :
 ```
 pg_probackup-14 init
-pg_probackup-13 init
 ```
 ###### Ответ :
 INFO: Backup catalog '/home/backups' successfully inited
@@ -115,6 +112,14 @@ psql otus -c "select * from test;"
 ```
 pg_probackup-14 show-config --instance main
 ```
+###### Делаем бекап:
+```
+pg_probackup-14 backup --instance 'main' -b FULL --stream --temp-slot
+```
+Ответ:
+
+WARNING: Failed to access directory "/home/backups/backups/main": Permission denied
+
 
 
 
