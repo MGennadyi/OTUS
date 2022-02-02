@@ -1,4 +1,11 @@
 # pg_probackup на postgresql 14
+######1. Установка postgresql-14
+```
+sudo sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list'
+wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
+apt install postgresql-14
+```
+#####2. Установка pg_probackup
 ```
 sudo sh -c 'echo "deb [arch=amd64] https://repo.postgrespro.ru/pg_probackup/deb/ $(lsb_release -cs) main-$(lsb_release -cs)" > /etc/apt/sources.list.d/pg_probackup.list'
 sudo wget -O - https://repo.postgrespro.ru/pg_probackup/keys/GPG-KEY-PG_PROBACKUP | sudo apt-key add - && sudo apt-get update
@@ -82,6 +89,35 @@ pg_probackup-14 add-instance --instance 'main' -D /var/lib/postgresql/14/main
 ###### Ответ:
 INFO: Instance 'main' successfully inited
 ###### Теперь probackup знает где инстанс "main"
+
+###### Создаем новую БД не входя PSQL:
+
+```
+su postgres
+psql -c "CREATE DATABASE otus;"
+
+```
+####### Заполним БД тестовыми данными:
+
+psql otus -c "create table test(i int);"
+
+psql otus -c "insert into test values (10), (20), (30);"
+
+psql otus -c "select * from test;"
+
+###### Ответ:
+
+ i
+-
+ 10
+ 20
+ 30
+ 
+(3 строки)
+```
+pg_probackup-14 show-config --instance main
+```
+
 
 
 
