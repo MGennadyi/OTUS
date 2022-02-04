@@ -33,7 +33,7 @@ cd $HOME
 ```
 echo $BACKUP_PATH
 ```
-###### Создать пользователя backup с правами:
+###### 3. Создать пользователя backup с правами:
 ```
 su postgres
 psql
@@ -54,7 +54,7 @@ GRANT EXECUTE ON FUNCTION pg_catalog.txid_snapshot_xmax(txid_snapshot) TO backup
 GRANT EXECUTE ON FUNCTION pg_catalog.pg_control_checkpoint() TO backup;
 \q
 ```
-###### Инициализируем наш probackup для v_14 :
+###### 4. Инициализируем наш probackup для v_14 :
 ```
 pg_probackup-14 init
 ```
@@ -77,7 +77,7 @@ drwx------ 2 root root 4096 фев  2 08:41 backups
 drwx------ 2 root root 4096 фев  2 08:41 wal
 
 
-###### Добавить инстанс в наш probackup:
+###### 5. Добавить инстанс в наш probackup:
 ```
 pg_probackup-14 add-instance --instance 'main' -D /var/lib/postgresql/14/main
 ```
@@ -85,21 +85,19 @@ pg_probackup-14 add-instance --instance 'main' -D /var/lib/postgresql/14/main
 INFO: Instance 'main' successfully inited
 ###### Теперь probackup знает где инстанс "main"
 
-###### Создаем новую БД не входя PSQL:
+###### 6.Создаем и заполнение новой БД (не входя PSQL):
 
 ```
 su postgres
 psql -c "CREATE DATABASE otus;"
 
 ```
-####### Заполним БД тестовыми данными:
-
 psql otus -c "create table test(i int);"
 
 psql otus -c "insert into test values (10), (20), (30);"
 
 psql otus -c "select * from test;"
-
+```
 ###### Ответ:
 
  i
