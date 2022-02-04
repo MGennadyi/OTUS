@@ -110,13 +110,44 @@ psql otus -c "select * from test;"
 ```
 pg_probackup-14 show-config --instance main
 ```
-###### Делаем бекап:
+###### 7. Делаем полный бекап, потоковой репликации через временный слот  :
 ```
 pg_probackup-14 backup --instance 'main' -b FULL --stream --temp-slot
 ```
-Ответ:
+Ответ: WARNING: --data-checksums; Curent PostgreSQL role is superuser. Исправляем:
+Для отдельной поставки:
+```
+apt install postgresql-14-pg-checksums -y
+```
+```
+systemctl stop postgresql
+```
+/usr/lib/postgresql/14/bin/pg_checksums -D /var/lib/postgresql/14/main --enable
+systemctl start postgresql
+```
+Бекап из-под пользователя backup:
+```
+pg_probackup-14 show
+```
+psql otus -c "insert into test values (4);"
+```
+###### 8. Делаем дельту-копию из=под backup:
+```
+pg_probackup-14 backup --instance 'main' -b DELTA --stream --temp-slot -U backup
+```
+Исправляем ошибку "no connect to database" backup is running:
+``` 
+psql -c "ALTER USER backup PASSWORD '12345';
+```
+```
+pg_probackup-14 backup --instance 'main' -b DELTA --stream --temp-slot -U backup -W
+```
+WARNING; backup R38402 has status ERROR
 
-WARNING: Failed to access directory "/home/backups/backups/main": Permission denied
+
+
+
+
 
 
 
