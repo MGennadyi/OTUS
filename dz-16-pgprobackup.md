@@ -121,7 +121,7 @@ apt install postgresql-14-pg-checksums -y
 ```
 ```
 systemctl stop postgresql
-```
+
 /usr/lib/postgresql/14/bin/pg_checksums -D /var/lib/postgresql/14/main --enable
 systemctl start postgresql
 ```
