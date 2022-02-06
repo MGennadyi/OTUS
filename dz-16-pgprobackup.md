@@ -198,18 +198,21 @@ sudo rm -rf /var/lib/postgresql/14/main2
 sudo pg_probackup-14 restore --instance 'main' -i 'R6VP7D' -D /var/lib/postgresql/14/main2 -B /home/backups
 sudo pg_ctlcluster 14 main2 start
 ```
-###### Восстановление на определенное время:
+###### Восстановление на определенное время, id не указываем:
 ```
-
+psql -c 'show archive_mode'
 psql -c 'alter system set archive_mode = on'
 psql
 alter system set archive_command = 'pg_probackup-14 archive-push -B /home/backups/ --instance=main --wal-file-path=%p --wal-file-name=%f --compress';
-
-
-
+\q
+sudo pg_ctlcluster 14 main restart
+psql -c 'show archive_mode'
+psql -c 'show archive_command'
+psql otus -c "insert into test values (9);"
 date
-sudo -u postgres pg_probackup-14 restore --instance 'main' -i 'R384XJ' -D /var/lib/postgresql/14/main2 -B /home/backups --recovery-target-time="2021-11-27 09:35:00+00"
+pg_probackup-14 restore --instance 'main' -D /var/lib/postgresql/14/main2 -B /home/backups --recovery-target-time="2022-02-06 17:55:03+00"
 ```
+###### Ответ: ERROR: Restore destination is not empty: "/var/lib/postgresql/14/main2"
 
 
 
