@@ -144,6 +144,29 @@ pg_probackup-14 backup --instance 'main' -b DELTA --stream --temp-slot -U backup
 ```
 WARNING; backup R38402 has status ERROR
 
+###### PGPASS Луна в юпитере:
+```
+echo "localhost:5432:otus:backup:12345">>~/.pgpass
+chmod 600 ~/.pgpass
+pg_probackup-14 backup --instance 'main' -b FULL --stream --temp-slot -h localhost -U backup --pgdatabase=otus
+```
+Ответ: Backup R6VP59 completed
+```
+pg_probackup-14 backup --instance 'main' -b DELTA --stream --temp-slot -h localhost -U backup --pgdatabase=otus
+```
+Ответ: Parent backup: R6VP59; Backup R6VP7D completed
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
