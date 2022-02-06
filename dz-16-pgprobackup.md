@@ -155,6 +155,49 @@ pg_probackup-14 backup --instance 'main' -b FULL --stream --temp-slot -h localho
 pg_probackup-14 backup --instance 'main' -b DELTA --stream --temp-slot -h localhost -U backup --pgdatabase=otus
 ```
 Ответ: Parent backup: R6VP59; Backup R6VP7D completed
+###### Добавляем данные:                                                                                                               
+```
+psql otus -c "insert into test values (4);"
+psql otus -c "insert into test values (5);"
+pg_probackup-14 backup --instance 'main' -b DELTA --stream --temp-slot -h localhost -U backup --pgdatabase=otus
+```
+###### Восстановление копию в новый кластер:
+```
+sudo pg_createcluster 14 main2
+```
+Ответ: Ver Cluster Port Status Owner    Data directory               Log file
+14  main2   5433 down   postgres /var/lib/postgresql/14/main2 /var/log/postgresql/postgresql-14-main2.log
+```
+sudo rm -rf /var/lib/postgresql/14/main2
+```
+sudo pg_probackup-14 restore --instance 'main' -i 'R6VP7D' -D /var/lib/postgresql/14/main2 -B /home/backups
+```
+###### Ответ: Restore of backup R6VP7D completed.
+```
+sudo pg_ctlcluster 14 main2 start
+```
+###### Ответ: Data directory /var/lib/postgresql/14/main2 must not be owned by root
+```
+sudo chown -R postgres /var/lib/postgresql/14/main2
+```
+###### Проверка восстановления:
+```
+sudo -u postgres psql otus -p 5433 -c 'select * from test;'
+```
+###### Ответ: 
+ i
+----
+ 10
+ 20
+ 30
+  4
+(4 строки)
+
+
+
+
+
+
 
 
 
