@@ -169,7 +169,6 @@ sudo pg_createcluster 14 main2
 14  main2   5433 down   postgres /var/lib/postgresql/14/main2 /var/log/postgresql/postgresql-14-main2.log
 ```
 sudo rm -rf /var/lib/postgresql/14/main2
-```
 sudo pg_probackup-14 restore --instance 'main' -i 'R6VP7D' -D /var/lib/postgresql/14/main2 -B /home/backups
 ```
 ###### Ответ: Restore of backup R6VP7D completed.
@@ -192,6 +191,31 @@ sudo -u postgres psql otus -p 5433 -c 'select * from test;'
  30
   4
 (4 строки)
+###### Восстановление по id бекапа:
+```
+sudo pg_createcluster 14 main2 stop
+sudo rm -rf /var/lib/postgresql/14/main2
+sudo pg_probackup-14 restore --instance 'main' -i 'R6VP7D' -D /var/lib/postgresql/14/main2 -B /home/backups
+sudo pg_ctlcluster 14 main2 start
+```
+###### Восстановление на определенное время:
+```
+
+psql -c 'alter system set archive_mode = on'
+psql
+alter system set archive_command = 'pg_probackup-14 archive-push -B /home/backups/ --instance=main --wal-file-path=%p --wal-file-name=%f --compress';
+
+
+
+date
+sudo -u postgres pg_probackup-14 restore --instance 'main' -i 'R384XJ' -D /var/lib/postgresql/14/main2 -B /home/backups --recovery-target-time="2021-11-27 09:35:00+00"
+```
+
+
+
+
+
+
 
 
 
