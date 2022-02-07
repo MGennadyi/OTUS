@@ -17,7 +17,7 @@ apt install postgresql-14-pg-checksums -y
 ```
 ###### Создаем каталог с бекапами:
 ```
-sudo rm -rf /home/backups && sudo mkdir /home/backups && sudo chmod 777 /home/backups
+sudo rm -rf /home/backups && sudo mkdir /home/backups && sudo chmod -R 777 /home/backups
 ```
 ###### Добавляем переменную BACKUP_PATH, что бы не указывать каждый раз куда делать бекапы:
 ```
@@ -213,6 +213,13 @@ date
 pg_probackup-14 restore --instance 'main' -D /var/lib/postgresql/14/main2 -B /home/backups --recovery-target-time="2022-02-06 17:55:03+00"
 ```
 ###### Ответ: ERROR: Restore destination is not empty: "/var/lib/postgresql/14/main2"
+```
+sudo rm -rf /var/lib/postgresql/14/main2 && sudo mkdir /var/lib/postgresql/14/main2 && sudo chmod -R 777 /var/lib/postgresql/14/main2
+```
+INFO: Validating backup R6W17D
+WARNING: Invalid CRC of backup file "/home/backups/backups/main/R6W17D/database/pg_wal/000000010000000000000010" : AD6C62A9. Expected 50EA82D
+WARNING: Backup R6W17D data files are corrupted
+ERROR: Backup R6W17D is corrupt.
 
 
 
