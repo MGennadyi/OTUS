@@ -35,13 +35,36 @@ echo "archive_command='wal-g wal-push \"%p\" >> /var/lib/postgresql/13/main/log/
 echo "archive_timeout=60" >> /var/lib/postgresql/13/main/postgresql.auto.conf 
 echo "restore_command='wal-g wal-fetch \"%f\" \"%p\" >> /var/lib/postgresql/13/main/log/restore_command.log 2>&1' " >> /var/lib/postgresql/13/main/postgresql.auto.conf
 ```
-###### 6. Создадим тестовую базу данных с данными:
+###### 5. Создадим тестовую базу данных с данными:
 ```
 psql -c "CREATE DATABASE otus;"
 psql otus -c "create table test(i int);"
 psql otus -c "insert into test values (10), (20), (30);"
 psql otus -c "select * from test;"
 ```
+
+###### 6.Делаем бэкап:
+```
+wal-g backup-push /var/lib/postgresql/13/main
+wal-g backup-list
+```
+###### 7. Добавляем данные:
+```
+psql otus -c "UPDATE test SET i = 3 WHERE i = 30"
+```
+###### 6.Делаем бэкап:
+ ```
+wal-g backup-push /var/lib/postgresql/13/main
+wal-g backup-list
+```
+
+###### из инфы на экране появился delta=enable :
+
+
+
+
+wal-g backup-list
+
 
 
 
