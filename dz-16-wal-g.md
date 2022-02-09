@@ -3,15 +3,16 @@
 ###### 1. Установка Postgresql-13
 ###### 2. Установка WAL-G
 ```
-wget https://github.com/wal-g/wal-g/releases/download/v1.1.2-rc/wal-g-pg-ubuntu-20.04-amd64.tar.gz
+wget https://github.com/wal-g/wal-g/releases/download/v1.1.1-rc/wal-g-pg-ubuntu-20.04-amd64.tar.gz
 tar -zxvf /home/mgb/wal-g-pg-ubuntu-20.04-amd64.tar.gz
 mkdir /usr/local/bin/wal-g
 chown -R postgres /usr/local/bin/wal-g
 mv /home/mgb/wal-g-pg-ubuntu-20.04-amd64 /usr/local/bin/wal-g
+ls -l /usr/local/bin/wal-g
 rm -rf /home/backups && sudo mkdir /home/backups && sudo chmod -R 777 /home/backups
 su postgres
-mkdir /var/lib/postgresql/14/main/log
-vim ~/.walg.json
+mkdir /var/lib/postgresql/13/main/log
+vim /var/lib/postgresql/.walg.json
 {
     "WALG_FILE_PREFIX": "/home/backups",
 
@@ -52,18 +53,14 @@ wal-g backup-list
 ```
 psql otus -c "UPDATE test SET i = 3 WHERE i = 30"
 ```
-###### 6.Делаем бэкап:
+###### 8.Делаем бэкап:
  ```
 wal-g backup-push /var/lib/postgresql/13/main
 wal-g backup-list
 ```
-
-###### из инфы на экране появился delta=enable :
-
+wal-g: command not found
 
 
-
-wal-g backup-list
 
 
 
