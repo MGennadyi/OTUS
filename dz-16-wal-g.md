@@ -3,7 +3,7 @@
 ###### 1. Установка Postgresql-13
 ###### 2. Установка WAL-G
 ```
-wget https://github.com/wal-g/wal-g/releases/download/v1.1.1-rc/wal-g-pg-ubuntu-20.04-amd64.tar.gz
+wget https://github.com/wal-g/wal-g/releases/download/v1.1.2-rc/wal-g-pg-ubuntu-20.04-amd64.tar.gz
 tar -zxvf /home/mgb/wal-g-pg-ubuntu-20.04-amd64.tar.gz
 mkdir /usr/local/bin/wal-g
 chown -R postgres /usr/local/bin/wal-g
@@ -49,6 +49,8 @@ psql otus -c "select * from test;"
 wal-g backup-push /var/lib/postgresql/13/main
 wal-g backup-list
 ```
+### wal-g: command not found
+
 ###### 7. Добавляем данные:
 ```
 psql otus -c "UPDATE test SET i = 3 WHERE i = 30"
@@ -58,7 +60,7 @@ psql otus -c "UPDATE test SET i = 3 WHERE i = 30"
 wal-g backup-push /var/lib/postgresql/13/main
 wal-g backup-list
 ```
-wal-g: command not found
+### wal-g: command not found
 
 
 
