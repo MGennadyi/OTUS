@@ -16,7 +16,7 @@ sudo apt-get install pg-probackup-{14,13,12,11,10,9.6}-dbg -y
 apt install postgresql-contrib -y
 apt install postgresql-14-pg-checksums -y
 ```
-###### Создаем каталог с бекапами:
+###### Создаем каталог с бекапами, т.к. в каталоге с БД бекапы создать нельзя:
 ```
 sudo rm -rf /home/backups && sudo mkdir /home/backups && sudo chmod -R 777 /home/backups
 ```
