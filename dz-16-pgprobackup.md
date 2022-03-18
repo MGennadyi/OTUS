@@ -16,11 +16,11 @@ sudo apt-get install pg-probackup-{14,13,12,11,10,9.6}-dbg -y
 apt install postgresql-contrib -y
 apt install postgresql-14-pg-checksums -y
 ```
-###### Создаем каталог с бекапами, т.к. в каталоге с БД бекапы создать нельзя:
+###### Создаем каталог с бекапами, т.к. в каталоге с БД бекапы создать нельзя. Для теста можно 777:
 ```
 sudo rm -rf /home/backups && sudo mkdir /home/backups && sudo chmod -R 777 /home/backups
 ```
-###### Добавляем переменную BACKUP_PATH, что бы не указывать каждый раз куда делать бекапы:
+###### Добавляем в переменную BACKUP_PATH путь, чтобы не указывать его каждый раз куда делать бекапы::
 ```
 echo "BACKUP_PATH=/home/backups/">>~/.bashrc
 echo "export BACKUP_PATH">>~/.bashrc
@@ -39,6 +39,7 @@ echo $BACKUP_PATH
 su postgres
 psql
 create user backup;
+
 ALTER ROLE backup NOSUPERUSER;
 ALTER ROLE backup WITH REPLICATION;
 GRANT USAGE ON SCHEMA pg_catalog TO backup;
@@ -53,6 +54,7 @@ GRANT EXECUTE ON FUNCTION pg_catalog.txid_current() TO backup;
 GRANT EXECUTE ON FUNCTION pg_catalog.txid_current_snapshot() TO backup;
 GRANT EXECUTE ON FUNCTION pg_catalog.txid_snapshot_xmax(txid_snapshot) TO backup;
 GRANT EXECUTE ON FUNCTION pg_catalog.pg_control_checkpoint() TO backup;
+
 \q
 ```
 ###### 4. Инициализируем наш probackup для v_14 :
