@@ -87,17 +87,13 @@ pg_probackup-14 add-instance --instance 'main' -D /var/lib/postgresql/14/main
 INFO: Instance 'main' successfully inited
 ###### Теперь probackup знает где инстанс "main"
 
-###### 6.Создаем и заполнение новой БД (не входя PSQL):
+###### 6. Создаем и заполнение новой БД (не входя PSQL):
 
 ```
 su postgres
 psql -c "CREATE DATABASE otus;"
-
-```
 psql otus -c "create table test(i int);"
-
 psql otus -c "insert into test values (10), (20), (30);"
-
 psql otus -c "select * from test;"
 ```
 ###### Ответ:
