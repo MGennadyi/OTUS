@@ -68,8 +68,7 @@ INFO: Backup catalog '/home/backups' successfully inited
 cd $BACKUP_PATH
 ls -la
 ```
-###### Ответ:
-total 16
+###### Ответ: total 16
 
 drwxrwxrwx 4 root root 4096 фев  2 08:41 .
 
