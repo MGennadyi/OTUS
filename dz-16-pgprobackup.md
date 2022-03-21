@@ -40,7 +40,7 @@ echo $BACKUP_PATH
 su postgres
 psql
 create user backup;
-
+ALTER USER backup PASSWORD '12345';
 ALTER ROLE backup NOSUPERUSER;
 ALTER ROLE backup WITH REPLICATION;
 GRANT USAGE ON SCHEMA pg_catalog TO backup;
