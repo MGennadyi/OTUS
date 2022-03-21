@@ -108,6 +108,33 @@ id|
 ```
 pg_probackup-14 show-config --instance main
 ```
+#####  Ответ:
+###### # Backup instance information
+pgdata = /var/lib/postgresql/14/main
+system-identifier = 7076338028174019592
+xlog-seg-size = 16777216
+###### # Connection parameters
+pgdatabase = root
+###### # Replica parameters
+replica-timeout = 5min
+###### # Archive parameters
+archive-timeout = 5min
+###### # Logging parameters
+log-level-console = INFO
+log-level-file = OFF
+log-filename = pg_probackup.log
+log-rotation-size = 0TB
+log-rotation-age = 0d
+###### # Retention parameters
+retention-redundancy = 0
+retention-window = 0
+wal-depth = 0
+###### # Compression parameters
+compress-algorithm = none
+compress-level = 1
+###### # Remote access parameters
+remote-proto = ssh
+
 ##### 8. Делаем полный бекап, потоковой репликации через временный слот  :
 ```
 pg_probackup-14 backup --instance 'main' -b FULL --stream --temp-slot
