@@ -14,6 +14,7 @@ sudo apt update
 sudo apt-get install pg-probackup-{14,13,12,11,10,9.6} -y
 sudo apt-get install pg-probackup-{14,13,12,11,10,9.6}-dbg -y
 apt install postgresql-contrib -y
+# Т.к probackup работает только с кластерами с checksums:
 apt install postgresql-14-pg-checksums -y
 ```
 ##### 3. Создание каталог для бекапа, т.к. в каталоге с БД бекапы создать нельзя. Для теста можно 777:
@@ -105,6 +106,7 @@ id|
 30  
  
 (3 строки)
+###### Проcмотр конфига для инстанса main:
 ```
 pg_probackup-14 show-config --instance main
 ```
