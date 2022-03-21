@@ -155,6 +155,16 @@ systemctl start postgresql
 Бекап из-под пользователя backup:
 ```
 pg_probackup-14 show
+```
+
+###### BACKUP INSTANCE 'main'
+###### =============================================================================================================
+###### Instance   Version   ID       Recovery  Time            Mode   WAL  Mode   TLI   Time   Data    WAL   Zratio   Start  LSN   Stop  LSN    Status
+###### =============================================================================================================
+###### main      14       R93D33  2022-03-21 13:57:04+03  FULL  STREAM    1/0   10s  34MB  16MB    1.00  0/2000028  0/2005B50  OK
+
+###### Добавляем данные:
+```
 psql otus -c "insert into test values (4);"
 ```
 ##### 9. Делаем дельту-копию из=под backup:
