@@ -1,12 +1,12 @@
 # pg_probackup на postgresql 14
-###### 1. Установка postgresql-14
+##### 1. Установка postgresql-14
 ```
 sudo sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list'
 wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
 apt update
 apt install postgresql-14 -y
 ```
-###### 2. Установка pg_probackup
+##### 2. Установка pg_probackup
 ```
 sudo sh -c 'echo "deb [arch=amd64] https://repo.postgrespro.ru/pg_probackup/deb/ $(lsb_release -cs) main-$(lsb_release -cs)" > /etc/apt/sources.list.d/pg_probackup.list'
 sudo wget -O - https://repo.postgrespro.ru/pg_probackup/keys/GPG-KEY-PG_PROBACKUP | sudo apt-key add - && sudo apt-get update
@@ -16,7 +16,7 @@ sudo apt-get install pg-probackup-{14,13,12,11,10,9.6}-dbg -y
 apt install postgresql-contrib -y
 apt install postgresql-14-pg-checksums -y
 ```
-###### Создаем каталог с бекапами, т.к. в каталоге с БД бекапы создать нельзя. Для теста можно 777:
+##### 3. Создание каталог для бекапа, т.к. в каталоге с БД бекапы создать нельзя. Для теста можно 777:
 ```
 sudo rm -rf /home/backups && sudo mkdir /home/backups && sudo chmod -R 777 /home/backups
 ```
@@ -34,7 +34,7 @@ cd $HOME
 ```
 echo $BACKUP_PATH
 ```
-###### 3. Создать пользователя backup с правами:
+##### 4. Создать пользователя backup с правами:
 ```
 su postgres
 psql
@@ -57,7 +57,7 @@ GRANT EXECUTE ON FUNCTION pg_catalog.pg_control_checkpoint() TO backup;
 
 \q
 ```
-###### 4. Инициализируем наш probackup для v_14 :
+##### 5. Инициализируем наш probackup для v_14 :
 ```
 pg_probackup-14 init
 ```
@@ -79,7 +79,7 @@ drwx------ 2 root root 4096 фев  2 08:41 backups
 drwx------ 2 root root 4096 фев  2 08:41 wal
 
 
-###### 5. Добавить инстанс в наш probackup:
+##### 6. Добавить инстанс в наш probackup:
 ```
 pg_probackup-14 add-instance --instance 'main' -D /var/lib/postgresql/14/main
 ```
@@ -87,7 +87,7 @@ pg_probackup-14 add-instance --instance 'main' -D /var/lib/postgresql/14/main
 INFO: Instance 'main' successfully inited
 ###### Теперь probackup знает где инстанс "main"
 
-###### 6. Создаем и заполнение новой БД (не входя PSQL):
+##### 7. Создаем и заполнение новой БД (не входя PSQL):
 
 ```
 su postgres
@@ -108,7 +108,7 @@ id|
 ```
 pg_probackup-14 show-config --instance main
 ```
-###### 7. Делаем полный бекап, потоковой репликации через временный слот  :
+##### 8. Делаем полный бекап, потоковой репликации через временный слот  :
 ```
 pg_probackup-14 backup --instance 'main' -b FULL --stream --temp-slot
 ```
@@ -126,10 +126,9 @@ systemctl start postgresql
 Бекап из-под пользователя backup:
 ```
 pg_probackup-14 show
-```
 psql otus -c "insert into test values (4);"
 ```
-###### 8. Делаем дельту-копию из=под backup:
+##### 9. Делаем дельту-копию из=под backup:
 ```
 pg_probackup-14 backup --instance 'main' -b DELTA --stream --temp-slot -U backup
 ```
@@ -159,7 +158,7 @@ psql otus -c "insert into test values (4);"
 psql otus -c "insert into test values (5);"
 pg_probackup-14 backup --instance 'main' -b DELTA --stream --temp-slot -h localhost -U backup --pgdatabase=otus
 ```
-###### Восстановление копию в новый кластер:
+##### 10. Восстановление копию в новый кластер:
 ```
 sudo pg_createcluster 14 main2
 ```
