@@ -151,9 +151,7 @@ remote-proto = ssh
 ```
 pg_probackup-14 backup --instance 'main' -b FULL --stream --temp-slot
 ```
-Ответ: WARNING: --data-checksums; Curent PostgreSQL role is superuser. Исправляем:
-
-Бекап из-под пользователя backup:
+Ответ: WARNING: Curent PostgreSQL role is superuser. Исправляемся, следующий бекап из-под пользователя backup. Так что сейчас получилось? :
 ```
 pg_probackup-14 show
 ```
