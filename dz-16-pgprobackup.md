@@ -77,7 +77,7 @@ pg_probackup-13 init
 ```
 systemctl stop postgresql
 /usr/lib/postgresql/14/bin/pg_checksums -D /var/lib/postgresql/14/main --enable
-/usr/lib/postgresql/13/bin/pg_checksums -D /var/lib/postgresql/14/main --enable
+/usr/lib/postgresql/13/bin/pg_checksums -D /var/lib/postgresql/13/main --enable
 systemctl start postgresql
 ```
 ##### 5.3  Добавить инстанс в наш probackup:
