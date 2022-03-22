@@ -6,6 +6,8 @@ wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-
 apt update
 apt install postgresql-14 -y
 apt install postgresql-13 -y
+# Проверить наличие пользователя
+cat /etc/passwd | grep backup
 ```
 ##### 2. Установка pg_probackup
 ```
