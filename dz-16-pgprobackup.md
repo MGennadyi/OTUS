@@ -16,6 +16,7 @@ sudo apt-get install pg-probackup-{14,13,12,11,10,9.6}-dbg -y
 apt install postgresql-contrib -y
 # Т.к probackup работает только с кластерами с checksums:
 apt install postgresql-14-pg-checksums -y
+apt install postgresql-13-pg-checksums -y
 ```
 ##### 3. Создание каталог для бекапа, т.к. в каталоге с БД бекапы создать нельзя. Для теста можно 777:
 ```
@@ -61,20 +62,23 @@ GRANT EXECUTE ON FUNCTION pg_catalog.pg_control_checkpoint() TO backup;
 
 \q
 ```
-##### 5.1  Инициализируем наш probackup для v_14 :
+##### 5.1  Инициализируем наш probackup :
 ```
 pg_probackup-14 init
+pg_probackup-13 init
 ```
 ###### Ответ: Backup catalog '/home/backups' successfully inited
 ###### 5.2  Активируем установленнный ранее checksums:
 ```
 systemctl stop postgresql
 /usr/lib/postgresql/14/bin/pg_checksums -D /var/lib/postgresql/14/main --enable
+/usr/lib/postgresql/13/bin/pg_checksums -D /var/lib/postgresql/14/main --enable
 systemctl start postgresql
 ```
 ##### 5.3  Добавить инстанс в наш probackup:
 ```
 pg_probackup-14 add-instance --instance 'main' -D /var/lib/postgresql/14/main
+pg_probackup-13 add-instance --instance 'main' -D /var/lib/postgresql/13/main
 ```
 ###### Ответ: Instance 'main' successfully inited
 ###### Теперь probackup знает где инстанс "main"
