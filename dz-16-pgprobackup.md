@@ -65,8 +65,7 @@ GRANT EXECUTE ON FUNCTION pg_catalog.pg_control_checkpoint() TO backup;
 ```
 pg_probackup-14 init
 ```
-###### Ответ :
-INFO: Backup catalog '/home/backups' successfully inited
+###### Ответ: Backup catalog '/home/backups' successfully inited
 ###### 5.2  Активируем установленнный ранее checksums:
 ```
 systemctl stop postgresql
@@ -77,8 +76,7 @@ systemctl start postgresql
 ```
 pg_probackup-14 add-instance --instance 'main' -D /var/lib/postgresql/14/main
 ```
-###### Ответ:
-INFO: Instance 'main' successfully inited
+###### Ответ: Instance 'main' successfully inited
 ###### Теперь probackup знает где инстанс "main"
 ###### Смотрим что внутри директории бекапов:
 ```
