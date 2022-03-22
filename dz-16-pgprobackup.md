@@ -1,4 +1,4 @@
-# pg_probackup на postgresql 14
+# pg_probackup на postgresql 13, 14
 ##### 1. Установка postgresql-14
 ```
 sudo sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list'
