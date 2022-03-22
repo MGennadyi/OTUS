@@ -68,7 +68,7 @@ GRANT EXECUTE ON FUNCTION pg_catalog.pg_control_checkpoint() TO backup;
 
 \q
 ```
-##### 5.1  Инициализируем наш probackup :
+##### 5.1  Инициализируем наш probackup, из-под postgres:
 ```
 pg_probackup-14 init
 pg_probackup-13 init
@@ -82,13 +82,7 @@ systemctl stop postgresql
 systemctl start postgresql
 ```
 ###### Ответ: Контрольные суммы в кластере включены
-##### 5.3  Добавить инстанс в наш probackup:
-```
-pg_probackup-14 add-instance --instance 'main' -D /var/lib/postgresql/14/main
-pg_probackup-13 add-instance --instance 'main' -D /var/lib/postgresql/13/main
-```
-###### Ответ: Instance 'main' successfully inited
-###### Теперь probackup знает где инстанс "main"
+
 ###### Смотрим что внутри директории бекапов:
 ```
 cd $BACKUP_PATH
@@ -106,6 +100,13 @@ drwx------ 2 postgres postgres 4096 фев  2 08:41 wal
 ```
 sudo chmod -R 777 /home/backups
 ```
+##### 5.3  Добавить инстанс в наш probackup:
+```
+pg_probackup-14 add-instance --instance 'main' -D /var/lib/postgresql/14/main
+pg_probackup-13 add-instance --instance 'main' -D /var/lib/postgresql/13/main
+```
+###### Ответ: Instance 'main' successfully inited
+###### Теперь probackup знает где инстанс "main"
 
 ##### 7. Создаем и заполнение новой БД (не входя PSQL):
 
