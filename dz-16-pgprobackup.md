@@ -14,7 +14,9 @@ cat /etc/passwd | grep backup
 sudo sh -c 'echo "deb [arch=amd64] https://repo.postgrespro.ru/pg_probackup/deb/ $(lsb_release -cs) main-$(lsb_release -cs)" > /etc/apt/sources.list.d/pg_probackup.list'
 sudo wget -O - https://repo.postgrespro.ru/pg_probackup/keys/GPG-KEY-PG_PROBACKUP | sudo apt-key add - && sudo apt-get update
 sudo apt update
+sudo apt-get install pg-probackup-14 -y
 sudo apt-get install pg-probackup-{14,13,12,11,10,9.6} -y
+sudo apt-get install pg-probackup-14-dbg -y
 sudo apt-get install pg-probackup-{14,13,12,11,10,9.6}-dbg -y
 apt install postgresql-contrib -y
 # Т.к probackup работает только с кластерами с checksums:
@@ -47,7 +49,7 @@ passwd backup
 su postgres
 psql
 create user backup;
-ALTER USER backup PASSWORD '12345';
+ALTER USER backup WITH PASSWORD '12345';
 ALTER ROLE backup NOSUPERUSER;
 ALTER ROLE backup WITH REPLICATION;
 GRANT USAGE ON SCHEMA pg_catalog TO backup;
