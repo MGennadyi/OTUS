@@ -176,6 +176,7 @@ psql otus -c "insert into test values (4);"
 ##### 9. Делаем дельту-копию из=под backup:
 ```
 pg_probackup-14 backup --instance 'main' -b DELTA --stream --temp-slot -U backup
+pg_probackup-13 backup --instance 'main' -b DELTA --stream --temp-slot -U backup
 ```
 Исправляем ошибку "no connect to database" backup is running:
 ``` 
@@ -183,6 +184,7 @@ psql -c "ALTER USER backup PASSWORD '12345';
 ```
 ```
 pg_probackup-14 backup --instance 'main' -b DELTA --stream --temp-slot -U backup -W
+pg_probackup-13 backup --instance 'main' -b DELTA --stream --temp-slot -U backup -W
 ```
 WARNING; backup R38402 has status ERROR
 
