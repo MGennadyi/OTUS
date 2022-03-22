@@ -148,10 +148,12 @@ remote-proto = ssh
 ##### 8. Делаем полный бекап, потоковой репликации через временный слот  :
 ```
 pg_probackup-14 backup --instance 'main' -b FULL --stream --temp-slot
+pg_probackup-13 backup --instance 'main' -b FULL --stream --temp-slot
 ```
 Ответ: WARNING: Curent PostgreSQL role is superuser. Исправляемся, следующий бекап из-под пользователя backup. Так что сейчас получилось? :
 ```
 pg_probackup-14 show
+pg_probackup-13 show
 ```
 
 ###### BACKUP INSTANCE 'main'
