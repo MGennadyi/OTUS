@@ -37,6 +37,9 @@ echo $BACKUP_PATH
 ```
 ##### 4. Создать пользователя backup с правами:
 ```
+sudo useradd backup
+passwd backup
+12345
 su postgres
 psql
 create user backup;
