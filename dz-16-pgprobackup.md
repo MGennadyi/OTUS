@@ -19,7 +19,7 @@ sudo apt-get install pg-probackup-{14,13,12,11,10,9.6} -y
 sudo apt-get install pg-probackup-14-dbg -y
 sudo apt-get install pg-probackup-{14,13,12,11,10,9.6}-dbg -y
 apt install postgresql-contrib -y
-# Т.к probackup работает только с кластерами с checksums:
+# Т.к probackup работает только с кластерами с checksums, а по умолчанию уст.кластера без checksums:
 apt install postgresql-14-pg-checksums -y
 apt install postgresql-13-pg-checksums -y
 ```
