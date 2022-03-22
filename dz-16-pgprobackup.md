@@ -67,6 +67,13 @@ pg_probackup-14 init
 ```
 ###### Ответ :
 INFO: Backup catalog '/home/backups' successfully inited
+
+```
+systemctl stop postgresql
+
+/usr/lib/postgresql/14/bin/pg_checksums -D /var/lib/postgresql/14/main --enable
+systemctl start postgresql
+```
 ###### Смотрим что внутри директории бекапов:
 ```
 cd $BACKUP_PATH
@@ -145,16 +152,7 @@ remote-proto = ssh
 pg_probackup-14 backup --instance 'main' -b FULL --stream --temp-slot
 ```
 Ответ: WARNING: --data-checksums; Curent PostgreSQL role is superuser. Исправляем:
-Для отдельной поставки:
-```
-apt install postgresql-14-pg-checksums -y
-```
-```
-systemctl stop postgresql
 
-/usr/lib/postgresql/14/bin/pg_checksums -D /var/lib/postgresql/14/main --enable
-systemctl start postgresql
-```
 Бекап из-под пользователя backup:
 ```
 pg_probackup-14 show
