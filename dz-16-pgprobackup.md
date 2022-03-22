@@ -100,9 +100,9 @@ drwxrwxrwx 4 root root 4096 фев  2 08:41 .
 
 drwxr-xr-x 4 root root 4096 фев  1 15:36 ..
 
-drwx------ 2 root root 4096 фев  2 08:41 backups
+drwx------ 2 postgres postgres 4096 фев  2 08:41 backups
 
-drwx------ 2 root root 4096 фев  2 08:41 wal
+drwx------ 2 postgres postgres 4096 фев  2 08:41 wal
 ```
 sudo chmod -R 777 /home/backups
 ```
