@@ -171,7 +171,7 @@ pg_probackup-13 show
 
 ###### Добавляем данные:
 ```
-psql otus -c "insert into test values (4);"
+psql otus -c "insert into test values (40);"
 ```
 ##### 9. Делаем дельту-копию из=под backup:
 ```
