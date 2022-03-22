@@ -180,7 +180,7 @@ pg_probackup-13 backup --instance 'main' -b DELTA --stream --temp-slot -U backup
 ```
 Исправляем ошибку "no connect to database" backup is running:
 ``` 
-psql -c "ALTER USER backup PASSWORD '12345';
+psql -c "ALTER USER backup PASSWORD '12345';"
 ```
 ```
 pg_probackup-14 backup --instance 'main' -b DELTA --stream --temp-slot -U backup -W
