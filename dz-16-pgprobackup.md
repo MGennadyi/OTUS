@@ -80,6 +80,7 @@ systemctl stop postgresql
 /usr/lib/postgresql/13/bin/pg_checksums -D /var/lib/postgresql/13/main --enable
 systemctl start postgresql
 ```
+###### Ответ: Контрольные суммы в кластере включены
 ##### 5.3  Добавить инстанс в наш probackup:
 ```
 pg_probackup-14 add-instance --instance 'main' -D /var/lib/postgresql/14/main
