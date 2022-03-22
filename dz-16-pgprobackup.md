@@ -5,6 +5,7 @@ sudo sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)
 wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
 apt update
 apt install postgresql-14 -y
+apt install postgresql-13 -y
 ```
 ##### 2. Установка pg_probackup
 ```
