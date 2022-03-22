@@ -27,8 +27,9 @@ apt install postgresql-13-pg-checksums -y
 ```
 sudo rm -rf /home/backups && sudo mkdir /home/backups && sudo chmod -R 777 /home/backups
 ```
-###### Добавляем в переменную BACKUP_PATH путь, чтобы не указывать его каждый раз куда делать бекапы::
+###### Добавляем в переменную BACKUP_PATH путь, из-под postgres:
 ```
+su postgres
 echo "BACKUP_PATH=/home/backups/">>~/.bashrc
 echo "export BACKUP_PATH">>~/.bashrc
 cd $HOME
