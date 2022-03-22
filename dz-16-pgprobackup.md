@@ -87,7 +87,9 @@ drwxr-xr-x 4 root root 4096 фев  1 15:36 ..
 drwx------ 2 root root 4096 фев  2 08:41 backups
 
 drwx------ 2 root root 4096 фев  2 08:41 wal
-
+```
+sudo chmod -R 777 /home/backups
+```
 
 ##### 6. Добавить инстанс в наш probackup:
 ```
