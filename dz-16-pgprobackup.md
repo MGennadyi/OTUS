@@ -67,10 +67,9 @@ pg_probackup-14 init
 ```
 ###### Ответ :
 INFO: Backup catalog '/home/backups' successfully inited
-
+###### Активируем установленнный ранее checksums:
 ```
 systemctl stop postgresql
-
 /usr/lib/postgresql/14/bin/pg_checksums -D /var/lib/postgresql/14/main --enable
 systemctl start postgresql
 ```
