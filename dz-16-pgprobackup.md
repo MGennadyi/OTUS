@@ -147,7 +147,7 @@ compress-level = 1
 ###### # Remote access parameters
 remote-proto = ssh
 
-##### 8. Делаем полный бекап, потоковой репликации через временный слот  :
+##### 8. Делаем бекап с параметрами: FULL, потоковая репликация, временный слот:  :
 ```
 pg_probackup-14 backup --instance 'main' -b FULL --stream --temp-slot
 pg_probackup-13 backup --instance 'main' -b FULL --stream --temp-slot
@@ -173,14 +173,6 @@ systemctl stop postgresql
 systemctl start postgresql
 ```
 ###### Ответ: Контрольные суммы в кластере включены
-
-
-
-
-
-
-
-
 
 
 ###### Добавляем данные:
