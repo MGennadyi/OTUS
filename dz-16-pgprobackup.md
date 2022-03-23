@@ -92,7 +92,7 @@ drwx------ 2 postgres postgres 4096 фев  2 08:41 wal
 ```
 sudo chmod -R 777 /home/backups
 ```
-##### 6.3  Добавить инстанс в наш probackup:
+##### 6.2  Добавить инстанс в наш probackup:
 ```
 pg_probackup-14 add-instance --instance 'main' -D /var/lib/postgresql/14/main
 pg_probackup-13 add-instance --instance 'main' -D /var/lib/postgresql/13/main
@@ -101,7 +101,6 @@ pg_probackup-13 add-instance --instance 'main' -D /var/lib/postgresql/13/main
 ###### Теперь probackup знает где инстанс "main"
 
 ##### 7. Создаем и заполнение новой БД (не входя PSQL):
-
 ```
 su postgres
 psql -c "CREATE DATABASE otus;"
@@ -109,7 +108,7 @@ psql otus -c "create table test(i int);"
 psql otus -c "insert into test values (10), (20), (30);"
 psql otus -c "select * from test;"
 ```
-###### Ответ на последний запрос:
+###### Ответ:
 
 id|
 :----:
@@ -122,8 +121,7 @@ id|
 ```
 pg_probackup-14 show-config --instance main
 ```
-#####  Ответ:
-###### # Backup instance information
+#####  Ответ: Backup instance information
 pgdata = /var/lib/postgresql/14/main
 system-identifier = 7076338028174019592
 xlog-seg-size = 16777216
