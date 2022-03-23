@@ -23,11 +23,11 @@ apt install postgresql-contrib -y
 apt install postgresql-14-pg-checksums -y
 apt install postgresql-13-pg-checksums -y
 ```
-##### 3. Создание каталог для бекапа, т.к. в каталоге с БД бекапы создать нельзя. Для теста можно 777:
+##### 3. Создание каталога для бекапов. Права для теста можно 777:
 ```
 sudo rm -rf /home/backups && sudo mkdir /home/backups && sudo chmod -R 777 /home/backups
 ```
-###### Добавляем в переменную BACKUP_PATH путь, из-под postgres:
+##### 4. Добавляем в переменную BACKUP_PATH путь, из-под postgres:
 ```
 su postgres
 echo "BACKUP_PATH=/home/backups/">>~/.bashrc
@@ -42,7 +42,7 @@ cd $HOME
 ```
 echo $BACKUP_PATH
 ```
-##### 4. Создать пользователя backup с правами:
+##### 5. Создать пользователя backup с правами:
 ```
 # sudo useradd backup - пользователь имеется
 # passwd backup
@@ -68,22 +68,14 @@ GRANT EXECUTE ON FUNCTION pg_catalog.pg_control_checkpoint() TO backup;
 
 \q
 ```
-##### 5.1  Инициализируем наш probackup, из-под postgres:
+##### 6.1  Инициализируем наш probackup, из-под postgres:
 ```
 pg_probackup-14 init
 pg_probackup-13 init
 ```
 ###### Ответ: Backup catalog '/home/backups' successfully inited
-###### 5.2  Активируем установленнный ранее checksums:
-```
-systemctl stop postgresql
-/usr/lib/postgresql/14/bin/pg_checksums -D /var/lib/postgresql/14/main --enable
-/usr/lib/postgresql/13/bin/pg_checksums -D /var/lib/postgresql/13/main --enable
-systemctl start postgresql
-```
-###### Ответ: Контрольные суммы в кластере включены
 
-###### Смотрим что внутри директории бекапов:
+###### Что внутри директории бекапов:
 ```
 cd $BACKUP_PATH
 ls -la
@@ -100,7 +92,7 @@ drwx------ 2 postgres postgres 4096 фев  2 08:41 wal
 ```
 sudo chmod -R 777 /home/backups
 ```
-##### 5.3  Добавить инстанс в наш probackup:
+##### 6.3  Добавить инстанс в наш probackup:
 ```
 pg_probackup-14 add-instance --instance 'main' -D /var/lib/postgresql/14/main
 pg_probackup-13 add-instance --instance 'main' -D /var/lib/postgresql/13/main
@@ -173,6 +165,25 @@ pg_probackup-13 show
 ###### Instance   Version   ID       Recovery  Time            Mode   WAL  Mode   TLI   Time   Data    WAL   Zratio   Start  LSN   Stop  LSN    Status
 ###### ==========================================================================================================
 ###### main      14       R93D33  2022-03-21 13:57:04+03  FULL  STREAM    1/0   10s  34MB  16MB    1.00  0/2000028  0/2005B50  OK
+
+
+###### 6.2  Активируем установленнный ранее checksums:
+```
+systemctl stop postgresql
+/usr/lib/postgresql/14/bin/pg_checksums -D /var/lib/postgresql/14/main --enable
+/usr/lib/postgresql/13/bin/pg_checksums -D /var/lib/postgresql/13/main --enable
+systemctl start postgresql
+```
+###### Ответ: Контрольные суммы в кластере включены
+
+
+
+
+
+
+
+
+
 
 ###### Добавляем данные:
 ```
