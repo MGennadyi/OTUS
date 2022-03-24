@@ -139,6 +139,14 @@ compress-algorithm = none
 compress-level = 1  
 ###### # Remote access parameters  
 remote-proto = ssh  
+##### 8. Испольуем PGPASS через Луну в Юпитере: host:port:db_name:user_name:password
+```
+rm ~/.pgpass
+echo "localhost:5432:otus:backup:otus123">>~/.pgpass
+chmod 600 ~/.pgpass
+pg_ctlcluster 14 main stop
+pg_ctlcluster 14 main start
+```
 ##### 8. Делаем бекап из-под postgres с параметрами: FULL, потоковая репликация, временный слот:
 ```
 pg_probackup-14 backup --instance 'main' -b FULL --stream --temp-slot
@@ -157,7 +165,7 @@ pg_probackup-13 show
 ##### Есть два предупреждения, которые желательно устранить:  
 1. checksums, уст.только на остановленном кластере!  
 2. Не рекомендуется работа из-под superuser;  
-###### 9. Исправляем отсутствие checksums, иниц-ся на выкл.кластере, из-под postgres:
+###### 9. Исправляем отсутствие checksums, инициализацияся на выкл.кластере, из-под postgres:
 ```
 sudo pg_ctlcluster 14 main stop
 /usr/lib/postgresql/14/bin/pg_checksums -D /var/lib/postgresql/14/main --enable
