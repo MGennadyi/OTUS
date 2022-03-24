@@ -114,33 +114,32 @@ id|
 ```
 pg_probackup-14 show-config --instance main
 ```
-#####  Ответ: Backup instance information
-pgdata = /var/lib/postgresql/14/main
-system-identifier = 7076338028174019592
-xlog-seg-size = 16777216
-###### # Connection parameters
-pgdatabase = root
-###### # Replica parameters
-replica-timeout = 5min
-###### # Archive parameters
-archive-timeout = 5min
-###### # Logging parameters
-log-level-console = INFO
-log-level-file = OFF
-log-filename = pg_probackup.log
-log-rotation-size = 0TB
-log-rotation-age = 0d
-###### # Retention parameters
-retention-redundancy = 0
-retention-window = 0
-wal-depth = 0
-###### # Compression parameters
-compress-algorithm = none
-compress-level = 1
-###### # Remote access parameters
-remote-proto = ssh
-
-##### 8. Делаем бекап с параметрами: FULL, потоковая репликация, временный слот:  :
+#####  Ответ: Backup instance information  
+pgdata = /var/lib/postgresql/14/main  
+system-identifier = 7076338028174019592  
+xlog-seg-size = 16777216  
+###### # Connection parameters  
+pgdatabase = root  
+###### # Replica parameters  
+replica-timeout = 5min  
+###### # Archive parameters  
+archive-timeout = 5min  
+###### # Logging parameters  
+log-level-console = INFO  
+log-level-file = OFF  
+log-filename = pg_probackup.log  
+log-rotation-size = 0TB  
+log-rotation-age = 0d  
+###### # Retention parameters  
+retention-redundancy = 0  
+retention-window = 0  
+wal-depth = 0  
+###### # Compression parameters  
+compress-algorithm = none  
+compress-level = 1  
+###### # Remote access parameters  
+remote-proto = ssh  
+##### 8. Делаем бекап из-под postgres с параметрами: FULL, потоковая репликация, временный слот:
 ```
 pg_probackup-14 backup --instance 'main' -b FULL --stream --temp-slot
 pg_probackup-13 backup --instance 'main' -b FULL --stream --temp-slot
@@ -150,12 +149,36 @@ pg_probackup-13 backup --instance 'main' -b FULL --stream --temp-slot
 pg_probackup-14 show
 pg_probackup-13 show
 ```
-
 ###### BACKUP INSTANCE 'main'
 ###### ==========================================================================================================
 ###### Instance   Version   ID       Recovery  Time            Mode   WAL  Mode   TLI   Time   Data    WAL   Zratio   Start  LSN   Stop  LSN    Status
 ###### ==========================================================================================================
 ###### main      14       R93D33  2022-03-21 13:57:04+03  FULL  STREAM    1/0   10s  34MB  16MB    1.00  0/2000028  0/2005B50  OK
+##### Есть два предупреждения, которые желательно устранить:  
+1. checksums; -странно, но я устанавливал, уст.только на остановленном кластере!  
+2. Не рекомендуется работа из-под superuser;  
+###### 9. Исправляем отсутствие checksums, иниц-ся на выкл.кластере, из-под postgres:
+```
+sudo pg_ctlcluster 14 main stop
+/usr/lib/postgresql/14/bin/pg_checksums -D /var/lib/postgresql/14/main --enable
+sudo pg_ctlcluster 14 main start
+```
+# Ответ: Контрольные суммы в кластере включены.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 ###### 6.2  Активируем установленнный ранее checksums:
