@@ -6,8 +6,6 @@ wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-
 apt update
 apt install postgresql-14 -y
 apt install postgresql-13 -y
-# Проверить наличие пользователя
-cat /etc/passwd | grep backup
 ```
 ##### 2. Установка pg_probackup
 ```
@@ -19,7 +17,7 @@ sudo apt-get install pg-probackup-{14,13,12,11,10,9.6} -y
 sudo apt-get install pg-probackup-14-dbg -y
 sudo apt-get install pg-probackup-{14,13,12,11,10,9.6}-dbg -y
 apt install postgresql-contrib -y
-# Т.к probackup работает только с кластерами с checksums, а по умолчанию уст.кластера без checksums:
+# По умолчанию postgresql уст.без checksums:
 apt install postgresql-14-pg-checksums -y
 apt install postgresql-13-pg-checksums -y
 ```
@@ -42,14 +40,13 @@ cd $HOME
 ```
 echo $BACKUP_PATH
 ```
+###### Ответ: /home/backups/
 ##### 5. Создать пользователя backup с правами:
 ```
-# sudo useradd backup - пользователь имеется
-# passwd backup
-# 12345
 su postgres
 psql
 create user backup;
+
 ALTER USER backup WITH PASSWORD '12345';
 ALTER ROLE backup NOSUPERUSER;
 ALTER ROLE backup WITH REPLICATION;
@@ -74,7 +71,6 @@ pg_probackup-14 init
 pg_probackup-13 init
 ```
 ###### Ответ: Backup catalog '/home/backups' successfully inited
-
 ###### Что внутри директории бекапов:
 ```
 cd $BACKUP_PATH
@@ -82,12 +78,9 @@ ls -la
 ```
 ###### Ответ: total 16
 
-drwxrwxrwx 4 root root 4096 фев  2 08:41 .
-
-drwxr-xr-x 4 root root 4096 фев  1 15:36 ..
-
-drwx------ 2 postgres postgres 4096 фев  2 08:41 backups
-
+drwxrwxrwx 4 root root 4096 фев  2 08:41 .  
+drwxr-xr-x 4 root root 4096 фев  1 15:36 ..  
+drwx------ 2 postgres postgres 4096 фев  2 08:41 backups  
 drwx------ 2 postgres postgres 4096 фев  2 08:41 wal
 ```
 sudo chmod -R 777 /home/backups
