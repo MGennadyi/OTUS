@@ -149,8 +149,8 @@ pg_ctlcluster 14 main start
 ```
 ##### 8. Делаем бекап из-под postgres с параметрами: FULL, потоковая репликация, временный слот:
 ```
-pg_probackup-14 backup --instance 'main' -b FULL --stream --temp-slot
-pg_probackup-13 backup --instance 'main' -b FULL --stream --temp-slot
+pg_probackup-14 backup --instance 'main' -b FULL --stream --temp-slot -h localhost -U backup --pgdatabase=otus -p 5432
+pg_probackup-13 backup --instance 'main' -b FULL --stream --temp-slot -h localhost -U backup --pgdatabase=otus -p 5432
 ```
 Ответ: WARNING: Curent PostgreSQL role is superuser. Исправляемся, следующий бекап из-под пользователя backup. Так что сейчас получилось? :
 ```
