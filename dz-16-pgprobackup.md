@@ -179,9 +179,13 @@ psql otus -c "insert into test values (40);"
 ###### 11. Делаем дельта-backup с хостовым пользователем backup. Другой путь: Уст. пароль backup в БД :
 ```
 psql -c "ALTER USER backup PASSWORD '12345';"
-pg_probackup-14 backup --instance 'main' -b DELTA --stream --temp-slot -U backup -W
+pg_probackup-14 backup --instance 'main' -b DELTA --stream --temp-slot -h localhost -U backup --pgdatabase=otus -p 5432
+pg_probackup-13 backup --instance 'main' -b DELTA --stream --temp-slot -h localhost -U backup --pgdatabase=otus -p 5432
+psql otus -c "insert into test values (50);"
+pg_probackup-14 backup --instance 'main' -b DELTA --stream --temp-slot -h localhost -U backup --pgdatabase=otus -p 5432
+pg_probackup-13 backup --instance 'main' -b DELTA --stream --temp-slot -h localhost -U backup --pgdatabase=otus -p 5432
 ```
-####### ВАЖНО:  пользователь "backup" не прошёл проверку подлинности (Peer)
+
 
 
 
