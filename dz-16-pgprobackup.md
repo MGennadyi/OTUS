@@ -174,12 +174,12 @@ su postgres
 exit
 systemctl start postgresql
 ```
-# Ответ: Контрольные суммы в кластере включены.
-###### 11. Добавляем данные:                                                                                                               
+###### Ответ: Контрольные суммы в кластере включены.
+##### 11. Добавляем данные:                                                                                                               
 ```
 psql otus -c "insert into test values (40);"
 ```
-###### 12. Делаем дельта-backup с хостовым пользователем backup. Другой путь: Уст. пароль backup в БД :
+###### 12. Делаем дельта-backup с хостовым пользователем backup. Другой путь: Установим пароль на backup в БД :
 ```
 psql -c "ALTER USER backup PASSWORD '12345';"
 pg_probackup-14 backup --instance 'main' -b DELTA --stream --temp-slot -h localhost -U backup --pgdatabase=otus -p 5432
@@ -192,13 +192,8 @@ pg_probackup-13 backup --instance 'main' -b DELTA --stream --temp-slot -h localh
 ```
 psql otus -c "insert into test values (60);"
 ```
-##### 13. Делаем дельту-копию из=под backup:
-``` 
-psql -c "ALTER USER backup PASSWORD '12345';"
 ```
-
-```
-##### 10. Восстановление копию в новый кластер:
+##### 13. Восстановление копию в новый кластер:
 ```
 sudo pg_createcluster 14 main2
 ```
