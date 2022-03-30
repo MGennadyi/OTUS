@@ -147,7 +147,7 @@ chmod 600 ~/.pgpass
 pg_ctlcluster 14 main stop
 pg_ctlcluster 14 main start
 ```
-##### 8. Делаем бекап из-под postgres с параметрами: FULL, потоковая репликация, временный слот:
+##### 9. Делаем бекап из-под postgres с параметрами: FULL, потоковая репликация, временный слот:
 ```
 pg_probackup-14 backup --instance 'main' -b FULL --stream --temp-slot -h localhost -U backup --pgdatabase=otus -p 5432
 pg_probackup-13 backup --instance 'main' -b FULL --stream --temp-slot -h localhost -U backup --pgdatabase=otus -p 5432
@@ -165,18 +165,21 @@ pg_probackup-13 show
 ##### Есть два предупреждения, которые желательно устранить:  
 1. checksums, уст.только на остановленном кластере!  
 2. Не рекомендуется работа из-под superuser;  
-###### 9. Исправляем отсутствие checksums, инициализацияся на выкл.кластере, из-под postgres:
+###### 10. Исправляем отсутствие checksums, инициализацияся на выкл.кластере, из-под postgres:
 ```
-sudo pg_ctlcluster 14 main stop
+systemctl stop postgresql
+su postgres
 /usr/lib/postgresql/14/bin/pg_checksums -D /var/lib/postgresql/14/main --enable
-sudo pg_ctlcluster 14 main start
+/usr/lib/postgresql/13/bin/pg_checksums -D /var/lib/postgresql/13/main --enable
+exit
+systemctl start postgresql
 ```
 # Ответ: Контрольные суммы в кластере включены.
-###### 10. Добавляем данные:                                                                                                               
+###### 11. Добавляем данные:                                                                                                               
 ```
 psql otus -c "insert into test values (40);"
 ```
-###### 11. Делаем дельта-backup с хостовым пользователем backup. Другой путь: Уст. пароль backup в БД :
+###### 12. Делаем дельта-backup с хостовым пользователем backup. Другой путь: Уст. пароль backup в БД :
 ```
 psql -c "ALTER USER backup PASSWORD '12345';"
 pg_probackup-14 backup --instance 'main' -b DELTA --stream --temp-slot -h localhost -U backup --pgdatabase=otus -p 5432
@@ -185,68 +188,15 @@ psql otus -c "insert into test values (50);"
 pg_probackup-14 backup --instance 'main' -b DELTA --stream --temp-slot -h localhost -U backup --pgdatabase=otus -p 5432
 pg_probackup-13 backup --instance 'main' -b DELTA --stream --temp-slot -h localhost -U backup --pgdatabase=otus -p 5432
 ```
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-###### 6.2  Активируем установленнный ранее checksums:
-```
-systemctl stop postgresql
-/usr/lib/postgresql/14/bin/pg_checksums -D /var/lib/postgresql/14/main --enable
-/usr/lib/postgresql/13/bin/pg_checksums -D /var/lib/postgresql/13/main --enable
-systemctl start postgresql
-```
-###### Ответ: Контрольные суммы в кластере включены
-
-
 ###### Добавляем данные:
 ```
-psql otus -c "insert into test values (40);"
+psql otus -c "insert into test values (60);"
 ```
-##### 9. Делаем дельту-копию из=под backup:
-```
-pg_probackup-14 backup --instance 'main' -b DELTA --stream --temp-slot -U backup
-pg_probackup-13 backup --instance 'main' -b DELTA --stream --temp-slot -U backup
-```
-Исправляем ошибку "no connect to database" backup is running:
+##### 13. Делаем дельту-копию из=под backup:
 ``` 
 psql -c "ALTER USER backup PASSWORD '12345';"
 ```
-```
-pg_probackup-14 backup --instance 'main' -b DELTA --stream --temp-slot -U backup -W
-pg_probackup-13 backup --instance 'main' -b DELTA --stream --temp-slot -U backup -W
-```
-WARNING; backup R38402 has status ERROR
 
-###### PGPASS Луна в юпитере:
-```
-echo "localhost:5432:otus:backup:12345">>~/.pgpass
-chmod 600 ~/.pgpass
-pg_probackup-14 backup --instance 'main' -b FULL --stream --temp-slot -h localhost -U backup --pgdatabase=otus
-```
-Ответ: Backup R6VP59 completed
-```
-pg_probackup-14 backup --instance 'main' -b DELTA --stream --temp-slot -h localhost -U backup --pgdatabase=otus
-```
-Ответ: Parent backup: R6VP59; Backup R6VP7D completed
-###### Добавляем данные:                                                                                                               
-```
-psql otus -c "insert into test values (4);"
-psql otus -c "insert into test values (5);"
-pg_probackup-14 backup --instance 'main' -b DELTA --stream --temp-slot -h localhost -U backup --pgdatabase=otus
 ```
 ##### 10. Восстановление копию в новый кластер:
 ```
