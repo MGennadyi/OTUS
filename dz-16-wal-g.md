@@ -3,23 +3,9 @@
 ###### 1. Установка Postgresql-13
 ```
 sudo sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list'
-
 wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
-
 apt update
-
 apt install postgresql-14 -y
-
-apt install postgresql-13 -y
-
-vim /etc/apt/sources.list.d/postgresql-pgdg.list -? Почему?
-
-# Аристов на видео меняет hirsuite main-hirsuite на focal main-focal, т.к. для hirsute нет релиза pg_probackup.
-
-vim /etc/apt/sources.list.d/pg_probackup.list
-
-# у меня без обновления 20.04: deb http://apt.postgresql.org/pub/repos/apt/ focal-pgdg main
-
 sudo apt update
 ```
 ###### 2. Установка WAL-G
