@@ -15,7 +15,17 @@ mkdir /usr/local/bin/wal-g
 mv /home/mgb/wal-g-pg-ubuntu-20.04-amd64 /usr/local/bin/wal-g/wal-g
 ls -la /usr/local/bin/wal-g
 chown -R postgres /usr/local/bin/wal-g
+```
+##### 3. Создаем каталог для бекапов:
 rm -rf /home/backups && sudo mkdir /home/backups && sudo chmod -R 777 /home/backups
+##### 4. Создать директорию для логов:
+```
+mkdir /var/lib/postgresql/14/main/log
+chown -R postgres /var/lib/postgresql/14/main/log
+ls -l /var/lib/postgresql/14/main/log
+```
+##### 5. Под postgres создать скрытый конфиг для wal-g подключение через linux-socket:
+```
 su postgres
 mkdir /var/lib/postgresql/14/main/log
 vim /var/lib/postgresql/.walg.json
@@ -30,11 +40,12 @@ vim /var/lib/postgresql/.walg.json
 
     "PGHOST": "/var/run/postgresql/.s.PGSQL.5432"
 }
+ls -la /var/lib/postgresql/
 ```
 ###### DESC .walg.json: каталог для бекапов; сжатие=brotli; delta=5; подключение через linux-socket;
 
 
-###### 4. Правим  postgresql.conf через auto.conf:
+###### 3. Правим  postgresql.conf через auto.conf:
 ```
 echo "wal_level=replica" >> /var/lib/postgresql/14/main/postgresql.auto.conf
 echo "archive_mode=on" >> /var/lib/postgresql/14/main/postgresql.auto.conf
