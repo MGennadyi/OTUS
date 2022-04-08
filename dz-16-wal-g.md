@@ -17,17 +17,19 @@ ls -la /usr/local/bin/wal-g
 chown -R postgres /usr/local/bin/wal-g
 ```
 ##### 3. Создаем каталог для бекапов:
+```
 rm -rf /home/backups && sudo mkdir /home/backups && sudo chmod -R 777 /home/backups
+chown -R postgres /home/backups
+```
 ##### 4. Создать директорию для логов:
 ```
+su postgres
 mkdir /var/lib/postgresql/14/main/log
-chown -R postgres /var/lib/postgresql/14/main/log
 ls -l /var/lib/postgresql/14/main/log
 ```
 ##### 5. Под postgres создать скрытый конфиг для wal-g подключение через linux-socket:
 ```
 su postgres
-mkdir /var/lib/postgresql/14/main/log
 vim /var/lib/postgresql/.walg.json
 {
     "WALG_FILE_PREFIX": "/home/backups",
@@ -43,8 +45,6 @@ vim /var/lib/postgresql/.walg.json
 ls -la /var/lib/postgresql/
 ```
 ###### DESC .walg.json: каталог для бекапов; сжатие=brotli; delta=5; подключение через linux-socket;
-
-
 ###### 6. Правим  postgresql.conf через auto.conf:
 ```
 echo "wal_level=replica" >> /var/lib/postgresql/14/main/postgresql.auto.conf
@@ -53,6 +53,8 @@ echo "archive_command='wal-g wal-push \"%p\" >> /var/lib/postgresql/14/main/log/
 echo "archive_timeout=60" >> /var/lib/postgresql/14/main/postgresql.auto.conf 
 echo "restore_command='wal-g wal-fetch \"%f\" \"%p\" >> /var/lib/postgresql/14/main/log/restore_command.log 2>&1' " >> /var/lib/postgresql/14/main/postgresql.auto.conf
 cat ~/14/main/postgresql.auto.conf
+pg_ctlcluster 14 main stop
+pg_ctlcluster 14 main start
 ```
 ###### 7. Создадим тестовую базу данных с данными:
 ```
