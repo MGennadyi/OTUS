@@ -36,7 +36,7 @@ vim /var/lib/postgresql/.walg.json
 
     "WALG_DELTA_MAX_STEPS": "5",
 
-    "PGDATA": "/var/lib/postgresql/13/main",
+    "PGDATA": "/var/lib/postgresql/14/main",
 
     "PGHOST": "/var/run/postgresql/.s.PGSQL.5432"
 }
