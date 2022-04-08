@@ -45,22 +45,22 @@ ls -la /var/lib/postgresql/
 ###### DESC .walg.json: каталог для бекапов; сжатие=brotli; delta=5; подключение через linux-socket;
 
 
-###### 3. Правим  postgresql.conf через auto.conf:
+###### 6. Правим  postgresql.conf через auto.conf:
 ```
 echo "wal_level=replica" >> /var/lib/postgresql/14/main/postgresql.auto.conf
 echo "archive_mode=on" >> /var/lib/postgresql/14/main/postgresql.auto.conf
 echo "archive_command='wal-g wal-push \"%p\" >> /var/lib/postgresql/14/main/log/archive_command.log 2>&1' " >> /var/lib/postgresql/14/main/postgresql.auto.conf 
 echo "archive_timeout=60" >> /var/lib/postgresql/14/main/postgresql.auto.conf 
 echo "restore_command='wal-g wal-fetch \"%f\" \"%p\" >> /var/lib/postgresql/14/main/log/restore_command.log 2>&1' " >> /var/lib/postgresql/14/main/postgresql.auto.conf
+cat ~/14/main/postgresql.auto.conf
 ```
-###### 5. Создадим тестовую базу данных с данными:
+###### 7. Создадим тестовую базу данных с данными:
 ```
 psql -c "CREATE DATABASE otus;"
 psql otus -c "create table test(i int);"
 psql otus -c "insert into test values (10), (20), (30);"
 psql otus -c "select * from test;"
 ```
-
 ###### 6.Делаем бэкап:
 ```
 wal-g backup-push /var/lib/postgresql/14/main
