@@ -80,7 +80,7 @@ psql otus -c "UPDATE test SET i = 3 WHERE i = 30"
 wal-g backup-push /var/lib/postgresql/13/main
 wal-g backup-list
 ```
-### wal-g: command not found
+
 
 
 
