@@ -85,8 +85,27 @@ psql otus -c "UPDATE test SET i = 3 WHERE i = 30"
 wal-g backup-push /var/lib/postgresql/14/main
 ```
 ###### Получаем: LATEST backup is: 'base_000000010000000000000003'. Delta backup from base_000000010000000000000003 with LSN 3000028.
+##### 9. Восстановление на инстансе main2:
+```
+su postgres
+pg_createcluster 14 main2
+rm -rf /var/lib/postgresql/14/main2
+wal-g backup-fetch /var/lib/postgresql/14/main2 LATEST
+```
+###### Получаем: Selecting the latest backup...
+INFO: 2022/04/09 16:44:03.325798 LATEST backup is: 'base_00000001000000000000001E_D_000000010000000000000006'
+
+INFO: 2022/04/09 16:44:05.834564 Backup extraction complete. Бэкап сформировался за 0,02 сек.
 
 
+
+
+
+##### 9. Установка pgbanch:
+```
+apt-get install postgresql postgresql-contrib
+sudo -u postgres pgbench -i -s 10 otus
+sudo -u postgres pgbench -c 10 -j 2 -t 10000 otus
 
 
 
