@@ -11,10 +11,10 @@ apt install postgresql-14 -y
 ```
 wget https://github.com/wal-g/wal-g/releases/download/v1.1.2-rc/wal-g-pg-ubuntu-20.04-amd64.tar.gz
 tar -zxvf /home/mgb/wal-g-pg-ubuntu-20.04-amd64.tar.gz
-mkdir /usr/local/bin/wal-g
-mv /home/mgb/wal-g-pg-ubuntu-20.04-amd64 /usr/local/bin/wal-g/wal-g
-ls -la /usr/local/bin/wal-g
+mv /home/mgb/wal-g-pg-ubuntu-20.04-amd64 /usr/local/bin/wal-g
+ls -la /usr/local/bin/
 chown -R postgres /usr/local/bin/wal-g
+ls -la /usr/local/bin/
 ```
 ##### 3. Создаем каталог для бекапов:
 ```
