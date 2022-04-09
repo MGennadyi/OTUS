@@ -16,6 +16,8 @@ ls -la /usr/local/bin/
 chown -R postgres /usr/local/bin/wal-g
 ls -la /usr/local/bin/
 ```
+###### Ответ: -rwxr-xr-x  1 postgres root 41443344 ноя 26 17:11 wal-g
+
 ##### 3. Создаем каталог для бекапов:
 ```
 rm -rf /home/backups && sudo mkdir /home/backups && sudo chmod -R 777 /home/backups
