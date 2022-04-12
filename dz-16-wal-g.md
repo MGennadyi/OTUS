@@ -103,17 +103,17 @@ exit
 sudo systemctl start postgresql@14-main2
 
 pg_ctlcluster 14 main2 start
+```
 
 
 
-
-
+#### Доп.Задание: снять бекап под нагрузкой
 
 ##### 9. Установка pgbanch:
 ```
 apt-get install postgresql postgresql-contrib
 sudo -u postgres pgbench -i -s 10 otus
 sudo -u postgres pgbench -c 10 -j 2 -t 10000 otus
-
+```
 
 
