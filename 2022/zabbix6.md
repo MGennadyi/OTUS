@@ -24,11 +24,17 @@ apt install zabbix-server-pgsql zabbix-frontend-php php7.4-pgsql zabbix-nginx-co
 su postgres
 psql
 CREATE DATABASE zabbix;
-
-
+CREATE USER zabbix WITH PASSWORD '12345';
 ```
-
-
+```
+sudo -u postgres createdb -O zabbix -E Unicode -T template0 zabbix
+zcat /usr/share/doc/zabbix-server-pgsql/create.sql.gz | sudo -u zabbix psql zabbix
+vim /etc/zabbix/zabbix_server.conf
+```
+###### DBHost=
+DBName=zabbix
+DBUser=zabbix
+DBPassword=<username_password>
 
 
 
