@@ -1,5 +1,11 @@
 # ZABBIX 6.1.
 
+###### 0. Правим $PATH
+```
+vim /root/.bashrc
+export PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+sudo shutdown -r now
+```
 ###### 1. Установка Postgresql-14
 ```
 sudo sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list'
