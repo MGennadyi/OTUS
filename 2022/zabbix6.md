@@ -29,6 +29,7 @@ CREATE USER zabbix WITH PASSWORD '12345';
 ```
 sudo -u postgres createdb -O zabbix -E Unicode -T template0 zabbix
 zcat /usr/share/doc/zabbix-server-pgsql/create.sql.gz | sudo -u zabbix psql zabbix
+zcat /usr/share/doc/zabbix-sql-scripts/postgresql/server.sql.gz | sudo -u zabbix psql zabbix
 vim /etc/zabbix/zabbix_server.conf
 ```
 ###### DBHost=
