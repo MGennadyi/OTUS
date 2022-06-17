@@ -20,6 +20,13 @@ dpkg -i zabbix-release_6.1-2+debian11_all.deb
 apt update
 apt install zabbix-server-pgsql zabbix-frontend-php php7.4-pgsql zabbix-nginx-conf zabbix-sql-scripts zabbix-agent -y
 ```
+```
+su postgres
+psql
+CREATE DATABASE zabbix;
+
+
+```
 
 
 
