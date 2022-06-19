@@ -35,8 +35,10 @@ vim /etc/zabbix/zabbix_server.conf
 DBName=zabbix
 DBUser=zabbix
 DBPassword=12345
-
-
+```
+systemctl start zabbix-server
+systemctl enable zabbix-server
+```
 
 
 
