@@ -34,12 +34,19 @@ zcat /usr/share/doc/zabbix-sql-scripts/postgresql/server.sql.gz | sudo -u zabbix
 ```
 ##### 5. Настройка конфига zabbix_serve:
 ```
-vim /etc/zabbix/zabbix_server.conf
+vim /etc/postgresql/14/main/pg_hba.conf
+host    zabbix          zabbix          127.0.0.1/32            md5
 ```
-###### DBHost=127.0.0.1
+```
+vim /etc/zabbix/zabbix_server.conf
+DBHost=localhost
+ListenPort=10051
+DBHost=localhost
+DBPassword=12345
 DBName=zabbix
 DBUser=zabbix
 DBPassword=12345
+DBPort=5432
 ```
 systemctl stop zabbix-server
 systemctl start zabbix-server
