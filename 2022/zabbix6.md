@@ -20,15 +20,19 @@ dpkg -i zabbix-release_6.1-2+debian11_all.deb
 apt update
 apt install zabbix-server-pgsql zabbix-frontend-php php7.4-pgsql zabbix-nginx-conf zabbix-sql-scripts zabbix-agent -y
 ```
+##### 3. Создание базы и пользователя с паролем:
 ```
 su postgres
 psql
 CREATE DATABASE zabbix;
 CREATE USER zabbix WITH PASSWORD '12345';
 ```
-###### Импортируем схему:
+###### 4. Импортируем схему:
 ```
 zcat /usr/share/doc/zabbix-sql-scripts/postgresql/server.sql.gz | sudo -u zabbix psql zabbix
+```
+##### 5. Настройка конфига zabbix_serve:
+```
 vim /etc/zabbix/zabbix_server.conf
 ```
 ###### DBHost=127.0.0.1
@@ -45,7 +49,7 @@ systemctl status zabbix-server
 ```
 dpkg -l | grep zabbix
 ```
-##### Настроим Nginx. раскомментируем и настроим директивы 'listen' и 'server_name'
+##### 6. Настроим Nginx. раскомментируем и настроим директивы 'listen' и 'server_name'
 ```
 vim /etc/zabbix/nginx.conf
 ```
