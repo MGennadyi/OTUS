@@ -36,11 +36,21 @@ DBName=zabbix
 DBUser=zabbix
 DBPassword=12345
 ```
+systemctl stop zabbix-server
 systemctl start zabbix-server
 systemctl enable zabbix-server
+systemctl status zabbix-server
 ```
-
-
+###### Проверка версии:
+```
+dpkg -l | grep zabbix
+```
+##### Настроим Nginx. раскомментируем и настроим директивы 'listen' и 'server_name'
+```
+vim /etc/zabbix/nginx.conf
+```
+listen 80;
+server_name example.com;
 
 
 
