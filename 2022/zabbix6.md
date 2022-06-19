@@ -26,14 +26,15 @@ psql
 CREATE DATABASE zabbix;
 CREATE USER zabbix WITH PASSWORD '12345';
 ```
+###### Импортируем схему:
 ```
 zcat /usr/share/doc/zabbix-sql-scripts/postgresql/server.sql.gz | sudo -u zabbix psql zabbix
 vim /etc/zabbix/zabbix_server.conf
 ```
-###### DBHost=
+###### DBHost=127.0.0.1
 DBName=zabbix
 DBUser=zabbix
-DBPassword=<username_password>
+DBPassword=<12345>
 
 
 
