@@ -34,7 +34,7 @@ vim /etc/zabbix/zabbix_server.conf
 ###### DBHost=127.0.0.1
 DBName=zabbix
 DBUser=zabbix
-DBPassword=<12345>
+DBPassword=12345
 
 
 
