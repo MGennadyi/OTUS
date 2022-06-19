@@ -19,6 +19,7 @@ wget https://repo.zabbix.com/zabbix/6.1/debian/pool/main/z/zabbix-release/zabbix
 dpkg -i zabbix-release_6.1-2+debian11_all.deb
 apt update
 apt install zabbix-server-pgsql zabbix-frontend-php php7.4-pgsql zabbix-nginx-conf zabbix-sql-scripts zabbix-agent -y
+apt install zabbix-server-pgsql zabbix-frontend-php php7.4-pgsql zabbix-apache-conf zabbix-agent -y
 ```
 ##### 3. Создание базы и пользователя с паролем:
 ```
@@ -44,6 +45,8 @@ systemctl stop zabbix-server
 systemctl start zabbix-server
 systemctl enable zabbix-server
 systemctl status zabbix-server
+systemctl status zabbix-agent
+systemctl status apache2
 ```
 ###### Проверка версии:
 ```
@@ -52,6 +55,7 @@ dpkg -l | grep zabbix
 ##### 6. Настроим Nginx. раскомментируем и настроим директивы 'listen' и 'server_name'
 ```
 vim /etc/zabbix/nginx.conf
+
 ```
 listen 80;
 server_name example.com;
