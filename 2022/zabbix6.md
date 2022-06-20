@@ -42,7 +42,7 @@ CREATE DATABASE zabbix;
 CREATE USER zabbix WITH PASSWORD '12345';
 GRANT ALL PRIVILEGES ON DATABASE zabbix to zabbix;
 ```
-###### 4. Импортируем схему:
+###### 4. Импортируем схему БД:
 ```
 zcat /usr/share/doc/zabbix-sql-scripts/postgresql/server.sql.gz | sudo -u zabbix psql zabbix
 ```
@@ -74,7 +74,7 @@ systemctl status apache2
 ```
 dpkg -l | grep zabbix
 ```
-##### 6. Настроим Nginx, если установлено: раскомментируем и настроим две позиции- нет таких директорий:
+##### 6. Настроим Nginx, если установлено: раскомментируем и настроим две верхние позиции- нет таких директорий:
 ```
 vim /etc/zabbix/nginx.conf
 vim /etc/nginx/conf.d/zabbix.conf
