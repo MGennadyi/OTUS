@@ -23,7 +23,7 @@ wget https://repo.zabbix.com/zabbix/6.1/debian/pool/main/z/zabbix-release/zabbix
 dpkg -i zabbix-release_6.1-2+debian11_all.deb
 apt update
 apt install zabbix-server-pgsql zabbix-frontend-php php7.4-pgsql zabbix-nginx-conf zabbix-sql-scripts zabbix-agent jq sysstat -y
-или
+? или
 apt install zabbix-server-pgsql zabbix-frontend-php php7.4-pgsql zabbix-apache-conf zabbix-sql-scripts zabbix-agent jq sysstat -y
 ```
 ###### When installation is complete, verify the Zabbix server installed:
@@ -72,12 +72,14 @@ systemctl status apache2
 ```
 dpkg -l | grep zabbix
 ```
-##### 6. Настроим Nginx: раскомментируем и настроим две позиции:
+##### 6. Настроим Nginx: раскомментируем и настроим две позиции- нет таких директорий:
 ```
 vim /etc/zabbix/nginx.conf
 vim /etc/nginx/conf.d/zabbix.conf
         listen          80;
         server_name     192.168.0.17;
+vim  /etc/httpd/conf.d/zabbix.conf
+? или
 vim /etc/zabbix/php-fpm.conf
 php_value[date.timezone] = Europe/Moscow
 ```
