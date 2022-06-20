@@ -15,6 +15,7 @@ wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-
 sudo apt update
 apt install postgresql-14 -y
 systemctl status postgresql
+psql -V
 locale -a | grep ru
 ```
 ##### 2. Установка ZABBIX 6
