@@ -1,4 +1,4 @@
-# ZABBIX 6.1.
+# ZABBIX 6.1 на POSTGRESQL 14.
 
 ###### 0. Правим $PATH
 ```
@@ -24,7 +24,7 @@ wget https://repo.zabbix.com/zabbix/6.1/debian/pool/main/z/zabbix-release/zabbix
 dpkg -i zabbix-release_6.1-2+debian11_all.deb
 apt update
 apt install zabbix-server-pgsql zabbix-frontend-php php7.4-pgsql zabbix-nginx-conf zabbix-sql-scripts zabbix-agent jq sysstat -y
-? или
+или
 apt install zabbix-server-pgsql zabbix-frontend-php php7.4-pgsql zabbix-apache-conf zabbix-sql-scripts zabbix-agent jq sysstat -y
 ```
 ###### When installation is complete, verify the Zabbix server installed:
@@ -35,6 +35,7 @@ apt-cache policy zabbix-server-pgsql
 ```
 sudo -u postgres createuser --pwprompt zabbix
 sudo -u postgres createdb -O zabbix -T template0 zabbix
+или
 su postgres
 psql
 CREATE DATABASE zabbix;
@@ -73,7 +74,7 @@ systemctl status apache2
 ```
 dpkg -l | grep zabbix
 ```
-##### 6. Настроим Nginx: раскомментируем и настроим две позиции- нет таких директорий:
+##### 6. Настроим Nginx, если установлено: раскомментируем и настроим две позиции- нет таких директорий:
 ```
 vim /etc/zabbix/nginx.conf
 vim /etc/nginx/conf.d/zabbix.conf
@@ -85,6 +86,12 @@ vim /etc/zabbix/php-fpm.conf
 php_value[date.timezone] = Europe/Moscow
 ```
 
+##### 7. Настройка через web-интерфейс:
+```
+http://192.168.5.161/zabbix/setup.php
+Default language=RU
+login=Admin
+password=zabbix
 
 
 
