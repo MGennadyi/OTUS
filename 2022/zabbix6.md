@@ -15,6 +15,7 @@ wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-
 sudo apt update
 apt install postgresql-14 -y
 systemctl status postgresql
+locale -a | grep ru
 ```
 ##### 2. Установка ZABBIX 6
 ```
@@ -77,6 +78,8 @@ vim /etc/zabbix/nginx.conf
 vim /etc/nginx/conf.d/zabbix.conf
         listen          80;
         server_name     192.168.0.17;
+vim /etc/zabbix/php-fpm.conf
+php_value[date.timezone] = Europe/Moscow
 ```
 
 
