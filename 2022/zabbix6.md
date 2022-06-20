@@ -92,7 +92,7 @@ http://192.168.5.161/zabbix/setup.php
 Default language=RU
 login=Admin
 password=zabbix
-
+```
 
 
 
