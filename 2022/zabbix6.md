@@ -14,6 +14,7 @@ sudo sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)
 wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
 sudo apt update
 apt install postgresql-14 -y
+systemctl status postgresql
 ```
 ##### 2. Установка ZABBIX 6
 ```
@@ -25,6 +26,8 @@ apt install zabbix-server-pgsql zabbix-frontend-php php7.4-pgsql zabbix-apache-c
 ```
 ##### 3. Создание базы и пользователя с паролем (по док-и из template0):
 ```
+sudo -u postgres createuser --pwprompt zabbix
+sudo -u postgres createdb -O zabbix zabbix
 su postgres
 psql
 CREATE DATABASE zabbix;
@@ -62,13 +65,14 @@ systemctl status apache2
 ```
 dpkg -l | grep zabbix
 ```
-##### 6. Настроим Nginx. раскомментируем и настроим директивы 'listen' и 'server_name'
+##### 6. Настроим Nginx: раскомментируем и настроим две позиции:
 ```
 vim /etc/zabbix/nginx.conf
-
+vim /etc/nginx/conf.d/zabbix.conf
+        listen          80;
+        server_name     192.168.0.17;
 ```
-listen 80;
-server_name example.com;
+
 
 
 
