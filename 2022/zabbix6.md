@@ -4,6 +4,8 @@
 ```
 vim /root/.bashrc
 export PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+addgroup --system --quiet zabbix
+adduser --quiet --system --disabled-login --ingroup zabbix --home /var/lib/zabbix --no-create-home zabbix
 sudo shutdown -r now
 ```
 ###### 1. Установка Postgresql-14
@@ -18,8 +20,8 @@ apt install postgresql-14 -y
 wget https://repo.zabbix.com/zabbix/6.1/debian/pool/main/z/zabbix-release/zabbix-release_6.1-2%2Bdebian11_all.deb
 dpkg -i zabbix-release_6.1-2+debian11_all.deb
 apt update
-apt install zabbix-server-pgsql zabbix-frontend-php php7.4-pgsql zabbix-nginx-conf zabbix-sql-scripts zabbix-agent -y
-apt install zabbix-server-pgsql zabbix-frontend-php php7.4-pgsql zabbix-apache-conf zabbix-agent -y
+apt install zabbix-server-pgsql zabbix-frontend-php php7.4-pgsql zabbix-nginx-conf zabbix-sql-scripts zabbix-agent jq sysstat -y
+apt install zabbix-server-pgsql zabbix-frontend-php php7.4-pgsql zabbix-apache-conf zabbix-sql-scripts zabbix-agent jq sysstat -y
 ```
 ##### 3. Создание базы и пользователя с паролем:
 ```
@@ -27,6 +29,7 @@ su postgres
 psql
 CREATE DATABASE zabbix;
 CREATE USER zabbix WITH PASSWORD '12345';
+GRANT ALL PRIVILEGES ON DATABASE zabbix to zabbix;
 ```
 ###### 4. Импортируем схему:
 ```
