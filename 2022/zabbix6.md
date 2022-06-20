@@ -44,7 +44,7 @@ GRANT ALL PRIVILEGES ON DATABASE zabbix to zabbix;
 ```
 zcat /usr/share/doc/zabbix-sql-scripts/postgresql/server.sql.gz | sudo -u zabbix psql zabbix
 ```
-##### 5. Настройка конфига zabbix_serve:
+##### 5. Настройка конфига zabbix_server:
 ```
 vim /etc/postgresql/14/main/pg_hba.conf
 host    zabbix          zabbix          127.0.0.1/32            md5
