@@ -22,12 +22,17 @@ wget https://repo.zabbix.com/zabbix/6.1/debian/pool/main/z/zabbix-release/zabbix
 dpkg -i zabbix-release_6.1-2+debian11_all.deb
 apt update
 apt install zabbix-server-pgsql zabbix-frontend-php php7.4-pgsql zabbix-nginx-conf zabbix-sql-scripts zabbix-agent jq sysstat -y
+или
 apt install zabbix-server-pgsql zabbix-frontend-php php7.4-pgsql zabbix-apache-conf zabbix-sql-scripts zabbix-agent jq sysstat -y
+```
+###### When installation is complete, verify the Zabbix server installed:
+```
+apt-cache policy zabbix-server-pgsql
 ```
 ##### 3. Создание базы и пользователя с паролем (по док-и из template0):
 ```
 sudo -u postgres createuser --pwprompt zabbix
-sudo -u postgres createdb -O zabbix zabbix
+sudo -u postgres createdb -O zabbix -T template0 zabbix
 su postgres
 psql
 CREATE DATABASE zabbix;
