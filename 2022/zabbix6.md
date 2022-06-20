@@ -23,7 +23,7 @@ apt update
 apt install zabbix-server-pgsql zabbix-frontend-php php7.4-pgsql zabbix-nginx-conf zabbix-sql-scripts zabbix-agent jq sysstat -y
 apt install zabbix-server-pgsql zabbix-frontend-php php7.4-pgsql zabbix-apache-conf zabbix-sql-scripts zabbix-agent jq sysstat -y
 ```
-##### 3. Создание базы и пользователя с паролем:
+##### 3. Создание базы и пользователя с паролем (по док-и из template0):
 ```
 su postgres
 psql
