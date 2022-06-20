@@ -54,6 +54,7 @@ DBUser=zabbix
 DBPassword=12345
 DBPort=5432
 ```
+```
 systemctl stop zabbix-server
 systemctl start zabbix-server
 systemctl enable zabbix-server
