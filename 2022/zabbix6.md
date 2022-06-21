@@ -81,8 +81,8 @@ vim /etc/nginx/conf.d/zabbix.conf
         listen          80;
         server_name     192.168.0.17;
 vim  /etc/httpd/conf.d/zabbix.conf
-? или
-vim /etc/zabbix/php-fpm.conf
+или
+vim /etc/php/7.4/apache2/php.ini
 php_value[date.timezone] = Europe/Moscow
 
 systemctl restart nginx
@@ -97,12 +97,19 @@ Default language=RU
 login=Admin
 password=zabbix
 ```
-##### Агент
+##### 8. Linux-Agent2
 ```
 apt-get purge --auto-remove zabbix-agent
 wget https://repo.zabbix.com/zabbix/6.1/debian/pool/main/z/zabbix/zabbix-agent2_6.2.0~alpha2-1%2Bdebian11_amd64.deb
 dpkg -i zabbix-agent2_6.2.0~alpha2-1+debian11_amd64.deb
+systemctl status zabbix-agent2
+vim /etc/zabbix/zabbix_agent2.conf
+Server=192.168.5.161
+ServerActive=192.168.5.161
+Hostname=localhost
 
+
+systemctl restart zabbix-agent2
 ```
 
 
