@@ -76,7 +76,7 @@ dpkg -l | grep zabbix
 ```
 ##### 6. Настроим Nginx, если установлено: раскомментируем и настроим две верхние позиции- нет таких директорий:
 ```
-vim /etc/zabbix/nginx.conf
+vim /etc/zabbix/nginx.conf !
 vim /etc/nginx/conf.d/zabbix.conf
         listen          80;
         server_name     192.168.0.17;
@@ -84,6 +84,10 @@ vim  /etc/httpd/conf.d/zabbix.conf
 ? или
 vim /etc/zabbix/php-fpm.conf
 php_value[date.timezone] = Europe/Moscow
+
+systemctl restart nginx
+systemctl restart zabbix-server zabbix-agent nginx php7.2-fpm
+systemctl enable zabbix-server zabbix-agent nginx php7.2-fpm
 ```
 
 ##### 7. Настройка через web-интерфейс:
