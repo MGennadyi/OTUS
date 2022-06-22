@@ -109,11 +109,13 @@ ServerActive=192.168.5.161
 Hostname=localhost
 systemctl restart zabbix-agent2
 ```
+##### 9. MAMONSU
+```
+wget https://repo.postgrespro.ru/mamonsu/debian/pool/main/m/mamonsu/mamonsu_3.4.0-1.bullseye_all.deb
 
 
 
-
-
+```
 
 
 
