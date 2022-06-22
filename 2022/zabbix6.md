@@ -119,7 +119,14 @@ CREATE DATABASE mamonsu_database OWNER mamonsu_user;
 
 vim /etc/mamomsu/agent.conf
 ```
+##### 10. PostgreSQL плагин для Zabbix Agent 2
+```
+CREATE USER zbx_monitor WITH PASSWORD '12345' INHERIT;
+GRANT EXECUTE ON FUNCTION pg_catalog.pg_ls_dir(text) TO zbx_monitor;
+GRANT EXECUTE ON FUNCTION pg_catalog.pg_stat_file(text) TO zbx_monitor;
 
+
+```
 
 
 
