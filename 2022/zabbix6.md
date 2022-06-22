@@ -1,4 +1,4 @@
-# ZABBIX 6.1 на POSTGRESQL 14.
+# ZABBIX 6.2 на POSTGRESQL 14.
 
 ###### 0. Правим $PATH
 ```
