@@ -100,15 +100,13 @@ password=zabbix
 ##### 8. Linux-Agent2
 ```
 apt-get purge --auto-remove zabbix-agent
-wget https://repo.zabbix.com/zabbix/6.1/debian/pool/main/z/zabbix/zabbix-agent2_6.2.0~alpha2-1%2Bdebian11_amd64.deb
-dpkg -i zabbix-agent2_6.2.0~alpha2-1+debian11_amd64.deb
+wget https://repo.zabbix.com/zabbix/6.0/debian/pool/main/z/zabbix/zabbix-agent2_6.0.5-1%2Bdebian11_amd64.deb
+dpkg -i zabbix-agent2_6.0.5-1+debian11_amd64.deb
 systemctl status zabbix-agent2
 vim /etc/zabbix/zabbix_agent2.conf
 Server=192.168.5.161
 ServerActive=192.168.5.161
 Hostname=localhost
-
-
 systemctl restart zabbix-agent2
 ```
 
