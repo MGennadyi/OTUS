@@ -113,9 +113,11 @@ systemctl restart zabbix-agent2
 ```
 wget https://repo.postgrespro.ru/mamonsu/debian/pool/main/m/mamonsu/mamonsu_3.4.0-1.bullseye_all.deb
 dpkg -i mamonsu_3.4.0-1.bullseye_all.deb
-CREATE USER mamonsu_user WITH PASSWORD '12345';
+mamonsu bootstrap
+CREATE USER mamonsu_user WITH PASSWORD 'mamonsu';
 CREATE DATABASE mamonsu_database OWNER mamonsu_user;
 
+vim /etc/mamomsu/agent.conf
 ```
 
 
