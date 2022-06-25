@@ -15,6 +15,7 @@ sudo apt-get install gnupg1 gnupg2 -y
 sudo wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
 sudo apt update
 sudo apt-get install postgresql-14 -y
+pg_isready
 systemctl status postgresql
 psql -V
 locale -a | grep ru
