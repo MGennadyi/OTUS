@@ -1,1 +1,10 @@
+# pg_basebackup+PATRONI
+
+
+
+
+
+
+
+
 
