@@ -1,16 +1,16 @@
 # pg_basebackup+PATRONI
-###### Состав: lider=pp_pg_1 Sync Standby=pp_pg_2 
+###### Состав: lider=pp_pg_1 Sync Standby=pp_pg_2. Бэкап штатными средствами.
 ```
 
 
 ```
-###### Создание полного бекапа:
+###### 1. Создание полного бекапа:
 ```
 # Не будем дожидаться заполнения журнала, 
 pg_basebackup --checkpoint=fast -P -Xstream -z -Ft -h 10.128.0.51 -p15432 -U repl -D /mnt/fastceph/full
-# Смотрим каталог архива
+# Смотрим содержимое каталог архива, после выполнения:
 ls -la /mnt/fastceph/full
-# Ответ:
+# Видим 2 файла:
 base.tar.gz
 pg_wal.tar.gz
 ```
