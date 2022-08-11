@@ -21,7 +21,7 @@ systemctl stop patroni
 systemctl status patroni
 # 2. На всех нодах удалаяем (лучше перемещаем) директорию main:
 rm -rf /var/lib/postgresql/14/main
-# 3. азархивируем base.tar.gz в каталог main:
+# 3. Разархивируем base.tar.gz в каталог main:
 tar -xzf base.tar.gz -C /var/lib/postgresql/14/main
 # 4. Проверим, что владелец в main является postgresql:
 ls -la
