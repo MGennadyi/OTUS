@@ -14,14 +14,17 @@ ls -la /mnt/fastceph/full
 base.tar.gz
 pg_wal.tar.gz
 ```
-###### Восстановление из архива:
+###### 2. Восстановление из архива. Для этого:
 ```
-# На всех нодах останавливаем patroni:
+# 1. На всех нодах останавливаем patroni:
 systemctl stop patroni
 systemctl status patroni
-# На всех нодах удалаяем (лучше перемещаем) main:
+# На всех нодах удалаяем (лучше перемещаем) директорию main:
 rm -rf /var/lib/postgresql/14/main
+# Разархивируем base.tar.gz в каталог main:
 tar -xzf base.tar.gz -C /var/lib/postgresql/14/main
+# Проверим, что владелец в main является postgresql:
+ls -la
 # На лидере распаковка pg_wal:
 tar -xzf pg_wal.tar.gz -C /var/lib/postgresql/14/main/pg_wal
 # Удаление кластера patroni:
