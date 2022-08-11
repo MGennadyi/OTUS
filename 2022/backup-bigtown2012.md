@@ -19,17 +19,17 @@ pg_wal.tar.gz
 # 1. На всех нодах останавливаем patroni:
 systemctl stop patroni
 systemctl status patroni
-# На всех нодах удалаяем (лучше перемещаем) директорию main:
+# 2. На всех нодах удалаяем (лучше перемещаем) директорию main:
 rm -rf /var/lib/postgresql/14/main
-# Разархивируем base.tar.gz в каталог main:
+# 3. азархивируем base.tar.gz в каталог main:
 tar -xzf base.tar.gz -C /var/lib/postgresql/14/main
-# Проверим, что владелец в main является postgresql:
+# 4. Проверим, что владелец в main является postgresql:
 ls -la
-# На лидере распаковка pg_wal:
+# 5. На лидере распаковка pg_wal:
 tar -xzf pg_wal.tar.gz -C /var/lib/postgresql/14/main/pg_wal
-# Удаление кластера patroni:
+# 6. Удаление кластера patroni:
 patronictl -c /etc/patroni.tml remove pg-ha-cluster
-# Ввести: Yes I am aware
+# 7.Ввести: Yes I am aware
 systemctl start patroni
 ```
 ```
