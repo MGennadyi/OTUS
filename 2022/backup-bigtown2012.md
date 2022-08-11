@@ -25,12 +25,18 @@ rm -rf /var/lib/postgresql/14/main/*
 tar -xzf base.tar.gz -C /var/lib/postgresql/14/main
 # 4. Проверим, что владелец в main является postgresql:
 ls -la
-# 5. На лидере распаковка pg_wal:
+# 5. Разархивируем архив на лидере pg_wal в main/pg_wal:
 tar -xzf pg_wal.tar.gz -C /var/lib/postgresql/14/main/pg_wal
-# 6. Удаление кластера patroni:
+```
+###### Удаляем patromi
+```
+# 1. Для васстановления postgresql это уже достаточно, но для восстановления patroni его надо сначала удалить:
 patronictl -c /etc/patroni.tml remove pg-ha-cluster
-# 7.Ввести: Yes I am aware
+# 7.Ввести название кластера patroni: pg-ha-cluster
+# Ввести фразу: Yes I am aware
+# Должен заработать после старта:
 systemctl start patroni
+# т.о восстановили лидера, переходим к slave.
 ```
 ```
 # На реплике
