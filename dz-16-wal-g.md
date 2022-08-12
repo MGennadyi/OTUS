@@ -60,6 +60,10 @@ cat ~/14/main/postgresql.auto.conf
 pg_ctlcluster 14 main stop
 pg_ctlcluster 14 main start
 ```
+# Включаем показ тайминга выполнения команд:
+```
+\timing
+```
 ###### 7. Создадим тестовую базу данных с данными:
 ```
 psql -c "CREATE DATABASE otus;"
