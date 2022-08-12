@@ -89,6 +89,7 @@ archive_command='wal-g wal-push "%p" >> /var/lib/postgresql/14/main/log/archive_
 archive_timeout=60
 restore_command='wal-g wal-fetch "%f" "%p" >> /var/lib/postgresql/14/main/log/restore_command.log 2>&1'
 ```
+```
 pg_ctlcluster 14 main stop
 pg_ctlcluster 14 main start
 ```
