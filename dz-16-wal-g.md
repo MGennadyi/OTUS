@@ -40,9 +40,11 @@ su postgres
 mkdir /var/lib/postgresql/14/main/log
 ls -la /var/lib/postgresql/14/main/log
 ```
-##### 5. Под postgres создать скрытый конфиг для wal-g подключение через linux-socket:
+##### 5. Из-под postgres создать скрытый конфиг wal-g; подключение через linux-socket:
 ```
+# Бекапы не делаются из-под root, поэтому:
 su postgres
+vim ~/.walg.json
 vim /var/lib/postgresql/.walg.json
 {
     "WALG_FILE_PREFIX": "/home/backups",
