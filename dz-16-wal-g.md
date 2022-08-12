@@ -8,6 +8,18 @@ sudo apt update
 apt install postgresql-14 -y
 pg_isready
 ```
+```
+vim /etc/hosts
+192.168.5.162 etcd1.kolomna.centr.oe	etcd1
+192.168.5.163 etcd2.kolomna.centr.oe	etcd2
+192.168.5.164 etcd3.kolomna.centr.oe	etcd3
+192.168.5.165 pg1.kolomna.centr.oe	pg1
+192.168.5.166 pg2.kolomna.centr.oe	pg2
+192.168.5.167 pg3.kolomna.centr.oe	pg3
+192.168.5.168 haproxy1.kolomna.centr.oe	haproxy1
+192.168.5.169 haproxy2.kolomna.centr.oe	haproxy2
+192.168.5.180 keepalived.kolomna.centr.oe	keepalived
+```
 ###### 2. Установка WAL-G
 ```
 wget https://github.com/wal-g/wal-g/releases/download/v1.1.2-rc/wal-g-pg-ubuntu-20.04-amd64.tar.gz
