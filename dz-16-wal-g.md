@@ -78,9 +78,18 @@ echo "archive_mode=on" >> /var/lib/postgresql/14/main/postgresql.auto.conf
 echo "archive_command='wal-g wal-push \"%p\" >> /var/lib/postgresql/14/main/log/archive_command.log 2>&1' " >> /var/lib/postgresql/14/main/postgresql.auto.conf 
 echo "archive_timeout=60" >> /var/lib/postgresql/14/main/postgresql.auto.conf 
 echo "restore_command='wal-g wal-fetch \"%f\" \"%p\" >> /var/lib/postgresql/14/main/log/restore_command.log 2>&1' " >> /var/lib/postgresql/14/main/postgresql.auto.conf
-
+```
+```
 # Смотрим, что все записалось:
+```
 cat ~/14/main/postgresql.auto.conf
+
+wal_level=replica
+archive_mode=on
+archive_command='wal-g wal-push "%p" >> /var/lib/postgresql/14/main/log/archive_command.log 2>&1'
+archive_timeout=60
+restore_command='wal-g wal-fetch "%f" "%p" >> /var/lib/postgresql/14/main/log/restore_command.log 2>&1'
+```
 pg_ctlcluster 14 main stop
 pg_ctlcluster 14 main start
 ```
