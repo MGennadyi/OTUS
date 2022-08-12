@@ -34,7 +34,7 @@ drwxr-xr-x 10 root     root     4096 июн 21 17:19 ..
 rm -rf /home/backups && sudo mkdir /home/backups && sudo chmod -R 777 /home/backups
 chown -R postgres /home/backups
 ```
-##### 4. Создать директорию для логов:
+##### 4. Создать директорию для логов WAL-G:
 ```
 su postgres
 mkdir /var/lib/postgresql/14/main/log
@@ -42,9 +42,10 @@ ls -la /var/lib/postgresql/14/main/log
 ```
 ##### 5. Из-под postgres создать скрытый конфиг wal-g; подключение через linux-socket:
 ```
-# Бекапы не делаются из-под root, поэтому:
+# Бекапы не делаются из-под root, поэтому в домашнем каталоге должен быть:
 su postgres
 vim ~/.walg.json
+# или
 vim /var/lib/postgresql/.walg.json
 {
     "WALG_FILE_PREFIX": "/home/backups",
@@ -69,7 +70,7 @@ drwx------  4 postgres postgres 4096 июн 29 13:53 14
 -rw-------  1 postgres postgres 1308 авг 12 12:58 .viminfo
 -rw-r--r--  1 postgres postgres  218 авг 12 12:58 .walg.json
 ```
-###### DESC .walg.json: каталог для бекапов; сжатие=brotli; delta=5; подключение через linux-socket;
+###### DESC .walg.json: каталог для бекапов; сжатие=brotli; delta=5; подключение через linux-socket порт 5432;
 ###### 6. Правим  postgresql.conf через auto.conf, все команды разом:
 ```
 echo "wal_level=replica" >> /var/lib/postgresql/14/main/postgresql.auto.conf
