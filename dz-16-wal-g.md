@@ -38,7 +38,7 @@ chown -R postgres /home/backups
 ```
 su postgres
 mkdir /var/lib/postgresql/14/main/log
-ls -l /var/lib/postgresql/14/main/log
+ls -la /var/lib/postgresql/14/main/log
 ```
 ##### 5. Под postgres создать скрытый конфиг для wal-g подключение через linux-socket:
 ```
@@ -49,13 +49,23 @@ vim /var/lib/postgresql/.walg.json
 
     "WALG_COMPRESSION_METHOD": "brotli",
 
-    "WALG_DELTA_MAX_STEPS": "5",
+    "WALG_DELTA_MAX_STEPS": "6",
 
     "PGDATA": "/var/lib/postgresql/14/main",
 
     "PGHOST": "/var/run/postgresql/.s.PGSQL.5432"
 }
 ls -la /var/lib/postgresql/
+```
+```
+# Ответ:
+drwxr-xr-x  3 postgres postgres 4096 авг 12 12:58 .
+drwxr-xr-x 41 root     root     4096 июн 29 11:23 ..
+drwx------  4 postgres postgres 4096 июн 29 13:53 14
+-rw-------  1 postgres postgres  135 июл  1 09:43 .bash_history
+-rw-------  1 postgres postgres    6 июн 30 15:30 .psql_history
+-rw-------  1 postgres postgres 1308 авг 12 12:58 .viminfo
+-rw-r--r--  1 postgres postgres  218 авг 12 12:58 .walg.json
 ```
 ###### DESC .walg.json: каталог для бекапов; сжатие=brotli; delta=5; подключение через linux-socket;
 ###### 6. Правим  postgresql.conf через auto.conf, все команды разом:
