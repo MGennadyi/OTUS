@@ -46,8 +46,12 @@ systemctl start patroni
 ```
 systemctl status patroni
 ```
+# Восстановление PATRONI на PITR Point-in-Time Recovery:
+###### На всех нодах останвливаем Patroni и очищаем каталоги с БД:
+```
+systemctl stop patroni
 
-
+```
 
 
 
