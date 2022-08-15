@@ -38,11 +38,11 @@ patronictl -c /etc/patroni.tml remove pg-ha-cluster
 systemctl start patroni
 # т.о восстановили лидера, переходим к slave.
 ```
-# На реплике
+##### На реплике
 ```
 systemctl start patroni
 ```
-# На master 
+##### На master 
 ```
 systemctl status patroni
 ```
