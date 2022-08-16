@@ -111,6 +111,8 @@ pg_ctlcluster 14 main start
 sudo systemctl stop postgresql@14-main
 sudo systemctl start postgresql@14-main
 # Однако, управление через PATRONI, от сюда и 
+systemctl stop patroni
+systemctl start patroni
 ```
 ###### 7. Создадим тестовую базу данных с данными:
 ```
