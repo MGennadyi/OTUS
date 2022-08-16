@@ -82,7 +82,7 @@ drwx------  4 postgres postgres 4096 июн 29 13:53 14
 -rw-------  1 postgres postgres 1308 авг 12 12:58 .viminfo
 -rw-r--r--  1 postgres postgres  218 авг 12 12:58 .walg.json
 ```
-###### DESC .walg.json: каталог для бекапов; сжатие=brotli; delta=5; подключение через linux-socket порт 5432;
+###### DESC .walg.json: каталог для бекапов; сжатие=brotli; delta=6 хранимых копий; подключение через linux-socket порт 5432;
 ###### 6. Правим  postgresql.conf через auto.conf, все команды разом:
 ```
 echo "wal_level=replica" >> /var/lib/postgresql/14/main/postgresql.auto.conf
@@ -102,7 +102,10 @@ archive_timeout=60
 restore_command='wal-g wal-fetch "%f" "%p" >> /var/lib/postgresql/14/main/log/restore_command.log 2>&1'
 ```
 ```
+# Перезапуск не работает:
 pg_ctlcluster 14 main stop
+# Перезапуск работает:
+sudo systemctl stop postgresql@14-main
 pg_ctlcluster 14 main start
 ```
 ###### 7. Создадим тестовую базу данных с данными:
