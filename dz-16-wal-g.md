@@ -114,6 +114,16 @@ sudo systemctl start postgresql@14-main
 systemctl stop patroni
 systemctl start patroni
 ```
+###### На master node:
+```
+sudo -u postgres psql -h localhost
+select pg_switch_wal();
+# Ответ:
+--------------
+ 0/8000000
+(1 строка)
+
+```
 ###### 7. Создадим тестовую базу данных с данными:
 ```
 # Включаем показ тайминга выполнения команд:
