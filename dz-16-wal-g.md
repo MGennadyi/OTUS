@@ -47,7 +47,6 @@ ls -la /usr/local/bin/
 wal-g --version
 # Ответ:
 wal-g version v1.1.2-rc 6af461f 2021.11.26_14:09:59     PostgreSQL
-
 ```
 ##### 3. Создаем каталог для бекапов:
 ```
@@ -79,6 +78,10 @@ vim /var/lib/postgresql/.walg.json
     "PGHOST": "/var/run/postgresql/.s.PGSQL.5432"
 }
 ls -la /var/lib/postgresql/
+```
+```
+apt install net-tools -y
+netstat -nlp | grep 5432
 ```
 ```
 # Ответ:
