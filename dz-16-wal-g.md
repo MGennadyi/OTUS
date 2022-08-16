@@ -42,6 +42,13 @@ ls -la /usr/local/bin/
 # Ответ:
 -rwxr-xr-x  1 postgres root 41443344 ноя 26  2021 wal-g
 ```
+###### Проверка версии wal-g:
+```
+wal-g --version
+# Ответ:
+wal-g version v1.1.2-rc 6af461f 2021.11.26_14:09:59     PostgreSQL
+
+```
 ##### 3. Создаем каталог для бекапов:
 ```
 rm -rf /home/backups && sudo mkdir /home/backups && sudo chmod -R 777 /home/backups
