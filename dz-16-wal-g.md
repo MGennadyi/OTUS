@@ -42,18 +42,6 @@ ls -la /usr/local/bin/
 # Ответ:
 -rwxr-xr-x  1 postgres root 41443344 ноя 26  2021 wal-g
 ```
-```
-# Ответ: 
-drwxr-xr-x  2 root     root     4096 авг 12 12:47 .
-drwxr-xr-x 10 root     root     4096 июн 21 17:19 ..
--rwxr-xr-x  1 root     root      215 июн 29 11:48 patroni
--rwxr-xr-x  1 root     root      218 июн 29 11:48 patroni_aws
--rwxr-xr-x  1 root     root      208 июн 29 11:48 patronictl
--rwxr-xr-x  1 root     root      222 июн 29 11:48 patroni_raft_controller
--rwxr-xr-x  1 root     root      227 июн 29 11:48 patroni_wale_restore
--rwxr-xr-x  1 postgres root 41443344 ноя 26  2021 wal-g
--rwxr-xr-x  1 root     root      124 июн 29 11:48 ydiff
-```
 ##### 3. Создаем каталог для бекапов:
 ```
 rm -rf /home/backups && sudo mkdir /home/backups && sudo chmod -R 777 /home/backups
