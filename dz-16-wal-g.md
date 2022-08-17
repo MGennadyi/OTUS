@@ -3,10 +3,16 @@
 ###### 1. Установка Postgresql-14
 ```
 sudo sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list'
+sudo sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list'
+wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
 wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
 sudo apt update
+apt install gnupg2 -y
+sudo apt-cache search postgresql | grep postgresql
 apt install postgresql-14 -y
 pg_isready
+# Ответ:
+/var/run/postgresql:5432 - accepting connections
 ```
 ```
 vim /etc/hosts
