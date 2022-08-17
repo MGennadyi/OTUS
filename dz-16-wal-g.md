@@ -24,8 +24,11 @@ vim /etc/hosts
 10.128.0.62 etcd2.ru-central1.internal etcd2
 10.128.0.63 etcd2.ru-central1.internal etcd3
 10.128.0.64 patroni1.ru-central1.internal patroni1
-10.128.0.66 patroni2.ru-central1.internal patroni2
-10.128.0.64 patroni3.ru-central1.internal patroni3
+10.128.0.65 patroni2.ru-central1.internal patroni2
+10.128.0.66 patroni3.ru-central1.internal patroni3
+10.128.0.67 haproxy1.ru-central1.internal	haproxy1
+10.128.0.68 haproxy2.ru-central1.internal	haproxy2
+10.128.0.69 keepalived.ru-central1.internal	keepalived
 ```
 ###### 2. Установка WAL-G
 ```
