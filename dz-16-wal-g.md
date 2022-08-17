@@ -19,6 +19,13 @@ vim /etc/hosts
 192.168.5.168 haproxy1.kolomna.centr.oe	haproxy1
 192.168.5.169 haproxy2.kolomna.centr.oe	haproxy2
 192.168.5.180 keepalived.kolomna.centr.oe	keepalived
+#
+10.128.0.61 etcd1.ru-central1.internal etcd1
+10.128.0.62 etcd2.ru-central1.internal etcd2
+10.128.0.63 etcd2.ru-central1.internal etcd3
+10.128.0.64 patroni1.ru-central1.internal patroni1
+10.128.0.66 patroni2.ru-central1.internal patroni2
+10.128.0.64 patroni3.ru-central1.internal patroni3
 ```
 ###### 2. Установка WAL-G
 ```
