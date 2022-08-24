@@ -1,13 +1,14 @@
 # pg_basebackup+PATRONI
 ###### Состав: lider=pp_pg_1 Sync Standby=pp_pg_2. Бэкап штатными средствами.
 ```
-
-
+sudo useradd replicator -p rep-pass_321
+mkdir /home/backup
+sudo chown -R replicator /home/backup
 ```
 ###### 1. Создание полного бекапа:
 ```
 # Не будем дожидаться заполнения журнала, 
-pg_basebackup --checkpoint=fast -P -Xstream -z -Ft -h 10.128.0.51 -p15432 -U repl -D /mnt/fastceph/full
+pg_basebackup --checkpoint=fast -P -Xstream -z -Ft -h 192.168.5.165 -p 5432 -U replicator -D /home/backup
 # Смотрим содержимое каталог архива, после выполнения:
 ls -la /mnt/fastceph/full
 # Видим 2 файла:
