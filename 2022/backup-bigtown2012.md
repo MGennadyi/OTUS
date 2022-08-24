@@ -11,9 +11,12 @@ sudo chown -R replicator /home/backup
 pg_basebackup --checkpoint=fast -P -Xstream -z -Ft -h 192.168.5.165 -p 5432 -U replicator -D /home/backup
 # Смотрим содержимое каталог архива, после выполнения:
 ls -la /home/backup
-# Видим 2 файла:
-base.tar.gz
-pg_wal.tar.gz
+# Ответ:
+drwxr-xr-x 2 replicator root    4096 авг 24 17:21 .
+drwxr-xr-x 4 root       root    4096 авг 24 17:13 ..
+-rw------- 1 replicator root  181459 авг 24 17:21 backup_manifest
+-rw------- 1 replicator root 4535002 авг 24 17:21 base.tar.gz
+-rw------- 1 replicator root   17073 авг 24 17:21 pg_wal.tar.gz
 ```
 ###### 2. Восстановление из архива. Для этого:
 ```
