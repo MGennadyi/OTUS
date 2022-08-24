@@ -10,7 +10,7 @@ sudo chown -R replicator /home/backup
 # Не будем дожидаться заполнения журнала, 
 pg_basebackup --checkpoint=fast -P -Xstream -z -Ft -h 192.168.5.165 -p 5432 -U replicator -D /home/backup
 # Смотрим содержимое каталог архива, после выполнения:
-ls -la /mnt/fastceph/full
+ls -la /home/backup
 # Видим 2 файла:
 base.tar.gz
 pg_wal.tar.gz
