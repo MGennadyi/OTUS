@@ -54,9 +54,9 @@ sudo patronictl -c /etc/patroni.yml list
 | pg1    | 192.168.5.165 | Leader | running |  2 |           |
 +--------+---------------+--------+---------+----+-----------+
 # т.о восстановили лидера. 
-# Переходим к slave pg2:
+# На pg2:
 systemctl start patroni
-# На pg1
+# List pg1:
 sudo patronictl -c /etc/patroni.yml list
 +--------+---------------+---------+---------+----+-----------+
 | Member | Host          | Role    | State   | TL | Lag in MB |
@@ -66,7 +66,7 @@ sudo patronictl -c /etc/patroni.yml list
 +--------+---------------+---------+---------+----+-----------+
 # На pg3:
 systemctl start patroni
-# На pg1:
+# List pg1:
 sudo patronictl -c /etc/patroni.yml list
 +--------+---------------+---------+---------+----+-----------+
 | Member | Host          | Role    | State   | TL | Lag in MB |
@@ -76,14 +76,7 @@ sudo patronictl -c /etc/patroni.yml list
 | pg3    | 192.168.5.167 | Replica | stopped |    |   unknown |
 +--------+---------------+---------+---------+----+-----------+
 ```
-##### На реплике
-```
-systemctl start patroni
-```
-##### На master 
-```
-systemctl status patroni
-```
+
 # Восстановление PATRONI на PITR Point-in-Time Recovery:
 ###### На всех нодах останвливаем Patroni и очищаем каталоги с БД:
 ```
