@@ -78,14 +78,16 @@ sudo patronictl -c /etc/patroni.yml list
 ```
 
 # Восстановление PATRONI на PITR Point-in-Time Recovery:
-###### На всех нодах останвливаем Patroni и очищаем каталоги с БД:
+###### Повторение предыдущего: На всех нодах:
 ```
 systemctl stop patroni
-
+rm -rf /var/lib/postgresql/14/main/*
+```
+###### pg_wal не распаковываем
 ```
 
 
 
-
+```
 
 
