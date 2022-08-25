@@ -1,4 +1,4 @@
-# pg_basebackup+PATRONI
+# PATRONI+pg_basebackup
 ###### Состав: lider=pp_pg_1 Sync Standby=pp_pg_2. Бэкап штатными средствами.
 ```
 sudo useradd replicator -p rep-pass_321
