@@ -7,7 +7,7 @@ sudo chown -R replicator /home/backup
 ```
 ###### 1. Создание полного бекапа:
 ```
-# Не будем дожидаться заполнения журнала, 
+# Не будем дожидаться заполнения журнала:
 pg_basebackup --checkpoint=fast -P -Xstream -z -Ft -h 192.168.5.165 -p 5432 -U replicator -D /home/backup
 # Смотрим содержимое каталог архива, после выполнения:
 ls -la /home/backup
@@ -18,29 +18,63 @@ drwxr-xr-x 4 root       root    4096 авг 24 17:13 ..
 -rw------- 1 replicator root 4535002 авг 24 17:21 base.tar.gz
 -rw------- 1 replicator root   17073 авг 24 17:21 pg_wal.tar.gz
 ```
-###### 2. Восстановление из архива. Для этого:
+###### 2. Восстановление:
 ```
-# 1. На всех нодах останавливаем patroni:
+# 2.1. На всех нодах останновить patroni:
+systemctl status patroni
 systemctl stop patroni
 systemctl status patroni
-# 2. На всех нодах удалаяем (лучше перемещаем) содержимое директорию main:
+# 2.2 На всех нодах удалаяем (лучше перемещаем) содержимое директорию main:
 rm -rf /var/lib/postgresql/14/main/*
-# 3. Разархивируем архив base.tar.gz в каталог main:
+# 3.3. Разархивируем архив base.tar.gz в каталог main:
 tar -xzf base.tar.gz -C /var/lib/postgresql/14/main
-# 4. Проверим, что владелец в main является postgresql:
+#  Проверим, что владелец в main является postgresql:
 ls -la
-# 5. Разархивируем архив на лидере pg_wal в main/pg_wal:
+# 3.4 Разархивируем архив на лидере pg_wal в main/pg_wal:
 tar -xzf pg_wal.tar.gz -C /var/lib/postgresql/14/main/pg_wal
 ```
 ###### Удаляем patromi
 ```
 # 1. Для васстановления postgresql это уже достаточно, но для восстановления patroni его надо сначала удалить:
-patronictl -c /etc/patroni.tml remove pg-ha-cluster
-# 7.Ввести название кластера patroni: pg-ha-cluster
-# Ввести фразу: Yes I am aware
-# Должен заработать после старта:
+patronictl -c /etc/patroni.yml remove patroni
+# Ответ:
+Please confirm the cluster name to remove:
+patroni
+# Ответ:
+You are about to remove all information in DCS for patroni, please type: "Yes I am aware":
+Yes I am aware
+# Ответ: ничего
+# Стартуем:
 systemctl start patroni
-# т.о восстановили лидера, переходим к slave.
+sudo patronictl -c /etc/patroni.yml list
+# Ответ:
++--------+---------------+--------+---------+----+-----------+
+| Member | Host          | Role   | State   | TL | Lag in MB |
++ Cluster: patroni (7135394571389649652) ---+----+-----------+
+| pg1    | 192.168.5.165 | Leader | running |  2 |           |
++--------+---------------+--------+---------+----+-----------+
+# т.о восстановили лидера. 
+# Переходим к slave pg2:
+systemctl start patroni
+# На pg1
+sudo patronictl -c /etc/patroni.yml list
++--------+---------------+---------+---------+----+-----------+
+| Member | Host          | Role    | State   | TL | Lag in MB |
++ Cluster: patroni (7135394571389649652) ----+----+-----------+
+| pg1    | 192.168.5.165 | Leader  | running |  2 |           |
+| pg2    | 192.168.5.166 | Replica | stopped |    |   unknown |
++--------+---------------+---------+---------+----+-----------+
+# На pg3:
+systemctl start patroni
+# На pg1:
+sudo patronictl -c /etc/patroni.yml list
++--------+---------------+---------+---------+----+-----------+
+| Member | Host          | Role    | State   | TL | Lag in MB |
++ Cluster: patroni (7135394571389649652) ----+----+-----------+
+| pg1    | 192.168.5.165 | Leader  | running |  2 |           |
+| pg2    | 192.168.5.166 | Replica | running |  2 |         0 |
+| pg3    | 192.168.5.167 | Replica | stopped |    |   unknown |
++--------+---------------+---------+---------+----+-----------+
 ```
 ##### На реплике
 ```
