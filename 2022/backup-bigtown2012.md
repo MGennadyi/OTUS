@@ -33,7 +33,7 @@ ls -la
 # 3.4 Разархивируем архив на лидере pg_wal в main/pg_wal:
 tar -xzf pg_wal.tar.gz -C /var/lib/postgresql/14/main/pg_wal
 ```
-###### Удаляем patromi
+###### Удаляем patroni
 ```
 # 1. Для васстановления postgresql это уже достаточно, но для восстановления patroni его надо сначала удалить:
 patronictl -c /etc/patroni.yml remove patroni
