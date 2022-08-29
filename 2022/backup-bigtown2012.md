@@ -80,12 +80,16 @@ sudo patronictl -c /etc/patroni.yml list
 # Восстановление PATRONI на PITR Point-in-Time Recovery:
 ###### Повторение предыдущего: На всех нодах:
 ```
+pg_basebackup --checkpoint=fast -P -Xstream -z -Ft -h 192.168.5.165 -p 5432 -U replicator -D /home/backup
 systemctl stop patroni
 rm -rf /var/lib/postgresql/14/main/*
+# . Разархивируем только архив base.tar.gz в каталог main:
+tar -xzf base.tar.gz -C /var/lib/postgresql/14/main
 ```
 ###### pg_wal не распаковываем
 ```
-
+Что бы patroni сохранял wal, именим конфиг:
+ 
 
 
 ```
