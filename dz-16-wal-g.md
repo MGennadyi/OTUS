@@ -127,6 +127,18 @@ postgres=# show unix_socket_directories;
 -------------------------
  .
 (1 row)
+sudo patronictl -c /etc/patroni.yml edit-config
+# Ответ:
+
+loop_wait: 10
+maximum_lag_on_failover: 1048576
+postgresql:
+  parameters: null
+  use_pg_rewind: true
+retry_timeout: 10
+ttl: 30
+pending restart
+
 ```
 ```
 Базовая настройка Patroni помещает файл SOCK UNIX в каталог данных Postgres. 
