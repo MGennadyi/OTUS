@@ -116,6 +116,7 @@ vim /var/lib/postgresql/.walg.json
     "PGPORT": "5432"
     
     "WALG_LOG_LEVEL": "DEVEL"
+    "unix_socket_directories": "/var/run/postgresql"
 }
 ls -la /var/lib/postgresql/
 ```
@@ -126,6 +127,7 @@ ls -la /var/lib/postgresql/
 Вы можете использовать следующую конфигурацию, чтобы дать указание посетителям сделать это:
  parameters:
     unix_socket_directories: "/var/run/postgresql"
+(I have: /var/run/postgresql directory owned by postgres:postgres)
 ```
 
 ```
