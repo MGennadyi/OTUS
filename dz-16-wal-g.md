@@ -121,6 +121,14 @@ vim /var/lib/postgresql/.walg.json
 ls -la /var/lib/postgresql/
 ```
 ```
+psql -h localhost
+postgres=# show unix_socket_directories;
+ unix_socket_directories
+-------------------------
+ .
+(1 row)
+```
+```
 Базовая настройка Patroni помещает файл SOCK UNIX в каталог данных Postgres. 
 Вот почему вы столкнулись с приведенной выше ошибкой. 
 Если вы настроите этот файл UNIX SOCK из каталога данных Postgres, все будет в порядке.
