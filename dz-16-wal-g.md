@@ -111,11 +111,11 @@ vim /var/lib/postgresql/.walg.json
 
     "PGDATA": "/var/lib/postgresql/14/main",
 
-    "PGHOST": "localhost"
+    "PGHOST": "localhost",
     
-    "PGPORT": "5432"
+    "PGPORT": "5432",
     
-    "WALG_LOG_LEVEL": "DEVEL"
+    "WALG_LOG_LEVEL": "DEVEL",
     "unix_socket_directories": "/var/run/postgresql"
 }
 ls -la /var/lib/postgresql/
