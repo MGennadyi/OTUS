@@ -96,6 +96,31 @@ vim /var/lib/postgresql/.walg.json
 }
 ls -la /var/lib/postgresql/
 ```
+#### 5.2 YANDEX Из-под postgres:
+```
+su postgres
+vim ~/.walg.json
+# или
+vim /var/lib/postgresql/.walg.json
+{
+    "WALG_FILE_PREFIX": "/home/backups",
+
+    "WALG_COMPRESSION_METHOD": "lz4",
+
+    "WALG_DELTA_MAX_STEPS": "6",
+
+    "PGDATA": "/var/lib/postgresql/14/main",
+
+    "PGHOST": "localhost"
+    
+    "PGPORT": "5432"
+    
+    "WALG_LOG_LEVEL": "DEVEL"
+}
+ls -la /var/lib/postgresql/
+```
+
+
 ```
 apt install net-tools -y
 netstat -nlp | grep 5432
