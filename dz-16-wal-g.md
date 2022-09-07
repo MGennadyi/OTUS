@@ -120,6 +120,7 @@ vim /var/lib/postgresql/.walg.json
 }
 ls -la /var/lib/postgresql/
 ```
+##### Просмотр расположения unix_socket:
 ```
 psql -h localhost
 postgres=# show unix_socket_directories;
