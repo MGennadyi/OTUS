@@ -116,7 +116,7 @@ vim /var/lib/postgresql/.walg.json
     "PGPORT": "5432",
     
     "WALG_LOG_LEVEL": "DEVEL",
-    "unix_socket_directories": "/var/run/postgresql"
+    "unix_socket_directories": "/var/lib/postgresql/14/main"
 }
 ls -la /var/lib/postgresql/
 ```
@@ -149,6 +149,7 @@ pending restart
  parameters:
     unix_socket_directories: "/var/run/postgresql"
 (I have: /var/run/postgresql directory owned by postgres:postgres)
+Я имею /var/lib/postgresql/14/main
 ```
 
 ```
