@@ -43,11 +43,10 @@ vim /etc/hosts
 wget https://github.com/wal-g/wal-g/releases/download/v1.1.2-rc/wal-g-pg-ubuntu-20.04-amd64.tar.gz
 tar -zxvf /home/mgb/wal-g-pg-ubuntu-20.04-amd64.tar.gz
 mv /home/mgb/wal-g-pg-ubuntu-20.04-amd64 /usr/local/bin/wal-g
-# v.2
+# v.2.0.1
 wget https://github.com/wal-g/wal-g/releases/download/v2.0.1/wal-g-pg-ubuntu-20.04-amd64.tar.gz
-tar -zxvf /home/mgb/
-
-
+tar -zxvf /home/mgb/wal-g-pg-ubuntu-20.04-amd64.tar.gz
+mv /home/mgb/wal-g-pg-ubuntu-20.04-amd64 /usr/local/bin/wal-g
 ls -la /usr/local/bin/
 # Ответ:
 drwxr-xr-x  2 root root     4096 авг 16 08:50 .
@@ -79,6 +78,10 @@ chown -R postgres /home/backups
 ##### 4. Создать директорию для логов WAL-G:
 ```
 su postgres
+# v.12
+mkdir /var/lib/postgresql/12/main/log
+ls -la /var/lib/postgresql/12/main/log
+# v.14
 mkdir /var/lib/postgresql/14/main/log
 ls -la /var/lib/postgresql/14/main/log
 ```
