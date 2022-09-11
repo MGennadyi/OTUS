@@ -39,9 +39,15 @@ vim /etc/hosts
 ```
 ###### 2. Установка WAL-G
 ```
+# v.1.1.2
 wget https://github.com/wal-g/wal-g/releases/download/v1.1.2-rc/wal-g-pg-ubuntu-20.04-amd64.tar.gz
 tar -zxvf /home/mgb/wal-g-pg-ubuntu-20.04-amd64.tar.gz
 mv /home/mgb/wal-g-pg-ubuntu-20.04-amd64 /usr/local/bin/wal-g
+# v.2
+wget https://github.com/wal-g/wal-g/releases/download/v2.0.1/wal-g-pg-ubuntu-20.04-amd64.tar.gz
+tar -zxvf /home/mgb/
+
+
 ls -la /usr/local/bin/
 # Ответ:
 drwxr-xr-x  2 root root     4096 авг 16 08:50 .
