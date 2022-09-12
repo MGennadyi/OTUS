@@ -69,6 +69,7 @@ ls -la /usr/local/bin/
 wal-g --version
 # Ответ:
 wal-g version v1.1.2-rc 6af461f 2021.11.26_14:09:59     PostgreSQL
+wal-g version v2.0.1    b7d53dd 2022.08.25_09:34:20     PostgreSQL
 ```
 ##### 3. Создаем каталог для бекапов:
 ```
