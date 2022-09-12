@@ -152,7 +152,7 @@ ttl: 30
 pending restart
 
 ```
-###### Правим конфиг: vim /etc/patroni.yml
+###### Правим конфиг: vim /etc/patroni.yml   ru.stackoverflow.com советует, применим относительно patroni:
 ```
 # В секции parameters:  
         wal_level=replica
@@ -161,7 +161,13 @@ pending restart
         archive_timeout=60
         restore_command='wal-g wal-fetch "%f" "%p"
 # В секции postgresql:
-  "unix_socket_directories": "/var/lib/postgresql/14/main"
+  unix_socket_directories: /var/lib/postgresql/14/main
+```
+```
+vim /var/lib/postgresql/14/main/postgresql.conf
+vim /var/lib/postgresql/14/main/postgresql.base.conf
+systemctl stop patroni
+systemctl start patroni
 ```
 ```
 Базовая настройка Patroni помещает файл SOCK UNIX в каталог данных Postgres. 
