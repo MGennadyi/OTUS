@@ -126,6 +126,7 @@ vim /var/lib/postgresql/.walg.json
     "PGPORT": "5432",
     
     "WALG_LOG_LEVEL": "DEVEL",
+    
     "unix_socket_directories": "/var/lib/postgresql/14/main"
 }
 ls -la /var/lib/postgresql/
@@ -150,6 +151,17 @@ retry_timeout: 10
 ttl: 30
 pending restart
 
+```
+###### Правим конфиг: vim /etc/patroni.yml
+```
+# В секции parameters:  
+        wal_level=replica
+        archive_mode=on
+        archive_command='wal-g wal-push "%p"
+        archive_timeout=60
+        restore_command='wal-g wal-fetch "%f" "%p"
+# В секции postgresql:
+  "unix_socket_directories": "/var/lib/postgresql/14/main"
 ```
 ```
 Базовая настройка Patroni помещает файл SOCK UNIX в каталог данных Postgres. 
