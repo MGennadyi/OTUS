@@ -125,20 +125,25 @@ vim /var/lib/postgresql/.walg.json
     
     "PGPORT": "5432",
     
-    "WALG_LOG_LEVEL": "DEVEL",
+    "WALG_LOG_LEVEL": "DEVEL"
     
-    "unix_socket_directories": "/var/lib/postgresql/14/main"
 }
+
 ls -la /var/lib/postgresql/
+# Будет ругаться, если указать:
+"unix_socket_directories": "/var/run/postgresql/"
 ```
 ##### Просмотр расположения unix_socket:
 ```
 psql -h localhost
 postgres=# show unix_socket_directories;
- unix_socket_directories
+# Ответ не верный, это по дефолту
+unix_socket_directories
 -------------------------
  .
 (1 row)
+# Ответ верный:
+
 sudo patronictl -c /etc/patroni.yml edit-config
 # Ответ:
 
