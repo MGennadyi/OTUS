@@ -140,7 +140,7 @@ unix_socket_directories
 -------------------------
  .
 (1 row)
-# Ответ верный:  /var/run/postgresql/   -!!!
+# Ответ верный:  /var/run/postgresql/   -!, если указан в группе parametrs в .yml
 
 sudo patronictl -c /etc/patroni.yml edit-config
 # Ответ:
