@@ -104,6 +104,7 @@ vim /var/lib/postgresql/.walg.json
 
     "PGHOST": "/var/run/postgresql/.s.PGSQL.5432"
 }
+
 ls -la /var/lib/postgresql/
 ```
 #### 5.2 YANDEX Из-под postgres:
