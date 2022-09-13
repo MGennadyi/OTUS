@@ -108,14 +108,17 @@ ls -la /var/lib/postgresql/
 ```
 #### 5.2 YANDEX Из-под postgres:
 ```
+# Аристов указ.доп.параметр расш.лог:    "WALG_LOG_LEVEL": "DEVEL"
+# Аристов изменил "PGHOST": "/var/run/postgresql/.s.PGSQL.5432" на "localhost"
+# Ругаться, если указать: "unix_socket_directories": "/var/run/postgresql/" , прописывается в конце .yml
+
 su postgres
 vim ~/.walg.json
-# или
-vim /var/lib/postgresql/.walg.json
+
 {
     "WALG_FILE_PREFIX": "/home/backups",
 
-    "WALG_COMPRESSION_METHOD": "lz4",
+    "WALG_COMPRESSION_METHOD": "brotli",
 
     "WALG_DELTA_MAX_STEPS": "6",
 
@@ -123,15 +126,9 @@ vim /var/lib/postgresql/.walg.json
 
     "PGHOST": "localhost",
     
-    "PGPORT": "5432",
-    
-    "WALG_LOG_LEVEL": "DEVEL"
+    "PGPORT": "5432"
     
 }
-
-ls -la /var/lib/postgresql/
-# Будет ругаться, если указать:
-"unix_socket_directories": "/var/run/postgresql/"
 ```
 ##### Просмотр расположения unix_socket:
 ```
