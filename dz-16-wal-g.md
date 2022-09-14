@@ -237,6 +237,7 @@ select pg_switch_wal();
  0/8000000
 (1 строка)
 select * from pg_stat_activity \gx
+# Ответ: длинная портянка
 ```
 ###### Проверка доступности через netcat gp3 gp4 по портам:
 ```
