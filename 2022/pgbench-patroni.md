@@ -9,8 +9,9 @@ psql -p 5432 -d otus -h 192.168.5.180 -U postgres
 show max_connections;
 # Ответ одинаков: 100
 ```
-###### Смотр параметров на PG1:
+###### Смотр и правка параметров конфига на PG1:
 ```
+# 
 sudo patronictl -c /etc/patroni.yml edit-config
 # Ответ:
 loop_wait: 10
@@ -21,6 +22,49 @@ postgresql:
 retry_timeout: 10
 ttl: 30
 ```
+###### Аристов: pinding restart
+```
+# Не поможет, если: 
+sudo - u postgres psql - h localhost
+alter system set max_connections=20;
+````
+###### Поможет:
+```
+# Убираем null
+  parameters:
+# Добавляем ниже 
+max_connections: 20
+```
+```
+# Рестатуем PATRONI:
+sudo patronictl -c /etc/patroni.yml list
+sudo patronictl -c /etc/patroni.yml restart patroni
+# Ответ:
+When should the restart take place (e.g. 2022-09-15T10:03)  [now]: enter - прямо сейчас
+Are you sure you want to restart members pg1, pg2, pg3? [y/N]: y - конечно!
+Restart if the PostgreSQL version is less than provided (e.g. 9.5.2)  []: enter - согоашаемся
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
