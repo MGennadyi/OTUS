@@ -28,12 +28,17 @@ ttl: 30
 sudo -u postgres psql -h localhost
 alter system set max_connections=20;
 ````
-###### Поможет:
+###### Может помочь:
 ```
 # Убираем null
   parameters:
 # Добавляем ниже 
-max_connections: 20
+max_connections: 15
+```
+```
+sudo -u postgres psql -h localhost
+show max_connections;
+# Ответ: 100 - не помогло.
 ```
 ```
 # Рестатуем PATRONI:
@@ -43,6 +48,11 @@ sudo patronictl -c /etc/patroni.yml restart patroni
 When should the restart take place (e.g. 2022-09-15T10:03)  [now]: enter - прямо сейчас
 Are you sure you want to restart members pg1, pg2, pg3? [y/N]: y - конечно!
 Restart if the PostgreSQL version is less than provided (e.g. 9.5.2)  []: enter - согоашаемся
+# Ответ:
+Success: restart on member pg3
+Success: restart on member pg2
+Success: restart on member pg1
+
 
 ```
 
