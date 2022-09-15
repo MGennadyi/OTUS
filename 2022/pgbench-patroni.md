@@ -3,7 +3,7 @@
 ###### Изначально postgres имеет параметр max_connections = 100
 ```
 # На лосальном хосте:
-sudo - u postgres psql - h localhost
+sudo -u postgres psql -h localhost
 # Через haproxy+keepalived:
 psql -p 5432 -d otus -h 192.168.5.180 -U postgres
 show max_connections;
@@ -24,8 +24,8 @@ ttl: 30
 ```
 ###### Аристов: pinding restart
 ```
-# Не поможет, если: 
-sudo - u postgres psql - h localhost
+# Не поможет, если:
+sudo -u postgres psql -h localhost
 alter system set max_connections=20;
 ````
 ###### Поможет:
