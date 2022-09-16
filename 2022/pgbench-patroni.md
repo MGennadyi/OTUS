@@ -52,11 +52,38 @@ Restart if the PostgreSQL version is less than provided (e.g. 9.5.2)  []: enter 
 Success: restart on member pg3
 Success: restart on member pg2
 Success: restart on member pg1
+```
+```
+# так:
+sudo patronictl -c /etc/patroni.yml edit-config
+shared_preload_libraries: pg_stat_statements
+sudo vim /etc/patroni.yml
+shared_preload_libraries: 'pg_stat_statements'
+sudo patronictl -c /etc/patroni.yml restart patroni
+sudo -u postgres psql -h localhost
+CREATE EXTENSION pg_stat_statements;
+````
+```
+# Плохо читается:
+SELECT * FROM pg_stat_statements ORDER BY total_exec_time DESC;
+# Смотрим поля в таблице и видим total_time заменено на total_exec_time:
+\d pg_stat_statements
+
+# запрос, показывающий долгих по времени выполнения:
+SELECT substring (query, 1, 50) AS short_query,
+              round (total_exec_time::numeric, 2) AS total_exec_time,
+              calls,
+              round (total_exec_time::numeric, 2) AS mean,
+              round ((100 * total_exec_time / sum(total_exec_time::numeric) OVER ())::numeric, 2) AS percentage_cpu
+FROM  pg_stat_statements
+ORDER BY total_exec_time DESC
+LIMIT 20;
+
+
+
 
 
 ```
-
-
 
 
 
