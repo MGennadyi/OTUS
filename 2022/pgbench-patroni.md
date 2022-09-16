@@ -79,6 +79,8 @@ FROM  pg_stat_statements
 ORDER BY total_exec_time DESC
 LIMIT 20;
 
+ \timing
+
 
 
 
