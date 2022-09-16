@@ -133,14 +133,16 @@ vim ~/.walg.json
 ```
 ##### Просмотр расположения unix_socket:
 ```
+sudo vim /etc/patroni.yml
+# В группе parametrs по дефолту:  unix_socket_directories: '.'
 psql -h localhost
 postgres=# show unix_socket_directories;
-# Ответ не верный, это по дефолту
+# Ответ:
 unix_socket_directories
 -------------------------
  .
 (1 row)
-# Ответ верный:  /var/run/postgresql/   -!, если указан в группе parametrs в .yml
+# Изменить на !!!:  unix_socket_directories: '/var/run/postgresql/'
 
 sudo patronictl -c /etc/patroni.yml edit-config
 # Ответ:
