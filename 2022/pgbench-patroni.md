@@ -26,14 +26,14 @@ ttl: 30
 ```
 # Не поможет, если:
 sudo -u postgres psql -h localhost
-alter system set max_connections=20;
+alter system set max_connections=25;
 ````
 ###### Может помочь:
 ```
 # Убираем null
   parameters:
 # Добавляем ниже 
-max_connections: 15
+max_connections: 25
 ```
 ```
 sudo -u postgres psql -h localhost
