@@ -30,15 +30,14 @@ alter system set max_connections=25;
 ````
 ###### Может помочь:
 ```
-# Убираем null
+sudo patronictl -c /etc/patroni.yml edit-config
+# Убираем null и Добавляем ниже:
   parameters:
-# Добавляем ниже 
-max_connections: 25
+    max_connections: 25
 ```
 ```
 sudo -u postgres psql -h localhost
 show max_connections;
-# Ответ: 100 - не помогло.
 ```
 ```
 # Рестатуем PATRONI:
@@ -53,6 +52,7 @@ Success: restart on member pg3
 Success: restart on member pg2
 Success: restart on member pg1
 ```
+###### Для анализа производительности под нагрузкой подключим pg_stat_statements :
 ```
 # так:
 sudo patronictl -c /etc/patroni.yml edit-config
@@ -61,6 +61,7 @@ sudo vim /etc/patroni.yml
 shared_preload_libraries: 'pg_stat_statements'
 sudo patronictl -c /etc/patroni.yml restart patroni
 sudo -u postgres psql -h localhost
+ \timing
 CREATE EXTENSION pg_stat_statements;
 ````
 ```
@@ -78,15 +79,13 @@ SELECT substring (query, 1, 50) AS short_query,
 FROM  pg_stat_statements
 ORDER BY total_exec_time DESC
 LIMIT 20;
-
- \timing
-
+```
+```
 
 
 
 
 ```
-
 
 
 
