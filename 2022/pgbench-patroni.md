@@ -89,10 +89,17 @@ pgbench -h 192.168.5.165 -p 5432 -U postgres -i -s 100 -F 80 testpgbench
 pgbench -h 10.128.0.64 -p 5432 -U postgres -i -s 100 -F 80 testpgbench
 pgbench -i -s 100 -F 80 -U postgres testpgbench
 ```
-###### Запуск теста:
+###### Запуск теста: -c (подключенных коиентов)
 
 ```
-pgbench -c 8 -j 2 -P 10 -T 300 -U postgres testpgbench
+###### Тест на разницу лидер/keepalived
+pgbench -c 25 -j 2 -P 10 -T 300 -U postgres testpgbench
+pgbench -c 25 -j 2 -P 10 -T 300 -p 5432 -h 192.168.5.180 -U postgres testpgbench
+###### Тест на разницу при 125 клиантах с ограничением 25  лидер/keepalived
+pgbench -c 125 -j 2 -P 10 -T 300 -U postgres testpgbench
+pgbench -c 125 -j 2 -P 10 -T 300 -p 5432 -h 192.168.5.180 -U postgres testpgbench
+
+
 
 ```
 
