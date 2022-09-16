@@ -80,6 +80,17 @@ FROM  pg_stat_statements
 ORDER BY total_exec_time DESC
 LIMIT 20;
 ```
+###### 4. Предв.подготовка: создание и заполнение таблиц для теста: pgbench с ключом -i (иниц-я), -s (маштаб-е) -F (фактор заполнения)-U (user); БД testpgbench:
+```
+# На лидере patroni:
+sudo -u postgres psql -h localhost
+create database testpgbench;
+pgbench -h 192.168.5.165 -p 5432 -U postgres -i -s 100 -F 80 testpgbench
+pgbench -h 10.128.0.64 -p 5432 -U postgres -i -s 100 -F 80 testpgbench
+pgbench -i -s 100 -F 80 -U postgres testpgbench
+```
+
+
 ```
 
 
