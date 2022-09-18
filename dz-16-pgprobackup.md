@@ -5,8 +5,9 @@ sudo sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)
 wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
 apt update
 apt install postgresql-14 -y
-apt install postgresql-13 -y
 pg_isready
+# Ответ: /var/run/postgresql:5432 - принимает подключения
+
 ```
 ##### 2. Установка pg_probackup
 ```
@@ -14,13 +15,12 @@ sudo sh -c 'echo "deb [arch=amd64] https://repo.postgrespro.ru/pg_probackup/deb/
 sudo wget -O - https://repo.postgrespro.ru/pg_probackup/keys/GPG-KEY-PG_PROBACKUP | sudo apt-key add - && sudo apt-get update
 sudo apt update
 sudo apt-get install pg-probackup-14 -y
-sudo apt-get install pg-probackup-{14,13,12,11,10,9.6} -y
+# sudo apt-get install pg-probackup-{14,13,12,11,10,9.6} -y
 sudo apt-get install pg-probackup-14-dbg -y
-sudo apt-get install pg-probackup-{14,13,12,11,10,9.6}-dbg -y
+# sudo apt-get install pg-probackup-{14,13,12,11,10,9.6}-dbg -y
 apt install postgresql-contrib -y
 # По умолчанию postgresql уст.без checksums:
 apt install postgresql-14-pg-checksums -y
-apt install postgresql-13-pg-checksums -y
 ```
 ##### 3. Создание каталога для бекапов. Права для теста можно 777:
 ```
@@ -69,7 +69,6 @@ GRANT EXECUTE ON FUNCTION pg_catalog.pg_control_checkpoint() TO backup;
 ##### 6.1  Инициализируем наш probackup, из-под postgres:
 ```
 pg_probackup-14 init
-pg_probackup-13 init
 ```
 ###### Ответ: Backup catalog '/home/backups' successfully inited
 ###### Что внутри директории бекапов:
