@@ -188,12 +188,15 @@ BACKUP INSTANCE 'main'
  Instance  Version  ID      Recovery Time           Mode  WAL Mode  TLI  Time  Data   WAL  Zratio  Start LSN  Stop LSN   Status
 ================================================================================================================================
  main      14       RIEQTF  2022-09-18 16:29:41+03  FULL  STREAM    1/0   11s  34MB  16MB    1.00  0/2000028  0/20020D0  OK
+```
+```
 # V_2021
 ###### BACKUP INSTANCE 'main'
 ###### ==========================================================================================================
 ###### Instance   Version   ID       Recovery  Time            Mode   WAL  Mode   TLI   Time   Data    WAL   Zratio   Start  LSN   Stop  LSN    Status
 ###### ==========================================================================================================
 ###### main      14       R93D33  2022-03-21 13:57:04+03  FULL  STREAM    1/0   10s  34MB  16MB    1.00  0/2000028  0/2005B50  OK
+```
 ###### 10. Исправляем отсутствие checksums, инициализацияся на выкл.кластере, из-под postgres:
 ```
 systemctl stop postgresql
@@ -246,6 +249,15 @@ psql otus -c "insert into test values (50);"
 pg_probackup-14 backup --instance 'main' -b DELTA --stream --temp-slot -h localhost -U backup --pgdatabase=otus -p 5432
 pg_probackup-13 backup --instance 'main' -b DELTA --stream --temp-slot -h localhost -U backup --pgdatabase=otus -p 5432
 ```
+```
+pg_probackup-14 show
+# Ответ:
+ Instance  Version  ID      Recovery Time           Mode   WAL Mode  TLI  Time    Data   WAL  Zratio  Start LSN  Stop LSN   Status
+===================================================================================================================================
+ main      14       RIESAV  2022-09-18 17:01:54+03  DELTA  STREAM    1/1   20s  5271kB  16MB    1.00  0/4000028  0/40001A0  OK
+ main      14       RIEQTF  2022-09-18 16:29:41+03  FULL   STREAM    1/0   11s    34MB  16MB    1.00  0/2000028  0/20020D0  OK
+```
+
 ###### Добавляем данные:
 ```
 psql otus -c "insert into test values (60);"
