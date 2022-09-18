@@ -19,7 +19,7 @@ sudo apt-get install pg-probackup-14 -y
 sudo apt-get install pg-probackup-14-dbg -y
 # sudo apt-get install pg-probackup-{14,13,12,11,10,9.6}-dbg -y
 apt install postgresql-contrib -y
-# По умолчанию postgresql уст.без checksums:
+# По умолчанию postgresql уст.без checksums: требует остановки и enable:
 apt install postgresql-14-pg-checksums -y
 ```
 ##### 3. Создание каталога для бекапов. Права для теста можно 777:
@@ -171,16 +171,23 @@ INFO: Validating backup RIEQTF
 INFO: Backup RIEQTF data files are valid
 INFO: Backup RIEQTF resident size: 50MB
 INFO: Backup RIEQTF completed
+# Предупреждения: checksumm - перезагрузка; superuser исключить.
 ```
 ###### v_2021 было:
 ```
 pg_probackup-14 backup --instance 'main' -b FULL --stream --temp-slot -h localhost -U backup --pgdatabase=otus -p 5432
 ```
-Ответ: WARNING: Curent PostgreSQL role is superuser. Исправляемся, следующий бекап из-под пользователя backup. Так что сейчас получилось? :
+Ответ: WARNING: Curent PostgreSQL role is superuser. Исправляемся, следующий бекап из-под пользователя backup. Что сейчас получилось с бекапами? :
 ```
 pg_probackup-14 show
-pg_probackup-13 show
 ```
+# V_2022
+BACKUP INSTANCE 'main'
+================================================================================================================================
+ Instance  Version  ID      Recovery Time           Mode  WAL Mode  TLI  Time  Data   WAL  Zratio  Start LSN  Stop LSN   Status
+================================================================================================================================
+ main      14       RIEQTF  2022-09-18 16:29:41+03  FULL  STREAM    1/0   11s  34MB  16MB    1.00  0/2000028  0/20020D0  OK
+# V_2021
 ###### BACKUP INSTANCE 'main'
 ###### ==========================================================================================================
 ###### Instance   Version   ID       Recovery  Time            Mode   WAL  Mode   TLI   Time   Data    WAL   Zratio   Start  LSN   Stop  LSN    Status
@@ -194,7 +201,6 @@ pg_probackup-13 show
 systemctl stop postgresql
 su postgres
 /usr/lib/postgresql/14/bin/pg_checksums -D /var/lib/postgresql/14/main --enable
-/usr/lib/postgresql/13/bin/pg_checksums -D /var/lib/postgresql/13/main --enable
 exit
 systemctl start postgresql
 ```
