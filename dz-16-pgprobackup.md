@@ -33,7 +33,7 @@ echo "BACKUP_PATH=/home/backups/">>~/.bashrc
 echo "export BACKUP_PATH">>~/.bashrc
 cd $HOME
 ```
-###### Применим оболочку:
+###### Применим оболочку с новым профилем:
 ```
 . .bashrc
 ```
@@ -76,22 +76,22 @@ pg_probackup-14 init
 cd $BACKUP_PATH
 ls -la
 ```
-###### Ответ: total 16
-
+###### Ответ: создалось 2 каталога:
+```
 drwxrwxrwx 4 root root 4096 фев  2 08:41 .  
 drwxr-xr-x 4 root root 4096 фев  1 15:36 ..  
 drwx------ 2 postgres postgres 4096 фев  2 08:41 backups  
 drwx------ 2 postgres postgres 4096 фев  2 08:41 wal
 ```
+##### Уточнить, почему всем? в v_2022 нет:
+```
 sudo chmod -R 777 /home/backups
 ```
-##### 6.2  Добавить инстанс в наш probackup:
+##### 6.2  Добавить инстанс в наш probackup из-под postgres:
 ```
 pg_probackup-14 add-instance --instance 'main' -D /var/lib/postgresql/14/main
-pg_probackup-13 add-instance --instance 'main' -D /var/lib/postgresql/13/main
 ```
-###### Ответ: Instance 'main' successfully inited
-###### Теперь probackup знает где инстанс "main"
+###### Ответ: INFO: Instance 'main' successfully inited   Теперь probackup знает где инстанс "main"
 
 ##### 7. Создаем и заполнение новой БД (не входя PSQL):
 ```
@@ -102,14 +102,13 @@ psql otus -c "insert into test values (10), (20), (30);"
 psql otus -c "select * from test;"
 ```
 ###### Ответ:
-
-id|
-:----:
-10  
-20  
-30  
- 
-(3 строки)
+```
+ i
+----
+ 10
+ 20
+ 30
+```
 ###### Проcмотр конфига для инстанса main:
 ```
 pg_probackup-14 show-config --instance main
