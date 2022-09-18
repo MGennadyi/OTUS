@@ -1,4 +1,4 @@
-# pg_probackup на postgresql 13, 14
+# pg_probackup на postgresql 14
 ##### 1. Установка postgresql-14
 ```
 sudo sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list'
@@ -146,10 +146,35 @@ chmod 600 ~/.pgpass
 pg_ctlcluster 14 main stop
 pg_ctlcluster 14 main start
 ```
-##### 9. Делаем бекап из-под postgres с параметрами: FULL, потоковая репликация, временный слот:
+##### 9. Делаем бекап из-под POSTGRES с параметрами: FULL, потоковая репликация+временный слот:
+```
+# v_2022
+pg_probackup-14 backup --instance 'main' -b FULL --stream --temp-slot
+# Ответ:
+INFO: Backup start, pg_probackup version: 2.5.8, instance: main, backup ID: RIEQ                                                                                                                                TF, backup mode: FULL, wal mode: STREAM, remote: false, compress-algorithm: none                                                                                                                                , compress-level: 1
+WARNING: This PostgreSQL instance was initialized without data block checksums.                                                                                                                                 pg_probackup have no way to detect data block corruption without them. Reinitial                                                                                                                                ize PGDATA with option '--data-checksums'.
+WARNING: Current PostgreSQL role is superuser. It is not recommended to run pg_p                                                                                                                                robackup under superuser.
+INFO: Database backup start
+INFO: wait for pg_start_backup()
+INFO: Wait for WAL segment /home/backups/backups/main/RIEQTF/database/pg_wal/000                                                                                                                                000010000000000000002 to be streamed
+INFO: PGDATA size: 33MB
+INFO: Current Start LSN: 0/2000028, TLI: 1
+INFO: Start transferring data files
+INFO: Data files are transferred, time elapsed: 0
+INFO: wait for pg_stop_backup()
+INFO: pg_stop backup() successfully executed
+INFO: stop_lsn: 0/20020D0
+INFO: Getting the Recovery Time from WAL
+INFO: Syncing backup files to disk
+INFO: Backup files are synced, time elapsed: 0
+INFO: Validating backup RIEQTF
+INFO: Backup RIEQTF data files are valid
+INFO: Backup RIEQTF resident size: 50MB
+INFO: Backup RIEQTF completed
+```
+###### v_2021 было:
 ```
 pg_probackup-14 backup --instance 'main' -b FULL --stream --temp-slot -h localhost -U backup --pgdatabase=otus -p 5432
-pg_probackup-13 backup --instance 'main' -b FULL --stream --temp-slot -h localhost -U backup --pgdatabase=otus -p 5432
 ```
 Ответ: WARNING: Curent PostgreSQL role is superuser. Исправляемся, следующий бекап из-под пользователя backup. Так что сейчас получилось? :
 ```
