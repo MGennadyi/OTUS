@@ -171,7 +171,7 @@ INFO: Validating backup RIEQTF
 INFO: Backup RIEQTF data files are valid
 INFO: Backup RIEQTF resident size: 50MB
 INFO: Backup RIEQTF completed
-# Предупреждения: checksumm - перезагрузка; superuser исключить.
+# Предупреждения: checksumm - инициализация+start\stop; superuser исключить.
 ```
 ###### v_2021 было:
 ```
@@ -194,9 +194,6 @@ BACKUP INSTANCE 'main'
 ###### Instance   Version   ID       Recovery  Time            Mode   WAL  Mode   TLI   Time   Data    WAL   Zratio   Start  LSN   Stop  LSN    Status
 ###### ==========================================================================================================
 ###### main      14       R93D33  2022-03-21 13:57:04+03  FULL  STREAM    1/0   10s  34MB  16MB    1.00  0/2000028  0/2005B50  OK
-##### Есть два предупреждения, которые желательно устранить:  
-1. checksums, уст.только на остановленном кластере!  
-2. Не рекомендуется работа из-под superuser;  
 ###### 10. Исправляем отсутствие checksums, инициализацияся на выкл.кластере, из-под postgres:
 ```
 systemctl stop postgresql
@@ -212,6 +209,36 @@ psql otus -c "insert into test values (40);"
 ```
 ###### 12. Делаем дельта-backup с хостовым пользователем backup. Другой путь: Установим пароль на backup в БД :
 ```
+# V_2022
+psql -c "ALTER USER backup PASSWORD '12345';"
+pg_probackup-14 backup --instance 'main' -b DELTA --stream --temp-slot -h localhost -U backup -W
+# Ответ:
+INFO: Backup start, pg_probackup version: 2.5.8, instance: main, backup ID: RIESAV, backup mode: DELTA, wal mode: STREAM, remote: false, compress-algorithm: none, compress-level: 1
+Password for user backup:
+INFO: This PostgreSQL instance was initialized with data block checksums. Data block corruption will be detected
+INFO: Database backup start
+INFO: wait for pg_start_backup()
+INFO: Parent backup: RIEQTF
+INFO: Wait for WAL segment /home/backups/backups/main/RIESAV/database/pg_wal/000000010000000000000004 to be streamed
+INFO: PGDATA size: 33MB
+INFO: Current Start LSN: 0/4000028, TLI: 1
+INFO: Parent Start LSN: 0/2000028, TLI: 1
+INFO: Start transferring data files
+INFO: Data files are transferred, time elapsed: 1s
+INFO: wait for pg_stop_backup()
+INFO: pg_stop backup() successfully executed
+INFO: stop_lsn: 0/40001A0
+INFO: Getting the Recovery Time from WAL
+INFO: Syncing backup files to disk
+INFO: Backup files are synced, time elapsed: 0
+INFO: Validating backup RIESAV
+INFO: Backup RIESAV data files are valid
+INFO: Backup RIESAV resident size: 21MB
+INFO: Backup RIESAV completed
+
+# Примечание: Из-под авторизованного linux-user backup пароль не затребует
+
+# V_2021
 psql -c "ALTER USER backup PASSWORD '12345';"
 pg_probackup-14 backup --instance 'main' -b DELTA --stream --temp-slot -h localhost -U backup --pgdatabase=otus -p 5432
 pg_probackup-13 backup --instance 'main' -b DELTA --stream --temp-slot -h localhost -U backup --pgdatabase=otus -p 5432
