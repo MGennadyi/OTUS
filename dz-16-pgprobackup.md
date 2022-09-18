@@ -177,9 +177,10 @@ INFO: Backup RIEQTF completed
 ```
 pg_probackup-14 backup --instance 'main' -b FULL --stream --temp-slot -h localhost -U backup --pgdatabase=otus -p 5432
 ```
-Ответ: WARNING: Curent PostgreSQL role is superuser. Исправляемся, следующий бекап из-под пользователя backup. Что сейчас получилось с бекапами? :
+###### Ответ: WARNING: Curent PostgreSQL role is superuser. Исправляемся, следующий бекап из-под пользователя backup. Что сейчас получилось с бекапами? :
 ```
 pg_probackup-14 show
+```
 ```
 # V_2022
 BACKUP INSTANCE 'main'
