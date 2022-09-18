@@ -240,7 +240,8 @@ INFO: Backup RIESAV resident size: 21MB
 INFO: Backup RIESAV completed
 
 # Примечание: Из-под авторизованного linux-user backup пароль не затребует
-
+```
+```
 # V_2021
 psql -c "ALTER USER backup PASSWORD '12345';"
 pg_probackup-14 backup --instance 'main' -b DELTA --stream --temp-slot -h localhost -U backup --pgdatabase=otus -p 5432
