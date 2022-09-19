@@ -141,7 +141,7 @@ remote-proto = ssh
 ##### 8. Испольуем PGPASS через Луну в Юпитере: host:port:db_name:user_name:password
 ```
 rm ~/.pgpass
-echo "localhost:5432:otus:backup:otus123">>~/.pgpass
+echo "localhost:5432:otus:backup:12345">>~/.pgpass
 chmod 600 ~/.pgpass
 pg_ctlcluster 14 main stop
 pg_ctlcluster 14 main start
@@ -247,8 +247,20 @@ psql -c "ALTER USER backup PASSWORD '12345';"
 pg_probackup-14 backup --instance 'main' -b DELTA --stream --temp-slot -h localhost -U backup --pgdatabase=otus -p 5432
 
 psql otus -c "insert into test values (50);"
+pg_probackup-14 backup --instance 'main' -b FULL --stream --temp-slot -h localhost -U backup --pgdatabase=otus -p 5432
+```
+##### Получаем ошибку:
+```
+ERROR: query failed: ОШИБКА:  нет доступа к функции pg_start_backup query was: SELECT pg_catalog.pg_start_backup($1, $2, false)
+```
+##### Исправляем ошибку:
+```
+
+
+```
+
+```
 pg_probackup-14 backup --instance 'main' -b DELTA --stream --temp-slot -h localhost -U backup --pgdatabase=otus -p 5432
-pg_probackup-13 backup --instance 'main' -b DELTA --stream --temp-slot -h localhost -U backup --pgdatabase=otus -p 5432
 ```
 ```
 pg_probackup-14 show
