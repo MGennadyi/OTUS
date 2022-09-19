@@ -317,7 +317,10 @@ psql -c 'show archive_mode'
  # Ответ: archive_command
 -----------------------------------------------------------------------------------------------------------------
  pg_probackup-14 archive-push -B /home/backups/ --instance=main --wal-file-path=%p --wal-file-name=%f --compress
-
+```
+###### Аристов: мы перешли в другой режим бекапирования и лучше начинать с FULL бекапа:
+```
+pg_probackup-14 backup --instance 'main' -b FULL --stream --temp-slot -h localhost -U backup --pgdatabase=otus -p 5432
 pg_probackup-14 show
 sudo pg_probackup-14 restore --instance 'main' -i 'R6VP7D' -D /var/lib/postgresql/14/main2 -B /home/backups
 ```
