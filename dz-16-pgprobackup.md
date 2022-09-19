@@ -299,7 +299,26 @@ sudo pg_createcluster 14 main2
 Ответ: Ver Cluster Port Status Owner    Data directory               Log file
 14  main2   5433 down   postgres /var/lib/postgresql/14/main2 /var/log/postgresql/postgresql-14-main2.log
 ```
+# Смотрим статус main2
+pg_ctlcluster 14 main2 status
+# Ответ: pg_ctl: сервер не работает
 sudo rm -rf /var/lib/postgresql/14/main2
+#  Попытаемся восстановиться на последний бекап, смотрим его id: RIG0VK
+# Что бы заработало PITR должны иметь wal-файлы, для этого должно быть непрерывное архивирование:
+psql -c 'alter system set archive_mode = on'
+psql
+alter system set archive_command = 'pg_probackup-14 archive-push -B /home/backups/ --instance=main --wal-file-path=%p --wal-file-name=%f --compress';
+pg_ctlcluster 14 main restart
+psql -c 'show archive_mode'
+# Ответ: archive_mode
+--------------
+ on
+ psql -c 'show archive_command'
+ # Ответ: archive_command
+-----------------------------------------------------------------------------------------------------------------
+ pg_probackup-14 archive-push -B /home/backups/ --instance=main --wal-file-path=%p --wal-file-name=%f --compress
+
+pg_probackup-14 show
 sudo pg_probackup-14 restore --instance 'main' -i 'R6VP7D' -D /var/lib/postgresql/14/main2 -B /home/backups
 ```
 ###### Ответ: Restore of backup R6VP7D completed.
