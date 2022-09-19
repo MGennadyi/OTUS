@@ -295,7 +295,6 @@ psql otus -c "insert into test values (70);"
 ```
 # Создаем инстанс main2
 sudo pg_createcluster 14 main2
-
 # Ответ: Ver Cluster Port Status Owner    Data directory               Log file
 14  main2   5433 down   postgres /var/lib/postgresql/14/main2 /var/log/postgresql/postgresql-14-main2.log
 # Смотрим статус main2
@@ -303,7 +302,7 @@ pg_ctlcluster 14 main2 status
 # Ответ: pg_ctl: сервер не работает. Удаляем данные из main2:
 sudo rm -rf /var/lib/postgresql/14/main2
 #  Попытаемся восстановиться на последний бекап, смотрим его id: RIG0VK, однако:
-~~~
+```
 ##### Что бы заработало PITR должны иметь wal-файлы, для этого должно быть непрерывное архивирование:
 ```
 psql -c 'alter system set archive_mode = on'
