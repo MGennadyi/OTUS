@@ -368,10 +368,8 @@ psql otus -p 5433 -c 'select * from test;'
  70
 (7 строк)
 ```
-```
-# pg_probackup-14 restore --instance 'main' -i 'R6VP7D' -D /var/lib/postgresql/14/main2 -B /home/backups
-```
-###### Ответ: Restore of backup R6VP7D completed.
+
+###### 
 
 
 
@@ -391,9 +389,6 @@ psql otus -p 5433 -c 'select * from test;'
 
 
 
-```
-sudo chown -R postgres /var/lib/postgresql/14/main2
-```
 
 
 
