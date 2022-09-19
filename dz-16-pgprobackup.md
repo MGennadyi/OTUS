@@ -287,7 +287,7 @@ pg_probackup-14 show
  main      14       RIFZLG  2022-09-19 08:36:54+03  FULL   STREAM    1/0   11s   34MB  32MB    1.00  0/2000028  0/2009C90  OK
 
 ```
-###### Добавляем данные. Значение 70 после восстановления должны потерять:
+###### Добавляем данные. :
 ```
 psql otus -c "insert into test values (70);"
 ```
@@ -321,79 +321,79 @@ psql -c 'show archive_mode'
 ###### Аристов: мы перешли в другой режим бекапирования и лучше начинать с FULL бекапа:
 ```
 pg_probackup-14 backup --instance 'main' -b FULL --stream --temp-slot -h localhost -U backup --pgdatabase=otus -p 5432
-pg_probackup-14 show
-sudo pg_probackup-14 restore --instance 'main' -i 'R6VP7D' -D /var/lib/postgresql/14/main2 -B /home/backups
-```
-###### Ответ: Restore of backup R6VP7D completed.
-```
-sudo pg_ctlcluster 14 main2 start
-```
-###### Ответ: Data directory /var/lib/postgresql/14/main2 must not be owned by root
-```
-sudo chown -R postgres /var/lib/postgresql/14/main2
-```
-###### Проверка восстановления:
-```
-sudo -u postgres psql otus -p 5433 -c 'select * from test;'
-```
-###### Ответ: 
+psql otus -c "select * from test;"
+# Ответ: 
  i
 ----
  10
  20
  30
  40
-(4 строки)
-###### Восстановление по id бекапа:
+ 50
+ 60
+ 70
+(7 строк)
+pg_probackup-14 show
+# Добавляем данные. Значение 80 после восстановления должны потерять:
+psql otus -c "insert into test values (80);"
+pg_probackup-14 backup --instance 'main' -b FULL --stream --temp-slot -h localhost -U backup --pgdatabase=otus -p 5432
+
+pg_probackup-14 restore --instance 'main' -D /var/lib/postgresql/14/main2 --recovery-target-time="2022-09-19 12:40:03"
+# Ответ:
+INFO: Validating backup RIG979
+INFO: Backup RIG979 data files are valid
+INFO: Backup validation completed successfully on time 2022-09-19 12:48:14+03, xid 769 and LSN 0/B000520
+INFO: Backup RIG979 is valid.
+INFO: Restoring the database from backup at 2022-09-19 12:04:21+03
+INFO: Start restoring backup files. PGDATA size: 49MB
+INFO: Backup files are restored. Transfered bytes: 49MB, time elapsed: 0
+INFO: Restore incremental ratio (less is better): 100% (49MB/49MB)
+INFO: Syncing restored files to disk
+INFO: Restored backup files are synced, time elapsed: 31s
+INFO: Restore of backup RIG979 completed.
 ```
-sudo pg_createcluster 14 main2 stop
-sudo rm -rf /var/lib/postgresql/14/main2
-sudo pg_probackup-14 restore --instance 'main' -i 'R6VP7D' -D /var/lib/postgresql/14/main2 -B /home/backups
+##### Стартуем и смотрим востановленный кластер main2:
+```
 sudo pg_ctlcluster 14 main2 start
+psql otus -p 5433 -c 'select * from test;'
+# Ответ: 80 нет, т.к. создалась в 12-50, а восстановление было на 12-40:
+ i
+----
+ 10
+ 20
+ 30
+ 40
+ 50
+ 60
+ 70
+(7 строк)
 ```
-###### Восстановление на определенное время, id не указываем:
 ```
-psql -c 'show archive_mode'
-psql -c 'alter system set archive_mode = on'
-psql
-alter system set archive_command = 'pg_probackup-14 archive-push -B /home/backups/ --instance=main --wal-file-path=%p --wal-file-name=%f --compress';
-\q
-sudo pg_ctlcluster 14 main restart
-psql -c 'show archive_mode'
-psql -c 'show archive_command'
-psql otus -c "insert into test values (9);"
-date
-pg_probackup-14 restore --instance 'main' -D /var/lib/postgresql/14/main2 -B /home/backups --recovery-target-time="2022-02-06 17:55:03+00"
+# pg_probackup-14 restore --instance 'main' -i 'R6VP7D' -D /var/lib/postgresql/14/main2 -B /home/backups
 ```
-###### Ответ: ERROR: Restore destination is not empty: "/var/lib/postgresql/14/main2"
+###### Ответ: Restore of backup R6VP7D completed.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ```
-sudo rm -rf /var/lib/postgresql/14/main2 && sudo mkdir /var/lib/postgresql/14/main2 && sudo chmod -R 777 /var/lib/postgresql/14/main2
+sudo chown -R postgres /var/lib/postgresql/14/main2
 ```
-INFO: Validating backup R6W17D
-WARNING: Invalid CRC of backup file "/home/backups/backups/main/R6W17D/database/pg_wal/000000010000000000000010" : AD6C62A9. Expected 50EA82D
-WARNING: Backup R6W17D data files are corrupted
-ERROR: Backup R6W17D is corrupt.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
