@@ -247,7 +247,6 @@ psql -c "ALTER USER backup PASSWORD '12345';"
 pg_probackup-14 backup --instance 'main' -b DELTA --stream --temp-slot -h localhost -U backup --pgdatabase=otus -p 5432
 
 psql otus -c "insert into test values (50);"
-pg_probackup-14 backup --instance 'main' -b FULL --stream --temp-slot -h localhost -U backup --pgdatabase=otus -p 5432
 ```
 ##### Получаем ошибку:
 ```
@@ -269,42 +268,28 @@ GRANT EXECUTE ON FUNCTION pg_catalog.txid_current_snapshot() TO backup;
 GRANT EXECUTE ON FUNCTION pg_catalog.txid_snapshot_xmax(txid_snapshot) TO backup;
 GRANT EXECUTE ON FUNCTION pg_catalog.pg_control_checkpoint() TO backup;
 ```
-
+##### Повторяем бекап OTUS
 ```
+pg_probackup-14 backup --instance 'main' -b FULL --stream --temp-slot -h localhost -U backup --pgdatabase=otus -p 5432
+psql otus -c "insert into test values (60);"
 pg_probackup-14 backup --instance 'main' -b DELTA --stream --temp-slot -h localhost -U backup --pgdatabase=otus -p 5432
 ```
 ```
 pg_probackup-14 show
 # Ответ:
- Instance  Version  ID      Recovery Time           Mode   WAL Mode  TLI  Time    Data   WAL  Zratio  Start LSN  Stop LSN   Status
-===================================================================================================================================
- main      14       RIESAV  2022-09-18 17:01:54+03  DELTA  STREAM    1/1   20s  5271kB  16MB    1.00  0/4000028  0/40001A0  OK
- main      14       RIEQTF  2022-09-18 16:29:41+03  FULL   STREAM    1/0   11s    34MB  16MB    1.00  0/2000028  0/20020D0  OK
-```
-##### Бекап конкретной базы OTUS: выдать права!   -сверить с Аристовым!!!!!!!!!!!!!!!!
-```
-\c otus
-GRANT USAGE ON SCHEMA pg_catalog TO backup;
-GRANT EXECUTE ON FUNCTION pg_catalog.current_setting(text) TO backup;
-GRANT EXECUTE ON FUNCTION pg_catalog.pg_is_in_recovery() TO backup;
-GRANT EXECUTE ON FUNCTION pg_catalog.pg_start_backup(text, boolean, boolean) TO backup;
-GRANT EXECUTE ON FUNCTION pg_catalog.pg_stop_backup(boolean, boolean) TO backup;
-GRANT EXECUTE ON FUNCTION pg_catalog.pg_create_restore_point(text) TO backup;
-GRANT EXECUTE ON FUNCTION pg_catalog.pg_switch_wal() TO backup;
-GRANT EXECUTE ON FUNCTION pg_catalog.pg_last_wal_replay_lsn() TO backup;
-GRANT EXECUTE ON FUNCTION pg_catalog.txid_current() TO backup;
-GRANT EXECUTE ON FUNCTION pg_catalog.txid_current_snapshot() TO backup;
-GRANT EXECUTE ON FUNCTION pg_catalog.txid_snapshot_xmax(txid_snapshot) TO backup;
-GRANT EXECUTE ON FUNCTION pg_catalog.pg_control_checkpoint() TO backup;
-```
-```
-pg_probackup-14 backup --instance 'main' -b DELTA --stream --temp-slot -h localhost -U backup --pgdatabase=otus
-pg_probackup-14 show
-```
+ Instance  Version  ID      Recovery Time           Mode   WAL Mode  TLI  Time   Data   WAL  Zratio  Start LSN  Stop LSN   Status
+==================================================================================================================================
+ main      14       RIG0VK  2022-09-19 09:04:38+03  DELTA  STREAM    1/1   16s  167kB  16MB    1.00  0/8000028  0/80001A0  OK
+ main      14       RIG0QG  2022-09-19 09:01:33+03  FULL   STREAM    1/0   37s   34MB  16MB    1.00  0/6000028  0/6009CC8  OK
+ main      14       RIG05W  ----                    DELTA  STREAM    0/1    5s      0     0    1.00  0/0        0/0        ERROR
+ main      14       RIG03V  ----                    FULL   STREAM    0/0    4s      0     0    1.00  0/0        0/0        ERROR
+ main      14       RIFZZ0  2022-09-19 08:45:12+03  DELTA  STREAM    1/1   23s  183kB  16MB    1.00  0/4000028  0/4000168  OK
+ main      14       RIFZLG  2022-09-19 08:36:54+03  FULL   STREAM    1/0   11s   34MB  32MB    1.00  0/2000028  0/2009C90  OK
 
-###### Добавляем данные:
 ```
-psql otus -c "insert into test values (60);"
+###### Добавляем данные. Значение 70 после бекапа дорлжны потерять:
+```
+psql otus -c "insert into test values (70);"
 ```
 ```
 ##### 13. Восстановление копию в новый кластер:
@@ -335,7 +320,7 @@ sudo -u postgres psql otus -p 5433 -c 'select * from test;'
  10
  20
  30
-  4
+ 40
 (4 строки)
 ###### Восстановление по id бекапа:
 ```
