@@ -245,7 +245,7 @@ INFO: Backup RIESAV completed
 # V_2021
 psql -c "ALTER USER backup PASSWORD '12345';"
 pg_probackup-14 backup --instance 'main' -b DELTA --stream --temp-slot -h localhost -U backup --pgdatabase=otus -p 5432
-pg_probackup-13 backup --instance 'main' -b DELTA --stream --temp-slot -h localhost -U backup --pgdatabase=otus -p 5432
+
 psql otus -c "insert into test values (50);"
 pg_probackup-14 backup --instance 'main' -b DELTA --stream --temp-slot -h localhost -U backup --pgdatabase=otus -p 5432
 pg_probackup-13 backup --instance 'main' -b DELTA --stream --temp-slot -h localhost -U backup --pgdatabase=otus -p 5432
@@ -257,6 +257,26 @@ pg_probackup-14 show
 ===================================================================================================================================
  main      14       RIESAV  2022-09-18 17:01:54+03  DELTA  STREAM    1/1   20s  5271kB  16MB    1.00  0/4000028  0/40001A0  OK
  main      14       RIEQTF  2022-09-18 16:29:41+03  FULL   STREAM    1/0   11s    34MB  16MB    1.00  0/2000028  0/20020D0  OK
+```
+##### Бекап конкретной базы OTUS: выдать права!   -сверить с Аристовым!!!!!!!!!!!!!!!!
+```
+\c otus
+GRANT USAGE ON SCHEMA pg_catalog TO backup;
+GRANT EXECUTE ON FUNCTION pg_catalog.current_setting(text) TO backup;
+GRANT EXECUTE ON FUNCTION pg_catalog.pg_is_in_recovery() TO backup;
+GRANT EXECUTE ON FUNCTION pg_catalog.pg_start_backup(text, boolean, boolean) TO backup;
+GRANT EXECUTE ON FUNCTION pg_catalog.pg_stop_backup(boolean, boolean) TO backup;
+GRANT EXECUTE ON FUNCTION pg_catalog.pg_create_restore_point(text) TO backup;
+GRANT EXECUTE ON FUNCTION pg_catalog.pg_switch_wal() TO backup;
+GRANT EXECUTE ON FUNCTION pg_catalog.pg_last_wal_replay_lsn() TO backup;
+GRANT EXECUTE ON FUNCTION pg_catalog.txid_current() TO backup;
+GRANT EXECUTE ON FUNCTION pg_catalog.txid_current_snapshot() TO backup;
+GRANT EXECUTE ON FUNCTION pg_catalog.txid_snapshot_xmax(txid_snapshot) TO backup;
+GRANT EXECUTE ON FUNCTION pg_catalog.pg_control_checkpoint() TO backup;
+```
+```
+pg_probackup-14 backup --instance 'main' -b DELTA --stream --temp-slot -h localhost -U backup --pgdatabase=otus
+pg_probackup-14 show
 ```
 
 ###### Добавляем данные:
