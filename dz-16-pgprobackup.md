@@ -356,7 +356,7 @@ INFO: Restore of backup RIG979 completed.
 ```
 sudo pg_ctlcluster 14 main2 start
 psql otus -p 5433 -c 'select * from test;'
-# Ответ: 80 нет, т.к. создалась в 12-50, а восстановление было на 12-40:
+# Ответ: 80 нет, т.к. запись создавалась в 12-50, а восстановление было на 12-40:
  i
 ----
  10
@@ -369,7 +369,18 @@ psql otus -p 5433 -c 'select * from test;'
 (7 строк)
 ```
 
-###### 
+# PG_DUMP
+```
+su postgres
+mkdir /home/backup/1
+```
+```
+# Задача теста: сравнение по времени, по потокам, загрузки CPU, загрузки hdd: 
+sudo -u postgres pg_dump -d otus -Fc > /home/backup/1
+
+
+```
+
 
 
 
