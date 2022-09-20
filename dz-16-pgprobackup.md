@@ -376,9 +376,9 @@ mkdir /home/backup/1
 ```
 ```
 # Задача теста: сравнение по времени, по потокам, загрузки CPU, загрузки hdd:
-# При -F c практически не будет сжатия
+# При -F c практически не будет сжатия; d (directory) -j (потоки)
 sudo -u postgres pg_dump -d otus -Fc > /home/backup/1
-
+sudo -u postgres pg_dump -d otus -Fc -F d -j 1 -f /home/backup/1
 
 ```
 
