@@ -372,22 +372,43 @@ psql otus -p 5433 -c 'select * from test;'
 # PG_DUMP
 ```
 su postgres
-mkdir /home/backup/1
+mkdir /home/backups/1
 ```
 ```
 # Задача теста: сравнение по времени, по потокам, загрузки CPU, загрузки hdd:
-# При -F c практически не будет сжатия; d (directory) -j (потоки)
-sudo -u postgres pg_dump -d otus -Fc > /home/backup/1
-sudo -u postgres pg_dump -d otus -Fc -F d -j 1 -f /home/backup/1
+# При -Fc практически не будет сжатия; d (directory); -j (потоки); -F d (указ.формат.вывода d=директория) c (custom); -f (вывод в директорию путь обязателен);
+sudo -u postgres pg_dump -d otus -Fc > /home/backups/1
+sudo -u postgres pg_dump -d otus -j 1 -Fc -F d -f /home/backups/1
+```
+```
+vim dump.sh
+```
+```
+#!/bin/sh
+
+PATH=/etc:/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin
+
+PGPASSWORD=
+export PGPASSWORD
+pathB=/home/backups/1
+dbUser=postgres
+database=otus
+
+find $pathB \( -name "*-1[^5].*" -o -name "*-[023]?.*" \) -ctime +61 -delete
+pg_dump -U $dbUser $database | gzip > $pathB/pgsql_$(date "+%Y-%m-%d").sql.gz
+
+unset PGPASSWORD
+```
+```
+# Делаем исполняемый файл:
+chmod u+x dump.sh
+sudo chown -R postgres /home/mgb/dump.sh
+sudo chown -R postgres /home/backups/1
+sudo chown -R postgres /home/backups/1
+su postgres
+/home/mgb/dump.sh
 
 ```
-
-
-
-
-
-
-
 
 
 
