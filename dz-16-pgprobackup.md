@@ -377,6 +377,12 @@ mkdir /home/backups/1
 ```
 # Задача теста: сравнение по времени, по потокам, загрузки CPU, загрузки hdd:
 # При -Fc практически не будет сжатия; d (directory); -j (потоки); -F d (указ.формат.вывода d=директория) c (custom); -f (вывод в директорию путь обязателен);
+
+pg_dump -d otus --create > /home/backups/3.sql
+
+
+sudo -u postgres pg_dump --no-password --format=directory -v --host=localhost -p 5432 --username=postgres --dbname=otus -f /home/backups/2/otus.dmp
+sudo -u postgres pg_dump -Fc -v --host=localhost --username=postgres --dbname=otus -f testdb.dump
 sudo -u postgres pg_dump -d otus -Fc > /home/backups/1
 sudo -u postgres pg_dump -d otus -j 1 -Fc -F d -f /home/backups/1
 ```
@@ -411,7 +417,8 @@ su postgres
 ```
 # Востановление pg_restore -v (сообщения)
 pg_restore -h localhost -p 5432 -U postgres -d otus -v "/home/backups/1/psql-2022-09-21.sql.gz"
-pg_restore -j 2 --verbose --clean --no-acl --no-owner --host=localhost --dbname=otus --username=postgres latest.dump
+pg_restore -j 2 --verbose --clean --no-acl --no-owner --host=localhost -p 5432 --dbname=otus --username=postgres "/home/backups/1/psql-2022-09-21.sql.gz"
+pg_restore -j 2 -h localhost -U postgres -F c -d otus "/home/backups/1/psql-2022-09-21.sql.gz"
 ```
 
 
