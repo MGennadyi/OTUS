@@ -407,13 +407,12 @@ sudo chown -R postgres /home/backups/1
 sudo chown -R postgres /home/backups/1
 su postgres
 /home/mgb/dump.sh
-
 ```
-
-
-
-
-
+```
+# Востановление pg_restore -v (сообщения)
+pg_restore -h localhost -p 5432 -U postgres -d otus -v "/home/backups/1/psql-2022-09-21.sql.gz"
+pg_restore -j 2 --verbose --clean --no-acl --no-owner --host=localhost --dbname=otus --username=postgres latest.dump
+```
 
 
 
