@@ -395,7 +395,7 @@ pg_restore -j 1 -d otus /home/backups/otus4.gz
 pg_restore -j 2 -d otus /home/backups/otus4.gz
 ```
 # PG_BASEBACKUP
-###### работа по протоколу репликации. Проверим, что настроен для физич-го резервирования:
+###### HРбота по протоколу репликации. Проверим, что есть настройки по умолчанию для физич-го резервирования:
 ```
 postgres=# SELECT name, setting FROM pg_settings WHERE name IN ('wal_level','max_wal_senders');
       name       | setting
@@ -414,16 +414,36 @@ SELECT type, database, user_name, address, auth_method FROM pg_hba_file_rules() 
 (3 строки)
 # Создаем инстанс main2
 sudo pg_createcluster 14 main2
+pg_lsclusters
+# Ответ:
+14  main    5432 online postgres /var/lib/postgresql/14/main  /var/log/postgresql/postgresql-14-main.log
+14  main2   5433 down   postgres /var/lib/postgresql/14/main2 /var/log/postgresql/postgresql-14-main2.log
+
 # Удаляем данные из main2:
 sudo rm -rf /var/lib/postgresql/14/main2
 # Сделаем бэкап нашей БД
+su postgres
 pg_basebackup -p 5432 -D /var/lib/postgresql/14/main2
-#Зададим другой порт
-echo 'port = 5433' >> /var/lib/postgresql/14/main2/postgresql.auto.conf
+#Зададим другой порт - не заработает
+# echo 'port = 5433' >> /var/lib/postgresql/14/main2/postgresql.auto.conf - не заработает
 # Стуртуем кластер
 pg_ctlcluster 14 main2 start
 # Смотрим как стартовал
 pg_lsclusters
+14  main    5432 online postgres /var/lib/postgresql/14/main  /var/log/postgresql/postgresql-14-main.log
+14  main2   5433 online postgres /var/lib/postgresql/14/main2 /var/log/postgresql/postgresql-14-main2.log
+14  main3   5434 online postgres /var/lib/postgresql/14/main3 /var/log/postgresql/postgresql-14-main3.log
+psql -p5434
+\c otus
+otus=# select * from test;
+ i
+----
+ 10
+ 20
+ 30
+(3 строки)
+
+
 
 
 
