@@ -393,8 +393,14 @@ echo "create database otus;" | psql
 # Рассмотреть время выполнения в различных вариантах -j:
 pg_restore -j 1 -d otus /home/backups/otus4.gz
 pg_restore -j 2 -d otus /home/backups/otus4.gz
+```
+# PG_BACEBACKUP
+###### работа по протоколу репликации
+```
 
 
+```
+```
 sudo -u postgres pg_dump --no-password --format=directory -v --host=localhost -p 5432 --username=postgres --dbname=otus -f /home/backups/2/otus.dmp
 sudo -u postgres pg_dump -Fc -v --host=localhost --username=postgres --dbname=otus -f testdb.dump
 sudo -u postgres pg_dump -d otus -Fc > /home/backups/1
