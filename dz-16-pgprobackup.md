@@ -394,9 +394,40 @@ echo "create database otus;" | psql
 pg_restore -j 1 -d otus /home/backups/otus4.gz
 pg_restore -j 2 -d otus /home/backups/otus4.gz
 ```
-# PG_BACEBACKUP
-###### работа по протоколу репликации
+# PG_BASEBACKUP
+###### работа по протоколу репликации. Проверим, что настроен для физич-го резервирования:
 ```
+postgres=# SELECT name, setting FROM pg_settings WHERE name IN ('wal_level','max_wal_senders');
+      name       | setting
+-----------------+---------
+ max_wal_senders | 10
+ wal_level       | replica
+(2 строки)
+# Параметры ph_hba.conf касательно репликации:
+SELECT type, database, user_name, address, auth_method FROM pg_hba_file_rules() WHERE database = '{replication}';
+
+ type  |   database    | user_name |  address  |  auth_method
+-------+---------------+-----------+-----------+---------------
+ local | {replication} | {all}     |           | peer
+ host  | {replication} | {all}     | 127.0.0.1 | scram-sha-256
+ host  | {replication} | {all}     | ::1       | scram-sha-256
+(3 строки)
+# Создаем инстанс main2
+sudo pg_createcluster 14 main2
+# Удаляем данные из main2:
+sudo rm -rf /var/lib/postgresql/14/main2
+# Сделаем бэкап нашей БД
+pg_basebackup -p 5432 -D /var/lib/postgresql/14/main2
+#Зададим другой порт
+echo 'port = 5433' >> /var/lib/postgresql/14/main2/postgresql.auto.conf
+# Стуртуем кластер
+pg_ctlcluster 14 main2 start
+# Смотрим как стартовал
+pg_lsclusters
+
+
+
+
 
 
 ```
