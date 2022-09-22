@@ -452,13 +452,14 @@ SELECT name, setting FROM pg_settings WHERE name IN ('archive_mode','archive_com
  archive_mode    | off
  archive_timeout | 0
 (3 строки)
-
-
-cn-au-pyramid2.dmz.center.oen.su
-
-
-
 ```
+```
+vim ~/.pgpass
+localhost:5432:*:postgres:12345
+chmod 0600 ~/.pgpass
+```
+
+
 ```
 sudo -u postgres pg_dump --no-password --format=directory -v --host=localhost -p 5432 --username=postgres --dbname=otus -f /home/backups/2/otus.dmp
 sudo -u postgres pg_dump -Fc -v --host=localhost --username=postgres --dbname=otus -f testdb.dump
