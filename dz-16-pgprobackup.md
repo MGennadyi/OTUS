@@ -432,8 +432,7 @@ pg_ctlcluster 14 main2 start
 pg_lsclusters
 14  main    5432 online postgres /var/lib/postgresql/14/main  /var/log/postgresql/postgresql-14-main.log
 14  main2   5433 online postgres /var/lib/postgresql/14/main2 /var/log/postgresql/postgresql-14-main2.log
-14  main3   5434 online postgres /var/lib/postgresql/14/main3 /var/log/postgresql/postgresql-14-main3.log
-psql -p5434
+psql -p5433
 \c otus
 otus=# select * from test;
  i
@@ -442,11 +441,20 @@ otus=# select * from test;
  20
  30
 (3 строки)
+```
+##### Потоковый архив wal-файлов
+```
+# Смотри параметры:
+SELECT name, setting FROM pg_settings WHERE name IN ('archive_mode','archive_command','archive_timeout');
+      name       |  setting
+-----------------+------------
+ archive_command | (disabled)
+ archive_mode    | off
+ archive_timeout | 0
+(3 строки)
 
 
-
-
-
+cn-au-pyramid2.dmz.center.oen.su
 
 
 
