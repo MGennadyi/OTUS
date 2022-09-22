@@ -377,8 +377,16 @@ mkdir /home/backups/1
 ```
 # Задача теста: сравнение по времени, по потокам, загрузки CPU, загрузки hdd:
 # При -Fc практически не будет сжатия; d (directory); -j (потоки); -F d (указ.формат.вывода d=директория) c (custom); -f (вывод в директорию путь обязателен);
-
+# Простой вариант бекапа:
 pg_dump -d otus --create > /home/backups/3.sql
+# Простой со сжатием, в 2,8 раза меньше весит: 
+pg_dump -d otus --create | gzip > /home/backups/otus3.gz
+# Минимальная степень сжатия <10% : 
+pg_dump -d otus -Fc > /home/backups/otus4.gz
+# Восстановление:
+drop database otus;
+\q
+psql < /home/backups/3.sql
 
 
 sudo -u postgres pg_dump --no-password --format=directory -v --host=localhost -p 5432 --username=postgres --dbname=otus -f /home/backups/2/otus.dmp
