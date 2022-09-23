@@ -327,7 +327,7 @@ pg_ctlcluster 14 main2 status
 sudo rm -rf /var/lib/postgresql/14/main2
 #  Попытаемся восстановиться на последний бекап, смотрим его id: RIG0VK, однако:
 ```
-##### Что бы заработало PITR должны иметь wal-файлы, для этого должно быть непрерывное архивирование:
+##### Что бы заработало PITR wal-файлы должны быть непрерывное архивирование:
 ```
 psql -c 'alter system set archive_mode = on'
 psql
@@ -339,6 +339,16 @@ psql -c 'show archive_mode'
  on
  psql -c 'show archive_command'
  # Ответ: archive_command
+ # Показ всех 3-х параметров:
+postgres=# SELECT name, setting FROM pg_settings WHERE name IN ('archive_mode','archive_command','archive_timeout');
+      name       |                                                     setting
+-----------------+-----------------------------------------------------------------------------------------------------------------
+ archive_command | pg_probackup-14 archive-push -B /home/backups/ --instance=main --wal-file-path=%p --wal-file-name=%f --compress
+ archive_mode    | on
+ archive_timeout | 0
+(3 строки)
+vim /etc/postgresql/14/main/postgresql.conf
+archive_timeout = 600
 -----------------------------------------------------------------------------------------------------------------
  pg_probackup-14 archive-push -B /home/backups/ --instance=main --wal-file-path=%p --wal-file-name=%f --compress
 ```
@@ -452,6 +462,19 @@ SELECT name, setting FROM pg_settings WHERE name IN ('archive_mode','archive_com
  archive_mode    | off
  archive_timeout | 0
 (3 строки)
+```
+```
+# Исправляем https://habr.com/ru/post/525308/ - не отвечает
+vim /etc/postgresql/14/main/postgresql.conf 
+archive_mode: on
+archive_command: /usr/local/bin/copy_wal.sh %p %f
+archive_timeout: 600
+# вводим команды: 
+psql -c 'alter system set archive_mode = on'  --правка postgresql.auto.conf
+systemctl restart postgresql
+psql -c 'show archive_mode'
+
+
 ```
 ```
 vim ~/.pgpass
