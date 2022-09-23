@@ -500,7 +500,8 @@ pg_restore -h localhost -p 5432 -U postgres -d otus -v "/home/backups/1/psql-202
 pg_restore -j 2 --verbose --clean --no-acl --no-owner --host=localhost -p 5432 --dbname=otus --username=postgres "/home/backups/1/psql-2022-09-21.sql.gz"
 pg_restore -j 2 -h localhost -U postgres -F c -d otus "/home/backups/1/psql-2022-09-21.sql.gz"
 ```
-
+```
+```
 
 
 
