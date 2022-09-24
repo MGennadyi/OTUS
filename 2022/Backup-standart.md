@@ -1,4 +1,11 @@
 # Backup-restore штатными средствами
+###### 0.
+```
+Не беря во внимание утилиты файлового копирования PostgreS комплектуется 2-мя штатными утилитами для резервного копирования, это pg_dump/pg_dumpall и pg_basebackup. 
+
+
+
+```
 ##### 1. Установка postgresql-14
 ```
 sudo sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list'
