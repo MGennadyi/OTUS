@@ -1,7 +1,8 @@
 # Backup-restore штатными средствами
 ###### 0.
 ```
-Не беря во внимание утилиты файлового копирования PostgreS комплектуется 2-мя штатными утилитами для резервного копирования, это pg_dump/pg_dumpall и pg_basebackup. 
+Не беря во внимание утилиты файлового копирования PostgreS комплектуется 2-мя штатными утилитами для резервного копирования, 
+это pg_dump/pg_dumpall и pg_basebackup. 
 
 
 
@@ -19,6 +20,7 @@ pg_isready
 ```
 su postgres
 mkdir /home/backups/1
+
 ```
 ```
 # Задача теста: сравнение по времени, по потокам, загрузки CPU, загрузки hdd:
@@ -33,10 +35,17 @@ pg_dump -d otus -Fc > /home/backups/otus4.gz
 drop database otus;
 \q
 psql < /home/backups/3.sql
-# Восстановление-2 (drop/create/pg_restore):
+```
+
+##### Восстановление-2 (drop/create/pg_restore):
+```
+# pg_restore 
+echo "drop database otus;" | sudo -u postgres psql
+echo "create database otus;" | sudo -u postgres psql
 echo "drop database otus;" | psql
 echo "create database otus;" | psql
 # Рассмотреть время выполнения в различных вариантах -j:
+pg_restore otus3.gz -d otus
 pg_restore -j 1 -d otus /home/backups/otus4.gz
 pg_restore -j 2 -d otus /home/backups/otus4.gz
 ```
@@ -412,7 +421,7 @@ psql otus -p 5433 -c 'select * from test;'
 
 
 # PG_BASEBACKUP
-###### HРбота по протоколу репликации. Проверим, что есть настройки по умолчанию для физич-го резервирования:
+###### Работа по протоколу репликации. Cоздаёт копию файлов кластера целиком. Проверим, что есть настройки по умолчанию для физич-го резервирования:
 ```
 postgres=# SELECT name, setting FROM pg_settings WHERE name IN ('wal_level','max_wal_senders');
       name       | setting
