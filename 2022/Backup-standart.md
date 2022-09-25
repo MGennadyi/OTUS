@@ -29,7 +29,7 @@ mkdir /home/backups/1
 pg_dump -d otus --create > /home/backups/3.sql
 # Простой со сжатием, в 2,8 раза меньше весит: 
 pg_dump -d otus --create | gzip > /home/backups/otus3.gz
-# Архив с оглавлением для pg_restore. Минимальная степень сжатия <10% : 
+# Архив с оглавлением для pg_restore. Минимальная степень сжатия <10% -Fc: 
 pg_dump -d otus -Fc > /home/backups/otus4.gz
 # Восстановление-1:
 drop database otus;
@@ -39,15 +39,15 @@ psql < /home/backups/3.sql
 
 ##### Восстановление-2 (drop/create/pg_restore):
 ```
-# pg_restore 
+# pg_restore не отработает, если нет БД:
 echo "drop database otus;" | sudo -u postgres psql
 echo "create database otus;" | sudo -u postgres psql
 echo "drop database otus;" | psql
 echo "create database otus;" | psql
-# Рассмотреть время выполнения в различных вариантах -j:
-pg_restore otus3.gz -d otus
-pg_restore -j 1 -d otus /home/backups/otus4.gz
-pg_restore -j 2 -d otus /home/backups/otus4.gz
+# Тестим на скорость выполнения в различных вариантах --jobs:
+sudo -u postgres pg_restore otus3.gz -d otus
+sudo -u postgres pg_restore -j 1 -d otus /home/backups/otus4.gz
+sudo -u postgres pg_restore -j 10 -d otus /home/backups/otus4.gz
 ```
 ##### 2. Установка pg_probackup
 ```
