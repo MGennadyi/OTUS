@@ -450,7 +450,7 @@ sudo rm -rf /var/lib/postgresql/14/main2
 # Сделаем бэкап нашей БД
 su postgres
 pg_basebackup -p 5432 -D /var/lib/postgresql/14/main2
-#Зададим другой порт - не заработает
+# До v_10 необходимо задавать другой порт:
 # echo 'port = 5433' >> /var/lib/postgresql/14/main2/postgresql.auto.conf - не заработает
 # Стуртуем кластер
 pg_ctlcluster 14 main2 start
@@ -478,6 +478,9 @@ SELECT name, setting FROM pg_settings WHERE name IN ('archive_mode','archive_com
  archive_mode    | off
  archive_timeout | 0
 (3 строки)
+```
+```
+archive_command = 'cat %p | ssh foobackup@[backupServerIp] "set -e; test ! -f /var/lib/postgresql/backups/[clientName]/wal/%f; cat > /var/lib/postgresql/backups/[clientName]/wal/%f.part; sync /var/lib/postgresql/backups/[clientName]/wal/%f.part;  mv /var/lib/postgresql/backups/[clientName]/wal/%f.part /var/lib/postgresql/backups/[clientName]/wal/%f"'
 ```
 ```
 # Исправляем https://habr.com/ru/post/525308/ - не отвечает
