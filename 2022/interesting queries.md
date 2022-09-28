@@ -28,8 +28,27 @@ ORDER BY duration DESC;
 ```
 # Предварительно активировать:
 vim /var/lib/postgresql/14/main/postgresql.conf
+# Для patroni: add в секции 'postgresql':
+vim /etc/patroni.yml
 shared_preload_libraries = 'pg_stat_statements'
+systemctl stop patroni
+systemctl start patroni
 create extension pg_stat_statements;
+```
+```
+# ТОП по загрузке CPU:
+SELECT substring(query, 1, 50) AS short_query, round(total_time::numeric, 2) AS total_time, calls,
+rows, round(total_time::numeric / calls, 2) AS avg_time, round((100 * total_time /
+sum(total_time::numeric) OVER ())::numeric, 2) AS percentage_cpu
+FROM pg_stat_statements ORDER BY total_time DESC LIMIT 20;
+
+# ТОП по времени выполнения: 
+SELECT substring(query, 1, 100) AS short_query, round(total_time::numeric, 2) AS total_time, calls,
+rows, round(total_time::numeric / calls, 2) AS avg_time, round((100 * total_time /
+sum(total_time::numeric) OVER ())::numeric, 2) AS percentage_cpu
+FROM pg_stat_statements ORDER BY avg_time DESC LIMIT 20;
 
 
 ```
+
+
