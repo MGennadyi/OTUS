@@ -37,10 +37,54 @@ create extension pg_stat_statements;
 ```
 ```
 # ТОП по загрузке CPU:
-SELECT substring(query, 1, 50) AS short_query, round(total_time::numeric, 2) AS total_time, calls,
-rows, round(total_time::numeric / calls, 2) AS avg_time, round((100 * total_time /
-sum(total_time::numeric) OVER ())::numeric, 2) AS percentage_cpu
-FROM pg_stat_statements ORDER BY total_time DESC LIMIT 20;
+SELECT substring(query, 1, 50) AS short_query, round(total_exec_time::numeric, 2) AS total_time, calls,
+rows, round(total_exec_time::numeric / calls, 2) AS avg_time, round((100 * total_exec_time /
+sum(total_exec_time::numeric) OVER ())::numeric, 2) AS percentage_cpu
+FROM pg_stat_statements ORDER BY total_exec_time DESC LIMIT 20;
+
+                                  short_query                                  | total_time | calls |   rows   | avg_time  | percentage_cpu
+-------------------------------------------------------------------------------+------------+-------+----------+-----------+----------------
+ vacuum analyze pgbench_accounts                                               |  905079.02 |     1 |        0 | 905079.02 |          45.12
+ SELECT count(*)                                                              +|  396347.46 | 38454 |    38454 |     10.31 |          19.76
+                                 FROM pg_catalog.pg_stat_all_ta                |            |       |          |           |
+ copy pgbench_accounts from stdin                                              |  261989.00 |     1 | 10000000 | 261989.00 |          13.06
+ SELECT row_to_json (T)                                                       +|   90442.45 |  7689 |     7689 |     11.76 |           4.51
+     FROM (                                                                   +|            |       |          |           |
+           SELECT                                                              |            |       |          |           |
+ SELECT json_object_agg(coalesce (datname,$1), row_                            |   82928.18 |  7692 |     7692 |     10.78 |           4.13
+ SELECT row_to_json (T)                                                       +|   82373.48 |  7690 |     7690 |     10.71 |           4.11
+     FROM  (                                                                  +|            |       |          |           |
+       SELECT                                                                 +|            |       |          |           |
+                                                                               |            |       |          |           |
+ SELECT row_to_json(T)                                                        +|   82354.48 |  7689 |     7689 |     10.71 |           4.11
+                                                         FROM (               +|            |       |          |           |
+                                                                         SELEC |            |       |          |           |
+ alter table pgbench_accounts add primary key (aid)                            |   65289.45 |     1 |        0 |  65289.45 |           3.25
+ SELECT row_to_json(T)                                                        +|   10041.71 |  7689 |     7689 |      1.31 |           0.50
+                                                         FROM (               +|            |       |          |           |
+                                                                 WITH v        |            |       |          |           |
+ SELECT pg_database_size(datname::text)                                       +|    8005.40 |  7693 |     7675 |      1.04 |           0.40
+                 FROM pg_c                                                     |            |       |          |           |
+ SELECT pg_catalog.pg_postmaster_start_time(), CASE                            |    5447.05 | 48512 |    48512 |      0.11 |           0.27
+ WITH T AS                                                                    +|    2671.44 |  7692 |     7692 |      0.35 |           0.13
+         (SELECT db.datname dbname,                                           +|            |       |          |           |
+                         lower(rep                                             |            |       |          |           |
+ vacuum analyze pgbench_branches                                               |    2198.60 |     1 |        0 |   2198.60 |           0.11
+ WITH T AS (                                                                  +|    2078.59 |  7690 |     7690 |      0.27 |           0.10
+                 SELECT                                                       +|            |       |          |           |
+                         db.datname,                                          +|            |       |          |           |
+                         coalesce(T.                                           |            |       |          |           |
+ SELECT CASE WHEN pg_catalog.pg_is_in_recovery() TH                            |    1156.64 | 46154 |    46154 |      0.03 |           0.06
+ SELECT row_to_json(T)                                                        +|     956.02 |  7690 |     7690 |      0.12 |           0.05
+         FROM (                                                               +|            |       |          |           |
+                 SELECT                                                       +|            |       |          |           |
+                         sum(CASE                                              |            |       |          |           |
+ SELECT json_object_agg(application_name, row_to_js                            |     837.65 |  7689 |     7689 |      0.11 |           0.04
+ SELECT COUNT(DISTINCT client_addr) + COALESCE(SUM(                            |     764.01 |  7692 |     7692 |      0.10 |           0.04
+ vacuum analyze pgbench_tellers                                                |     677.55 |     1 |        0 |    677.55 |           0.03
+ CHECKPOINT                                                                    |     617.57 |     5 |        0 |    123.51 |           0.03
+(20 строк)
+
 
 # ТОП по времени выполнения: 
 SELECT substring(query, 1, 100) AS short_query, round(total_time::numeric, 2) AS total_time, calls,
