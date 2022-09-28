@@ -87,10 +87,56 @@ FROM pg_stat_statements ORDER BY total_exec_time DESC LIMIT 20;
 
 
 # ТОП по времени выполнения: 
-SELECT substring(query, 1, 100) AS short_query, round(total_time::numeric, 2) AS total_time, calls,
-rows, round(total_time::numeric / calls, 2) AS avg_time, round((100 * total_time /
-sum(total_time::numeric) OVER ())::numeric, 2) AS percentage_cpu
+SELECT substring(query, 1, 100) AS short_query, round(total_exec_time::numeric, 2) AS total_time, calls,
+rows, round(total_exec_time::numeric / calls, 2) AS avg_time, round((100 * total_exec_time /
+sum(total_exec_time::numeric) OVER ())::numeric, 2) AS percentage_cpu
 FROM pg_stat_statements ORDER BY avg_time DESC LIMIT 20;
+
+
+                                                 short_query                                                 | total_time | calls |   rows   | avg_time  | percentage_cpu
+-------------------------------------------------------------------------------------------------------------+------------+-------+----------+-----------+----------------
+ vacuum analyze pgbench_accounts                                                                             |  905079.02 |     1 |        0 | 905079.02 |          45.09
+ copy pgbench_accounts from stdin                                                                            |  261989.00 |     1 | 10000000 | 261989.00 |          13.05
+ alter table pgbench_accounts add primary key (aid)                                                          |   65289.45 |     1 |        0 |  65289.45 |           3.25
+ vacuum analyze pgbench_branches                                                                             |    2198.60 |     1 |        0 |   2198.60 |           0.11
+ vacuum analyze pgbench_tellers                                                                              |     677.55 |     1 |        0 |    677.55 |           0.03
+ CREATE EXTENSION pg_stat_statements                                                                         |     343.62 |     1 |        0 |    343.62 |           0.02
+ alter table pgbench_branches add primary key (bid)                                                          |     308.86 |     1 |        0 |    308.86 |           0.02
+ SELECT pg_catalog.pg_create_physical_replication_slot($1, $2) WHERE NOT EXISTS (SELECT $3 FROM pg_ca        |     429.15 |     2 |        2 |    214.57 |           0.02
+ alter table pgbench_tellers add primary key (tid)                                                           |     188.34 |     1 |        0 |    188.34 |           0.01
+ vacuum analyze pgbench_history                                                                              |     172.47 |     1 |        0 |    172.47 |           0.01
+ CHECKPOINT                                                                                                  |     617.57 |     5 |        0 |    123.51 |           0.03
+ SELECT pg_catalog.pg_drop_replication_slot($1) WHERE EXISTS (SELECT $2 FROM pg_catalog.pg_replicatio        |     135.25 |     4 |        4 |     33.81 |           0.01
+ SELECT row_to_json (T)                                                                                     +|   90586.81 |  7703 |     7703 |     11.76 |           4.51
+     FROM (                                                                                                 +|            |       |          |           |
+           SELECT                                                                                           +|            |       |          |           |
+               checkpoints_timed                                                                            +|            |       |          |           |
+             , che                                                                                           |            |       |          |           |
+ SELECT json_object_agg(coalesce (datname,$1), row_to_json(T))                                              +|   83073.50 |  7706 |     7706 |     10.78 |           4.14
+     FROM  (                                                                                                +|            |       |          |           |
+       SELECT                                                                                               +|            |       |          |           |
+         datna                                                                                               |            |       |          |           |
+ SELECT row_to_json(T)                                                                                      +|   82488.40 |  7702 |     7702 |     10.71 |           4.11
+                                                         FROM (                                             +|            |       |          |           |
+                                                                         SELECT archived_count, failed_count+|            |       |          |           |
+                                                                           FROM                              |            |       |          |           |
+ SELECT row_to_json (T)                                                                                     +|   82518.53 |  7704 |     7704 |     10.71 |           4.11
+     FROM  (                                                                                                +|            |       |          |           |
+       SELECT                                                                                               +|            |       |          |           |
+         sum(numbackends) as numbackends                                                                    +|            |       |          |           |
+       , sum(                                                                                                |            |       |          |           |
+ SELECT count(*)                                                                                            +|  396911.90 | 38519 |    38519 |     10.30 |          19.77
+                                 FROM pg_catalog.pg_stat_all_tables                                         +|            |       |          |           |
+                            WHERE (n_dead_tup/(n_live_tup+n_dead                                             |            |       |          |           |
+ create table pgbench_history(tid int,bid int,aid    int,delta int,mtime timestamp,filler char(22))          |       3.39 |     1 |        0 |      3.39 |           0.00
+ SELECT name, setting, unit, vartype, context, sourcefile FROM pg_catalog.pg_settings  WHERE pg_catal        |      18.67 |     9 |      117 |      2.07 |           0.00
+ SELECT row_to_json(T)                                                                                      +|   10055.22 |  7702 |     7702 |      1.31 |           0.50
+                                                         FROM (                                             +|            |       |          |           |
+                                                                 WITH values AS (                           +|            |       |          |           |
+                                                                         SELECT                             +|            |       |          |           |
+                                                                                 $1/(ceil(pg_s               |            |       |          |           |
+(20 строк)
+
 
 
 ```
