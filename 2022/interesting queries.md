@@ -136,9 +136,117 @@ FROM pg_stat_statements ORDER BY avg_time DESC LIMIT 20;
                                                                          SELECT                             +|            |       |          |           |
                                                                                  $1/(ceil(pg_s               |            |       |          |           |
 (20 строк)
+```
+#### pg_stat_user_tables
+```
+# Выборка таблиц в которых больше всего операций последовательного чтения:
+SELECT schemaname, relname, seq_scan, seq_tup_read, seq_tup_read / seq_scan AS avg, idx_scan
+FROM pg_stat_user_tables
+WHERE seq_scan > 0
+ORDER BY seq_tup_read DESC
+LIMIT 25;
+ schemaname | relname | seq_scan | seq_tup_read | avg | idx_scan
+------------+---------+----------+--------------+-----+----------
+(0 строк)
+```
+#### pg_statio_user_tables
+```
+# кэширование таблиц, вставить поля heap_blks и idx_blks
+```
+### Размер базы данных:
+```
+SELECT pg_size_pretty( pg_database_size( 'otus' ) );
+```
+### Обнаружение не использ-х индексов
+```
+# wiki.postgresql.org/wiki/index_maintenance
+# https://wiki.postgresql.org/wiki/Index_Maintenance  - !!!
 
+select 
+schemaname || '.' || relname AS table, 
+indexrelname AS index,
+pg_size_pretty (pg_relation_size (i.indexrelid)) AS index_size, 
+idx_scan as index_scans 
+from pg_stat_user_indexes ui
+JOIN pg_index i ON ui.indexrelid = i.indexrelid
+WHERE NOT indisunique AND idx_scan < 50 AND pg_relation_size (relid) > 5 * 8192
+ORDER BY pg_relation_size (i.indexrelid) / nullif (idx_scan, 0) DESC NULLS FIRST pg_relation_size (i.indexrelid) DESC;
+```
+```
+SELECT column_name, column_default, data_type 
+FROM INFORMATION_SCHEMA.COLUMNS 
+WHERE table_name = 'pg_stat_user_indexes';
+```
+### Поиск неиспользуемых индексов
+```
+ Если idx.scan=0, значит индекс не используется 
+SELECT * FROM pg_stat_user_indexes WHERE idx_scan = 0;
+SELECT * FROM pg_stat_all_indexes WHERE relname='t';
+
+
+SELECT *
+FROM
+  pg_stat_statements
+ORDER BY
+  total_exec_time DESC;
+```
+### Отсутствующие индексы
+```
+SELECT
+  relname,
+  seq_scan - idx_scan AS too_much_seq,
+  CASE
+    WHEN
+      seq_scan - coalesce(idx_scan, 0) > 0
+    THEN
+      'Missing Index?'
+    ELSE
+      'OK'
+  END,
+  pg_relation_size(relname::regclass) AS rel_size, seq_scan, idx_scan
+FROM
+  pg_stat_all_tables
+WHERE
+  schemaname = 'public'
+  AND pg_relation_size(relname::regclass) > 80000
+ORDER BY
+  too_much_seq DESC;
+```
+### Неиспользуемые индексы
+```
+SELECT
+  indexrelid::regclass as index,
+  relid::regclass as table,
+  'DROP INDEX ' || indexrelid::regclass || ';' as drop_statement
+FROM
+  pg_stat_user_indexes
+  JOIN
+    pg_index USING (indexrelid)
+WHERE
+  idx_scan = 0
+  AND indisunique is false;
+```
+
+```
+postgres=# SELECT column_name, column_default, data_type
+FROM INFORMATION_SCHEMA.COLUMNS
+WHERE table_name = 'pg_stat_user_indexes';
+  column_name  | column_default | data_type
+---------------+----------------+-----------
+ relid         |                | oid
+ indexrelid    |                | oid
+ idx_scan      |                | bigint
+ idx_tup_read  |                | bigint
+ idx_tup_fetch |                | bigint
+ schemaname    |                | name
+ relname       |                | name
+ indexrelname  |                | name
+(8 строк)
 
 
 ```
+
+
+
 
 
