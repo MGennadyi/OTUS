@@ -25,9 +25,11 @@ ORDER BY duration DESC;
 ```
 ## pg_stat_statements
 ###### Инфа по раннее выполненным запросам
-
 ```
-
+# Предварительно активировать:
+vim /var/lib/postgresql/14/main/postgresql.conf
+shared_preload_libraries = 'pg_stat_statements'
+create extension pg_stat_statements;
 
 
 ```
