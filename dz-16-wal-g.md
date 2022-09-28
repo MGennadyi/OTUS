@@ -157,7 +157,8 @@ ttl: 30
 pending restart
 
 ```
-###### Правим конфиг: vim /etc/patroni.yml   ru.stackoverflow.com советует, применим относительно patroni:
+###### Правим конфиг: vim /etc/patroni.yml   
+###### ru.stackoverflow.com советует, применим относительно patroni:
 ```
 # В секции parameters:  
         wal_level=replica
@@ -166,6 +167,7 @@ pending restart
         archive_timeout=60
         restore_command='wal-g wal-fetch "%f" "%p"
 # В секции postgresql:
+  shared_preload_libraries = 'pg_stat_statements'
   unix_socket_directories: /var/lib/postgresql/14/main
 ```
 ```
