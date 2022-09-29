@@ -1,5 +1,5 @@
 ## pg_stat_activity
-###### Инфа по выполняющимся запросам в данное время
+###### Инфа по выполняющимся в данное время запросам :
 ```
 # активные (state='active') запросы длительностью более 5 секунд:
 SELECT now() - query_start as "runtime", usename, datname, wait_event_type, state, query
@@ -24,7 +24,7 @@ WHERE state LIKE '%transaction%'
 ORDER BY duration DESC;
 ```
 ## pg_stat_statements
-###### Инфа по раннее выполненным запросам
+###### Инфа по раннее выполненным, т.е. завершенным запросам: 
 ```
 # Предварительно активировать:
 vim /var/lib/postgresql/14/main/postgresql.conf
