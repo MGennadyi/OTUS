@@ -242,11 +242,14 @@ WHERE table_name = 'pg_stat_user_indexes';
  relname       |                | name
  indexrelname  |                | name
 (8 строк)
-
+```
+```
+vim /etc/postgresql/14/main/postgresql.conf
+```
+```
+\d pg_stat_history
 
 ```
-
-
 
 
 
