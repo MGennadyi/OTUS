@@ -31,7 +31,9 @@ pg_dump -d otus --create > /home/backups/3.sql
 pg_dump -d otus --create | gzip > /home/backups/otus3.gz
 # Архив с оглавлением для pg_restore. Минимальная степень сжатия <10% -Fc: 
 pg_dump -d otus -Fc > /home/backups/otus4.gz
-# Восстановление-1:
+```
+##### Восстановление-1:
+```
 drop database otus;
 \q
 psql < /home/backups/3.sql
