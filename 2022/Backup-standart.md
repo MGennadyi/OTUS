@@ -20,15 +20,35 @@ pg_isready
 ```
 su postgres
 mkdir /home/backups/1
+# Включ.времени выполнения:
+\c otus
+\timing
+create table test (id int);
+insert into test values (10), (20), (30);
 
+```
+###### Включ.времени выполнения:
+```
+\c otus
+\timing
+```
+```
+# Выгрузка в CSV :
+COPY test TO '/home/backups/test.sql' CSV HEADER;
+# Восстановление в таблицу test2:
+create table test2(id int);
+COPY test2 TO '/home/backups/test.sql' CSV HEADER;
 ```
 ```
 # Задача теста: сравнение по времени, по потокам, загрузки CPU, загрузки hdd:
 # При -Fc практически не будет сжатия; d (directory); -j (потоки); -F d (указ.формат.вывода d=директория) c (custom); -f (вывод в директорию путь обязателен);
+# Примитивный вариант бекапа, на экран  :
+pg_dump -d otus --create
 # Простой вариант бекапа, в SQL-скрипте :
-pg_dump -d otus --create > /home/backups/3.sql
+pg_dump -d otus --create > /home/backups/1.sql
 # Простой со сжатием, в 2,8 раза меньше весит: 
-pg_dump -d otus --create | gzip > /home/backups/otus3.gz
+pg_dump -d otus --create | gzip > /home/backups/otus1.gz
+
 # Архив с оглавлением для pg_restore. Минимальная степень сжатия <10% -Fc: 
 pg_dump -d otus -Fc > /home/backups/otus4.gz
 ```
