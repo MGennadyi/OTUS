@@ -49,7 +49,7 @@ pg_dump -d otus --create > /home/backups/1.sql
 # Простой со сжатием, в 2,8 раза меньше весит: 
 pg_dump -d otus --create | gzip > /home/backups/otus1.gz
 
-# Архив с оглавлением для pg_restore. Минимальная степень сжатия <10% -Fc: 
+# Кастомный формат архива с оглавлением для pg_restore. Минимальная степень сжатия <10% -Fc: 
 pg_dump -d otus -Fc > /home/backups/otus4.gz
 ```
 ##### Восстановление-1:
@@ -61,11 +61,12 @@ psql < /home/backups/3.sql
 
 ##### Восстановление-2 (drop/create/pg_restore):
 ```
-# pg_restore не отработает, если нет БД:
+# pg_restore не отработает, если БД не существует:
 echo "drop database otus;" | sudo -u postgres psql
 echo "create database otus;" | sudo -u postgres psql
 echo "drop database otus;" | psql
 echo "create database otus;" | psql
+# Заливаем данные БД Полеты
 # Тестим на скорость выполнения в различных вариантах --jobs:
 sudo -u postgres pg_restore otus3.gz -d otus
 sudo -u postgres pg_restore -j 1 -d otus /home/backups/otus4.gz
