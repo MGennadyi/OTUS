@@ -1,4 +1,10 @@
 # PGBENCH+PATRONI тест производительности
+```
+# Уст. времени выполнения команд:
+apt install time -y
+# Пример:
+time apt update
+```
 
 ###### Изначально postgres имеет параметр max_connections = 100
 ```
@@ -93,13 +99,13 @@ pgbench -i -s 100 -F 80 -U postgres testpgbench
 
 ```
 ###### Тест на разницу лидер/keepalived
-pgbench -c 25 -j 2 -P 10 -T 300 -U postgres testpgbench
+time pgbench -c 25 -j 2 -P 10 -T 300 -U postgres otus
 # Ответ:
 done in 1237.82 s (drop tables 0.00 s, create tables 0.13 s, client-side generate 263.41 s, vacuum 908.19 s, primary keys 66.08 s).
 pgbench -c 25 -j 2 -P 10 -T 300 -p 5432 -h 192.168.5.180 -U postgres testpgbench
 ###### Тест на разницу при 125 клиантах с ограничением 25  лидер/keepalived
-pgbench -c 125 -j 2 -P 10 -T 300 -U postgres testpgbench
-pgbench -c 125 -j 2 -P 10 -T 300 -p 5432 -h 192.168.5.180 -U postgres testpgbench
+pgbench -c 125 -j 2 -P 10 -T 300 -U postgres otus
+pgbench -c 125 -j 2 -P 10 -T 300 -p 5432 -h 192.168.5.180 -U postgres otus
 
 
 
