@@ -27,13 +27,18 @@ ORDER BY duration DESC;
 ###### Инфа по раннее выполненным, т.е. завершенным запросам: 
 ```
 # Предварительно активировать:
-vim /var/lib/postgresql/14/main/postgresql.conf
+# Не верно:
+sudo vim /var/lib/postgresql/14/main/postgresql.conf
+# Верно:
+sudo vim /etc/postgresql/14/main/postgresql.conf
+
 # Для patroni: add в секции 'postgresql':
 vim /etc/patroni.yml
 shared_preload_libraries = 'pg_stat_statements'
 systemctl stop patroni
 systemctl start patroni
 create extension pg_stat_statements;
+# Ответ:
 ```
 ```
 # ТОП по загрузке CPU:
