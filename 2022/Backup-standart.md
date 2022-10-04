@@ -50,7 +50,7 @@ COPY test2 TO '/home/backups/test.sql' CSV HEADER;
 # Примитивный вариант бекапа, на экран  :
 pg_dump -d otus --create
 # Простой вариант бекапа, в SQL-скрипте :
-time pg_dump -d otus --create > /home/backups/1.sql
+time sudo -u postgres pg_dump -d otus --create > /home/backups/otuss.sql
 # Простой со сжатием, в 2,8 раза меньше весит: 
 time pg_dump -d otus --create | gzip > /home/backups/otus1.gz
 
@@ -80,9 +80,11 @@ sudo -u postgres pg_restore -j 10 -d otus /home/backups/otus4.gz
 ```
 ##### Бекап БД "Полеты" sql; -Fc
 ```
-time pg_dump -d demo --create > /home/backups/demo.sql
-time pg_dump -d demo -Fc > /home/backups/demo.dmp
-time pg_dump dbname | gzip > /home/backups/demo.gz
+time sudo -u postgres pg_dump -d demo --create > /home/backups/1/demm.sql
+time sudo -u postgres pg_dump -d demo --create > /home/backups/demo.sql
+time sudo -u postgres pg_dump -d demo --create | gzip > /home/backups/demo.gz
+time sudo -u postgres pg_dump -d demo -Fc > /home/backups/demo.dmp
+time sudo -u postgres pg_dump demo | gzip > /home/backups/demo.gz
 ```
 ##### Восстановление БД "Полеты" (drop/create/pg_restore):
 ```
