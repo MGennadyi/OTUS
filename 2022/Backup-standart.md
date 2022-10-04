@@ -81,7 +81,8 @@ sudo -u postgres pg_restore -j 10 -d otus /home/backups/otus4.gz
 ##### Бекап БД "Полеты" sql; -Fc
 ```
 time pg_dump -d demo --create > /home/backups/demo.sql
-time pg_dump -d demo -Fc > /home/backups/demo.gz
+time pg_dump -d demo -Fc > /home/backups/demo.dmp
+time pg_dump dbname | gzip > /home/backups/demo.gz
 ```
 ##### Восстановление БД "Полеты" (drop/create/pg_restore):
 ```
