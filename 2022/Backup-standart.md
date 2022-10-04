@@ -80,14 +80,17 @@ sudo -u postgres pg_restore -j 10 -d otus /home/backups/otus4.gz
 ```
 ##### Бекап БД "Полеты" sql; -Fc
 ```
-time sudo -u postgres pg_dump -d demo --create > /home/backups/1/demo.sql
+time sudo -u postgres pg_dump -d demo -j 1 --create > /home/backups/1/demo.sql
 real    0m1,883s 103 868kb
+# параллельное резервное копирование поддерживается только с форматом "каталог"
+time sudo -u postgres pg_dump -Fd demo -j 4 -f /home/backups/2
+real    0m2,436s 21732 kb
 time sudo -u postgres pg_dump -d demo --create | gzip > /home/backups/demo.gz
-real    0m3,764s
+real    0m3,764s  0m4,035s
 time sudo -u postgres pg_dump -d demo -Fc > /home/backups/1/demo.dmp
 real    0m3,739s 22 258kb
-time sudo -u postgres pg_dump demo | gzip > /home/backups/1/demo.gz
-real    0m3,740s 22 187kb
+time sudo -u postgres pg_dump demo | gzip > /home/backups/1/demoo.gz
+real    0m3,740s  real    0m3,931s 22 187kb
 ```
 ##### Восстановление БД "Полеты" (drop/create/pg_restore):
 ```
