@@ -91,6 +91,8 @@ time sudo -u postgres pg_dump -d demo -Fc > /home/backups/1/demo.dmp
 real    0m3,739s 22 258kb
 time sudo -u postgres pg_dump demo | gzip > /home/backups/1/demoo.gz
 real    0m3,740s  real    0m3,931s 22 187kb
+time wal-g backup-push /var/lib/postgresql/14/main
+real    FULL=0m5,068s DELTA=0m1,462s 51mb
 ```
 ##### Восстановление БД "Полеты" (drop/create/pg_restore):
 ```
