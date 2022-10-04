@@ -29,8 +29,11 @@ insert into test values (10), (20), (30);
 ```
 ###### Включ.времени выполнения:
 ```
+# В postgresql
 \c otus
 \timing
+# В ОС;
+
 ```
 ```
 # Выгрузка в CSV :
@@ -72,6 +75,31 @@ sudo -u postgres pg_restore otus3.gz -d otus
 sudo -u postgres pg_restore -j 1 -d otus /home/backups/otus4.gz
 sudo -u postgres pg_restore -j 10 -d otus /home/backups/otus4.gz
 ```
+##### Восстановление-2 (drop/create/pg_restore):
+```
+# pg_restore не отработает, если БД не существует:
+echo "drop database otus;" | sudo -u postgres psql
+echo "create database otus;" | sudo -u postgres psql
+# Заливаем данные БД Полеты
+# Тестим на скорость выполнения в различных вариантах --jobs:
+sudo -u postgres pg_restore demo.gz -d otus
+sudo -u postgres pg_restore -j 1 -d demo /home/backups/demo4.gz
+sudo -u postgres pg_restore -j 10 -d demo /home/backups/demo.gz
+```
+
+
+
+
+
+
+
+
+```
+time pg_dump -Fd demo -j 10 -f /home/backups/1
+```
+
+
+
 ##### 2. Установка pg_probackup
 ```
 sudo sh -c 'echo "deb [arch=amd64] https://repo.postgrespro.ru/pg_probackup/deb/ $(lsb_release -cs) main-$(lsb_release -cs)" > /etc/apt/sources.list.d/pg_probackup.list'
