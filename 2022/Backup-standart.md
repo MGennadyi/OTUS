@@ -31,9 +31,10 @@ insert into test values (10), (20), (30);
 ```
 # В postgresql
 \c otus
-\timing
+\timing -вкл\выкл
 # В ОС;
 apt install time
+time команда
 ```
 ```
 # Выгрузка в CSV :
