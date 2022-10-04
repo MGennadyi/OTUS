@@ -72,7 +72,7 @@ echo "drop database otus;" | sudo -u postgres psql
 echo "create database otus;" | sudo -u postgres psql
 echo "drop database otus;" | psql
 echo "create database otus;" | psql
-# Заливаем данные БД Полеты
+
 # Тестим на скорость выполнения в различных вариантах --jobs:
 sudo -u postgres pg_restore otus3.gz -d otus
 sudo -u postgres pg_restore -j 1 -d otus /home/backups/otus4.gz
@@ -80,6 +80,10 @@ sudo -u postgres pg_restore -j 10 -d otus /home/backups/otus4.gz
 ```
 ##### Бекап БД "Полеты" sql; -Fc
 ```
+# Загрузка скаченной демо БД "Полеты":
+time psql -f demo-small-20170815.sql -U postgres
+
+
 time sudo -u postgres pg_dump -d demo -j 1 --create > /home/backups/1/demo.sql
 real    0m1,883s 103 868kb
 # параллельное резервное копирование поддерживается только с форматом "каталог"
@@ -96,30 +100,23 @@ real    FULL=0m5,068s DELTA=0m1,462s 51mb
 ```
 ##### Восстановление БД "Полеты" (drop/create/pg_restore):
 ```
-# Загрузка скаченной демо БД "Полеты":
-time psql -f demo-small-20170815.sql -U postgres
 # pg_restore не отработает, если БД не существует:
 time echo "drop database demo;" | sudo -u postgres psql
 time echo "create database demo;" | sudo -u postgres psql
-# Заливаем данные БД Полеты
+
 # Тестим на скорость выполнения в различных вариантах --jobs:
 time sudo -u postgres pg_restore demo.gz -d otus
-time sudo -u postgres pg_restore -j 1 -d demo /home/backups/1
-time sudo -u postgres pg_restore -j 10 -d demo /home/backups/2
+time sudo -u postgres pg_restore -j 1 -d demo -Fd /home/backups/2
+real    0m27,545s
+time sudo -u postgres pg_restore -j 4 -d demo -Fd /home/backups/2
+real    0m24,351s # разница маленькая 27-24s
+
+gunzip -c demo.gz | psql demo -U postgres
 ```
 
-
-
-
-
-
-
-
 ```
-time pg_dump -Fd demo -j 10 -f /home/backups/1
+time pg_dump -Fd demo -j 8 -f /home/backups/1
 ```
-
-
 
 ##### 2. Установка pg_probackup
 ```
