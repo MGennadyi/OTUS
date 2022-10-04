@@ -49,9 +49,10 @@ COPY test2 TO '/home/backups/test.sql' CSV HEADER;
 # Примитивный вариант бекапа, на экран  :
 pg_dump -d otus --create
 # Простой вариант бекапа, в SQL-скрипте :
-pg_dump -d otus --create > /home/backups/1.sql
+time pg_dump -d otus --create > /home/backups/1.sql
 # Простой со сжатием, в 2,8 раза меньше весит: 
-pg_dump -d otus --create | gzip > /home/backups/otus1.gz
+time pg_dump -d otus --create | gzip > /home/backups/otus1.gz
+
 
 # Кастомный формат архива с оглавлением для pg_restore. Минимальная степень сжатия <10% -Fc: 
 pg_dump -d otus -Fc > /home/backups/otus4.gz
@@ -76,9 +77,9 @@ sudo -u postgres pg_restore otus3.gz -d otus
 sudo -u postgres pg_restore -j 1 -d otus /home/backups/otus4.gz
 sudo -u postgres pg_restore -j 10 -d otus /home/backups/otus4.gz
 ```
-##### Восстановление-2 (drop/create/pg_restore):
+##### Восстановление БД "Полеты" (drop/create/pg_restore):
 ```
-# Загрузка скаченной демоБД "Полеты":
+# Загрузка скаченной демо БД "Полеты":
 psql -f demo-small-20170815.sql -U postgres
 # pg_restore не отработает, если БД не существует:
 echo "drop database demo;" | sudo -u postgres psql
