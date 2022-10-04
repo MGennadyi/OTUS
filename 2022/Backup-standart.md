@@ -20,9 +20,8 @@ pg_isready
 ```
 su postgres
 mkdir /home/backups/1
-# Включ.времени выполнения:
+sudo chown -R postgres /home/backups/1
 \c otus
-\timing
 create table test (id int);
 insert into test values (10), (20), (30);
 
