@@ -20,7 +20,9 @@ pg_isready
 ```
 su postgres
 mkdir /home/backups/1
+mkdir /home/backups/2
 sudo chown -R postgres /home/backups/1
+sudo chown -R postgres /home/backups/2
 \c otus
 create table test (id int);
 insert into test values (10), (20), (30);
@@ -63,7 +65,7 @@ drop database otus;
 psql < /home/backups/3.sql
 ```
 
-##### Восстановление-2 (drop/create/pg_restore):
+##### Восстановление OTUS (drop/create/pg_restore):
 ```
 # pg_restore не отработает, если БД не существует:
 echo "drop database otus;" | sudo -u postgres psql
@@ -76,18 +78,23 @@ sudo -u postgres pg_restore otus3.gz -d otus
 sudo -u postgres pg_restore -j 1 -d otus /home/backups/otus4.gz
 sudo -u postgres pg_restore -j 10 -d otus /home/backups/otus4.gz
 ```
+##### Бекап БД "Полеты" sql; -Fc
+```
+time pg_dump -d demo --create > /home/backups/demo.sql
+time pg_dump -d demo -Fc > /home/backups/demo.gz
+```
 ##### Восстановление БД "Полеты" (drop/create/pg_restore):
 ```
 # Загрузка скаченной демо БД "Полеты":
-psql -f demo-small-20170815.sql -U postgres
+time psql -f demo-small-20170815.sql -U postgres
 # pg_restore не отработает, если БД не существует:
-echo "drop database demo;" | sudo -u postgres psql
-echo "create database demo;" | sudo -u postgres psql
+time echo "drop database demo;" | sudo -u postgres psql
+time echo "create database demo;" | sudo -u postgres psql
 # Заливаем данные БД Полеты
 # Тестим на скорость выполнения в различных вариантах --jobs:
-sudo -u postgres pg_restore demo.gz -d otus
-sudo -u postgres pg_restore -j 1 -d demo /home/backups/demo4.gz
-sudo -u postgres pg_restore -j 10 -d demo /home/backups/demo.gz
+time sudo -u postgres pg_restore demo.gz -d otus
+time sudo -u postgres pg_restore -j 1 -d demo /home/backups/1
+time sudo -u postgres pg_restore -j 10 -d demo /home/backups/2
 ```
 
 
