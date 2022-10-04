@@ -270,9 +270,9 @@ psql otus -c "create table test(i int);"
 psql otus -c "insert into test values (10), (20), (30);"
 psql otus -c "select * from test;"
 ```
-###### 6.Делаем backup-push:
+###### 6. Делаем backup-push:
 ```
-wal-g backup-push /var/lib/postgresql/14/main
+time wal-g backup-push /var/lib/postgresql/14/main
 ```
 ###### Ужас: Couldn't find previous backup.
 ```
