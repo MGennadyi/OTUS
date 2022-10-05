@@ -277,6 +277,10 @@ systemctl restart postgresql
 # Ответ: 0.1
 psql -c 'show random_page_cost'
 # Ответ: 4
-
+```
+##### Вкл.статист ввода-вывода
+```
+psql -c 'ALTER SYSTEM SET track_io_timing=on;'
+psql -c 'ALTER SYSTEM SET track_functions="all";'
 
 ```
