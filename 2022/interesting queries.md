@@ -261,8 +261,8 @@ time sudo pg_ctlcluster 14 main2 stop
 time sudo pg_dropcluster 14 main2
 time sudo pg_ctlcluster 14 main3 stop
 time sudo pg_dropcluster 14 main3
-
-
 ```
-
-
+##### Перекинуть таблицу из БД otus в otus2:
+```
+pg_dump -d otus --table=test | psql -d otus2
+```
