@@ -266,3 +266,17 @@ time sudo pg_dropcluster 14 main3
 ```
 pg_dump -d otus --table=test | psql -d otus2
 ```
+##### Стоимость чтения с диска HDD и SSD;
+```
+select type, database, user_name, address, auth_method FROM pg_hba_file_rules;
+select random_page_cost FROM postgresql_file_rules;
+psql -c 'show seq_page_cost'
+# Ответ: 1
+psql -c 'alter system set seq_page_cost = 0.1'
+systemctl restart postgresql
+# Ответ: 0.1
+psql -c 'show random_page_cost'
+# Ответ: 4
+
+
+```
