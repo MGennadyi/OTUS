@@ -48,14 +48,14 @@ COPY test2 TO '/home/backups/test.sql' CSV HEADER;
 # Задача теста: сравнение по времени, по потокам, загрузки CPU, загрузки hdd:
 # При -Fc практически не будет сжатия; d (directory); -j (потоки); -F d (указ.формат.вывода d=директория) c (custom); -f (вывод в директорию путь обязателен);
 # Примитивный вариант бекапа, на экран  :
-pg_dump -d otus --create
+pg_dump -d otus
 # Простой вариант бекапа, в SQL-скрипте :
 time sudo -u postgres pg_dump -d otus --create > /home/backups/otuss.sql
 # Простой со сжатием, в 2,8 раза меньше весит: 
 time pg_dump -d otus --create | gzip > /home/backups/otus1.gz
 
 
-# Кастомный формат архива с оглавлением для pg_restore. Минимальная степень сжатия <10% -Fc: 
+# Кастомный формат архива с оглавлением для pg_restore: 
 pg_dump -d otus -Fc > /home/backups/otus4.gz
 ```
 ##### Восстановление-1:
@@ -83,7 +83,7 @@ sudo -u postgres pg_restore -j 10 -d otus /home/backups/otus4.gz
 # Загрузка скаченной демо БД "Полеты":
 time psql -f demo-small-20170815.sql -U postgres
 
-
+# Опция --create создает БД при восстановлении:
 time sudo -u postgres pg_dump -d demo -j 1 --create > /home/backups/1/demo.sql
 real    0m1,883s 103 868kb
 # параллельное резервное копирование поддерживается только с форматом "каталог"
