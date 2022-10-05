@@ -253,8 +253,16 @@ vim /etc/postgresql/14/main/postgresql.conf
 ```
 ```
 \d pg_stat_history
+```
+##### Видит ли ZABBIX больше 1 инстанса на ноде
+```
+time sudo pg_createcluster 14 main2
+time sudo pg_ctlcluster 14 main2 stop
+time sudo pg_dropcluster 14 main2
+time sudo pg_ctlcluster 14 main3 stop
+time sudo pg_dropcluster 14 main3
+
 
 ```
-
 
 
