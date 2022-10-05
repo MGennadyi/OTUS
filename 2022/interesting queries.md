@@ -282,5 +282,8 @@ psql -c 'show random_page_cost'
 ```
 psql -c 'ALTER SYSTEM SET track_io_timing=on;'
 psql -c 'ALTER SYSTEM SET track_functions="all";'
+SELECT pg_reload_conf();
+# Сброс статистики:
+SELECT pg_stat_reset();
 
 ```
