@@ -7,7 +7,10 @@ apt update
 apt install postgresql-14 -y
 pg_isready
 # Ответ: /var/run/postgresql:5432 - принимает подключения
-
+```
+###### Установка контроля времени выполнения:
+```
+apt install time -y
 ```
 ##### 2. Установка pg_probackup
 ```
@@ -95,6 +98,11 @@ pg_probackup-14 add-instance --instance 'main' -D /var/lib/postgresql/14/main
 
 ##### 7. Создаем и заполнение новой БД (не входя PSQL):
 ```
+time psql -f demo-small-20170815.sql -U postgres
+real    0m35,852s
+```
+
+```
 su postgres
 psql -c "CREATE DATABASE otus;"
 psql otus -c "create table test(i int);"
@@ -149,7 +157,8 @@ pg_ctlcluster 14 main start
 ##### 9. Делаем бекап из-под POSTGRES с параметрами: FULL, потоковая репликация+временный слот:
 ```
 # v_2022
-pg_probackup-14 backup --instance 'main' -b FULL --stream --temp-slot
+time pg_probackup-14 backup --instance 'main' -b FULL --stream --temp-slot
+# время/размер c demo: real    0m15,365s Backup RJBO31 resident size: 330MB
 # Ответ:
 INFO: Backup start, pg_probackup version: 2.5.8, instance: main, backup ID: RIEQ                                                                                                                                TF, backup mode: FULL, wal mode: STREAM, remote: false, compress-algorithm: none                                                                                                                                , compress-level: 1
 WARNING: This PostgreSQL instance was initialized without data block checksums.                                                                                                                                 pg_probackup have no way to detect data block corruption without them. Reinitial                                                                                                                                ize PGDATA with option '--data-checksums'.
@@ -244,7 +253,8 @@ INFO: Backup RIESAV completed
 ```
 # V_2021
 psql -c "ALTER USER backup PASSWORD '12345';"
-pg_probackup-14 backup --instance 'main' -b DELTA --stream --temp-slot -h localhost -U backup --pgdatabase=otus -p 5432
+time pg_probackup-14 backup --instance 'main' -b DELTA --stream --temp-slot -h localhost -U backup --pgdatabase=otus -p 5432
+# Время/размер c demo: real    0m6,790s Backup RJBOJP resident size: 32MB
 
 psql otus -c "insert into test values (50);"
 ```
@@ -270,12 +280,12 @@ GRANT EXECUTE ON FUNCTION pg_catalog.pg_control_checkpoint() TO backup;
 ```
 ##### Повторяем бекап OTUS
 ```
-pg_probackup-14 backup --instance 'main' -b FULL --stream --temp-slot -h localhost -U backup --pgdatabase=otus -p 5432
+time pg_probackup-14 backup --instance 'main' -b FULL --stream --temp-slot -h localhost -U backup --pgdatabase=otus -p 5432
 psql otus -c "insert into test values (60);"
-pg_probackup-14 backup --instance 'main' -b DELTA --stream --temp-slot -h localhost -U backup --pgdatabase=otus -p 5432
+time pg_probackup-14 backup --instance 'main' -b DELTA --stream --temp-slot -h localhost -U backup --pgdatabase=otus -p 5432
 ```
 ```
-pg_probackup-14 show
+time pg_probackup-14 show
 # Ответ:
  Instance  Version  ID      Recovery Time           Mode   WAL Mode  TLI  Time   Data   WAL  Zratio  Start LSN  Stop LSN   Status
 ==================================================================================================================================
@@ -294,7 +304,7 @@ psql otus -c "insert into test values (70);"
 ##### 13. Восстановление копию в новый кластер:
 ```
 # Создаем инстанс main2
-sudo pg_createcluster 14 main2
+time sudo pg_createcluster 14 main2
 # Ответ: Ver Cluster Port Status Owner    Data directory               Log file
 14  main2   5433 down   postgres /var/lib/postgresql/14/main2 /var/log/postgresql/postgresql-14-main2.log
 # Смотрим статус main2
@@ -316,11 +326,11 @@ psql -c 'show archive_mode'
  psql -c 'show archive_command'
  # Ответ: archive_command
 -----------------------------------------------------------------------------------------------------------------
- pg_probackup-14 archive-push -B /home/backups/ --instance=main --wal-file-path=%p --wal-file-name=%f --compress
+time pg_probackup-14 archive-push -B /home/backups/ --instance=main --wal-file-path=%p --wal-file-name=%f --compress
 ```
 ###### Аристов: мы перешли в другой режим бекапирования и лучше начинать с FULL бекапа:
 ```
-pg_probackup-14 backup --instance 'main' -b FULL --stream --temp-slot -h localhost -U backup --pgdatabase=otus -p 5432
+time pg_probackup-14 backup --instance 'main' -b FULL --stream --temp-slot -h localhost -U backup --pgdatabase=otus -p 5432
 psql otus -c "select * from test;"
 # Ответ: 
  i
@@ -336,9 +346,9 @@ psql otus -c "select * from test;"
 pg_probackup-14 show
 # Добавляем данные. Значение 80 после восстановления должны потерять:
 psql otus -c "insert into test values (80);"
-pg_probackup-14 backup --instance 'main' -b FULL --stream --temp-slot -h localhost -U backup --pgdatabase=otus -p 5432
+time pg_probackup-14 backup --instance 'main' -b FULL --stream --temp-slot -h localhost -U backup --pgdatabase=otus -p 5432
 
-pg_probackup-14 restore --instance 'main' -D /var/lib/postgresql/14/main2 --recovery-target-time="2022-09-19 12:40:03"
+time pg_probackup-14 restore --instance 'main' -D /var/lib/postgresql/14/main2 --recovery-target-time="2022-09-19 12:40:03"
 # Ответ:
 INFO: Validating backup RIG979
 INFO: Backup RIG979 data files are valid
@@ -413,7 +423,7 @@ SELECT type, database, user_name, address, auth_method FROM pg_hba_file_rules() 
  host  | {replication} | {all}     | ::1       | scram-sha-256
 (3 строки)
 # Создаем инстанс main2
-sudo pg_createcluster 14 main2
+time sudo pg_createcluster 14 main2
 pg_lsclusters
 # Ответ:
 14  main    5432 online postgres /var/lib/postgresql/14/main  /var/log/postgresql/postgresql-14-main.log
@@ -461,10 +471,10 @@ chmod 0600 ~/.pgpass
 
 
 ```
-sudo -u postgres pg_dump --no-password --format=directory -v --host=localhost -p 5432 --username=postgres --dbname=otus -f /home/backups/2/otus.dmp
-sudo -u postgres pg_dump -Fc -v --host=localhost --username=postgres --dbname=otus -f testdb.dump
-sudo -u postgres pg_dump -d otus -Fc > /home/backups/1
-sudo -u postgres pg_dump -d otus -j 1 -Fc -F d -f /home/backups/1
+time sudo -u postgres pg_dump --no-password --format=directory -v --host=localhost -p 5432 --username=postgres --dbname=otus -f /home/backups/2/otus.dmp
+time sudo -u postgres pg_dump -Fc -v --host=localhost --username=postgres --dbname=otus -f testdb.dump
+time sudo -u postgres pg_dump -d otus -Fc > /home/backups/1
+time sudo -u postgres pg_dump -d otus -j 1 -Fc -F d -f /home/backups/1
 ```
 ```
 vim dump.sh
@@ -496,9 +506,9 @@ su postgres
 ```
 ```
 # Востановление pg_restore -v (сообщения)
-pg_restore -h localhost -p 5432 -U postgres -d otus -v "/home/backups/1/psql-2022-09-21.sql.gz"
-pg_restore -j 2 --verbose --clean --no-acl --no-owner --host=localhost -p 5432 --dbname=otus --username=postgres "/home/backups/1/psql-2022-09-21.sql.gz"
-pg_restore -j 2 -h localhost -U postgres -F c -d otus "/home/backups/1/psql-2022-09-21.sql.gz"
+time pg_restore -h localhost -p 5432 -U postgres -d otus -v "/home/backups/1/psql-2022-09-21.sql.gz"
+time pg_restore -j 2 --verbose --clean --no-acl --no-owner --host=localhost -p 5432 --dbname=otus --username=postgres "/home/backups/1/psql-2022-09-21.sql.gz"
+time pg_restore -j 2 -h localhost -U postgres -F c -d otus "/home/backups/1/psql-2022-09-21.sql.gz"
 ```
 ```
 ```
