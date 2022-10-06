@@ -98,6 +98,9 @@ time sudo -u postgres pg_dump -Fd demo -j 4 -f /home/backups/1
 real    0m2,206s  21732 kb
 time sudo -u postgres pg_dump -d demo --create | gzip > /home/backups/demo.gz
 real    0m3,940s
+# Восстановление:
+time gunzip -c /home/backups/demo.gz | psql demo -U user
+
 time sudo -u postgres pg_dump -d demo -Fc > /home/backups/demo.dmp
 real    0m3,753s 22 258kb
 time sudo -u postgres pg_dump demo | gzip > /home/backups/1/demoo.gz
