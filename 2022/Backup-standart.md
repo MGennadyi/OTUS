@@ -73,18 +73,16 @@ time psql < /home/backups/democ.sql
 # pg_restore не отработает, если БД не существует:
 echo "drop database demo;" | sudo -u postgres psql
 echo "create database demo;" | sudo -u postgres psql
-echo "drop database demo ;" | psql
-echo "create database demo;" | psql
+```
 
 # Тестим на скорость выполнения в различных вариантах --jobs:
+```
 sudo -u postgres pg_restore otus3.gz -d otus
 sudo -u postgres pg_restore -j 1 -d otus /home/backups/otus4.gz
 sudo -u postgres pg_restore -j 10 -d otus /home/backups/otus4.gz
 ```
 ##### Бекап БД "Полеты" sql; -Fc
 ```
-
-
 # Опция --create создает БД при восстановлении:
 time sudo -u postgres pg_dump -d demo -j 1 --create > /home/backups/1/demo.sql
 real    0m1,883s 103 868kb
