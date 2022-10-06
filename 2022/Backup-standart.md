@@ -19,10 +19,14 @@ pg_isready
 # PG_DUMP
 ```
 su postgres
+mkdir /home/backups/sql
 mkdir /home/backups/1
 mkdir /home/backups/2
+mkdir /home/backups/3
+sudo chown -R postgres /home/backups/sql
 sudo chown -R postgres /home/backups/1
 sudo chown -R postgres /home/backups/2
+sudo chown -R postgres /home/backups/3
 \c otus
 create table test (id int);
 insert into test values (10), (20), (30);
@@ -83,20 +87,28 @@ sudo -u postgres pg_restore -j 10 -d demo /home/backups/demo.gz
 ```
 ##### Бекап БД "Полеты" sql; -Fc
 ```
-# Опция --create создает БД при восстановлении:
-time sudo -u postgres pg_dump -d demo -j 1 --create > /home/backups/1/demo.sql
-real    0m1,883s 103 868kb
-# параллельное резервное копирование поддерживается только с форматом "каталог"
-time sudo -u postgres pg_dump -Fd demo -j 4 -f /home/backups/2
-real    0m2,436s 21732 kb
+# Опция --create добавляет команду создания БД при восстановлении из sql-файла:
+time sudo -u postgres pg_dump -d demo -j 1 --create > /home/backups/sql/demo.sql
+real    real    0m2,001s 103 868kb real
+# Параллельное резервное копирование поддерживается только с форматом "каталог"
+time sudo -u postgres pg_dump -Fd demo -j 1 -f /home/backups/1
+real    0m4,014s
+rm -rf /home/backups/1/*
+time sudo -u postgres pg_dump -Fd demo -j 4 -f /home/backups/1
+real    0m2,206s  21732 kb
 time sudo -u postgres pg_dump -d demo --create | gzip > /home/backups/demo.gz
-real    0m3,764s  0m4,035s
-time sudo -u postgres pg_dump -d demo -Fc > /home/backups/1/demo.dmp
-real    0m3,739s 22 258kb
+real    0m3,940s
+time sudo -u postgres pg_dump -d demo -Fc > /home/backups/demo.dmp
+real    0m3,753s 22 258kb
 time sudo -u postgres pg_dump demo | gzip > /home/backups/1/demoo.gz
-real    0m3,740s  real    0m3,931s 22 187kb
+real   0m3,931s 22 187kb
 time wal-g backup-push /var/lib/postgresql/14/main
-real    FULL=0m5,068s DELTA=0m1,462s 51mb
+real    FULL=0m7,000s DELTA=0m1,662s 51mb
+
+pg_dumpall -f dumpall.sql
+time sudo -u postgres pg_dumpall > /home/backups/sql/dumpall.sql
+real    0m4,799s 101437 kb
+
 ```
 ##### Восстановление БД "Полеты" (drop/create/pg_restore):
 ```
@@ -518,7 +530,9 @@ pg_lsclusters
 sudo rm -rf /var/lib/postgresql/14/main2
 # Сделаем бэкап нашей БД
 su postgres
-pg_basebackup -p 5432 -D /var/lib/postgresql/14/main2
+time pg_basebackup -p 5432 -D /var/lib/postgresql/14/main2
+real    0m9,449s -
+
 # До v_10 необходимо задавать другой порт:
 # echo 'port = 5433' >> /var/lib/postgresql/14/main2/postgresql.auto.conf - не заработает
 # Стуртуем кластер
@@ -561,9 +575,20 @@ archive_timeout: 600
 psql -c 'alter system set archive_mode = on'  --правка postgresql.auto.conf
 systemctl restart postgresql
 psql -c 'show archive_mode'
-
-
 ```
+###### Проверяем
+```
+postgres=# SELECT name, setting FROM pg_settings WHERE name IN ('archive_mode','archive_command','archive_timeout');
+      name       |                                     setting
+-----------------+---------------------------------------------------------------------------------
+ archive_command | wal-g wal-push "%p" >> /var/lib/postgresql/14/main/log/archive_command.log 2>&1
+ archive_mode    | on
+ archive_timeout | 60
+```
+
+
+
+
 ```
 vim ~/.pgpass
 localhost:5432:*:postgres:12345
