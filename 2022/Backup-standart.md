@@ -75,7 +75,7 @@ echo "drop database demo;" | sudo -u postgres psql
 echo "create database demo;" | sudo -u postgres psql
 ```
 
-# Тестим на скорость выполнения в различных вариантах --jobs:
+##### Тестим на скорость выполнения в различных вариантах --jobs:
 ```
 sudo -u postgres pg_restore otus3.gz -d otus
 sudo -u postgres pg_restore -j 1 -d otus /home/backups/otus4.gz
