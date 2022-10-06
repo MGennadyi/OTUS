@@ -37,6 +37,10 @@ insert into test values (10), (20), (30);
 apt install time
 time команда
 ```
+##### Загрузка скаченной демо БД "Полеты":
+```
+time psql -f demo-small-20170815.sql -U postgres
+```
 ```
 # Выгрузка в CSV :
 COPY test TO '/home/backups/test.sql' CSV HEADER;
@@ -44,25 +48,24 @@ COPY test TO '/home/backups/test.sql' CSV HEADER;
 create table test2(id int);
 COPY test2 TO '/home/backups/test.sql' CSV HEADER;
 ```
+##### Задача теста: сравнение по времени, по потокам, загрузки CPU, hdd:
 ```
-# Задача теста: сравнение по времени, по потокам, загрузки CPU, загрузки hdd:
 # При -Fc практически не будет сжатия; d (directory); -j (потоки); -F d (указ.формат.вывода d=директория) c (custom); -f (вывод в директорию путь обязателен);
-# Примитивный вариант бекапа, на экран  :
-pg_dump -d otus
+# Примитивный вариант бекапа на экран не используем :
+time pg_dump -d demo
 # Простой вариант бекапа, в SQL-скрипте :
-time sudo -u postgres pg_dump -d otus --create > /home/backups/otuss.sql
-# Простой со сжатием, в 2,8 раза меньше весит: 
-time pg_dump -d otus --create | gzip > /home/backups/otus1.gz
-
-
+time sudo -u postgres pg_dump -d demo --create > /home/backups/demo.sql
+# Простой со сжатием : 
+time pg_dump -d demo --create | gzip > /home/backups/demo.gz
 # Кастомный формат архива с оглавлением для pg_restore: 
-pg_dump -d otus -Fc > /home/backups/otus4.gz
+pg_dump -d demo -Fc > /home/backups/democ.gz
 ```
 ##### Восстановление-1:
 ```
-drop database otus;
+psql
+drop database demo;
 \q
-psql < /home/backups/3.sql
+time psql < /home/backups/democ.sql
 ```
 
 ##### Восстановление OTUS (drop/create/pg_restore):
@@ -80,8 +83,7 @@ sudo -u postgres pg_restore -j 10 -d otus /home/backups/otus4.gz
 ```
 ##### Бекап БД "Полеты" sql; -Fc
 ```
-# Загрузка скаченной демо БД "Полеты":
-time psql -f demo-small-20170815.sql -U postgres
+
 
 # Опция --create создает БД при восстановлении:
 time sudo -u postgres pg_dump -d demo -j 1 --create > /home/backups/1/demo.sql
