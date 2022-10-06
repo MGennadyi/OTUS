@@ -71,10 +71,10 @@ time psql < /home/backups/democ.sql
 ##### Восстановление OTUS (drop/create/pg_restore):
 ```
 # pg_restore не отработает, если БД не существует:
-echo "drop database otus;" | sudo -u postgres psql
-echo "create database otus;" | sudo -u postgres psql
-echo "drop database otus;" | psql
-echo "create database otus;" | psql
+echo "drop database demo;" | sudo -u postgres psql
+echo "create database demo;" | sudo -u postgres psql
+echo "drop database demo ;" | psql
+echo "create database demo;" | psql
 
 # Тестим на скорость выполнения в различных вариантах --jobs:
 sudo -u postgres pg_restore otus3.gz -d otus
