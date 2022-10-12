@@ -107,13 +107,20 @@ pgbench -c 25 -j 2 -P 10 -T 300 -p 5432 -h 192.168.5.180 -U postgres testpgbench
 pgbench -c 125 -j 2 -P 10 -T 300 -U postgres otus
 pgbench -c 125 -j 2 -P 10 -T 300 -p 5432 -h 192.168.5.180 -U postgres otus
 
+```
+
+###### Тест host=pgdump
+```
+postgres=# SHOW synchronous_commit;
+ synchronous_commit
+--------------------
+ on
+(1 строка)
+time pgbench -h localhost -p 5432 -U postgres -i -s 100 -F 80 otus
+time pgbench -c 125 -j 1 -P 10 -T 100 -U postgres otus
 
 
 ```
-
-
-
-
 
 
 
