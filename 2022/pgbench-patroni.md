@@ -116,10 +116,21 @@ postgres=# SHOW synchronous_commit;
 --------------------
  on
 (1 строка)
-time pgbench -h localhost -p 5432 -U postgres -i -s 100 -F 80 otus
-time pgbench -c 125 -j 1 -P 10 -T 100 -U postgres otus
+# Инициализация:
+time pgbench -i -s 100 -F 80 -U postgres otus
+done in 185.96 s (drop tables 0.42 s, create tables 0.09 s, client-side generate 57.41 s, vacuum 75.85 s, primary keys 52.18 s).
+real    3m6,037s
 
 
+# Запуск теста
+time pgbench -c 100 -j 1 -P 10 -T 100 -U postgres otus
+# Ответ:
+number of transactions actually processed: 13431
+latency average = 741.818 ms
+latency stddev = 514.101 ms
+initial connection time = 432.039 ms
+tps = 132.733466 (without initial connection time)
+real    1m42,602s
 ```
 
 
