@@ -285,5 +285,22 @@ psql -c 'ALTER SYSTEM SET track_functions="all";'
 SELECT pg_reload_conf();
 # Сброс статистики:
 SELECT pg_stat_reset();
+```
+###### Загруженность оборудования
+```
+# Если показатель приближается к 100%, то нужно подумать об увеличении памяти.
+iostat –dx
+```
+###### Активеые запросы больше 5 сек:
+```
+SELECT now() - query_start as "runtime", usename, datname, wait_event, state, query FROM pg_stat_activity WHERE now() - query_start > '5 seconds'::interval and state='active' ORDER BY runtime DESC;
+ runtime | usename | datname | wait_event | state | query
+---------+---------+---------+------------+-------+-------
+(0 строк)
+```
+###### Зависшие транзакции:
+```
+SELECT pid, xact_start, now() - xact_start AS duration FROM pg_stat_activity WHERE state LIKE '%transaction%' ORDER BY 3 DESC;
+
 
 ```
