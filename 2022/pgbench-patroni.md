@@ -106,7 +106,8 @@ pgbench -c 25 -j 2 -P 10 -T 300 -p 5432 -h 192.168.5.180 -U postgres testpgbench
 ###### Тест на разницу при 125 клиантах с ограничением 25  лидер/keepalived
 pgbench -c 125 -j 2 -P 10 -T 300 -U postgres otus
 pgbench -c 125 -j 2 -P 10 -T 300 -p 5432 -h 192.168.5.180 -U postgres otus
-
+# Запуск теста
+pgbench -c 1 -j  -P 10 -T 300 -p 5432 -h 192.168.5.180 -U postgres otus
 ```
 
 ###### Тест host=pgdump Режим synchronous_commit = on
