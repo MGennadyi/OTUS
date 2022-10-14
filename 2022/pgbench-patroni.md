@@ -28,9 +28,9 @@ postgresql:
 retry_timeout: 10
 ttl: 30
 ```
-###### Аристов: pinding restart
+###### Не поможет обновить параметры:
 ```
-# Не поможет, если:
+# Примениться, если запросит на сохранение:
 sudo -u postgres psql -h localhost
 alter system set max_connections=25;
 ````
@@ -40,6 +40,8 @@ sudo patronictl -c /etc/patroni.yml edit-config
 # Убираем null и Добавляем ниже:
   parameters:
     max_connections: 25
+# Примениться, если запросит на сохранение. Далее обязательно перегрузка restart! reload-не поможет:
+sudo patronictl -c /etc/patroni.yml restart patroni
 ```
 ```
 sudo -u postgres psql -h localhost
