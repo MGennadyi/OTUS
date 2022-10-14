@@ -1,3 +1,8 @@
+###### Просмотр полей в представлении; total_exec_time:
+```
+\d pg_stat_statements
+\d pg_stat_activity
+```
 ## pg_stat_activity
 ###### Инфа по выполняющимся в данное время запросам :
 ```
@@ -300,7 +305,11 @@ SELECT now() - query_start as "runtime", usename, datname, wait_event, state, qu
 ```
 ###### Зависшие транзакции:
 ```
+sudo -u postgres psql -h localhost
 SELECT pid, xact_start, now() - xact_start AS duration FROM pg_stat_activity WHERE state LIKE '%transaction%' ORDER BY 3 DESC;
-
-
+select pg_cancel_backend(pid) from pg_stat_activity where state = 'idle in transactions' and datname = 'otus';
+select pg_cancel_backend(pid) from pg_stat_activity where state = 'idle in transactions';
+select * from pg_stat_activity\gx
+select datname, usename, wait_event from pg_stat_activity where state = 'idle';
+select count(*) from pg_stat_activity where state = 'idle';
 ```
