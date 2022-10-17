@@ -4,6 +4,10 @@
 \d pg_stat_activity
 ```
 ## pg_stat_activity
+###### Просмотр активных сессий:
+```
+select pid as process_id, usename as username, datname as database_name, client_addr as client_address, application_name, backend_start, state, state_change from pg_stat_activity;
+```
 ###### Инфа по выполняющимся в данное время запросам :
 ```
 # активные (state='active') запросы длительностью более 5 секунд:
