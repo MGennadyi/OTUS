@@ -329,5 +329,11 @@ show random_page_cost;
  random_page_cost
 ------------------
  10
+ show max_connections;
+ alter system set max_connections = 150;
+ systemctl restart postgresql
+
+ 
+ 
 ```
 
