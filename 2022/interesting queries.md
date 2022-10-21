@@ -317,3 +317,17 @@ select * from pg_stat_activity\gx
 select datname, usename, wait_event from pg_stat_activity where state = 'idle';
 select count(*) from pg_stat_activity where state = 'idle';
 ```
+###### random_page_cost
+```
+show random_page_cost;
+ random_page_cost
+------------------
+ 4
+alter system set random_page_cost = 10;
+sudo patronictl -c /etc/patroni.yml restart patroni
+show random_page_cost;
+ random_page_cost
+------------------
+ 10
+```
+
