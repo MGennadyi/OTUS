@@ -332,6 +332,7 @@ show random_page_cost;
  show max_connections;
  alter system set max_connections = 150;
  systemctl restart postgresql
+pgbench -i -s 100 -F 80 -U postgres otus
 
  
  
