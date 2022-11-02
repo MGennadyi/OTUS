@@ -118,7 +118,25 @@ otus=# explain (analyze, buffers) select count(distinct id) from users;
 (16 строк)
 Время: 5058,112 мс (00:05,058)
 ```
-
+###### Повторно:
+```
+otus=# explain (analyze, buffers) select count(distinct id) from users;
+                                                                    QUERY PLAN
+---------------------------------------------------------------------------------------------------------------------------------------------------
+ Aggregate  (cost=202487.05..202487.06 rows=1 width=8) (actual time=2983.612..2983.614 rows=1 loops=1)
+   Buffers: shared hit=27395, temp read=14683 written=14688
+   ->  Index Only Scan using users_pkey on users  (cost=0.43..177486.96 rows=10000035 width=8) (actual time=0.025..1035.222 rows=10000000 loops=1)
+         Heap Fetches: 3904
+         Buffers: shared hit=27395
+ Planning Time: 0.082 ms
+ JIT:
+   Functions: 2
+   Options: Inlining false, Optimization false, Expressions true, Deforming true
+   Timing: Generation 0.257 ms, Inlining 0.000 ms, Optimization 0.101 ms, Emission 1.218 ms, Total 1.576 ms
+ Execution Time: 2983.958 ms
+(11 строк)
+Время: 2984,443 мс (00:02,984)
+```
 
 
 
