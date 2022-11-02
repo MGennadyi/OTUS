@@ -1,5 +1,8 @@
 # Ускорение с помощью конфигурации базы и оптимизации запросов
 ```
+\timing
+```
+```
 create table users
 (
   id bigint primary key,
@@ -9,11 +12,9 @@ create table users
   create_date timestamp not null default now()
 );
 ```
+###### Добавим в нее 10 млн записей
 ```
-CREATE TABLE
-insert into users
-select id, random() * id, md5(sin(id)::text), md5(cos(id)::text)
-from generate_series(1, 10000000) id;
+insert into users select id, random() * id, md5(sin(id)::text), md5(cos(id)::text) from generate_series(1, 10000000) id;
 ```
 ```
 analyze users;
