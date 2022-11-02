@@ -18,17 +18,20 @@ insert into users select id, random() * id, md5(sin(id)::text), md5(cos(id)::tex
 ```
 ```
 analyze users;
-# Ответ: ANALYZE
 ```
 ```
 \timing
 ```
 ```
 select count(distinct id) from users;
-# Ответ:
-
+# Ответ: Время: 48999,199 мс (00:48,999)
 ```
-
+###### Хорошо ьы просмотреть hints из ролика про мониторинг
+###### Повторим
+```
+select count(distinct id) from users;
+# Ответ: Время: 5930,707 мс (00:05,931) - разница в 10 раз
+```
 
 
 
