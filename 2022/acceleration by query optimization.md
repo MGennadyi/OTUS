@@ -82,8 +82,42 @@ explain (analyze, buffers) select count(distinct id) from users;
 Время: 3837,578 мс (00:03,838)
 ```
 ######  интересный показатель temp_write. Он показывает, что оперативной памяти на запрос не хватило, и в какой-то момент БД создала файл на 30 страниц на диске, а потом оттуда их считывала. То есть можно увеличить work_mem, и тогда этот показатель исчезнет.
-
-
+```
+otus=# show work_mem;
+ work_mem
+----------
+ 4MB
+(1 строка)
+# Изменим:
+otus=# alter system set work_mem = "40MB";
+otus=# show work_mem;
+ work_mem
+----------
+ 40MB
+```
+```
+otus=# explain (analyze, buffers) select count(distinct id) from users;
+                                                                    QUERY PLAN
+---------------------------------------------------------------------------------------------------------------------------------------------------
+ Aggregate  (cost=202487.05..202487.06 rows=1 width=8) (actual time=4175.482..4175.483 rows=1 loops=1)
+   Buffers: shared hit=4 read=27400, temp read=14683 written=14688
+   I/O Timings: read=950.091
+   ->  Index Only Scan using users_pkey on users  (cost=0.43..177486.96 rows=10000035 width=8) (actual time=0.209..2069.674 rows=10000000 loops=1)
+         Heap Fetches: 3904
+         Buffers: shared read=27395
+         I/O Timings: read=939.904
+ Planning:
+   Buffers: shared hit=44 read=10
+   I/O Timings: read=45.341
+ Planning Time: 45.765 ms
+ JIT:
+   Functions: 2
+   Options: Inlining false, Optimization false, Expressions true, Deforming true
+   Timing: Generation 0.381 ms, Inlining 0.000 ms, Optimization 0.224 ms, Emission 14.108 ms, Total 14.713 ms
+ Execution Time: 4888.535 ms
+(16 строк)
+Время: 5058,112 мс (00:05,058)
+```
 
 
 
