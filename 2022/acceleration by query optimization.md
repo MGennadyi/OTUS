@@ -62,6 +62,26 @@ explain analyze select count(distinct id) from users;
 (9 строк)
 Время: 3990,685 мс (00:03,991)
 ```
+######
+```
+explain (analyze, buffers) select count(distinct id) from users;
+                                                           QUERY PLAN
+---------------------------------------------------------------------------------------------------------------------------------------------------
+ Aggregate  (cost=202487.05..202487.06 rows=1 width=8) (actual time=3836.661..3836.662 rows=1 loops=1)
+   Buffers: shared hit=27395, temp read=30325 written=30382
+   ->  Index Only Scan using users_pkey on users  (cost=0.43..177486.96 rows=10000035 width=8) (actual time=0.037..1063.914 rows=10000000 loops=1)
+         Heap Fetches: 3904
+         Buffers: shared hit=27395
+ Planning Time: 0.075 ms
+ JIT:
+   Functions: 2
+   Options: Inlining false, Optimization false, Expressions true, Deforming true
+   Timing: Generation 0.320 ms, Inlining 0.000 ms, Optimization 0.142 ms, Emission 1.386 ms, Total 1.849 ms
+ Execution Time: 3837.063 ms
+(11 строк)
+Время: 3837,578 мс (00:03,838)
+```
+
 
 
 
