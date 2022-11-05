@@ -172,7 +172,37 @@ otus=# explain (analyze, buffers) select count(distinct id) from users;
 select sourceline, name, setting, applied from pg_file_settings where name = 'work_mem';
 
 select name, setting unit, boot_val, reset_val, source, sourcefile, sourceline, pending_restart, context from pg_settings WHERE name = 'work_mem' \gx
-
+```
+#### Поиск НЕИСП ИНДЕКСОВ:
+###### Самое простое — найти индексы, по которым вообще не было проходов:
+```
+SELECT * FROM pg_stat_user_indexes WHERE idx_scan = 0;
+```
+```
+postgres=# SELECT
+  relname                                               AS TableName,
+  to_char(seq_scan, '999,999,999,999')                  AS TotalSeqScan,
+  to_char(idx_scan, '999,999,999,999')                  AS TotalIndexScan,
+  to_char(n_live_tup, '999,999,999,999')                AS TableRows,
+  pg_size_pretty(pg_relation_size(relname :: regclass)) AS TableSize
+FROM pg_stat_all_tables
+WHERE schemaname = 'public'
+      AND 50 * seq_scan > idx_scan -- more than 2%
+      AND n_live_tup > 10000
+      AND pg_relation_size(relname :: regclass) > 5000000
+ORDER BY relname ASC;
+ tablename | totalseqscan | totalindexscan | tablerows | tablesize
+-----------+--------------+----------------+-----------+-----------
+(0 строк)
+--------------------------------
+This checks if there are more sequence scans than index scans. If the table is small, it gets ignored, since Postgres seems to prefer sequence scans for them.
+Above query does reveal missing indexes.
+The next step would be to detect missing combined indexes. I guess this is not easy, but doable. Maybe analyzing the slow queries ... I heard pg_stat_statements could help.
+----------------------------------
+postgres=# SELECT relname, seq_scan-idx_scan AS too_much_seq, case when seq_scan-idx_scan>0 THEN 'Missing Index?' ELSE 'OK' END,  pg_relation_size(relid::regclass) AS rel_size, seq_scan, idx_scan  FROM pg_stat_all_tables WHERE schemaname='public' AND pg_relation_size(relid::regclass)>80000 ORDER BY too_much_seq DESC;
+ relname | too_much_seq | case | rel_size | seq_scan | idx_scan
+---------+--------------+------+----------+----------+----------
+(0 строк)
 ```
 
 
