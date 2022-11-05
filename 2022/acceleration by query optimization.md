@@ -105,13 +105,15 @@ sourceline      |
 pending_restart | f
 context         | user
 ```
+###### Изменим work_mem:
 ```
-# Изменим work_mem:
 otus=# alter system set work_mem = "40MB";
 otus=# show work_mem;
  work_mem
 ----------
  40MB
+ # Изменим другим способом:
+ SET work_mem TO '40MB'
 ```
 ```
 otus=# explain (analyze, buffers) select count(distinct id) from users;
