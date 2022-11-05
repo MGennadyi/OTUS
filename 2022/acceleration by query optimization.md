@@ -83,6 +83,10 @@ explain (analyze, buffers) select count(distinct id) from users;
 ```
 ######  интересный показатель temp_write. Он показывает, что оперативной памяти на запрос не хватило, и в какой-то момент БД создала файл на 30 страниц на диске, а потом оттуда их считывала. То есть можно увеличить work_mem (изм.операции с сортировкой), и тогда этот показатель исчезнет.
 ```
+postgres=# show shared_buffers;
+ shared_buffers
+----------------
+ 128MB
 otus=# show work_mem;
  work_mem
 ----------
