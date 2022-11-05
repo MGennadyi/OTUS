@@ -87,8 +87,26 @@ otus=# show work_mem;
  work_mem
 ----------
  4MB
-(1 строка)
-# Изменим:
+# Смотрим по другому:
+postgres=# select sourceline, name, setting, applied from pg_file_settings where name = 'work_mem';
+ sourceline |   name   | setting | applied
+------------+----------+---------+---------
+          7 | work_mem | 40MB    | t
+ # Смотрим по другому: 
+postgres=# select name, setting unit, boot_val, reset_val, source, sourcefile, sourceline, pending_restart, context from pg_settings WHERE name = 'work_mem' \gx
+-[ RECORD 1 ]---+---------
+name            | work_mem
+unit            | 4096
+boot_val        | 4096
+reset_val       | 4096
+source          | default
+sourcefile      |
+sourceline      |
+pending_restart | f
+context         | user
+```
+```
+# Изменим work_mem:
 otus=# alter system set work_mem = "40MB";
 otus=# show work_mem;
  work_mem
@@ -136,6 +154,13 @@ otus=# explain (analyze, buffers) select count(distinct id) from users;
  Execution Time: 2983.958 ms
 (11 строк)
 Время: 2984,443 мс (00:02,984)
+```
+######
+```
+select sourceline, name, setting, applied from pg_file_settings where name = 'work_mem';
+
+select name, setting unit, boot_val, reset_val, source, sourcefile, sourceline, pending_restart, context from pg_settings WHERE name = 'work_mem' \gx
+
 ```
 
 
