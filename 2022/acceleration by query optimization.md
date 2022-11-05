@@ -88,6 +88,11 @@ otus=# show work_mem;
 ----------
  4MB
 # Смотрим по другому:
+postgres=# SELECT current_setting('work_mem');
+ current_setting
+-----------------
+ 4MB
+# Смотрим по другому:
 postgres=# select sourceline, name, setting, applied from pg_file_settings where name = 'work_mem';
  sourceline |   name   | setting | applied
 ------------+----------+---------+---------
