@@ -14,9 +14,12 @@ systemctl reboot
 
 ```
 apt install proxmox-ve postfix open-iscsi
-
 ```
-
+##### Восстановление vm из резервнной копии
+```
+# Директория vm для восстановления бекапов: 
+/var/lib/vz/dump
+```
 
 
 
