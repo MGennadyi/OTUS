@@ -24,9 +24,31 @@ passwd
 # В результате появится autirized_keys
 ```
 ```
+mkdir hosts.txt
+
 [staging_server]
-etcd1 ansible_host=192.168.5.162 ansible_user=mgb ansible_privat_key_file=/home/mgb/.ssh/autirized_keys
+etcd2 ansible_host=192.168.5.163 ansible_user=mgb ansible_privat_key_file=/home/mgb/.ssh/autirized_keys
+etcd2 ansible_host=192.168.5.163 ansible_user=mgb ansible_privat_key_file=/home/mgb/.ssh/autirized_keys
 ```
+```
+mgb@etcd1:~/ansible$ ansible -i hosts.txt all -m ping
+etcd2 | SUCCESS => {
+    "ansible_facts": {
+        "discovered_interpreter_python": "/usr/bin/python3"
+    },
+    "changed": false,
+    "ping": "pong"
+}
+etcd3 | SUCCESS => {
+    "ansible_facts": {
+        "discovered_interpreter_python": "/usr/bin/python3"
+    },
+    "changed": false,
+    "ping": "pong"
+}
+```
+
+
 
 
 
