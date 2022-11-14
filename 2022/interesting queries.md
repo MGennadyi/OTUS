@@ -333,8 +333,25 @@ show random_page_cost;
  alter system set max_connections = 150;
  systemctl restart postgresql
 pgbench -i -s 100 -F 80 -U postgres otus
-
- 
- 
 ```
+##### Мониторинг процессов автовакуума
+```
+# Для 1С:
+# Увелич.autovacuum_max_workers в 2 раза, > autovacuum_vacuum_cost_limit увелич. в два раза;
+autovacuum_analyze_scale_factor = 0.5
+# Мониторинг процессов автовакуума
+select count(1) from pg_stat_progress_vacuum;
+```
+##### REINDEX INDEX CONCURRENTLY
+```
+CREATE INDEX CONCURRENTLY new_index ON …;
+DROP INDEX CONCURRENTLY old_index;
+ALTER INDEX new_index RENAME TO old_index;
+CREATE EXTENSION pg_repack;
+```
+
+
+
+
+
 
