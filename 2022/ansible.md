@@ -16,11 +16,16 @@ PasswordAuthentication yes
 sudo systemctl restart sshd
 # С etcd1 раскладываем ключ по другим ВМ из под mgb:
 ssh-copy-id etcd2
+yes
+passwd
 ssh-copy-id etcd3
+yes
+passwd
+# В результате появится autirized_keys
 ```
 ```
 [staging_server]
-etcd1 ansible_host=192.168.5.162 ansible_user=mgb ansible_privat_key_file=/home/mgb/.ssh/autir
+etcd1 ansible_host=192.168.5.162 ansible_user=mgb ansible_privat_key_file=/home/mgb/.ssh/autirized_keys
 ```
 
 
