@@ -47,7 +47,16 @@ etcd3 | SUCCESS => {
     "ping": "pong"
 }
 ```
+##### Отконфигурируем ansible:
+```
+vim ansible.cfg
+[defaults]
+host_key_checking = false
+inventory = ./hosts.txt
 
+
+
+```
 
 
 
