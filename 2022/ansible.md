@@ -2,6 +2,10 @@
 
 ```
 # создаем ssh ключ (без фразы)  для связывания ВМ между собой:
+sudo apt install ssh
+mkdir /home/mgb/.ssh
+sudo usermod -aG sudo mgb
+sudo chown -R mgb /home/mgb/.ssh
 su mgb
 sudo -u mgb ssh-keygen -t rsa -b 4096 -q -f /home/mgb/.ssh/id_rsa -N ''
 ```
