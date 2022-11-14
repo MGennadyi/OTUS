@@ -14,7 +14,7 @@ sudo -u mgb ssh-keygen -t rsa -b 4096 -q -f /home/mgb/.ssh/id_rsa -N ''
 sudo vim /etc/ssh/sshd_config
 PasswordAuthentication yes
 sudo systemctl restart sshd
-# С etcd1 раскладываем ключ по другим ВМ из под gpadmin:
+# С etcd1 раскладываем ключ по другим ВМ из под mgb:
 ssh-copy-id etcd2
 ssh-copy-id etcd3
 ```
