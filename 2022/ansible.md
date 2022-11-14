@@ -2,14 +2,15 @@
 
 ```
 # создаем ssh ключ (без фразы)  для связывания ВМ между собой:
-sudo apt install ssh
-mkdir /home/mgb/.ssh
 sudo usermod -aG sudo mgb
-sudo chown -R mgb /home/mgb/.ssh
+sudo apt install ssh
 su mgb
+mkdir /home/mgb/.ssh
+# Если не из-под mgb, то
+sudo chown -R mgb /home/mgb/.ssh
 sudo -u mgb ssh-keygen -t rsa -b 4096 -q -f /home/mgb/.ssh/id_rsa -N ''
 
-# Раскоментировать 
+# Раскоментировать на всех нодах:
 sudo vim /etc/ssh/sshd_config
 PasswordAuthentication yes
 sudo systemctl restart sshd
