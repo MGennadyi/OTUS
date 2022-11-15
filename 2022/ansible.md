@@ -126,8 +126,6 @@ ansible all -m command -a "/bin/echo Hello World"
   handlers:
     - name: RESTART APACHE@
       servise: name=apache2 state=restarted    
-        
-        
 ```
 
 
