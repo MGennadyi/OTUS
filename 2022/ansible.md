@@ -53,11 +53,11 @@ vim ansible.cfg
 [defaults]
 host_key_checking = false
 inventory = ./hosts.txt
-
-
-
 ```
-
+```
+# Теперь команда будет короче:
+ansible all -m ping
+```
 
 
 
