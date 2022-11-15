@@ -15,15 +15,23 @@ Successfully installed MarkupSafe-2.1.1 PyYAML-6.0 ansible-6.6.0 ansible-core-2.
 root@ansible:/home/mgb#
 ```
 ```
-# Смотрим, что установилось:
+# Смотрим, что установилось, парвые 2 не показывают:
 dpkg-query -l
 dpkg -l | grep ansible
 ansible --version
 ```
+```
+vim ~/ansible/.hosts.txt
 
+[servers]
+ansible-master ansible_host=192.168.5.170 ansible_user=root ansible_ssh_pass=12345 ansible_ssh_port=22
+# Не слабо:
+192.168.5.170 ansible_ssh_user=mgb ansible_ssh_pass=12345
+```
 ```
 # создаем ssh ключ (без фразы)  для связывания ВМ между собой:
 sudo usermod -aG sudo mgb
+sudo apt install opensss-server
 sudo apt install ssh
 su mgb
 mkdir /home/mgb/.ssh
