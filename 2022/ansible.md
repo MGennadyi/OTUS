@@ -1,4 +1,20 @@
 # Postgres
+```
+export PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+sudo apt update
+apt install python3 python3-pip
+pip install ansible
+```
+```
+Installing collected packages: pycparser, pyparsing, MarkupSafe, cffi, resolvelib, PyYAML, packaging, jinja2, cryptography, ansible-core, ansible
+Successfully installed MarkupSafe-2.1.1 PyYAML-6.0 ansible-6.6.0 ansible-core-2.13.6 cffi-1.15.1 cryptography-38.0.3 jinja2-3.1.2 packaging-21.3 pycparser-2.21 pyparsing-3.0.9 resolvelib-0.8.1
+root@ansible:/home/mgb#
+```
+```
+# Смотрим, что установилось:
+dpkg-query -l
+dpkg -l | grep ansible
+```
 
 ```
 # создаем ssh ключ (без фразы)  для связывания ВМ между собой:
