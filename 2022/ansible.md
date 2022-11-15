@@ -27,6 +27,9 @@ vim ~/ansible/.hosts.txt
 ansible-master ansible_host=192.168.5.170 ansible_user=root ansible_ssh_pass=12345 ansible_ssh_port=22
 # Не слабо:
 192.168.5.170 ansible_ssh_user=mgb ansible_ssh_pass=12345
+192.168.5.162 ansible_ssh_user=mgb ansible_ssh_pass=12345
+192.168.5.163 ansible_ssh_user=mgb ansible_ssh_pass=12345
+192.168.5.164 ansible_ssh_user=mgb ansible_ssh_pass=12345
 ```
 ```
 # создаем ssh ключ (без фразы)  для связывания ВМ между собой:
@@ -53,7 +56,7 @@ passwd
 # В результате появится autirized_keys
 ```
 ```
-mkdir hosts.txt
+vim hosts.txt
 
 [staging_server]
 etcd2 ansible_host=192.168.5.163 ansible_user=mgb ansible_privat_key_file=/home/mgb/.ssh/autirized_keys
@@ -78,16 +81,54 @@ etcd3 | SUCCESS => {
 ```
 ##### Отконфигурируем ansible:
 ```
-vim ansible.cfg
+vim /home/mgb/ansible/ansible.cfg
 [defaults]
 host_key_checking = false
 inventory = ./hosts.txt
+retry_files_enabled = false
 ```
 ```
-# Теперь команда будет короче:
-ansible all -m ping
+# Теперь команда будет короче. ansible.cfg примениться, находясь в одной с ним папке:
+# Затребовал: apt install sshpass
+cd /home/mgb/ansible
+root@ansible:/home/mgb/ansible# ansible all -m ping
+192.168.5.170 | SUCCESS => {
+    "ansible_facts": {
+        "discovered_interpreter_python": "/usr/bin/python3"
+    },
+    "changed": false,
+    "ping": "pong"
+}
 ```
-
+```
+ansible all -m command -a "/bin/echo Hello World"
+```
+```
+---
+- hosts: servers
+  tasks:
+    - name: run echo command
+      command: /bin/echo Hello World
+```
+```
+###### Install_apache_playbook.yml
+---
+- hosts: servers
+  become: yes
+  tasks:
+    - name: INSTALL APACHE2
+      apt: name=apache2 update_cache=yes state=latest
+      
+    - name: ENABLE MOD_REWRITE      
+      apache2_module: name=rewrite state=present
+      notify:
+        - RESTART APACH2
+  handlers:
+    - name: RESTART APACHE@
+      servise: name=apache2 state=restarted    
+        
+        
+```
 
 
 
