@@ -1,7 +1,11 @@
 # Postgres
 ```
 export PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 93C4A3FD7BB9C367
+vim /etc/apt/sources.list
+deb http://ppa.launchpad.net/ansible/ansible/ubuntu focal main
 sudo apt update
+# Лучше устанавливать Ansible НЕ из репозитория Debian, а использовать Pip или Pip3:
 apt install python3 python3-pip
 pip install ansible
 ```
@@ -14,6 +18,7 @@ root@ansible:/home/mgb#
 # Смотрим, что установилось:
 dpkg-query -l
 dpkg -l | grep ansible
+ansible --version
 ```
 
 ```
