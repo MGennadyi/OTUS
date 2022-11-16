@@ -15,7 +15,7 @@ Successfully installed MarkupSafe-2.1.1 PyYAML-6.0 ansible-6.6.0 ansible-core-2.
 root@ansible:/home/mgb#
 ```
 ```
-# Смотрим, что установилось, парвые 2 не показывают:
+# Смотрим, что установилось, первые 2 не показывают:
 dpkg-query -l
 dpkg -l | grep ansible
 ansible --version
@@ -84,6 +84,7 @@ etcd3 | SUCCESS => {
 ```
 ##### Отконфигурируем ansible /home/mgb/ansible/ansible.cfg:
 ```
+# В папке с ansible.cfg будет использован не глобальный, а локальный cfg
 [defaults]
 host_key_checking = false
 inventory = ./hosts.txt
@@ -129,6 +130,11 @@ ansible all -m command -a "/bin/echo Hello World"
       apache2_module: name=rewrite state=present
       notify:
         - RESTART APACH2
+        
+    - name: APACHE2 LISTEN ON PORT 8081
+      lineinfile: dest=/etc/apache2/ports.conf regexp="^Listen 80" Line="listen 8081"
+        
+        
   handlers:
     - name: RESTART APACHE2
       servise: name=apache2 state=restarted    
