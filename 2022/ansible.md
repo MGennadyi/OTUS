@@ -140,11 +140,6 @@ ansible all -m command -a "/bin/echo Hello World"
   tasks:
     - name: Installs apache web server
       apt: pkg=apache2 state=installed update_cache=true
-
-
-
-
-
 ```
 ###### Просмотр свободной памяти
 ```
@@ -154,7 +149,16 @@ ansible -i hosts.txt etcd1 -m setup
 ansible -m shell -a 'free -m' etcd1
 ansible -i hosts.txt etcd1 -a 'filter=ansible_memtotal_mb' -m setup
 ```
+###### 
+```
+[servers]
+etcd1 ansible_host=192.168.5.162 ansible_user=mgb ansible_ssh_private_key_file=/home/mgb/.ssh/id_rsa
+etcd2 ansible_host=192.168.5.163 ansible_user=mgb ansible_ssh_private_key_file=/home/mgb/.ssh/id_rsa
+etcd3 ansible_host=192.168.5.164 ansible_user=mgb ansible_ssh_private_key_file=/home/mgb/.ssh/id_rsa
 
+
+
+```
 
 
 
