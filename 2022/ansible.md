@@ -112,8 +112,12 @@ ansible all -m command -a "/bin/echo Hello World"
     - name: run echo command
       command: /bin/echo Hello World
 ```
+
+###### ansible-playbook -v install_apache_playbook.yml -kK
 ```
-###### ansible-playbook -v install_apache_playbook.yml
+# ansible-playbook -v install_apache_playbook.yml --extra-vars "ansible_sudo_pass=12345"
+# -k, --ask-pass: ask for connection password
+# -K, --ask-become-pass: ask for privilege escalation password
 ---
 - hosts: servers
   become: yes
@@ -128,6 +132,19 @@ ansible all -m command -a "/bin/echo Hello World"
   handlers:
     - name: RESTART APACHE2
       servise: name=apache2 state=restarted    
+```
+###### ansible-playbook -v install_apache.yml
+```
+---
+- hosts: servers
+  tasks:
+    - name: Installs apache web server
+      apt: pkg=apache2 state=installed update_cache=true
+
+
+
+
+
 ```
 ###### Просмотр свободной памяти
 ```
