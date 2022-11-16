@@ -129,6 +129,15 @@ ansible all -m command -a "/bin/echo Hello World"
     - name: RESTART APACHE2
       servise: name=apache2 state=restarted    
 ```
+###### Просмотр свободной памяти
+```
+# Вывод всех параметров:
+ansible -i hosts.txt etcd1 -m setup
+# Вывод доступной памяти ОЗУ:
+ansible -m shell -a 'free -m' etcd1
+ansible -i hosts.txt etcd1 -a 'filter=ansible_memtotal_mb' -m setup
+```
+
 
 
 
