@@ -26,10 +26,9 @@ vim ~/ansible/.hosts.txt
 [servers]
 ansible-master ansible_host=192.168.5.170 ansible_user=root ansible_ssh_pass=12345 ansible_ssh_port=22
 # Не слабо:
-192.168.5.170 ansible_ssh_user=mgb ansible_ssh_pass=12345
-192.168.5.162 ansible_ssh_user=mgb ansible_ssh_pass=12345
-192.168.5.163 ansible_ssh_user=mgb ansible_ssh_pass=12345
-192.168.5.164 ansible_ssh_user=mgb ansible_ssh_pass=12345
+etcd1 ansible_ssh_host=192.168.5.162 ansible_ssh_user=mgb ansible_ssh_pass=12345
+etcd2 ansible_ssh_host=192.168.5.163 ansible_ssh_user=mgb ansible_ssh_pass=12345
+etcd3 ansible_ssh_host=192.168.5.164 ansible_ssh_user=mgb ansible_ssh_pass=12345
 ```
 ```
 # создаем ssh ключ (без фразы)  для связывания ВМ между собой:
@@ -46,14 +45,17 @@ sudo -u mgb ssh-keygen -t rsa -b 4096 -q -f /home/mgb/.ssh/id_rsa -N ''
 sudo vim /etc/ssh/sshd_config
 PasswordAuthentication yes
 sudo systemctl restart sshd
-# С etcd1 раскладываем ключ по другим ВМ из под mgb:
+# С ansible раскладываем ключ по другим ВМ из под mgb:
+ssh-copy-id etcd1
 ssh-copy-id etcd2
-yes
-passwd
 ssh-copy-id etcd3
+ssh-copy-id -i ~/.ssh/id_rsa.pub mgb@etcd1
+ssh-copy-id -i ~/.ssh/id_rsa.pub mgb@etcd2
+ssh-copy-id -i ~/.ssh/id_rsa.pub mgb@etcd3
 yes
 passwd
-# В результате появится autirized_keys
+# В результате на удаленной машине появится autirized_keys
+sudo systemctl restart sshd
 ```
 ```
 vim hosts.txt
@@ -64,7 +66,8 @@ etcd2 ansible_host=192.168.5.163 ansible_user=mgb ansible_privat_key_file=/home/
 ```
 ```
 mgb@etcd1:~/ansible$ ansible -i hosts.txt all -m ping
-etcd2 | SUCCESS => {
+mgb@etcd1:~/ansible$ ansible -i hosts.txt all -m ping
+etcd2 | SUCCESS => {mc
     "ansible_facts": {
         "discovered_interpreter_python": "/usr/bin/python3"
     },
@@ -79,9 +82,8 @@ etcd3 | SUCCESS => {
     "ping": "pong"
 }
 ```
-##### Отконфигурируем ansible:
+##### Отконфигурируем ansible /home/mgb/ansible/ansible.cfg:
 ```
-vim /home/mgb/ansible/ansible.cfg
 [defaults]
 host_key_checking = false
 inventory = ./hosts.txt
@@ -111,7 +113,7 @@ ansible all -m command -a "/bin/echo Hello World"
       command: /bin/echo Hello World
 ```
 ```
-###### Install_apache_playbook.yml
+###### ansible-playbook -v install_apache_playbook.yml
 ---
 - hosts: servers
   become: yes
@@ -124,7 +126,7 @@ ansible all -m command -a "/bin/echo Hello World"
       notify:
         - RESTART APACH2
   handlers:
-    - name: RESTART APACHE@
+    - name: RESTART APACHE2
       servise: name=apache2 state=restarted    
 ```
 
