@@ -205,6 +205,19 @@ postgres=# SELECT relname, seq_scan-idx_scan AS too_much_seq, case when seq_scan
 (0 строк)
 ```
 
+#####  
+```
+# Сколько страниц прочитано
+alter system set track_io_timing=on;
+# Кол-во исп функций:
+alter system set track_functions='all';
+select pg_reload_conf();
+```
+```
+CREATE DATABASE otus;
+\q
+pgbench -i otus
+```
 
 
 
