@@ -155,17 +155,24 @@ ansible -i hosts.txt etcd1 -m setup
 ansible -m shell -a 'free -m' etcd1
 ansible -i hosts.txt etcd1 -a 'filter=ansible_memtotal_mb' -m setup
 ```
-###### 
+###### ansible-playbook
 ```
 [servers]
 etcd1 ansible_host=192.168.5.162 ansible_user=mgb ansible_ssh_private_key_file=/home/mgb/.ssh/id_rsa
 etcd2 ansible_host=192.168.5.163 ansible_user=mgb ansible_ssh_private_key_file=/home/mgb/.ssh/id_rsa
 etcd3 ansible_host=192.168.5.164 ansible_user=mgb ansible_ssh_private_key_file=/home/mgb/.ssh/id_rsa
-
-
-
 ```
-
+###### ansible-playbook -v install_postgres.yml
+```
+---
+- name: Populate PostgreSQL apt template on target host
+  template:
+    src: templates/pgdg.list.j2
+    dest: /etc/apt/sources.list.d/pgdg.list
+    owner: root
+    group: root
+    mode: '0644'
+```
 
 
 
