@@ -25,6 +25,8 @@ vim /etc/hosts
 192.168.5.167 pg3.kolomna.centr.oe	pg3
 192.168.5.168 haproxy1.kolomna.centr.oe	haproxy1
 192.168.5.169 haproxy2.kolomna.centr.oe	haproxy2
+192.168.5.170 ansible.kolomna.centr.oe	ansible
+192.168.5.171 wal-g.kolomna.centr.oe	wal-g
 192.168.5.180 keepalived.kolomna.centr.oe	keepalived
 #
 10.128.0.61 etcd1.ru-central1.internal etcd1
