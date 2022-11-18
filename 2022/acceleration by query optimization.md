@@ -355,6 +355,37 @@ wait_event       | ClientRead
 wait_event_type  | Client
 pg_blocking_pids | {}
 
+# DESC: pg_blocking_pids | {120512} -pid процесса, который заблокировал процесс 110706. idle in transaction - Идет транзакция, но ничего не происходит.
+```
+###### Завершение блокирующего процесса в ручную:
+```
+# Получаем pid-процесса и записываем его в переменную blocked_pid. cardinality - возвращает кол-во элементов массива
+SELECT pid as blocked_pid FROM pg_stat_activity WHERE backend_type = 'client backend' and cardinality(pg_blocking_pids(pid)) > 0 \gset
+
+
+postgres=# SELECT pg_terminate_backend(b.pid) FROM unnest(pg_blocking_pids(:blocked_pid)) AS b(pid);
+ pg_terminate_backend
+----------------------
+ t
+# А что теперь? только 2 процесса:
+postgres=# SELECT pid, query, state, wait_event, wait_event_type FROM pg_stat_activity WHERE backend_type = 'client backend' \gx
+-[ RECORD 1 ]---+-------------------------------------------------------------------------------------------------------------------
+pid             | 122655
+query           | SELECT pid, query, state, wait_event, wait_event_type FROM pg_stat_activity WHERE backend_type = 'client backend'
+state           | active
+wait_event      |
+wait_event_type |
+-[ RECORD 2 ]---+-------------------------------------------------------------------------------------------------------------------
+pid             | 110706
+query           | UPDATE t SET n = n + 3;
+state           | idle in transaction
+wait_event      | ClientRead
+wait_event_type | Client
+
+
+
+
+# Можно выставить timeout в idle_in_transaction_session_timeout =  после которого принудительно завершится сеанс 
 ```
 
 
