@@ -217,8 +217,40 @@ select pg_reload_conf();
 CREATE DATABASE otus;
 \q
 pgbench -i otus
+# Сброс статистики:
+SELECT pg_stat_reset();
+SELECT pg_stat_reset_shared('bgwriter');
+\c otus
+VACUUM pgbench_accounts;
 ```
-
+```
+# Смотрим статистику:
+otus=# SELECT * FROM pg_stat_all_tables WHERE relid='pgbench_accounts'::regclass \gx
+-[ RECORD 1 ]-------+------------------------------
+relid               | 16395
+schemaname          | public
+relname             | pgbench_accounts
+seq_scan            | 2
+seq_tup_read        | 100000
+idx_scan            | 4492
+idx_tup_fetch       | 4492
+n_tup_ins           | 100000
+n_tup_upd           | 2246
+n_tup_del           | 0
+n_tup_hot_upd       | 1003
+n_live_tup          | 100000
+n_dead_tup          | 0
+n_mod_since_analyze | 2246
+n_ins_since_vacuum  | 0
+last_vacuum         | 2022-11-18 08:37:29.056348+03
+last_autovacuum     | 2022-11-17 17:58:31.44941+03
+last_analyze        | 2022-11-17 17:58:31.284511+03
+last_autoanalyze    | 2022-11-17 17:58:31.502845+03
+vacuum_count        | 2
+autovacuum_count    | 1
+analyze_count       | 1
+autoanalyze_count   | 1
+```
 
 
 
