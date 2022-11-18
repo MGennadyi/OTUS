@@ -302,6 +302,7 @@ sessions_fatal           | 0
 sessions_killed          | 0
 stats_reset  
 ```
+###### CHEKPOINT; сброс грязных буферов на диск
 ```
 otus=# SELECT * FROM pg_stat_bgwriter \gx
 -[ RECORD 1 ]---------+------------------------------
