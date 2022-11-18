@@ -317,8 +317,15 @@ buffers_backend       | 2776
 buffers_backend_fsync | 0
 buffers_alloc         | 996
 stats_reset           | 2022-11-17 18:01:59.523438+03
-```
 
+# DESC: 1. bgwriter 2. chekpoint, контрольная точка, 3. доп серверный процес
+```
+```
+CREATE TABLE t(n integer);
+INSERT INTO t VALUES(42);
+
+
+```
 
 
 
