@@ -250,10 +250,73 @@ vacuum_count        | 2
 autovacuum_count    | 1
 analyze_count       | 1
 autoanalyze_count   | 1
+
+# DESC: инф по кол-ву строчек
 ```
+```
+otus=# SELECT * FROM pg_statio_all_tables WHERE relid='pgbench_accounts'::regclass \gx
+-[ RECORD 1 ]---+-----------------
+relid           | 16395
+schemaname      | public
+relname         | pgbench_accounts
+heap_blks_read  | 4571
+heap_blks_hit   | 20723
+idx_blks_read   | 551
+idx_blks_hit    | 11218
+toast_blks_read |
+toast_blks_hit  |
+tidx_blks_read  |
+tidx_blks_hit 
 
-
-
+# DESC: инф по кол-ву страниц: heap_blks_read - чтение с диска, heap_blks_hit - чтение из буфера.
+```
+```
+otus=# SELECT * FROM pg_stat_DATABASE WHERE datname='otus' \gx
+-[ RECORD 1 ]------------+------------
+datid                    | 16388
+datname                  | otus
+numbackends              | 1
+xact_commit              | 4272
+xact_rollback            | 0
+blks_read                | 5337
+blks_hit                 | 126402
+tup_returned             | 1013324
+tup_fetched              | 21851
+tup_inserted             | 102357
+tup_updated              | 6754
+tup_deleted              | 0
+conflicts                | 0
+temp_files               | 4
+temp_bytes               | 2023424
+deadlocks                | 0
+checksum_failures        |
+checksum_last_failure    |
+blk_read_time            | 18.839
+blk_write_time           | 13.731
+session_time             | 6203222.083
+active_time              | 10530.677
+idle_in_transaction_time | 414.18
+sessions                 | 4
+sessions_abandoned       | 0
+sessions_fatal           | 0
+sessions_killed          | 0
+stats_reset  
+```
+```
+otus=# SELECT * FROM pg_stat_bgwriter \gx
+-[ RECORD 1 ]---------+------------------------------
+checkpoints_timed     | 198
+checkpoints_req       | 1
+checkpoint_write_time | 425549
+checkpoint_sync_time  | 97
+buffers_checkpoint    | 3017
+buffers_clean         | 0
+maxwritten_clean      | 0
+buffers_backend       | 2776
+buffers_backend_fsync | 0
+buffers_alloc         | 996
+stats_reset           | 2022-11-17 18:01:59.523438+03
+```
 
 
 
