@@ -204,7 +204,6 @@ postgres=# SELECT relname, seq_scan-idx_scan AS too_much_seq, case when seq_scan
 ---------+--------------+------+----------+----------+----------
 (0 строк)
 ```
-
 #####  
 ```
 # Сколько страниц прочитано
@@ -225,6 +224,7 @@ VACUUM pgbench_accounts;
 ```
 ```
 # Смотрим статистику:
+# Есть строчка для каждой таблицы. pgbench_accounts приводим к regclass, чтоб получить внутренний инлетификатор и смотрим строку, относящ. к pgbench_accounts:
 otus=# SELECT * FROM pg_stat_all_tables WHERE relid='pgbench_accounts'::regclass \gx
 -[ RECORD 1 ]-------+------------------------------
 relid               | 16395
