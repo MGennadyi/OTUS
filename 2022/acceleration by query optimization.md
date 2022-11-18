@@ -389,7 +389,7 @@ wait_event_type | Client
 ```
 ```
 # Все команда будут попадать в лог:
-ALTER SYSTEM SET log_min_duration_statement=0;
+ALTER SYSTEM SET log_min_duration_statement=1;
 # На конкретную базу:
 ALTER database otus SYSTEM SET log_min_duration_statement=0;
 
