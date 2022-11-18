@@ -320,10 +320,40 @@ stats_reset           | 2022-11-17 18:01:59.523438+03
 
 # DESC: 1. bgwriter 2. chekpoint, контрольная точка, 3. доп серверный процес
 ```
+###### Коллизия 2-х сеансов 
 ```
 CREATE TABLE t(n integer);
 INSERT INTO t VALUES(42);
-
+BEGIN;
+UPDATE t SET n = n + 1;
+# из 2-го сеанса:
+BEGIN;
+UPDATE t SET n = n + 2;
+# а в ответ тишина
+```
+```
+postgres=# SELECT pid, query, state, wait_event, wait_event_type, pg_blocking_pids(pid) FROM pg_stat_activity WHERE backend_type = 'client backend' \gx
+-[ RECORD 1 ]----+------------------------------------------------------------------------------------------------------------------------------------------------------------
+pid              | 122655
+query            | SELECT pid, query, state, wait_event, wait_event_type, pg_blocking_pids(pid) FROM pg_stat_activity WHERE backend_type = 'client backend'
+state            | active
+wait_event       |
+wait_event_type  |
+pg_blocking_pids | {}
+-[ RECORD 2 ]----+------------------------------------------------------------------------------------------------------------------------------------------------------------
+pid              | 110706
+query            | UPDATE t SET n = n + 3;
+state            | active
+wait_event       | transactionid
+wait_event_type  | Lock
+pg_blocking_pids | {120512}
+-[ RECORD 3 ]----+------------------------------------------------------------------------------------------------------------------------------------------------------------
+pid              | 120512
+query            | SELECT pid, query, state, wait_event, wait_event_type, pg_stat_activity, pg_blocking_pids(pid) FROM pg_stat_activity WHERE backend_type = 'cliend_backend'
+state            | idle in transaction
+wait_event       | ClientRead
+wait_event_type  | Client
+pg_blocking_pids | {}
 
 ```
 
