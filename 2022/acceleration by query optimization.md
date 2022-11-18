@@ -362,7 +362,7 @@ pg_blocking_pids | {}
 # Получаем pid-процесса и записываем его в переменную blocked_pid. cardinality - возвращает кол-во элементов массива
 SELECT pid as blocked_pid FROM pg_stat_activity WHERE backend_type = 'client backend' and cardinality(pg_blocking_pids(pid)) > 0 \gset
 
-
+# Функцией pg_terminate_backend прекращаем сеанс:
 postgres=# SELECT pg_terminate_backend(b.pid) FROM unnest(pg_blocking_pids(:blocked_pid)) AS b(pid);
  pg_terminate_backend
 ----------------------
@@ -387,6 +387,14 @@ wait_event_type | Client
 
 # Можно выставить timeout в idle_in_transaction_session_timeout =  после которого принудительно завершится сеанс 
 ```
+```
+# Все команда будут попадать в лог:
+ALTER SYSTEM SET log_min_duration_statement=0;
+# На конкретную базу:
+ALTER database otus SYSTEM SET log_min_duration_statement=0;
+
+```
+
 
 
 
