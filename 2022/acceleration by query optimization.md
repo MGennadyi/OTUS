@@ -392,9 +392,16 @@ wait_event_type | Client
 ALTER SYSTEM SET log_min_duration_statement=1;
 # На конкретную базу:
 ALTER database otus SYSTEM SET log_min_duration_statement=0;
+```
+###### Генерация милионов записей
+```
+CREATE TABLE test(i int0);
+INSERT INTO test SELECT s.id FROM generate_series(1,1000000000) AS s(id);
+sudo apr inatall pgtop
+sudu -u postgres pg_top
+# Q - текст запроса; E - план; L - блокировки; 
 
 ```
-
 
 
 
