@@ -40,12 +40,58 @@ chmod +x user-input
 ```
 sudo apt-cache search python3-pip
 sudo apt install python3-pip
+# Уст.framework:
 pip3 install flask
+```
+```
+vim sample_app.py
+
+from flask import Flask
+from flask import request
+from flask import render_template
+
+sample = Flask(_name_)
+
+@sample.route("/")
+def main():
+    return render_template("index.html")
+    return "You are calling me from " + request.remote_addr + "\n"
+
+if __name__== "__main__":
+ sample.run(host = "0.0.0.0", port=8080)
+```
+```
+python3 sample_app.py
+WARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://192.168.5.163:8080
+Press CTRL+C to quit
+WARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.
+```
+###### vim sample_app.sh
+```
+mkdir temdir
+mkdir temdir/templates
+mkdir temdir/static
+
+cp sample_app.py tempdir/.
+cp -r templates/* tempdir/templates/.
+cp -r static /* tempdir/static/.
+
+echo "FROM python" > temdir/Dockerfile
+echo "RUN pip install flask >> temdir/Dockerfile
+
+echo "COPY ./static /home/myapp/static" >> tempdir/Dockerfile
+echo "COPY ./template /home/myapp/templates/" >> tempdir/Dockerfile
+echo "COPY sample_app.py /home/myapp/" >> tempdir/Dockerfile
+
+echo "EXPOSE 8080" >> tempdir/Dockerfile
+
+echo "CMD python3 /home/myapp/sample_app.py" >> tempdir
 
 
 ```
-
-
 
 
 
