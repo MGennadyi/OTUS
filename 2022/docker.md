@@ -88,12 +88,27 @@ echo "COPY sample_app.py /home/myapp/" >> tempdir/Dockerfile
 
 echo "EXPOSE 8080" >> tempdir/Dockerfile
 
-echo "CMD python3 /home/myapp/sample_app.py" >> tempdir
+echo "CMD python3 /home/myapp/sample_app.py" >> tempdir/Dockerfile
 
+cd tempdir
+docker build-t sampleapp .
 
+docker run -t -d -p 8080:8080 --name samplerunning sampleapp
+
+docker ps -a
 ```
+# ----------------------------------------
+```
+# Извлекаем последний публичный образ postgres  Docker Hub:
+docker pull postgres
+# Или определенную версию:
+docker pull postgres:14.2
+# запуск Docker-конт. исп.образ postgres:latest: переменные POSTGRES_USER, POSTGRES_PASSWORD, -p 5432:5432 для уст.user/pass/port: 
+docker run -itd -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=12345 -p 5432:5432 -v /data:/var/lib/postgresql/data --name postgresql postgres
 
-
+PGPASSWORD=12345 psql -U postgres
+PGPASSWORD=12345 psql -U postgres -c '\l'
+```
 
 
 
