@@ -99,12 +99,25 @@ docker ps -a
 ```
 # ----------------------------------------
 ```
+sudo apt install docker.io -y
 # Извлекаем последний публичный образ postgres  Docker Hub:
 docker pull postgres
 # Или определенную версию:
 docker pull postgres:14.2
 # запуск Docker-конт. исп.образ postgres:latest: переменные POSTGRES_USER, POSTGRES_PASSWORD, -p 5432:5432 для уст.user/pass/port: 
 docker run -itd -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=12345 -p 5432:5432 -v /data:/var/lib/postgresql/data --name postgresql postgres
+
+docker run -itd -e POSTGRES_USER=baeldung -e POSTGRES_PASSWORD=baeldung -p 5432:5432 -v /data:/var/lib/postgresql/data --name postgresql postgres
+
+root@etcd2:/home/mgb# sudo docker container ls
+CONTAINER ID   IMAGE      COMMAND                  CREATED              STATUS              PORTS                    NAMES
+9c3a64750e51   postgres   "docker-entrypoint.s…"   About a minute ago   Up About a minute   0.0.0.0:5432->5432/tcp   postgresql
+root@etcd2:/home/mgb#
+
+
+
+
+sudo docker run --name pg-docker --network pg-net -e POSTGRES_PASSWORD=12345 -d -p 5432:5432 -v /var/lib/postgres:/var/lib/postgresql/data
 
 PGPASSWORD=12345 psql -U postgres
 PGPASSWORD=12345 psql -U postgres -c '\l'
