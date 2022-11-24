@@ -5,6 +5,13 @@ sudo apt install docker.io -y
 docker -v
 # Ответ:
 Docker version 20.10.5+dfsg1, build 55c4c88
+# Лучше сделать через уст.скрипт от самой команды Docker:
+wget -qO- https://get.docker.com/ | sh
+apt install python3-pip
+sudo pip install docker-compose
+docker-compose --version
+# Ответ: docker-compose version 1.29.2, build unknown
+
 ```
 ```
 # Docker определит, что нет лок.образа с таким именем и загруз. его с Docker Hub,запустит образ в виде контейнера. После вывода приветствия и заверш.работу.
