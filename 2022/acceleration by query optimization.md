@@ -26,7 +26,7 @@ analyze users;
 select count(distinct id) from users;
 # Ответ: Время: 48999,199 мс (00:48,999)
 ```
-###### Хорошо ьы просмотреть hints из ролика про мониторинг
+###### Хорошо бы просмотреть hints из ролика про мониторинг
 ###### Повторим:
 ```
 select count(distinct id) from users;
