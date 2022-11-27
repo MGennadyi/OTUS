@@ -91,6 +91,16 @@ otus=# show work_mem;
  work_mem
 ----------
  4MB
+# Перечитываем конфиг:
+otus=# SELECT pg_reload_conf();
+ pg_reload_conf
+----------------
+ t
+ # Проверяем применение изменений:
+otus=# show work_mem;
+ work_mem
+----------
+ 40MB
 # Смотрим по другому:
 postgres=# SELECT current_setting('work_mem');
  current_setting
