@@ -371,6 +371,8 @@ otus=# show log_min_duration_statement;
 ```
 sudo DEBIAM_FRONTEND=nointeractive apt install pgbadger -y
 tail /var/log/postgresql/postgresql-14-main.log
+pgbadger -f /var/log/postgresql/postgresql-14-main.log
+
 
 ALTER SYSTEM SET log_line_prefix='(pid=%p) ';
 SELECT pg_reload_conf();
@@ -392,16 +394,28 @@ perf -v
 perf version 5.10.149
 # Запуск
 perf top
+```
+###### AUDIT
+```
+sudo apt-get install auditd
+auditctl -v
+auditctl version 3.0
 
-
-
-
-
+root@wal-g2:/home/mgb# auditctl -e 0
+enabled 0
+failure 1
+pid 595353
+rate_limit 0
+backlog_limit 8192
+lost 0
+backlog 0
+backlog_wait_time 60000
+backlog_wait_time_actual 0
+root@wal-g2:/home/mgb#
 
 
 
 ```
-
 
 
 
