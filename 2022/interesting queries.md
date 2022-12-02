@@ -352,7 +352,36 @@ DROP INDEX CONCURRENTLY old_index;
 ALTER INDEX new_index RENAME TO old_index;
 CREATE EXTENSION pg_repack;
 ```
+###### Включение логирование
+```
+otus=# ALTER SYSTEM SET log_min_duration_statement = 0;
+otus=# SELECT pg_reload_conf();
+ pg_reload_conf
+----------------
+ t
+(1 строка)
+# Смотрим, что параметр применился:
+otus=# show log_min_duration_statement;
+ log_min_duration_statement
+----------------------------
+ 0
+(1 строка)
+```
+###### Уст pgbadger
+```
+sudo DEBIAM_FRONTEND=nointeractive apt install pgbadger -y
+tail /var/log/postgresql/postgresql-14-main.log
 
+ALTER SYSTEM SET log_line_prefix='(pid=%p) ';
+SELECT pg_reload_conf();
+FATAL: unable to detect log file format from /var/log/postgresql/postgresql-14-main.log, please use -f option.
+    - Error at line 17757
+
+
+
+
+
+```
 
 
 
