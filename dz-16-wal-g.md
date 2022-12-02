@@ -81,9 +81,6 @@ chown -R postgres /home/backups
 ##### 4. Создать директорию для логов WAL-G:
 ```
 su postgres
-# v.12
-mkdir /var/lib/postgresql/12/main/log
-ls -la /var/lib/postgresql/12/main/log
 # v.14
 mkdir /var/lib/postgresql/14/main/log
 ls -la /var/lib/postgresql/14/main/log
