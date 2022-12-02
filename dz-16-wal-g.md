@@ -272,13 +272,15 @@ psql otus -c "select * from test;"
 ###### 6. Делаем backup-push:
 ```
 time wal-g backup-push /var/lib/postgresql/14/main
+# Ответ: Couldn't find previous backup.
 ```
-###### Ужас: Couldn't find previous backup.
 ```
 wal-g backup-list
 ```
 ###### НЕ все так плохо: name     modified          wal_segment_backup_start
+```
 base_000000010000000000000003 2022-04-09T13:44:44+03:00 000000010000000000000003
+```
 ###### 7. Добавляем данные:
 ```
 psql otus -c "UPDATE test SET i = 3 WHERE i = 30"
@@ -286,8 +288,8 @@ psql otus -c "UPDATE test SET i = 3 WHERE i = 30"
 ###### 8. Повторяем backup-push:
  ```
 wal-g backup-push /var/lib/postgresql/14/main
+Ответ: LATEST backup is: 'base_000000010000000000000003'. Delta backup from base_000000010000000000000003 with LSN 3000028.
 ```
-###### Получаем: LATEST backup is: 'base_000000010000000000000003'. Delta backup from base_000000010000000000000003 with LSN 3000028.
 ##### 9. Восстановление на инстансе main2:
 ```
 su postgres
