@@ -390,7 +390,8 @@ sudo apt-get install linux-tools-5.10.0-12
 sudo apt install linux-perf
 perf -v
 perf version 5.10.149
-
+# Запуск
+perf top
 
 
 
