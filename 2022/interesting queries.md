@@ -36,6 +36,9 @@ ORDER BY duration DESC;
 ###### Инфа по раннее выполненным, т.е. завершенным запросам: 
 ```
 # Предварительно активировать:
+show config_file;
+ -----------------------------------------
+ /etc/postgresql/14/main/postgresql.conf
 # Не верно:
 sudo vim /var/lib/postgresql/14/main/postgresql.conf
 # Верно:
