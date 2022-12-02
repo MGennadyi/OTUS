@@ -376,13 +376,30 @@ ALTER SYSTEM SET log_line_prefix='(pid=%p) ';
 SELECT pg_reload_conf();
 FATAL: unable to detect log file format from /var/log/postgresql/postgresql-14-main.log, please use -f option.
     - Error at line 17757
+```
+###### PERF TOP
+```
+# Не проходит
+sudo apt install linux-tools-common
+# Не верный путь:
+root@wal-g2:/home/mgb# uname -r
+5.10.0-12-amd64
+sudo apt-get install linux-tools-5.10.0-12
+
+# Правильный путь!:
+sudo apt install linux-perf
+perf -v
+perf version 5.10.149
+
+
+
+
 
 
 
 
 
 ```
-
 
 
 
