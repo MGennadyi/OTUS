@@ -320,5 +320,12 @@ apt-get install postgresql postgresql-contrib
 sudo -u postgres pgbench -i -s 10 otus
 sudo -u postgres pgbench -c 10 -j 2 -t 10000 otus
 ```
+###### Удаление старых резервных копий
+```
+#!/bin/bash
+echo "30 6 * * *    /usr/local/bin/wal-g delete before FIND_FULL \$(date -d '-5 days' '+\\%FT\\%TZ') --confirm >> /var/log/postgresql/walg_delete.log 2>&1" >> /var/spool/cron/crontabs/postgres
 
+
+
+```
 
