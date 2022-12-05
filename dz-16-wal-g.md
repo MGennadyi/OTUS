@@ -324,7 +324,7 @@ sudo -u postgres pgbench -c 10 -j 2 -t 10000 otus
 ```
 #!/bin/bash
 
-echo "15 4 * * *    /usr/local/bin/wal-g backup-push /var/lib/postgresql/12/main >> /var/log/postgresql/walg_backup.log 2>&1" >> /var/spool/cron/crontabs/postgres
+echo "15 4 * * *    /usr/local/bin/wal-g backup-push /var/lib/postgresql/14/main >> /var/log/postgresql/walg_backup.log 2>&1" >> /var/spool/cron/crontabs/postgres
 # задаем владельца и выставляем правильные права файлу
 chown postgres: /var/spool/cron/crontabs/postgres
 chmod 600 /var/spool/cron/crontabs/postgres
@@ -356,7 +356,12 @@ postgres@wal-g2:/home/mgb$
 
 
 vim /var/spool/cron/crontabs/postgres
+vim /var/log/postgresql/walg_delete.log
+time wal-g backup-push /var/lib/postgresql/14/main
 
+
+# Интервал раз в 10 минут. разделитель косая черта - "/":
+echo "*/10 * * * * /usr/local/bin/wal-g backup-push /var/lib/postgresql/14/main" >> /var/spool/cron/crontabs/postgres
 
 
 
