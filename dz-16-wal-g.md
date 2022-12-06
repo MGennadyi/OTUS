@@ -289,6 +289,7 @@ time wal-g backup-push /var/lib/postgresql/14/main
 ```
 ```
 wal-g backup-list
+wal-g backup-list --pretty
 ```
 ###### НЕ все так плохо: name     modified          wal_segment_backup_start
 ```
@@ -322,6 +323,8 @@ pg_lsclusters
 14  main    5432 online postgres /var/lib/postgresql/14/main  /var/log/postgresql/postgresql-14-main.log
 14  main2   5433 down   postgres /var/lib/postgresql/14/main2 /var/log/postgresql/postgresql-14-main2.log
 
+pg_ctlcluster 14 main2 start
+pg_ctlcluster 14 main2 stop
 sudo systemctl start postgresql@14-main2
 sudo systemctl stop postgresql@14-main2
 pg_ctlcluster 14 main2 stop
@@ -364,7 +367,8 @@ su postgres
 exit
 systemctl start postgresql
 ```
-
+###### ПОДСКАЗКА:  Если вы восстанавливаете резервную копию, создайте 
+vim /var/lib/postgresql/14/main2/recovery.signal
 
 ```
 ###### Получаем: Selecting the latest backup...
@@ -467,6 +471,7 @@ touch /home/backups/test_postgres.txt
 home/mgb/backup_wal-g.sh
 chmod +x /home/mgb/backup_wal-g.sh
 
+wal-g backup-list --pretty
 
 
 
