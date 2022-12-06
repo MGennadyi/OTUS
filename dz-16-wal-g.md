@@ -99,7 +99,7 @@ vim /var/lib/postgresql/.walg.json
 
     "WALG_COMPRESSION_METHOD": "brotli",
 
-    "WALG_DELTA_MAX_STEPS": "6",
+    "WALG_DELTA_MAX_STEPS": "3",
 
     "PGDATA": "/var/lib/postgresql/14/main",
 
@@ -271,6 +271,12 @@ psql otus -c "create table test(i int);"
 psql otus -c "insert into test values (10), (20), (30);"
 psql otus -c "select * from test;"
 ```
+###### 6. Делаем каталог для бекапов:
+```
+sudo mkdir /home/backups/
+chown postgres: /home/backups/
+
+```
 ###### 6. Делаем backup-push:
 ```
 time wal-g backup-push /var/lib/postgresql/14/main
@@ -295,12 +301,23 @@ wal-g backup-push /var/lib/postgresql/14/main
 ##### 9. Восстановление на инстансе main2:
 ```
 su postgres
+pg_dropcluster 14 main2
 pg_createcluster 14 main2
+pg_lsclusters
+sudo systemctl start postgresql@14-main2
+sudo systemctl stop postgresql@14-main2
 pg_ctlcluster 14 main2 stop
 
-rm -rf /var/lib/postgresql/14/main2
+rm -rf /var/lib/postgresql/14/main2/*
 wal-g backup-fetch /var/lib/postgresql/14/main2 LATEST
 # Ответ: Backup extraction complete.
+pg_ctlcluster 14 main2 start
+root@wal-g2:/home/mgb# pg_ctlcluster 14 main2 start
+Job for postgresql@14-main2.service failed because the service did not take the steps required by its unit configuration.
+See "systemctl status postgresql@14-main2.service" and "journalctl -xe" for details.
+root@wal-g2:/home/mgb#
+
+
 ```
 ###### Получаем: Selecting the latest backup...
 INFO: 2022/04/09 16:44:03.325798 LATEST backup is: 'base_00000001000000000000001E_D_000000010000000000000006'
