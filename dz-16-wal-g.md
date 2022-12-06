@@ -296,6 +296,7 @@ wal-g backup-push /var/lib/postgresql/14/main
 ```
 su postgres
 pg_createcluster 14 main2
+pg_stopcluster 14 main2
 rm -rf /var/lib/postgresql/14/main2
 wal-g backup-fetch /var/lib/postgresql/14/main2 LATEST
 ```
@@ -333,6 +334,26 @@ chmod 600 /var/spool/cron/crontabs/postgres
 ```
 ###### Удаление старых резервных копий
 ```
+touch /home/mgb/del_wal-g.sh
+chmod +x /home/mgb/del_wal-g.sh
+chown postgres: /home/mgb/del_wal-g.sh
+vim /home/mgb/del_wal-g.sh
+#!/bin/bash
+# Время в днях: -mtime
+age_d=1
+dir="/home/backups/"
+find "$dir" -mtime "+$age_d" -delete && find "$dir" -type d -empty -delete
+################
+
+# Время в минутах: -mmin
+age_m=60
+dir="/home/backups/"
+find "$dir" -mmin "+$age_m" -delete && find "$dir" -type d -empty -delete
+
+
+
+/home/mgb/del_wal-g.sh
+--------------------------
 #!/bin/bash
 echo "30 6 * * *    /usr/local/bin/wal-g delete before FIND_FULL \$(date -d '-5 days' '+\\%FT\\%TZ') --confirm >> /var/log/postgresql/walg_delete.log 2>&1" >> /var/spool/cron/crontabs/postgres
 
@@ -375,9 +396,6 @@ chmod 600 /var/spool/cron/crontabs/postgres
 vim backup_wal-g.sh
 touch /home/backups/test_postgres.txt
 /usr/local/bin/wal-g backup-push /var/lib/postgresql/14/main /var/log/postgresql/walg_delete.log
-
-
-
 
 home/mgb/backup_wal-g.sh
 chmod +x /home/mgb/backup_wal-g.sh
