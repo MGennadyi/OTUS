@@ -1,5 +1,7 @@
 # Над пропастью WAL-G.
-
+```
+export PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+```
 ###### 1. Установка Postgresql-14
 ```
 sudo sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list'
@@ -333,6 +335,8 @@ chmod 600 /var/spool/cron/crontabs/postgres
 ```
 #!/bin/bash
 echo "30 6 * * *    /usr/local/bin/wal-g delete before FIND_FULL \$(date -d '-5 days' '+\\%FT\\%TZ') --confirm >> /var/log/postgresql/walg_delete.log 2>&1" >> /var/spool/cron/crontabs/postgres
+
+/usr/local/bin/wal-g delete before FIND_FULL /$(date -d '-5 days' '+\\%FT\\%TZ')
 ```
 ###### CRON
 ```
@@ -361,7 +365,23 @@ time wal-g backup-push /var/lib/postgresql/14/main
 
 
 # Интервал раз в 10 минут. разделитель косая черта - "/":
-echo "*/10 * * * * /usr/local/bin/wal-g backup-push /var/lib/postgresql/14/main" >> /var/spool/cron/crontabs/postgres
+echo "*/10 * * * * >> /var/spool/cron/crontabs/postgres
+# Уст.прав. из-под root не работает :
+chown postgres: /var/spool/cron/crontabs/postgres
+chmod 600 /var/spool/cron/crontabs/postgres
+
+*/1 * * * * touch /home/backups/test_postgres.txt
+*/1 * * * * wal-g backup-push /var/lib/postgresql/14/main
+vim backup_wal-g.sh
+touch /home/backups/test_postgres.txt
+/usr/local/bin/wal-g backup-push /var/lib/postgresql/14/main /var/log/postgresql/walg_delete.log
+
+
+
+
+home/mgb/backup_wal-g.sh
+chmod +x /home/mgb/backup_wal-g.sh
+
 
 
 
