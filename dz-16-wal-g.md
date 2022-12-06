@@ -368,6 +368,7 @@ exit
 systemctl start postgresql
 ```
 ###### ПОДСКАЗКА:  Если вы восстанавливаете резервную копию, создайте 
+touch /var/lib/postgresql/14/main2/recovery.signal
 vim /var/lib/postgresql/14/main2/recovery.signal
 
 ```
