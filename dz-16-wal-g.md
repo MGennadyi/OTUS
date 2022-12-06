@@ -274,11 +274,16 @@ psql otus -c "select * from test;"
 ###### 6. Делаем каталог для бекапов:
 ```
 sudo mkdir /home/backups/
-chown postgres: /home/backups/
-
+chown -R postgres /home/backups/
+root@backup:/home/mgb# ls -la /home/
+drwxr-xr-x  4 root     root     4096 дек  6 17:32 .
+drwxr-xr-x 19 root     root     4096 мар 21  2022 ..
+drwxr-xr-x  2 postgres postgres 4096 дек  6 17:32 backups
+drwxr-xr-x 14 mgb      mgb      4096 дек  6 17:19 mgb
 ```
 ###### 6. Делаем backup-push:
 ```
+su postgres
 time wal-g backup-push /var/lib/postgresql/14/main
 # Ответ: Couldn't find previous backup.
 ```
@@ -301,9 +306,22 @@ wal-g backup-push /var/lib/postgresql/14/main
 ##### 9. Восстановление на инстансе main2:
 ```
 su postgres
-pg_dropcluster 14 main2
+# pg_dropcluster 14 main2
+postgres@backup:/home/mgb$ pg_lsclusters
+Ver Cluster Port Status Owner    Data directory              Log file
+14  main    5432 online postgres /var/lib/postgresql/14/main /var/log/postgresql/postgresql-14-main.log
+
 pg_createcluster 14 main2
+# Ответ:
+Warning: systemd does not know about the new cluster yet. Operations like "service postgresql start" will not handle it. To fix, run:
+  sudo systemctl daemon-reload
+Ver Cluster Port Status Owner    Data directory               Log file
+14  main2   5433 down   postgres /var/lib/postgresql/14/main2 /var/log/postgresql/postgresql-14-main2.log
 pg_lsclusters
+# Ответ:
+14  main    5432 online postgres /var/lib/postgresql/14/main  /var/log/postgresql/postgresql-14-main.log
+14  main2   5433 down   postgres /var/lib/postgresql/14/main2 /var/log/postgresql/postgresql-14-main2.log
+
 sudo systemctl start postgresql@14-main2
 sudo systemctl stop postgresql@14-main2
 pg_ctlcluster 14 main2 stop
@@ -315,7 +333,30 @@ pg_ctlcluster 14 main2 start
 root@wal-g2:/home/mgb# pg_ctlcluster 14 main2 start
 Job for postgresql@14-main2.service failed because the service did not take the steps required by its unit configuration.
 See "systemctl status postgresql@14-main2.service" and "journalctl -xe" for details.
-root@wal-g2:/home/mgb#
+# Смотрим журнал:
+journalctl -xe
+дек 06 17:45:30 backup postgresql@14-main2[1162]: Error: /usr/lib/postgresql/14/bin/pg_ctl /usr/lib/postgresql/14/bin/pg_ctl start -D /var/lib/postgresql/14/ma>
+дек 06 17:45:30 backup postgresql@14-main2[1162]: 2022-12-06 17:45:30.278 MSK [1167] СООБЩЕНИЕ:  запускается PostgreSQL 14.6 (Debian 14.6-1.pgdg110+1) on x86_6>
+дек 06 17:45:30 backup postgresql@14-main2[1162]: 2022-12-06 17:45:30.279 MSK [1167] СООБЩЕНИЕ:  для приёма подключений по адресу IPv6 "::1" открыт порт 5433
+дек 06 17:45:30 backup postgresql@14-main2[1162]: 2022-12-06 17:45:30.279 MSK [1167] СООБЩЕНИЕ:  для приёма подключений по адресу IPv4 "127.0.0.1" открыт порт >
+дек 06 17:45:30 backup postgresql@14-main2[1162]: 2022-12-06 17:45:30.279 MSK [1167] СООБЩЕНИЕ:  для приёма подключений открыт Unix-сокет "/var/run/postgresql/>
+дек 06 17:45:30 backup postgresql@14-main2[1162]: 2022-12-06 17:45:30.283 MSK [1168] СООБЩЕНИЕ:  работа системы БД была прервана; последний момент работы: 2022>
+дек 06 17:45:30 backup postgresql@14-main2[1162]: 2022-12-06 17:45:30.604 MSK [1168] СООБЩЕНИЕ:  неверная запись контрольной точки
+дек 06 17:45:30 backup postgresql@14-main2[1162]: 2022-12-06 17:45:30.604 MSK [1168] ВАЖНО:  не удалось считать нужную запись контрольной точки
+дек 06 17:45:30 backup postgresql@14-main2[1162]: 2022-12-06 17:45:30.604 MSK [1168] ПОДСКАЗКА:  Если вы восстанавливаете резервную копию, создайте "/var/lib/p>
+дек 06 17:45:30 backup postgresql@14-main2[1162]:         В других случаях попытайтесь удалить файл "/var/lib/postgresql/14/main2/backup_label".
+дек 06 17:45:30 backup postgresql@14-main2[1162]:         Будьте осторожны: при восстановлении резервной копии удаление "/var/lib/postgresql/14/main2/backup_la>
+дек 06 17:45:30 backup postgresql@14-main2[1162]: 2022-12-06 17:45:30.605 MSK [1167] СООБЩЕНИЕ:  стартовый процесс (PID 1168) завершился с кодом выхода 1
+дек 06 17:45:30 backup postgresql@14-main2[1162]: 2022-12-06 17:45:30.605 MSK [1167] СООБЩЕНИЕ:  прерывание запуска из-за ошибки в стартовом процессе
+дек 06 17:45:30 backup postgresql@14-main2[1162]: 2022-12-06 17:45:30.607 MSK [1167] СООБЩЕНИЕ:  система БД выключена
+дек 06 17:45:30 backup postgresql@14-main2[1162]: pg_ctl: не удалось запустить сервер
+дек 06 17:45:30 backup postgresql@14-main2[1162]: Изучите протокол выполнения.
+# Не поможет:
+sudo systemctl daemon-reload
+pg_ctlcluster 14 main2 start
+# Контрольные суммы:
+
+
 
 
 ```
