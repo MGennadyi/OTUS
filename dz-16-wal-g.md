@@ -355,8 +355,15 @@ journalctl -xe
 sudo systemctl daemon-reload
 pg_ctlcluster 14 main2 start
 # Контрольные суммы:
-
-
+```
+###### 10. Исправляем отсутствие checksums, инициализацияся на выкл.кластере, из-под postgres:
+```
+systemctl stop postgresql
+su postgres
+/usr/lib/postgresql/14/bin/pg_checksums -D /var/lib/postgresql/14/main --enable
+exit
+systemctl start postgresql
+```
 
 
 ```
