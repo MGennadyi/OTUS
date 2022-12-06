@@ -296,7 +296,8 @@ wal-g backup-push /var/lib/postgresql/14/main
 ```
 su postgres
 pg_createcluster 14 main2
-pg_stopcluster 14 main2
+pg_ctlcluster 14 main2 stop
+
 rm -rf /var/lib/postgresql/14/main2
 wal-g backup-fetch /var/lib/postgresql/14/main2 LATEST
 ```
