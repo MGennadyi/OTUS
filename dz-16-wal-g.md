@@ -300,6 +300,7 @@ pg_ctlcluster 14 main2 stop
 
 rm -rf /var/lib/postgresql/14/main2
 wal-g backup-fetch /var/lib/postgresql/14/main2 LATEST
+# Ответ: Backup extraction complete.
 ```
 ###### Получаем: Selecting the latest backup...
 INFO: 2022/04/09 16:44:03.325798 LATEST backup is: 'base_00000001000000000000001E_D_000000010000000000000006'
