@@ -382,12 +382,8 @@ INFO: 2022/04/09 16:44:05.834564 Backup extraction complete. Бэкап сфор
 touch "/var/lib/postgresql/14/main2/recovery.signal"
 exit
 sudo systemctl start postgresql@14-main2
-
 pg_ctlcluster 14 main2 start
 ```
-
-
-
 #### Доп.Задание: снять бекап под нагрузкой
 
 ##### 9. Установка pgbanch:
@@ -405,28 +401,43 @@ echo "15 4 * * *    /usr/local/bin/wal-g backup-push /var/lib/postgresql/14/main
 chown postgres: /var/spool/cron/crontabs/postgres
 chmod 600 /var/spool/cron/crontabs/postgres
 ```
-###### Удаление старых резервных копий
+###### Скрипт backup_wal-g.sh: Создание резервных копий :
+```
+touch /home/mgb/backup_wal-g.sh
+chmod +x /home/mgb/backup_wal-g.sh
+chown postgres: /home/mgb/backup_wal-g.sh
+vim /home/mgb/backup_wal-g.sh
+
+#!/bin/bash
+
+# Интервал раз в 10 минут. разделитель косая черта - "/":
+*/10 * * * * touch /home/backups/test_postgres.txt
+*/10 * * * * wal-g backup-push /var/lib/postgresql/14/main
+
+?
+/usr/local/bin/wal-g backup-push /var/lib/postgresql/14/main /var/log/postgresql/walg_delete.log
+```
+###### Скрипт del_wal-g.sh: Удаление старых резервных копий :
 ```
 touch /home/mgb/del_wal-g.sh
 chmod +x /home/mgb/del_wal-g.sh
 chown postgres: /home/mgb/del_wal-g.sh
 vim /home/mgb/del_wal-g.sh
+
 #!/bin/bash
-# Время в днях: -mtime
+
+# Настройка: Время в днях: -mtime
 age_d=1
 dir="/home/backups/"
 find "$dir" -mtime "+$age_d" -delete && find "$dir" -type d -empty -delete
 ################
-
-# Время в минутах: -mmin
+# Настройка: Время в минутах: -mmin
 age_m=60
 dir="/home/backups/"
 find "$dir" -mmin "+$age_m" -delete && find "$dir" -type d -empty -delete
-
-
-
-/home/mgb/del_wal-g.sh
---------------------------
+```
+###### Не работает:
+```
 #!/bin/bash
 echo "30 6 * * *    /usr/local/bin/wal-g delete before FIND_FULL \$(date -d '-5 days' '+\\%FT\\%TZ') --confirm >> /var/log/postgresql/walg_delete.log 2>&1" >> /var/spool/cron/crontabs/postgres
 
@@ -458,25 +469,8 @@ vim /var/log/postgresql/walg_delete.log
 time wal-g backup-push /var/lib/postgresql/14/main
 
 
-# Интервал раз в 10 минут. разделитель косая черта - "/":
-echo "*/10 * * * * >> /var/spool/cron/crontabs/postgres
-# Уст.прав. из-под root не работает :
-chown postgres: /var/spool/cron/crontabs/postgres
-chmod 600 /var/spool/cron/crontabs/postgres
 
-*/1 * * * * touch /home/backups/test_postgres.txt
-*/1 * * * * wal-g backup-push /var/lib/postgresql/14/main
-vim backup_wal-g.sh
-touch /home/backups/test_postgres.txt
-/usr/local/bin/wal-g backup-push /var/lib/postgresql/14/main /var/log/postgresql/walg_delete.log
-
-home/mgb/backup_wal-g.sh
-chmod +x /home/mgb/backup_wal-g.sh
 
 wal-g backup-list --pretty
-
-
-
-
 
 ```
