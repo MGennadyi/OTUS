@@ -429,7 +429,7 @@ age_m=60
 dir="/home/backups/"
 find "$dir" -mmin "+$age_m" -delete && find "$dir" -type d -empty -delete
 ```
-###### Не работает:
+###### Пример не работает:
 ```
 #!/bin/bash
 echo "30 6 * * *    /usr/local/bin/wal-g delete before FIND_FULL \$(date -d '-5 days' '+\\%FT\\%TZ') --confirm >> /var/log/postgresql/walg_delete.log 2>&1" >> /var/spool/cron/crontabs/postgres
@@ -444,7 +444,16 @@ crontab -l
 crontab -e
 # Удаление
 crontab -r
-
+```
+###### Настраиваем планировщик:
+```
+su postgres
+crontab -e
+*/10 * * * * touch /home/backups/test_postgres_cr.txt
+*/10 * * * * /home/mgb/del_wal-g.sh
+*/10 * * * * /home/mgb/backup_wal-g.sh
+```
+```
 postgres@wal-g2:/home/mgb$ wal-g backup-list --pretty
 +---+----------------------------------------------------------+----------------------------------+--------------------------+
 | # | NAME                                                     | MODIFIED                         | WAL SEGMENT BACKUP START |
