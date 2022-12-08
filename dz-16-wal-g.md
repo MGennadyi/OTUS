@@ -367,15 +367,16 @@ su postgres
 exit
 systemctl start postgresql
 ```
-###### ПОДСКАЗКА:  Если вы восстанавливаете резервную копию, создайте 
+###### ПОДСКАЗКА:  Если вы восстанавливаете резервную копию, создайте
+```
 touch /var/lib/postgresql/14/main2/recovery.signal
 vim /var/lib/postgresql/14/main2/recovery.signal
-
 ```
 ###### Получаем: Selecting the latest backup...
+```
 INFO: 2022/04/09 16:44:03.325798 LATEST backup is: 'base_00000001000000000000001E_D_000000010000000000000006'
-
 INFO: 2022/04/09 16:44:05.834564 Backup extraction complete. Бэкап сформировался за 0,02 сек.
+```
 ##### 10. На точку времени создать файл для восстановления из архивов wal:
 ```
 touch "/var/lib/postgresql/14/main2/recovery.signal"
