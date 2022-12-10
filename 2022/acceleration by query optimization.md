@@ -126,7 +126,10 @@ context         | user
 ```
 ###### Изменим work_mem, сначала сбросим значение:
 ```
+# Не сработает:
 postgres=# reset work_mem;
+select pg_reload_conf();
+# Делаем по другому:
 otus=# alter system set work_mem = "40MB";
 otus=# show work_mem;
  work_mem
