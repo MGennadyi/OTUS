@@ -312,7 +312,7 @@ sudo systemctl start postgresql@14-main2
 pg_ctlcluster 14 main2 start
 ```
 
-###### CRON расписания резервного копирования:
+##### CRON расписания резервного копирования:
 ```
 # Просмотр заданий:
 crontab -l
@@ -329,6 +329,25 @@ echo "15 4 * * *    /usr/local/bin/wal-g backup-push /var/lib/postgresql/14/main
 chown postgres: /var/spool/cron/crontabs/postgres
 chmod 600 /var/spool/cron/crontabs/postgres
 ```
+###### Скрипт data.sh: 
+```
+touch /home/mgb/data.sh
+chmod +x /home/mgb/data.sh
+chown postgres: /home/mgb/data.sh
+vim /home/mgb/data.sh
+
+#!/bin/bash
+
+# Интервал раз в 10 минут. разделитель косая черта - "/":
+ echo 'date +\%y-\%m-\%d' > /home/backups/test_postgres.txt
+ echo 'date +\%y-\%m-\%d' '%H:%M:%S' > /home/backups/test_postgres.txt
+
+
+DATE=`date +%d-%m-%y`
+date | cut -d " " -f2-4 | tr " " "-" 
+datevar=$(date +'%Y-%m-%d : %H-%M')
+echo $datevar
+```
 ###### Скрипт backup_wal-g.sh: Создание резервных копий :
 ```
 touch /home/mgb/backup_wal-g.sh
@@ -339,6 +358,7 @@ vim /home/mgb/backup_wal-g.sh
 #!/bin/bash
 
 # Интервал раз в 10 минут. разделитель косая черта - "/":
+*/10 * * * * echo 'data +\%y-\%m-\%d' '%H:%M:%S' > /home/backups/test_postgres.txt
 */10 * * * * touch /home/backups/test_postgres.txt
 */10 * * * * wal-g backup-push /var/lib/postgresql/14/main
 
