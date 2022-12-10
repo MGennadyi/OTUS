@@ -43,10 +43,6 @@ vim /etc/hosts
 ```
 ###### 2. Установка WAL-G
 ```
-# v.1.1.2
-wget https://github.com/wal-g/wal-g/releases/download/v1.1.2-rc/wal-g-pg-ubuntu-20.04-amd64.tar.gz
-tar -zxvf /home/mgb/wal-g-pg-ubuntu-20.04-amd64.tar.gz
-mv /home/mgb/wal-g-pg-ubuntu-20.04-amd64 /usr/local/bin/wal-g
 # v.2.0.1
 wget https://github.com/wal-g/wal-g/releases/download/v2.0.1/wal-g-pg-ubuntu-20.04-amd64.tar.gz
 tar -zxvf /home/mgb/wal-g-pg-ubuntu-20.04-amd64.tar.gz
@@ -79,13 +75,6 @@ wal-g version v2.0.1    b7d53dd 2022.08.25_09:34:20     PostgreSQL
 ```
 rm -rf /home/backups && sudo mkdir /home/backups && sudo chmod -R 777 /home/backups
 chown -R postgres /home/backups
-```
-##### 4. Создать директорию для логов WAL-G:
-```
-su postgres
-# v.14
-mkdir /var/lib/postgresql/14/main/log
-ls -la /var/lib/postgresql/14/main/log
 ```
 ##### 5. Из-под postgres создать скрытый конфиг wal-g; подключение через linux-socket:
 ```
@@ -158,50 +147,6 @@ ttl: 30
 pending restart
 
 ```
-###### Правим конфиг: vim /etc/patroni.yml   
-###### ru.stackoverflow.com советует, применим относительно patroni:
-```
-# В секции parameters:  
-        wal_level=replica
-        archive_mode=on
-        archive_command='wal-g wal-push "%p"
-        archive_timeout=60
-        restore_command='wal-g wal-fetch "%f" "%p"
-# В секции postgresql:
-  shared_preload_libraries = 'pg_stat_statements'
-  unix_socket_directories: /var/lib/postgresql/14/main
-```
-```
-vim /var/lib/postgresql/14/main/postgresql.conf
-vim /var/lib/postgresql/14/main/postgresql.base.conf
-systemctl stop patroni
-systemctl start patroni
-```
-```
-Базовая настройка Patroni помещает файл SOCK UNIX в каталог данных Postgres. 
-Вот почему вы столкнулись с приведенной выше ошибкой. 
-Если вы настроите этот файл UNIX SOCK из каталога данных Postgres, все будет в порядке.
-Вы можете использовать следующую конфигурацию, чтобы дать указание посетителям сделать это:
- parameters:
-    unix_socket_directories: "/var/run/postgresql"
-(I have: /var/run/postgresql directory owned by postgres:postgres)
-Я имею /var/lib/postgresql/14/main
-```
-
-```
-apt install net-tools -y
-netstat -nlp | grep 5432
-```
-```
-# Ответ:
-drwxr-xr-x  3 postgres postgres 4096 авг 12 12:58 .
-drwxr-xr-x 41 root     root     4096 июн 29 11:23 ..
-drwx------  4 postgres postgres 4096 июн 29 13:53 14
--rw-------  1 postgres postgres  135 июл  1 09:43 .bash_history
--rw-------  1 postgres postgres    6 июн 30 15:30 .psql_history
--rw-------  1 postgres postgres 1308 авг 12 12:58 .viminfo
--rw-r--r--  1 postgres postgres  218 авг 12 12:58 .walg.json
-```
 ###### DESC .walg.json: каталог для бекапов; сжатие=brotli; delta=6 хранимых копий; подключение через linux-socket порт 5432;
 ###### 6. Правим  postgresql.conf через auto.conf, все команды разом:
 ```
@@ -244,24 +189,6 @@ select pg_switch_wal();
 select * from pg_stat_activity \gx
 # Ответ: длинная портянка
 ```
-###### Проверка доступности через netcat gp3 gp4 по портам:
-```
-sudo apt install netcat
-gpadmin@gp1:/home/mgb$ nc -vz 10.128.0.54 7000
-Connection to 10.128.0.54 7000 port [tcp/afs3-fileserver] succeeded!
-gpadmin@gp1:/home/mgb$ nc -vz 10.128.0.54 6000
-Connection to 10.128.0.54 6000 port [tcp/x11] succeeded!
-```
-###### Проверка доступности через netstat по портам:
-```
-apt install net-tools -y
-netstat -nlp | grep 5432
-# Ответ:
-tcp        0      0 192.168.5.165:5432      0.0.0.0:*               LISTEN      490/postgres
-tcp        0      0 127.0.0.1:5432          0.0.0.0:*               LISTEN      490/postgres
-unix  2      [ ACC ]     STREAM     LISTENING     13157    490/postgres         ./.s.PGSQL.5432
-```
-
 ###### 7. Создадим тестовую базу данных с данными:
 ```
 # Включаем показ тайминга выполнения команд:
@@ -385,7 +312,15 @@ sudo systemctl start postgresql@14-main2
 pg_ctlcluster 14 main2 start
 ```
 
-###### Настройка расписания резервного копирования
+###### CRON расписания резервного копирования:
+```
+# Просмотр заданий:
+crontab -l
+# Редактирование задание через vim
+crontab -e
+# Удаление
+crontab -r
+```
 ```
 #!/bin/bash
 
@@ -435,15 +370,6 @@ find "$dir" -mmin "+$age_m" -delete && find "$dir" -type d -empty -delete
 echo "30 6 * * *    /usr/local/bin/wal-g delete before FIND_FULL \$(date -d '-5 days' '+\\%FT\\%TZ') --confirm >> /var/log/postgresql/walg_delete.log 2>&1" >> /var/spool/cron/crontabs/postgres
 
 /usr/local/bin/wal-g delete before FIND_FULL /$(date -d '-5 days' '+\\%FT\\%TZ')
-```
-###### CRON
-```
-# Просмотр заданий:
-crontab -l
-# Редактирование задание через vim
-crontab -e
-# Удаление
-crontab -r
 ```
 ###### Настраиваем планировщик:
 ```
