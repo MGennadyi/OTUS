@@ -111,7 +111,7 @@ vim ~/.walg.json
 
     "WALG_COMPRESSION_METHOD": "brotli",
 
-    "WALG_DELTA_MAX_STEPS": "6",
+    "WALG_DELTA_MAX_STEPS": "3",
 
     "PGDATA": "/var/lib/postgresql/14/main",
 
@@ -171,12 +171,6 @@ restore_command='wal-g wal-fetch "%f" "%p" >> /var/lib/postgresql/14/main/log/re
 # Перезапуск, ругается :
 pg_ctlcluster 14 main stop
 pg_ctlcluster 14 main start
-# Перезапуск, молчит:
-sudo systemctl stop postgresql@14-main
-sudo systemctl start postgresql@14-main
-# Однако, управление через PATRONI, от сюда и 
-systemctl stop patroni
-systemctl start patroni
 ```
 ###### На master node:
 ```
@@ -234,36 +228,43 @@ wal-g backup-push /var/lib/postgresql/14/main
 ##### 9. Восстановление на инстансе main2:
 ```
 su postgres
-# pg_dropcluster 14 main2
-postgres@backup:/home/mgb$ pg_lsclusters
+# Удаляем, если есть: 
+pg_dropcluster 14 main2
+Error: This cluster is still running. Stop it or supply the --stop option
+pg_ctlcluster 14 main2 stop
+pg_lsclusters
 Ver Cluster Port Status Owner    Data directory              Log file
 14  main    5432 online postgres /var/lib/postgresql/14/main /var/log/postgresql/postgresql-14-main.log
-
 pg_createcluster 14 main2
 # Ответ:
 Warning: systemd does not know about the new cluster yet. Operations like "service postgresql start" will not handle it. To fix, run:
-  sudo systemctl daemon-reload
+sudo systemctl daemon-reload
 Ver Cluster Port Status Owner    Data directory               Log file
 14  main2   5433 down   postgres /var/lib/postgresql/14/main2 /var/log/postgresql/postgresql-14-main2.log
 pg_lsclusters
 # Ответ:
 14  main    5432 online postgres /var/lib/postgresql/14/main  /var/log/postgresql/postgresql-14-main.log
 14  main2   5433 down   postgres /var/lib/postgresql/14/main2 /var/log/postgresql/postgresql-14-main2.log
-
 pg_ctlcluster 14 main2 start
+# Ответ:
+14  main    5432 online postgres /var/lib/postgresql/14/main  /var/log/postgresql/postgresql-14-main.log
+14  main2   5433 online postgres /var/lib/postgresql/14/main2 /var/log/postgresql/postgresql-14-main2.log
 pg_ctlcluster 14 main2 stop
-sudo systemctl start postgresql@14-main2
-sudo systemctl stop postgresql@14-main2
-pg_ctlcluster 14 main2 stop
-
+# sudo systemctl start postgresql@14-main2
+# sudo systemctl stop postgresql@14-main2
+# Удаляем содержимое main2 :
 rm -rf /var/lib/postgresql/14/main2/*
+# А что с бекапами? :
 wal-g backup-fetch /var/lib/postgresql/14/main2 LATEST
 # Ответ: Backup extraction complete.
+sudo systemctl daemon-reload
 pg_ctlcluster 14 main2 start
 root@wal-g2:/home/mgb# pg_ctlcluster 14 main2 start
 Job for postgresql@14-main2.service failed because the service did not take the steps required by its unit configuration.
 See "systemctl status postgresql@14-main2.service" and "journalctl -xe" for details.
+
 # Смотрим журнал:
+tail /var/lib/postgresql/14/main/log/restore_command.log
 journalctl -xe
 дек 06 17:45:30 backup postgresql@14-main2[1162]: Error: /usr/lib/postgresql/14/bin/pg_ctl /usr/lib/postgresql/14/bin/pg_ctl start -D /var/lib/postgresql/14/ma>
 дек 06 17:45:30 backup postgresql@14-main2[1162]: 2022-12-06 17:45:30.278 MSK [1167] СООБЩЕНИЕ:  запускается PostgreSQL 14.6 (Debian 14.6-1.pgdg110+1) on x86_6>
@@ -285,6 +286,37 @@ journalctl -xe
 sudo systemctl daemon-reload
 pg_ctlcluster 14 main2 start
 # Контрольные суммы:
+
+
+
+su postgres
+/usr/lib/postgresql/14/bin/pg_ctl restart -D /var/lib/postgresql/14/main2
+pg_ctl: файл PID "/var/lib/postgresql/14/main2/postmaster.pid" не существует
+Запущен ли сервер?
+производится попытка запуска сервера в любом случае
+ожидание запуска сервера....(pid=169899) СООБЩЕНИЕ:  запускается PostgreSQL 14.2 (Debian 14.2-1.pgdg110+1) on x86_64-pc-linux-gnu, compiled by gcc (Debian 10.2.1-6) 10.2.1 20210110, 64-bit
+(pid=169899) СООБЩЕНИЕ:  для приёма подключений по адресу IPv6 "::1" открыт порт 5433
+(pid=169899) СООБЩЕНИЕ:  для приёма подключений по адресу IPv4 "127.0.0.1" открыт порт 5433
+(pid=169899) СООБЩЕНИЕ:  для приёма подключений открыт Unix-сокет "/var/run/postgresql/.s.PGSQL.5433"
+(pid=169900) СООБЩЕНИЕ:  работа системы БД была прервана; последний момент работы: 2022-12-10 18:22:01 MSK
+(pid=169900) СООБЩЕНИЕ:  неверная запись контрольной точки
+(pid=169900) ВАЖНО:  не удалось считать нужную запись контрольной точки
+(pid=169900) ПОДСКАЗКА:  Если вы восстанавливаете резервную копию, создайте "/var/lib/postgresql/14/main2/recovery.signal" и задайте обязательные параметры восстановления.
+        В других случаях попытайтесь удалить файл "/var/lib/postgresql/14/main2/backup_label".
+        Будьте осторожны: при восстановлении резервной копии удаление "/var/lib/postgresql/14/main2/backup_label" приведёт к повреждению кластера.
+(pid=169899) СООБЩЕНИЕ:  стартовый процесс (PID 169900) завершился с кодом выхода 1
+(pid=169899) СООБЩЕНИЕ:  прерывание запуска из-за ошибки в стартовом процессе
+(pid=169899) СООБЩЕНИЕ:  система БД выключена
+ прекращение ожидания
+pg_ctl: не удалось запустить сервер
+Изучите протокол выполнения.
+```
+##### Теплое резервирование:
+```
+touch "/var/lib/postgresql/14/main2/recovery.signal"
+
+
+
 ```
 ###### 10. Исправляем отсутствие checksums, инициализацияся на выкл.кластере, из-под postgres:
 ```
@@ -329,20 +361,24 @@ echo "15 4 * * *    /usr/local/bin/wal-g backup-push /var/lib/postgresql/14/main
 chown postgres: /var/spool/cron/crontabs/postgres
 chmod 600 /var/spool/cron/crontabs/postgres
 ```
-###### Скрипт data.sh: 
+###### Скрипт data.sh добавляет запись Бэкап началася: 
 ```
 touch /home/mgb/data.sh
 chmod +x /home/mgb/data.sh
 chown postgres: /home/mgb/data.sh
 vim /home/mgb/data.sh
-
+-----------------------------
 #!/bin/bash
-
+myvar=$(date '+%d-%m-%Y_%H-%M-%S')
+echo "Бэкап началася в $myvar" >> /home/backups/test_postgres.txt
+touch /home/backups/$myvar.txt
+-----------------------------
+#!/bin/bash
 # Интервал раз в 10 минут. разделитель косая черта - "/":
  echo 'date +\%y-\%m-\%d' > /home/backups/test_postgres.txt
  echo 'date +\%y-\%m-\%d' '%H:%M:%S' > /home/backups/test_postgres.txt
-
-
+---------------------------
+#!/bin/bash
 DATE=`date +%d-%m-%y`
 date | cut -d " " -f2-4 | tr " " "-" 
 datevar=$(date +'%Y-%m-%d : %H-%M')
@@ -388,16 +424,15 @@ find "$dir" -mmin "+$age_m" -delete && find "$dir" -type d -empty -delete
 ```
 #!/bin/bash
 echo "30 6 * * *    /usr/local/bin/wal-g delete before FIND_FULL \$(date -d '-5 days' '+\\%FT\\%TZ') --confirm >> /var/log/postgresql/walg_delete.log 2>&1" >> /var/spool/cron/crontabs/postgres
-
-/usr/local/bin/wal-g delete before FIND_FULL /$(date -d '-5 days' '+\\%FT\\%TZ')
 ```
 ###### Настраиваем планировщик:
 ```
 su postgres
 crontab -e
-*/10 * * * * touch /home/backups/test_postgres_cr.txt
+*/10 * * * * touch /home/backups/test_pg_cr.txt
 */10 * * * * /home/mgb/del_wal-g.sh
 */10 * * * * /home/mgb/backup_wal-g.sh
+*/10 * * * * /home/mgb/data.sh
 ```
 ```
 postgres@wal-g2:/home/mgb$ wal-g backup-list --pretty
