@@ -86,6 +86,10 @@ su postgres
 # v.14
 mkdir /var/lib/postgresql/14/main/log
 ls -la /var/lib/postgresql/14/main/log
+-rw-------  1 postgres postgres 109982 дек 10 17:28 archive_command.log
+-rw-------  1 postgres postgres    634 апр  9  2022 restore_command.log
+
+chown -R postgres /var/lib/postgresql/14/main/log
 ```
 ##### 5. Из-под postgres создать скрытый конфиг wal-g; подключение через linux-socket:
 ```
