@@ -79,7 +79,7 @@ ls -la $BACKUP_PATH
 rm -rf /home/backups/*
 pg_probackup-14 init
 # Ответ: INFO: Backup catalog '/home/backups' successfully inited
-# Добавилось 2 каталога: backups, wal
+# Добавилось 2 каталога: backups, wal. Однако, автоматом wal-файлы пока не идут.
 ```
 ##### Уточнить, почему всем? в v_2022 нет:
 ```      
@@ -87,25 +87,22 @@ sudo chmod -R 777 /home/backups
 ```
 ##### 6.2  Добавить инстанс в наш probackup из-под postgres:
 ```
+su postgres
 pg_probackup-14 add-instance --instance 'main' -D /var/lib/postgresql/14/main
+Ответ: INFO: Instance 'main' successfully inited.   Теперь probackup знает где инстанс "main".
 ```
-###### Ответ: INFO: Instance 'main' successfully inited   Теперь probackup знает где инстанс "main"
-
 ##### 7. Создаем и заполнение новой БД (не входя PSQL):
 ```
 time psql -f demo-small-20170815.sql -U postgres
 real    0m35,852s
 ```
-
 ```
 su postgres
 psql -c "CREATE DATABASE otus;"
 psql otus -c "create table test(i int);"
 psql otus -c "insert into test values (10), (20), (30);"
 psql otus -c "select * from test;"
-```
-###### Ответ:
-```
+Ответ:
  i
 ----
  10
@@ -116,31 +113,32 @@ psql otus -c "select * from test;"
 ```
 pg_probackup-14 show-config --instance main
 ```
-#####  Ответ: Backup instance information  
+```
 pgdata = /var/lib/postgresql/14/main  
 system-identifier = 7076338028174019592  
 xlog-seg-size = 16777216  
-###### # Connection parameters  
+# Connection parameters  
 pgdatabase = root  
-###### # Replica parameters  
+# Replica parameters  
 replica-timeout = 5min  
-###### # Archive parameters  
+# Archive parameters  
 archive-timeout = 5min  
-###### # Logging parameters  
+# Logging parameters  
 log-level-console = INFO  
 log-level-file = OFF  
 log-filename = pg_probackup.log  
 log-rotation-size = 0TB  
 log-rotation-age = 0d  
-###### # Retention parameters  
+# Retention parameters  
 retention-redundancy = 0  
 retention-window = 0  
 wal-depth = 0  
-###### # Compression parameters  
+# Compression parameters  
 compress-algorithm = none  
 compress-level = 1  
-###### # Remote access parameters  
+# Remote access parameters  
 remote-proto = ssh  
+```
 ##### 8. Испольуем PGPASS через Луну в Юпитере: host:port:db_name:user_name:password
 ```
 rm ~/.pgpass
@@ -204,12 +202,17 @@ BACKUP INSTANCE 'main'
 ###### 10. Исправляем отсутствие checksums, инициализацияся на выкл.кластере, из-под postgres:
 ```
 systemctl stop postgresql
+# или, можно из-под postgres, выдаст ошибку, но отработает:
+pg_ctlcluster 14 main stop
+pg_lsclusters
 su postgres
 /usr/lib/postgresql/14/bin/pg_checksums -D /var/lib/postgresql/14/main --enable
+# Ответ: Контрольные суммы в кластере включены
 exit
+pg_ctlcluster 14 main start
 systemctl start postgresql
+pg_lsclusters
 ```
-###### Ответ: Контрольные суммы в кластере включены.
 ##### 11. Добавляем данные:                                                                                                               
 ```
 psql otus -c "insert into test values (40);"
