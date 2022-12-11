@@ -331,7 +331,7 @@ pg_ctlcluster 14 main2 status
 sudo rm -rf /var/lib/postgresql/14/main2
 #  Попытаемся восстановиться на последний бекап, смотрим его id: RIG0VK, однако:
 ```
-##### Что бы заработало PITR должны иметь wal-файлы, для этого должно быть непрерывное архивирование:
+##### Для PITR должны иметь wal-файлы, для этого должно быть непрерывное архивирование:
 ```
 psql -c 'alter system set archive_mode = on'
 psql
@@ -486,8 +486,6 @@ vim ~/.pgpass
 localhost:5432:*:postgres:12345
 chmod 0600 ~/.pgpass
 ```
-
-
 ```
 time sudo -u postgres pg_dump --no-password --format=directory -v --host=localhost -p 5432 --username=postgres --dbname=otus -f /home/backups/2/otus.dmp
 time sudo -u postgres pg_dump -Fc -v --host=localhost --username=postgres --dbname=otus -f testdb.dump
@@ -528,8 +526,7 @@ time pg_restore -h localhost -p 5432 -U postgres -d otus -v "/home/backups/1/psq
 time pg_restore -j 2 --verbose --clean --no-acl --no-owner --host=localhost -p 5432 --dbname=otus --username=postgres "/home/backups/1/psql-2022-09-21.sql.gz"
 time pg_restore -j 2 -h localhost -U postgres -F c -d otus "/home/backups/1/psql-2022-09-21.sql.gz"
 ```
-```
-```
+
 
 
 
