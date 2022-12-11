@@ -51,7 +51,7 @@ su postgres
 psql
 create user backup;
 
-ALTER USER backup WITH PASSWORD '12345';
+ALTER USER backup WITH PASSWORD 'otus123';
 ALTER ROLE backup NOSUPERUSER;
 ALTER ROLE backup WITH REPLICATION;
 # Далее все вместе:
@@ -139,13 +139,19 @@ compress-level = 1
 # Remote access parameters  
 remote-proto = ssh  
 ```
-##### 8. Испольуем PGPASS через Луну в Юпитере: host:port:db_name:user_name:password
+##### 8. Испольуем Linux-авторизацию через PGPASS (Луну в Юпитере): host:port:db_name:user_name:password
 ```
 rm ~/.pgpass
 echo "localhost:5432:otus:backup:12345">>~/.pgpass
 chmod 600 ~/.pgpass
 pg_ctlcluster 14 main stop
 pg_ctlcluster 14 main start
+# Исп.авторизацию в БД:
+psql -c "ALTER USER backup PASSWORD '12345';"
+sudo useradd backup -p 12345
+# Ответ: пользователь «backup» уже существует
+passwd backup
+12345
 ```
 ##### 9. Делаем бекап из-под POSTGRES с параметрами: FULL, потоковая репликация+временный слот:
 ```
@@ -177,19 +183,12 @@ INFO: Backup RIEQTF completed
 ```
 ###### v_2021 было:
 ```
+pg_probackup-14 backup --instance 'main' -b DELTA --stream --temp-slot -h localhost -U backup -W
 pg_probackup-14 backup --instance 'main' -b FULL --stream --temp-slot -h localhost -U backup --pgdatabase=otus -p 5432
 ```
-###### Ответ: WARNING: Curent PostgreSQL role is superuser. Исправляемся, следующий бекап из-под пользователя backup. Что сейчас получилось с бекапами? :
+###### Ответ: WARNING: Curent PostgreSQL role is superuser. Исправляемся, следующий бекап из-под пользователя backup. Что с бекапами? :
 ```
 pg_probackup-14 show
-```
-```
-# V_2022
-BACKUP INSTANCE 'main'
-================================================================================================================================
- Instance  Version  ID      Recovery Time           Mode  WAL Mode  TLI  Time  Data   WAL  Zratio  Start LSN  Stop LSN   Status
-================================================================================================================================
- main      14       RIEQTF  2022-09-18 16:29:41+03  FULL  STREAM    1/0   11s  34MB  16MB    1.00  0/2000028  0/20020D0  OK
 ```
 ```
 # V_2021
@@ -198,6 +197,23 @@ BACKUP INSTANCE 'main'
 ###### Instance   Version   ID       Recovery  Time            Mode   WAL  Mode   TLI   Time   Data    WAL   Zratio   Start  LSN   Stop  LSN    Status
 ###### ==========================================================================================================
 ###### main      14       R93D33  2022-03-21 13:57:04+03  FULL  STREAM    1/0   10s  34MB  16MB    1.00  0/2000028  0/2005B50  OK
+```
+```
+# V_2022_1
+BACKUP INSTANCE 'main'
+================================================================================================================================
+ Instance  Version  ID      Recovery Time           Mode  WAL Mode  TLI  Time  Data   WAL  Zratio  Start LSN  Stop LSN   Status
+================================================================================================================================
+ main      14       RIEQTF  2022-09-18 16:29:41+03  FULL  STREAM    1/0   11s  34MB  16MB    1.00  0/2000028  0/20020D0  OK
+```
+```
+# V_2022_2
+pg_probackup-14 show
+==================================================================================================================================
+ Instance  Version  ID      Recovery Time           Mode  WAL Mode  TLI  Time  Data   WAL  Zratio  Start LSN   Stop LSN    Status
+==================================================================================================================================
+ main      14       RMPX20  2022-12-11 11:32:25+03  FULL  STREAM    1/0    7s  34MB  32MB    1.00  2/8F000028  2/8F000168  OK
+ main      14       RMPWOU  2022-12-11 11:24:32+03  FULL  STREAM    1/0   11s  34MB  16MB    1.00  2/83000028  2/830020D0  OK
 ```
 ###### 10. Исправляем отсутствие checksums, инициализацияся на выкл.кластере, из-под postgres:
 ```
@@ -217,12 +233,12 @@ pg_lsclusters
 ```
 psql otus -c "insert into test values (40);"
 ```
-###### 12. Делаем дельта-backup с хостовым пользователем backup. Другой путь: Установим пароль на backup в БД :
+###### 12. Делаем дельта-backup с хостовым linux-пользователем backup. Другой путь: Установим пароль на backup в БД :
 ```
-# V_2022
-psql -c "ALTER USER backup PASSWORD '12345';"
+# V_2022 -- зададим пароль backup в postgres:
+psql -c "ALTER USER backup PASSWORD 'otus123';"
 pg_probackup-14 backup --instance 'main' -b DELTA --stream --temp-slot -h localhost -U backup -W
-# Ответ:
+# В ответ вводим pass: otus123 и получаем
 INFO: Backup start, pg_probackup version: 2.5.8, instance: main, backup ID: RIESAV, backup mode: DELTA, wal mode: STREAM, remote: false, compress-algorithm: none, compress-level: 1
 Password for user backup:
 INFO: This PostgreSQL instance was initialized with data block checksums. Data block corruption will be detected
@@ -245,18 +261,22 @@ INFO: Validating backup RIESAV
 INFO: Backup RIESAV data files are valid
 INFO: Backup RIESAV resident size: 21MB
 INFO: Backup RIESAV completed
-
-# Примечание: Из-под авторизованного linux-user backup пароль не затребует
+====================================================================================================================================
+ Instance  Version  ID      Recovery Time           Mode   WAL Mode  TLI  Time   Data   WAL  Zratio  Start LSN   Stop LSN    Status
+====================================================================================================================================
+ main      14       RMPYDH  2022-12-11 12:01:02+03  DELTA  STREAM    1/1   11s  139kB  64MB    1.00  2/C9000028  2/CB0000B8  OK
+ main      14       RMPX20  2022-12-11 11:32:25+03  FULL   STREAM    1/0    7s   34MB  32MB    1.00  2/8F000028  2/8F000168  OK
+ main      14       RMPWOU  2022-12-11 11:24:32+03  FULL   STREAM    1/0   11s   34MB  16MB    1.00  2/83000028  2/830020D0  OK
+ # Примечание: Из-под авторизованного linux-user backup пароль не затребует
 ```
+###### Переинициализируем pg_probackup на БД otus:
 ```
-# V_2021
-psql -c "ALTER USER backup PASSWORD '12345';"
-time pg_probackup-14 backup --instance 'main' -b DELTA --stream --temp-slot -h localhost -U backup --pgdatabase=otus -p 5432
-# Время/размер c demo: real    0m6,790s Backup RJBOJP resident size: 32MB
-
 psql otus -c "insert into test values (50);"
+pg_probackup-14 backup --instance 'main' -b DELTA --stream --temp-slot -h localhost -U backup --pgdatabase=otus -p 5432
+pg_probackup-14 backup --instance 'main' -b FULL --stream --temp-slot -h localhost -U backup --pgdatabase=otus -p 5432
+
 ```
-##### Получаем ошибку:
+##### Без переинициализации получаем ошибку:
 ```
 ERROR: query failed: ОШИБКА:  нет доступа к функции pg_start_backup query was: SELECT pg_catalog.pg_start_backup($1, $2, false)
 ```
