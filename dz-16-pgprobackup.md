@@ -43,9 +43,9 @@ cd $HOME
 ###### Просмотр переменной:
 ```
 echo $BACKUP_PATH
+Ответ: /home/backups/
 ```
-###### Ответ: /home/backups/
-##### 5. Создать пользователя backup с правами:
+##### 5. Создать пользователя backup с правами на БД postgres:
 ```
 su postgres
 psql
@@ -54,6 +54,7 @@ create user backup;
 ALTER USER backup WITH PASSWORD '12345';
 ALTER ROLE backup NOSUPERUSER;
 ALTER ROLE backup WITH REPLICATION;
+# Далее все вместе:
 GRANT USAGE ON SCHEMA pg_catalog TO backup;
 GRANT EXECUTE ON FUNCTION pg_catalog.current_setting(text) TO backup;
 GRANT EXECUTE ON FUNCTION pg_catalog.pg_is_in_recovery() TO backup;
