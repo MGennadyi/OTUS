@@ -70,25 +70,19 @@ GRANT EXECUTE ON FUNCTION pg_catalog.pg_control_checkpoint() TO backup;
 
 \q
 ```
-##### 6.1  Инициализируем наш probackup, из-под postgres:
+##### 6.1  Инициализируем probackup, из-под postgres:
 ```
 pg_probackup-14 init
-```
-###### Ответ: Backup catalog '/home/backups' successfully inited
-###### Что внутри директории бекапов:
-```
-cd $BACKUP_PATH
-ls -la
-```
-###### Ответ: создалось 2 каталога:
-```
-drwxrwxrwx 4 root root 4096 фев  2 08:41 .  
-drwxr-xr-x 4 root root 4096 фев  1 15:36 ..  
-drwx------ 2 postgres postgres 4096 фев  2 08:41 backups  
-drwx------ 2 postgres postgres 4096 фев  2 08:41 wal
+# Ответ: ERROR: backup catalog already exist and it's not empty
+# Смотрим, что внутри что-то есть:
+ls -la $BACKUP_PATH
+rm -rf /home/backups/*
+pg_probackup-14 init
+# Ответ: INFO: Backup catalog '/home/backups' successfully inited
+# Добавилось 2 каталога: backups, wal
 ```
 ##### Уточнить, почему всем? в v_2022 нет:
-```
+```      
 sudo chmod -R 777 /home/backups
 ```
 ##### 6.2  Добавить инстанс в наш probackup из-под postgres:
