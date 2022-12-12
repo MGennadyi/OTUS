@@ -8,6 +8,11 @@ apt install postgresql-14 -y
 pg_isready
 # Ответ: /var/run/postgresql:5432 - принимает подключения
 ```
+###### Что под капотом:
+```
+lsb_release -a
+pg_lsclusters
+```
 ###### Установка контроля времени выполнения:
 ```
 apt install time -y
