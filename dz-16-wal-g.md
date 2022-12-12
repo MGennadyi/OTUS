@@ -310,6 +310,7 @@ wal-g backup-push /var/lib/postgresql/14/main
 ```
 ##### 9. Восстановление на инстансе main2:
 ```
+pg_lsclusters
 su postgres
 # pg_dropcluster 14 main2
 postgres@backup:/home/mgb$ pg_lsclusters
