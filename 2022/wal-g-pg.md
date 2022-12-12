@@ -17,6 +17,12 @@ pg_isready
 # Ответ:
 /var/run/postgresql:5432 - accepting connections
 ```
+###### Проверка состояния:
+```
+# Что под капотом:
+lsb_release -a
+pg_lsclusters
+```
 ```
 vim /etc/hosts
 192.168.5.162 etcd1.kolomna.centr.oe	etcd1
@@ -178,6 +184,11 @@ restore_command='wal-g wal-fetch "%f" "%p" >> /var/lib/postgresql/14/main/log/re
 # Перезапуск, ругается :
 pg_ctlcluster 14 main stop
 pg_ctlcluster 14 main start
+# V-11
+СООБЩЕНИЕ:  нераспознанный параметр конфигурации "restore_command" в файле "/var/lib/postgresql/11/main/postgresql.auto.conf", строке 7
+mkdir /var/lib/postgresql/11/main/log/
+touch /var/lib/postgresql/11/main/log/restore_command.log
+ls -la /var/lib/postgresql/11/main/log/restore_command.log
 ```
 ###### На master node:
 ```
