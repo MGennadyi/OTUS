@@ -222,6 +222,7 @@ drwxr-xr-x 14 mgb      mgb      4096 дек  6 17:19 mgb
 ```
 ###### 6. Делаем backup-push:
 ```
+pg_lsclusters
 su postgres
 time wal-g backup-push /var/lib/postgresql/14/main
 # Ответ: Couldn't find previous backup.
