@@ -186,9 +186,9 @@ pg_ctlcluster 14 main stop
 pg_ctlcluster 14 main start
 # V-11
 СООБЩЕНИЕ:  нераспознанный параметр конфигурации "restore_command" в файле "/var/lib/postgresql/11/main/postgresql.auto.conf", строке 7
-mkdir /var/lib/postgresql/11/main/log/
-touch /var/lib/postgresql/11/main/log/restore_command.log
-ls -la /var/lib/postgresql/11/main/log/restore_command.log
+mkdir /var/lib/postgresql/13/main/log/
+touch /var/lib/postgresql/13/main/log/restore_command.log
+ls -la /var/lib/postgresql/13/main/
 ```
 ###### На master node:
 ```
@@ -205,7 +205,7 @@ select * from pg_stat_activity \gx
 ```
 # Включаем показ тайминга выполнения команд:
 \timing
-psql -c "CREATE DATABASE otus1;"
+psql -c "CREATE DATABASE otus;"
 psql otus -c "create table test(i int);"
 psql otus -c "insert into test values (10), (20), (30);"
 psql otus -c "select * from test;"
