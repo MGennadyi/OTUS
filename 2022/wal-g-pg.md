@@ -121,7 +121,14 @@ vim ~/.walg.json
     
 }
 ```
-##### Просмотр расположения unix_socket:
+###### Просмотр расположения unix_socket postgres-11:
+```
+show unix_socket_directories;
+# Ответ:
+------------------------
+ /var/run/postgresql
+```
+##### Просмотр расположения unix_socket patroni:
 ```
 sudo vim /etc/patroni.yml
 # В группе parametrs по дефолту:  unix_socket_directories: '.'
