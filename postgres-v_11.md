@@ -4,8 +4,8 @@ wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-
 apt update 
 apt install postgresql-11 -y
 ```
-```
-# Проверка что под капотом:
+
+###### Проверка что под капотом:
 ```
 lsb_release -a
 pg_lsclusters
