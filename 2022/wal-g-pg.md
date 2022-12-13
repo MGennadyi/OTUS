@@ -286,14 +286,16 @@ ls -la /var/lib/postgresql/14/main2
 wal-g backup-fetch /var/lib/postgresql/14/main2 LATEST
 ```
 ###### 9.5.  Создаем recovery.signal:
+```
 touch "/var/lib/postgresql/14/main2/recovery.signal"
+```
 ###### 9.6. Стартуем main2:
 ```
 pg_ctlcluster 14 main2 start
 # После восстановления recovery.signal удаляется чтобы предотвратить повторный запуск режима восстановления.
 ```
-sudo systemctl daemon-reload
-# Смотрим журнал:
+###### Смотрим журнал:
+```
 tail /var/lib/postgresql/14/main/log/restore_command.log
 journalctl -xe
 дек 06 17:45:30 backup postgresql@14-main2[1162]: Error: /usr/lib/postgresql/14/bin/pg_ctl /usr/lib/postgresql/14/bin/pg_ctl start -D /var/lib/postgresql/14/ma>
@@ -344,9 +346,6 @@ pg_ctl: не удалось запустить сервер
 ##### Теплое резервирование:
 ```
 touch "/var/lib/postgresql/14/main2/recovery.signal"
-
-
-
 ```
 ###### 10. Исправляем отсутствие checksums, инициализацияся на выкл.кластере, из-под postgres:
 ```
@@ -356,24 +355,6 @@ su postgres
 exit
 systemctl start postgresql
 ```
-###### ПОДСКАЗКА:  Если вы восстанавливаете резервную копию, создайте
-```
-touch /var/lib/postgresql/14/main2/recovery.signal
-vim /var/lib/postgresql/14/main2/recovery.signal
-```
-###### Получаем: Selecting the latest backup...
-```
-INFO: 2022/04/09 16:44:03.325798 LATEST backup is: 'base_00000001000000000000001E_D_000000010000000000000006'
-INFO: 2022/04/09 16:44:05.834564 Backup extraction complete. Бэкап сформировался за 0,02 сек.
-```
-##### 10. На точку времени создать файл для восстановления из архивов wal:
-```
-touch "/var/lib/postgresql/14/main2/recovery.signal"
-exit
-sudo systemctl start postgresql@14-main2
-pg_ctlcluster 14 main2 start
-```
-
 ##### CRON расписания резервного копирования:
 ```
 # Просмотр заданий:
@@ -480,9 +461,6 @@ postgres@wal-g2:/home/mgb$
 vim /var/spool/cron/crontabs/postgres
 vim /var/log/postgresql/walg_delete.log
 time wal-g backup-push /var/lib/postgresql/14/main
-
-
-
 
 wal-g backup-list --pretty
 
