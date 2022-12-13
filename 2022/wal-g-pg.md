@@ -158,6 +158,7 @@ echo "restore_command='wal-g wal-fetch \"%f\" \"%p\" >> /var/lib/postgresql/14/m
 ```
 ##### Смотрим, что все записалось:
 ```
+cat ~/13/main/postgresql.auto.conf
 cat ~/14/main/postgresql.auto.conf
 
 wal_level=replica
@@ -210,6 +211,9 @@ drwxr-xr-x 14 mgb      mgb      4096 дек  6 17:19 mgb
 ```
 pg_lsclusters
 su postgres
+# V_13
+time wal-g backup-push /var/lib/postgresql/13/main
+# V_14
 time wal-g backup-push /var/lib/postgresql/14/main
 # Ответ: Couldn't find previous backup.
 ```
@@ -236,11 +240,13 @@ wal-g backup-push /var/lib/postgresql/14/main
 pg_ctlcluster 13 main2 stop
 pg_lsclusters
 pg_dropcluster 13 main2
+pg_lsclusters
 ```
 ###### 9.2. Создаем main2:
 ```
 pg_createcluster 13 main2
 13  main2   5433 down   postgres /var/lib/postgresql/13/main2 /var/log/postgresql/postgresql-13-main2.log
+sudo systemctl daemon-reload  -Надо ли?
 ```
 ###### 9.3. Удаляем содержимое main2, не стартуя :
 ```
