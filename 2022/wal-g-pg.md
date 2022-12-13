@@ -290,6 +290,7 @@ touch "/var/lib/postgresql/14/main2/recovery.signal"
 ###### 9.6. Стартуем main2:
 ```
 pg_ctlcluster 14 main2 start
+# После восстановления recovery.signal удаляется чтобы предотвратить повторный запуск режима восстановления.
 ```
 sudo systemctl daemon-reload
 # Смотрим журнал:
