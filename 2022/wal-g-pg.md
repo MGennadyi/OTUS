@@ -231,23 +231,29 @@ wal-g backup-push /var/lib/postgresql/14/main
 Ответ: LATEST backup is: 'base_000000010000000000000003'. Delta backup from base_000000010000000000000003 with LSN 3000028.
 ```
 ##### 9. Восстановление на инстансе main2:
+###### 9.1. Останавливаем и Удаляем, если есть: 
 ```
-su postgres
-# 1. Останавливаем и Удаляем, если есть: 
 pg_ctlcluster 14 main2 stop
 pg_lsclusters
 pg_dropcluster 14 main2
-# 2. Создаем main2:
+```
+###### 9.2. Создаем main2:
+```
 pg_createcluster 14 main2
 14  main2   5433 down   postgres /var/lib/postgresql/14/main2 /var/log/postgresql/postgresql-14-main2.log
-# 3. Удаляем содержимое main2 :
+```
+###### 9.3. Удаляем содержимое main2, не стартуя :
+```
 rm -rf /var/lib/postgresql/14/main2/*
-# Восстанавливаемся в main2 :
+ls -la /var/lib/postgresql/14/main2/
+```
+###### 9.4 Восстанавливаемся в main2 :
+```
 wal-g backup-fetch /var/lib/postgresql/14/main2 LATEST
-# Ответ: Backup extraction complete.
-# 4.  Создаем recovery.signal:
+```
+###### 9.5.  Создаем recovery.signal:
 touch "/var/lib/postgresql/14/main2/recovery.signal"
-# 5. Стартуем main2:
+###### 9.6. Стартуем main2:
 pg_ctlcluster 14 main2 start
 
 sudo systemctl daemon-reload
