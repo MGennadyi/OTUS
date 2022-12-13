@@ -146,19 +146,6 @@ unix_socket_directories
  .
 (1 row)
 # Изменить на !!!:  unix_socket_directories: '/var/run/postgresql/'
-
-sudo patronictl -c /etc/patroni.yml edit-config
-# Ответ:
-
-loop_wait: 10
-maximum_lag_on_failover: 1048576
-postgresql:
-  parameters: null
-  use_pg_rewind: true
-retry_timeout: 10
-ttl: 30
-pending restart
-
 ```
 ###### DESC .walg.json: каталог для бекапов; сжатие=brotli; delta=6 хранимых копий; подключение через linux-socket порт 5432;
 ###### 6. Правим  postgresql.conf через auto.conf, все команды разом:
@@ -197,9 +184,6 @@ select pg_switch_wal();
 # Ответ:
 --------------
  0/8000000
-(1 строка)
-select * from pg_stat_activity \gx
-# Ответ: длинная портянка
 ```
 ###### 7. Создадим тестовую базу данных с данными:
 ```
@@ -247,41 +231,24 @@ wal-g backup-push /var/lib/postgresql/14/main
 ##### 9. Восстановление на инстансе main2:
 ```
 su postgres
-# Удаляем, если есть: 
+# 1. Останавливаем и Удаляем, если есть: 
+pg_ctlcluster 14 main2 stop
+pg_lsclusters
 pg_dropcluster 14 main2
-Error: This cluster is still running. Stop it or supply the --stop option
-pg_ctlcluster 14 main2 stop
-pg_lsclusters
-Ver Cluster Port Status Owner    Data directory              Log file
-14  main    5432 online postgres /var/lib/postgresql/14/main /var/log/postgresql/postgresql-14-main.log
+# 2. Создаем main2:
 pg_createcluster 14 main2
-# Ответ:
-Warning: systemd does not know about the new cluster yet. Operations like "service postgresql start" will not handle it. To fix, run:
-sudo systemctl daemon-reload
-Ver Cluster Port Status Owner    Data directory               Log file
 14  main2   5433 down   postgres /var/lib/postgresql/14/main2 /var/log/postgresql/postgresql-14-main2.log
-pg_lsclusters
-# Ответ:
-14  main    5432 online postgres /var/lib/postgresql/14/main  /var/log/postgresql/postgresql-14-main.log
-14  main2   5433 down   postgres /var/lib/postgresql/14/main2 /var/log/postgresql/postgresql-14-main2.log
-pg_ctlcluster 14 main2 start
-# Ответ:
-14  main    5432 online postgres /var/lib/postgresql/14/main  /var/log/postgresql/postgresql-14-main.log
-14  main2   5433 online postgres /var/lib/postgresql/14/main2 /var/log/postgresql/postgresql-14-main2.log
-pg_ctlcluster 14 main2 stop
-# sudo systemctl start postgresql@14-main2
-# sudo systemctl stop postgresql@14-main2
-# Удаляем содержимое main2 :
+# 3. Удаляем содержимое main2 :
 rm -rf /var/lib/postgresql/14/main2/*
-# А что с бекапами? :
+# Восстанавливаемся в main2 :
 wal-g backup-fetch /var/lib/postgresql/14/main2 LATEST
 # Ответ: Backup extraction complete.
-sudo systemctl daemon-reload
+# 4.  Создаем recovery.signal:
+touch "/var/lib/postgresql/14/main2/recovery.signal"
+# 5. Стартуем main2:
 pg_ctlcluster 14 main2 start
-root@wal-g2:/home/mgb# pg_ctlcluster 14 main2 start
-Job for postgresql@14-main2.service failed because the service did not take the steps required by its unit configuration.
-See "systemctl status postgresql@14-main2.service" and "journalctl -xe" for details.
 
+sudo systemctl daemon-reload
 # Смотрим журнал:
 tail /var/lib/postgresql/14/main/log/restore_command.log
 journalctl -xe
