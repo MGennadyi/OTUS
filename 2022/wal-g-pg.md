@@ -250,8 +250,9 @@ sudo systemctl daemon-reload  -Надо ли?
 ```
 ###### 9.3. Удаляем содержимое main2, не стартуя :
 ```
-rm -rf /var/lib/postgresql/13/main2/*
-ls -la /var/lib/postgresql/13/main2/
+rm -rf /var/lib/postgresql/13/main2
+ls -la /var/lib/postgresql/13/
+# Ответ: нет main2
 ```
 ###### 9.4 Восстанавливаемся в main2 :
 ```
@@ -277,8 +278,8 @@ pg_createcluster 14 main2
 ```
 ###### 9.3. Удаляем содержимое main2, не стартуя :
 ```
-rm -rf /var/lib/postgresql/14/main2/*
-ls -la /var/lib/postgresql/14/main2/
+rm -rf /var/lib/postgresql/14/main2
+ls -la /var/lib/postgresql/14/main2
 ```
 ###### 9.4 Восстанавливаемся в main2 :
 ```
