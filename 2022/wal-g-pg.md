@@ -254,8 +254,9 @@ wal-g backup-fetch /var/lib/postgresql/14/main2 LATEST
 ###### 9.5.  Создаем recovery.signal:
 touch "/var/lib/postgresql/14/main2/recovery.signal"
 ###### 9.6. Стартуем main2:
+```
 pg_ctlcluster 14 main2 start
-
+```
 sudo systemctl daemon-reload
 # Смотрим журнал:
 tail /var/lib/postgresql/14/main/log/restore_command.log
