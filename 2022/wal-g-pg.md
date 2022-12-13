@@ -193,6 +193,8 @@ psql -c "CREATE DATABASE otus;"
 psql otus -c "create table test(i int);"
 psql otus -c "insert into test values (10), (20), (30);"
 psql otus -c "select * from test;"
+
+select * from test;
 ```
 ###### 6. Делаем каталог для бекапов:
 ```
