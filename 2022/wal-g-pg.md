@@ -285,7 +285,7 @@ ls -la /var/lib/postgresql/14/main2
 ```
 wal-g backup-fetch /var/lib/postgresql/14/main2 LATEST
 ```
-###### 9.5.  Создаем recovery.signal:
+###### 9.5.  Запуск main2 в режиме восстановления - Создаем recovery.signal:
 ```
 touch "/var/lib/postgresql/14/main2/recovery.signal"
 ```
