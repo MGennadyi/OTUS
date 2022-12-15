@@ -345,7 +345,11 @@ pg_ctl: не удалось запустить сервер
 ```
 ##### Теплое резервирование:
 ```
-touch "/var/lib/postgresql/14/main2/recovery.signal"
+vim "/var/lib/postgresql/14/main2/recovery.signal"
+
+standby_mode = 'on'
+primary_conninfo = 'user=repuser reusepass=yes passfile=''/var/lib/postgresql/.pgpass'' host=''fobos'' port=5432 sslmode=prefer sslcompression=0 krbsrvname=postgres target_session_attrs=any target_server_type=any hostorder=sequential'
+primary_slot_name = 'repslot'
 ```
 ###### 10. Исправляем отсутствие checksums, инициализацияся на выкл.кластере, из-под postgres:
 ```
