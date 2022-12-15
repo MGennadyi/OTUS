@@ -1,5 +1,8 @@
 # PG_DUMP
 ```
+apt install time
+```
+```
 su postgres
 mkdir /home/backups/1
 ```
@@ -7,11 +10,21 @@ mkdir /home/backups/1
 # Задача теста: сравнение по времени, по потокам, загрузки CPU, загрузки hdd:
 # При -Fc практически не будет сжатия; d (directory); -j (потоки); -F d (указ.формат.вывода d=директория) c (custom); -f (вывод в директорию путь обязателен);
 # Простой вариант бекапа, в SQL-скрипте :
-pg_dump -d otus --create > /home/backups/3.sql
+time pg_dump -d demo --create > /home/backups/pg_dump/demo1.sql
+# Ответ: real    0m1,888s 0m1,917s
 # Простой со сжатием, в 2,8 раза меньше весит: 
-pg_dump -d otus --create | gzip > /home/backups/otus3.gz
-# Архив с оглавлением для pg_restore. Минимальная степень сжатия <10% : 
-pg_dump -d otus -Fc > /home/backups/otus4.gz
+time pg_dump -d demo --create | gzip > /home/backups/demo1.gz
+# real    0m5,829s 0m5,685s 0m5,682s
+ls -lh /home/backups/pg_dump/
+ 22M demo1.gz
+100M demo1.sql
+time pg_dump -j 2 -Fd demo -f /home/backups/pg_dump/111
+rm /home/backups/pg_dump/111/*
+real    0m3,420s
+du -sh /home/backups/pg_dump/111 22M
+
+# Архив с оглавлением для pg_restore. : 
+time pg_dump -d demo -Fc > /home/backups/pg_dump/demo11.gz
 # Восстановление-1:
 drop database otus;
 \q
