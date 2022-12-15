@@ -26,8 +26,14 @@ pg_restore -j 2 -d otus /home/backups/otus4.gz
 ```
 # Зальем данные:
 cd ~
-cd $HOME && wget --quiet https://edu.postgrespro.ru/demo_small.zip && unzip demo_small.zip && psql -d postgres < demo_small.sql
-# Greenplum: При загрузке будут ошибки со старыми индексами, т.к. v.9.4.26 много чего не поддерживает:
+sudo wget --quiet https://edu.postgrespro.ru/demo_small.zip
+# chown postgres /home/mgb/demo-small.zip
+sudo unzip demo-small.zip
+ls -la
+demo-small-20170815.sql
+CREATE DATABASE demo;
+psql -d demo < demo-small-20170815.sql
+# Ответ:
 COPY 9
 COPY 104
 COPY 579686
