@@ -66,6 +66,8 @@ real    0m1,888s 0m1,917s
 gzip > /home/backups/demo1.gz
 # real    0m5,829s 0m5,685s 0m5,682s
 
+pg_probackup
+real    0m16,929s
 
 
 # WAL_G
