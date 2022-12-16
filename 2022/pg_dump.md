@@ -40,12 +40,13 @@ pg_restore -j 2 -d otus /home/backups/otus4.gz
 # Зальем данные:
 cd ~
 sudo wget --quiet https://edu.postgrespro.ru/demo_small.zip
-# chown postgres /home/mgb/demo-small.zip
-sudo unzip demo-small.zip
+unzip demo_small.zip
+chown postgres /home/mgb/demo_small.sql
 ls -la
-demo-small-20170815.sql
+demo_small.sql
+su postgres
 CREATE DATABASE demo;
-psql -d demo < demo-small-20170815.sql
+psql -d demo < demo_small.sql
 # Ответ:
 COPY 9
 COPY 104
