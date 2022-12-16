@@ -56,7 +56,7 @@ su postgres
 psql
 create user backup;
 
-ALTER USER backup WITH PASSWORD 'otus123';
+ALTER USER backup WITH PASSWORD '12345';
 ALTER ROLE backup NOSUPERUSER;
 ALTER ROLE backup WITH REPLICATION;
 # Далее все вместе:
@@ -98,7 +98,7 @@ pg_probackup-14 add-instance --instance 'main' -D /var/lib/postgresql/14/main
 ```
 ##### 7. Создаем и заполнение новой БД (не входя PSQL):
 ```
-time psql -f demo-small-20170815.sql -U postgres
+time psql -f demo_small.sql -U postgres
 real    0m35,852s
 ```
 ```
@@ -148,6 +148,7 @@ remote-proto = ssh
 ```
 rm ~/.pgpass
 echo "localhost:5432:otus:backup:12345">>~/.pgpass
+echo "localhost:5432:demo:backup:12345">>~/.pgpass
 chmod 600 ~/.pgpass
 pg_ctlcluster 14 main stop
 pg_ctlcluster 14 main start
@@ -190,6 +191,7 @@ INFO: Backup RIEQTF completed
 ```
 pg_probackup-14 backup --instance 'main' -b DELTA --stream --temp-slot -h localhost -U backup -W
 pg_probackup-14 backup --instance 'main' -b FULL --stream --temp-slot -h localhost -U backup --pgdatabase=otus -p 5432
+pg_probackup-14 backup --instance 'main' -b FULL --stream --temp-slot -h localhost -U backup --pgdatabase=demo -p 5432
 ```
 ###### Ответ: WARNING: Curent PostgreSQL role is superuser. Исправляемся, следующий бекап из-под пользователя backup. Что с бекапами? :
 ```
@@ -241,7 +243,7 @@ psql otus -c "insert into test values (40);"
 ###### 12. Делаем дельта-backup с хостовым linux-пользователем backup. Другой путь: Установим пароль на backup в БД :
 ```
 # V_2022 -- зададим пароль backup в postgres:
-psql -c "ALTER USER backup PASSWORD 'otus123';"
+psql -c "ALTER USER backup PASSWORD '12345';"
 pg_probackup-14 backup --instance 'main' -b DELTA --stream --temp-slot -h localhost -U backup -W
 # В ответ вводим pass: otus123 и получаем
 INFO: Backup start, pg_probackup version: 2.5.8, instance: main, backup ID: RIESAV, backup mode: DELTA, wal mode: STREAM, remote: false, compress-algorithm: none, compress-level: 1
@@ -285,7 +287,7 @@ pg_probackup-14 backup --instance 'main' -b FULL --stream --temp-slot -h localho
 ```
 ERROR: query failed: ОШИБКА:  нет доступа к функции pg_start_backup query was: SELECT pg_catalog.pg_start_backup($1, $2, false)
 ```
-##### Исправляем ошибку:
+###### Переинициализируем pg_probackup на БД otus:
 ```
 psql -d otus
 GRANT USAGE ON SCHEMA pg_catalog TO backup;
@@ -301,8 +303,26 @@ GRANT EXECUTE ON FUNCTION pg_catalog.txid_current_snapshot() TO backup;
 GRANT EXECUTE ON FUNCTION pg_catalog.txid_snapshot_xmax(txid_snapshot) TO backup;
 GRANT EXECUTE ON FUNCTION pg_catalog.pg_control_checkpoint() TO backup;
 ```
+###### Переинициализируем pg_probackup на БД demo:
+```
+psql -d demo
+GRANT USAGE ON SCHEMA pg_catalog TO backup;
+GRANT EXECUTE ON FUNCTION pg_catalog.current_setting(text) TO backup;
+GRANT EXECUTE ON FUNCTION pg_catalog.pg_is_in_recovery() TO backup;
+GRANT EXECUTE ON FUNCTION pg_catalog.pg_start_backup(text, boolean, boolean) TO backup;
+GRANT EXECUTE ON FUNCTION pg_catalog.pg_stop_backup(boolean, boolean) TO backup;
+GRANT EXECUTE ON FUNCTION pg_catalog.pg_create_restore_point(text) TO backup;
+GRANT EXECUTE ON FUNCTION pg_catalog.pg_switch_wal() TO backup;
+GRANT EXECUTE ON FUNCTION pg_catalog.pg_last_wal_replay_lsn() TO backup;
+GRANT EXECUTE ON FUNCTION pg_catalog.txid_current() TO backup;
+GRANT EXECUTE ON FUNCTION pg_catalog.txid_current_snapshot() TO backup;
+GRANT EXECUTE ON FUNCTION pg_catalog.txid_snapshot_xmax(txid_snapshot) TO backup;
+GRANT EXECUTE ON FUNCTION pg_catalog.pg_control_checkpoint() TO backup;
+```
 ##### Повторяем бекап OTUS
 ```
+time pg_probackup-14 backup --instance 'main' -b FULL --stream --temp-slot -h localhost -U backup --pgdatabase=demo -p 5432
+real    0m14,621s 0m16,929s
 time pg_probackup-14 backup --instance 'main' -b FULL --stream --temp-slot -h localhost -U backup --pgdatabase=otus -p 5432
 psql otus -c "insert into test values (60);"
 time pg_probackup-14 backup --instance 'main' -b DELTA --stream --temp-slot -h localhost -U backup --pgdatabase=otus -p 5432
