@@ -73,20 +73,19 @@ real    0m16,929s
 # WAL_G
 real    0m5,125s
 real    0m1,232s
+```
+```
+pg_ctl start -D 
+
+
+
+
+
 
 
 
 
 ```
-
-
-
-
-
-
-
-
-
 
 
 
