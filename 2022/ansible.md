@@ -173,7 +173,19 @@ etcd3 ansible_host=192.168.5.164 ansible_user=mgb ansible_ssh_private_key_file=/
     group: root
     mode: '0644'
 ```
+# AWX
+```
+apt install git python3-pip docker docker-compose -y
 
+pip3 install ansible
+mkdir /downloads
+cd /downloads/
+# Клонируем репозиторий:
+git clone https://github.com/ansible/awx
+cd /downloads/
+ansible-playbook.yml -i inventory
+
+```
 
 
 
