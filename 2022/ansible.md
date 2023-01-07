@@ -16,6 +16,12 @@ apt install -y  git python3-pip docker docker-compose
 pip3 install ansible
 ```
 ```
+mkdir downloads
+cd downloads
+git clone https://github.com/ansible/awx/
+cd awx/
+```
+```
 Installing collected packages: pycparser, pyparsing, MarkupSafe, cffi, resolvelib, PyYAML, packaging, jinja2, cryptography, ansible-core, ansible
 Successfully installed MarkupSafe-2.1.1 PyYAML-6.0 ansible-6.6.0 ansible-core-2.13.6 cffi-1.15.1 cryptography-38.0.3 jinja2-3.1.2 packaging-21.3 pycparser-2.21 pyparsing-3.0.9 resolvelib-0.8.1
 root@ansible:/home/mgb#
@@ -25,6 +31,19 @@ root@ansible:/home/mgb#
 dpkg-query -l
 dpkg -l | grep ansible
 ansible --version
+# apt install ansible= ansible 2.10.8
+pip3 install ansible --upgrade
+# ansible [core 2.14.1]
+Установка ansible через GIT:
+mkdir downloads
+cd /usr/local/src && git clone git://github.com/ansible/ansible.git - не сработает
+cd downloads && git clone https://github.com/ansible/ansible.git
+# Уст модулей:
+pip3 install paramiko PyYAML jinja2 httplib2
+python3 home/mgb/downloads/ansible/setup.py build
+# Ответ: running build
+python3 home/mgb/downloads/ansible/setup.py install
+# ansible [core 2.14.1]
 python3 --version
 ```
 ```
