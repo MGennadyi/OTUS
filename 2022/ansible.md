@@ -11,9 +11,9 @@ apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 93C4A3FD7BB9C367
 vim /etc/apt/sources.list
 deb http://ppa.launchpad.net/ansible/ansible/ubuntu focal main
 sudo apt update
-# Лучше устанавливать Ansible НЕ из репозитория Debian, а использовать Pip или Pip3:
-apt install python3 python3-pip
-pip install ansible
+# Установка необходимых пакетов: Лучше устанавливать Ansible НЕ из репозитория Debian, а использовать Pip3:
+apt install -y  git python3-pip docker docker-compose
+pip3 install ansible
 ```
 ```
 Installing collected packages: pycparser, pyparsing, MarkupSafe, cffi, resolvelib, PyYAML, packaging, jinja2, cryptography, ansible-core, ansible
