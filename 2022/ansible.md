@@ -24,7 +24,16 @@ cd awx/
 ```
 Installing collected packages: pycparser, pyparsing, MarkupSafe, cffi, resolvelib, PyYAML, packaging, jinja2, cryptography, ansible-core, ansible
 Successfully installed MarkupSafe-2.1.1 PyYAML-6.0 ansible-6.6.0 ansible-core-2.13.6 cffi-1.15.1 cryptography-38.0.3 jinja2-3.1.2 packaging-21.3 pycparser-2.21 pyparsing-3.0.9 resolvelib-0.8.1
+# Сгенерируйте секретный ключ для AWX
+pwgen -N 1 -s 30
+9RYNGtlFC9g8KmlKNZhm9a4AcPrfVG
+
 root@ansible:/home/mgb#
+```
+```
+apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 93C4A3FD7BB9C367
+echo "deb http://ppa.launchpad.net/ansible/ansible/ubuntu bullseye main" | tee /etc/apt/sources.list.d/ansible.list
+
 ```
 ```
 # Смотрим, что установилось, первые 2 не показывают:
@@ -44,6 +53,16 @@ python3 home/mgb/downloads/ansible/setup.py build
 # Ответ: running build
 python3 home/mgb/downloads/ansible/setup.py install
 # ansible [core 2.14.1]
+# Установим environment для ансибл:
+cd home/mgb/downloads/ansible && source hacking/env-setup
+# Ответ: Setting up Ansible to run out of checkout...
+PATH=/home/mgb/downloads/ansible/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+PYTHONPATH=/home/mgb/downloads/ansible/test/lib:/home/mgb/downloads/ansible/lib
+MANPATH=/home/mgb/downloads/ansible/docs/man:/usr/local/man:/usr/local/share/man:/usr/share/man
+Remember, you may wish to specify your host file with -i
+which ansible
+# Отвтет: /home/mgb/downloads/ansible/bin/ansible
+
 python3 --version
 ```
 ```
