@@ -1,7 +1,10 @@
 # Postgres
 ###### От RomNero 01-Установка Ansible AWX
+```
+apt install -y  git python3-pip docker docker-compose
 
 
+```
 ```
 export PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 93C4A3FD7BB9C367
@@ -22,6 +25,7 @@ root@ansible:/home/mgb#
 dpkg-query -l
 dpkg -l | grep ansible
 ansible --version
+python3 --version
 ```
 ```
 vim ~/ansible/.hosts.txt
