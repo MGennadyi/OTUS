@@ -140,14 +140,28 @@ sync_priority    | 0
 sync_state       | async
 reply_time       | 2023-01-10 18:07:10.171855+03
 ```
-
-
-
-
-
-
-
-
+###### На мастер: Создаем и заполнение новую таблицу :
+```
+su postgres
+psql -c "CREATE DATABASE otus;"
+psql otus -c "create table test(i int);"
+psql otus -c "insert into test values (10), (20), (30);"
+psql otus -c "select * from test;"
+ i
+----
+ 10
+ 20
+ 30
+```
+###### На SLAVE смотрим изменения:
+```
+psql otus -c "select * from test;"
+ i
+----
+ 10
+ 20
+ 30
+```
 
 
 
