@@ -21,10 +21,26 @@ Ver Cluster Port Status Owner    Data directory              Log file
 # По умолчанию: listen_addresses = 'localhost' #wal_log_hints = off
 echo "listen_addresses = '*'" >> /etc/postgresql/14/main/postgresql.conf
 echo "wal_log_hints = on" >> /etc/postgresql/14/main/postgresql.conf
+---------------
+echo "archive_mode = on" >>  /etc/postgresql/14/main/postgresql.conf
+echo "archive_command = 'test ! -f /archive/%f && cp %p /archive/%f'" >>  /etc/postgresql/14/main/postgresql.conf
+# echo "archive_cleanup_command = 'pg_archivecleanup /archive %r'" >>  /etc/postgresql/14/main/postgresql.conf
+# echo "restore_command = 'cp /archive/%f %p'" >>  /etc/postgresql/14/main/postgresql.conf
 
+
+echo "host replication replica 0.0.0.0/0 md5" >> /etc/postgresql/14/main/pg_hba.conf
+echo "host all rewind 0.0.0.0/0 md5" >> /etc/postgresql/14/main/pg_hba.conf
+
+
+mkdir /archive
+chown -R postgres:postgres /archive
+```
+```
+create replica and rewind users with password 12345
+sudo -u postgres psql -c "create user replica with replication encrypted password '12345'"
+sudo -u postgres psql -c "CREATE USER rewind SUPERUSER encrypted PASSWORD '12345'"
 
 ```
-
 
 
 
