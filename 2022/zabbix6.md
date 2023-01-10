@@ -4,6 +4,8 @@
 ```
 vim /root/.bashrc
 export PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+# Смотрим установленные переменные:
+echo $PATH
 addgroup --system --quiet zabbix
 adduser --quiet --system --disabled-login --ingroup zabbix --home /var/lib/zabbix --no-create-home zabbix
 sudo shutdown -r now
