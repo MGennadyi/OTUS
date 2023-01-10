@@ -84,7 +84,8 @@ primary_slot_name = 'replica1'
 ```
 ###### Проверка создания standby.signal, который переводит режим работы ноды в slave: 
 ```
-ls -la /var/lib/postgresql/12/main/ | grep standby
+ls -la /var/lib/postgresql/14/main/ | grep standby
+-rw-------  1 postgres postgres      0 янв 10 17:44 standby.signal
 ```
 ###### На slave
 ```
@@ -94,7 +95,9 @@ pg_lsclusters
 ###### На master check replication slots:
 ```
 sudo -u postgres psql -c "select * from pg_replication_slots"
-sudo -u postgres psql -c "select * from pg_stat_replication"
+ slot_name | plugin | slot_type | datoid | database | temporary | active | active_pid | xmin | catalog_xmin | restart_lsn | confirmed_flush_lsn | wal_status | safe_wal_size | two_phase
+-----------+--------+-----------+--------+----------+-----------+--------+------------+------+--------------+-------------+---------------------+------------+---------------+-----------
+ replica1  |        | physical  |        |          | f         | t      |     104288 |      |              | 0/B000148   |                     | reserved   |               | f
 ```
 
 
