@@ -68,10 +68,19 @@ sudo -u postgres rm -rf /var/lib/postgresql/14/main/*
 
 ###### Восстановим cluster from master (it will ask for 123 password of replica user, also note that it can take some time to backup restore 500mb)
 ```
-# На реплике:
+# Restor на реплике:
 sudo -u postgres pg_basebackup --host=192.168.0.17 --port=5432 --username=replica --pgdata=/var/lib/postgresql/14/main/ --progress --write-recovery-conf --create-slot --slot=replica1
+# Ответ: 188126/188126 КБ (100%), табличное пространство 1/1  -синхронизация прошла успешно.
 # В ответ на сообщение реплики "waiting  checkpoint", на мастере:
 sudo -u postgres psql -c "checkpoint"
+```
+###### Проверим, что изменилось:
+```
+# На slave: 
+cat /var/lib/postgresql/14/main/postgresql.auto.conf
+primary_conninfo = 'user=replica password=12345 channel_binding=prefer host=192.168.0.17 port=5432 sslmode=prefer sslcompression=0 sslsni=1 ssl_min_protocol_version=TLSv1.2 gssencmode=prefer krbsrvname=postgres target_session_attrs=any'
+primary_slot_name = 'replica1'
+# Т.О. на MASTER создался слот репликации, а на SLAVE прописались параметры подключения.
 ```
 ###### Проверка создания standby.signal, который переводит режим работы ноды в slave: 
 ```
