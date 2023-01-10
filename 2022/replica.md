@@ -6,6 +6,7 @@ sudo sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)
 wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
 apt update
 apt install postgresql-14 -y
+apt install net-tools -y
 # Проверяем:
 pg_isready
 # Ответ: /var/run/postgresql:5432 - принимает подключения
@@ -50,6 +51,9 @@ sudo -u postgres pgbench -i -s 10 sample
 sudo -u postgres rm -rf /var/lib/postgresql/14/main/*
 # Принимает ли подключения:
 nc -vz 192.168.0.18 5432
+Проверка доступности через netstat по портам:
+apt install net-tools -y
+netstat -nlp | grep 5432
 ```
 ###### Восстановим cluster from master (it will ask for 123 password of replica user, also note that it can take some time to backup restore 500mb)
 ```
