@@ -96,15 +96,28 @@ pg_lsclusters
 ```
 ###### На master check replication slots:
 ```
-sudo -u postgres psql -c "select * from pg_replication_slots"
- slot_name | plugin | slot_type | datoid | database | temporary | active | active_pid | xmin | catalog_xmin | restart_lsn | confirmed_flush_lsn | wal_status | safe_wal_size | two_phase
------------+--------+-----------+--------+----------+-----------+--------+------------+------+--------------+-------------+---------------------+------------+---------------+-----------
- replica1  |        | physical  |        |          | f         | t      |     104288 |      |              | 0/B000148   |                     | reserved   |               | f
-```
-```
 su - postgres
-psql 
-postgres=# select * from pg_stat_replication \gx
+psql
+postgres=# select * from pg_replication_slots \gx
+-[ RECORD 1 ]-------+----------
+slot_name           | replica1
+plugin              |
+slot_type           | physical
+datoid              |
+database            |
+temporary           | f
+active              | t
+active_pid          | 104288
+xmin                |
+catalog_xmin        |
+restart_lsn         | 0/B000148
+confirmed_flush_lsn |
+wal_status          | reserved
+safe_wal_size       |
+two_phase           | f
+```
+```
+ select * from pg_stat_replication \gx
 -[ RECORD 1 ]----+------------------------------
 pid              | 104288
 usesysid         | 16384
