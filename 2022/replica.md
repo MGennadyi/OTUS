@@ -39,16 +39,24 @@ chown -R postgres:postgres /archive
 create replica and rewind users with password 12345
 sudo -u postgres psql -c "create user replica with replication encrypted password '12345'"
 sudo -u postgres psql -c "CREATE USER rewind SUPERUSER encrypted PASSWORD '12345'"
-
 ```
-
-
-
-
-
-
-
-
+```
+sudo -u postgres psql -c "CREATE DATEBASE sample"
+sudo -u postgres pgbench -i -s 10 sample
+```
+###### На реплике 
+```
+sudo -u postgres rm -rf /var/lib/postgresql/14/main/*
+# Принимает ли подключения:
+nc -vz 192.168.0.18 5432
+```
+###### Восстановим cluster from master (it will ask for 123 password of replica user, also note that it can take some time to backup restore 500mb)
+```
+# На реплике:
+sudo -u postgres pg_basebackup --host=192.168.0.17 --port=5432 --username=replica --pgdata=/var/lib/postgresql/14/main/ --progress --write-recovery-conf --create-slot --slot=replica1
+# В ответ на сообщение реплики "waiting  checkpoint", на мастере:
+sudo -u postgres psql -c "checkpoint"
+```
 
 
 
