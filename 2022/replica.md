@@ -37,9 +37,11 @@ echo "host all rewind 0.0.0.0/0 md5" >> /etc/postgresql/14/main/pg_hba.conf
 mkdir /archive
 chown -R postgres:postgres /archive
 ```
-
+###### Применим изменения на всех нодах:
 ```
 pg_ctlcluster 14 main status
+pg_ctlcluster 14 main stop
+pg_ctlcluster 14 main start
 ```
 ```
 create replica and rewind users with password 12345  - на видео пропускает
