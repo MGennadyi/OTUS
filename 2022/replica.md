@@ -57,6 +57,12 @@ sudo -u postgres pg_basebackup --host=192.168.0.17 --port=5432 --username=replic
 # В ответ на сообщение реплики "waiting  checkpoint", на мастере:
 sudo -u postgres psql -c "checkpoint"
 ```
+###### Проверка создания standby.signal, который переводит режим работы ноды в slave: 
+```
+ls -la /var/lib/postgresql/12/main/ | grep standby
+
+
+```
 
 
 
