@@ -49,9 +49,12 @@ sudo -u postgres pgbench -i -s 10 sample
 ###### На реплике 
 ```
 sudo -u postgres rm -rf /var/lib/postgresql/14/main/*
-# Принимает ли подключения:
+```
+###### Проверка доступности
+```
+# Через nc
 nc -vz 192.168.0.18 5432
-Проверка доступности через netstat по портам:
+# Через netstat по портам:
 apt install net-tools -y
 netstat -nlp | grep 5432
 ```
