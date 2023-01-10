@@ -17,7 +17,13 @@ pg_lsclusters
 Ver Cluster Port Status Owner    Data directory              Log file
 14  main    5432 online postgres /var/lib/postgresql/14/main /var/log/postgresql/postgresql-14-main.log
 ````
+```
+# По умолчанию: listen_addresses = 'localhost' #wal_log_hints = off
+echo "listen_addresses = '*'" >> /etc/postgresql/14/main/postgresql.conf
+echo "wal_log_hints = on" >> /etc/postgresql/14/main/postgresql.conf
 
+
+```
 
 
 
