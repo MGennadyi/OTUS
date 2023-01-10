@@ -17,6 +17,7 @@ pg_lsclusters
 Ver Cluster Port Status Owner    Data directory              Log file
 14  main    5432 online postgres /var/lib/postgresql/14/main /var/log/postgresql/postgresql-14-main.log
 ````
+###### На обоих нодах:
 ```
 # По умолчанию: listen_addresses = 'localhost' #wal_log_hints = off
 echo "listen_addresses = '*'" >> /etc/postgresql/14/main/postgresql.conf
@@ -60,8 +61,16 @@ sudo -u postgres psql -c "checkpoint"
 ###### Проверка создания standby.signal, который переводит режим работы ноды в slave: 
 ```
 ls -la /var/lib/postgresql/12/main/ | grep standby
-
-
+```
+###### На slave
+```
+pg_ctlcluster 14 main start
+pg_lsclusters
+```
+###### На master check replication slots:
+```
+sudo -u postgres psql -c "select * from pg_replication_slots"
+sudo -u postgres psql -c "select * from pg_stat_replication"
 ```
 
 
