@@ -52,10 +52,6 @@ sudo -u postgres psql -c "CREATE USER rewind SUPERUSER encrypted PASSWORD '12345
 sudo -u postgres psql -c "CREATE DATABASE otus"
 sudo -u postgres pgbench -i -s 10 otus
 ```
-###### На реплике 
-```
-sudo -u postgres rm -rf /var/lib/postgresql/14/main/*
-```
 ###### Проверка доступности себя и соседа:
 ```
 # Через nc
@@ -65,6 +61,11 @@ nc -vz 192.168.0.17 5432
 apt install net-tools -y
 netstat -nlp | grep 5432
 ```
+###### На реплике 
+```
+sudo -u postgres rm -rf /var/lib/postgresql/14/main/*
+```
+
 ###### Восстановим cluster from master (it will ask for 123 password of replica user, also note that it can take some time to backup restore 500mb)
 ```
 # На реплике:
