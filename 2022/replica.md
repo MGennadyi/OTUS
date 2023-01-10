@@ -91,6 +91,8 @@ ls -la /var/lib/postgresql/14/main/ | grep standby
 ```
 pg_ctlcluster 14 main start
 pg_lsclusters
+# Ответ: online,recovery
+14  main    5432 online,recovery postgres /var/lib/postgresql/14/main /var/log/postgresql/postgresql-14-main.log
 ```
 ###### На master check replication slots:
 ```
@@ -98,6 +100,32 @@ sudo -u postgres psql -c "select * from pg_replication_slots"
  slot_name | plugin | slot_type | datoid | database | temporary | active | active_pid | xmin | catalog_xmin | restart_lsn | confirmed_flush_lsn | wal_status | safe_wal_size | two_phase
 -----------+--------+-----------+--------+----------+-----------+--------+------------+------+--------------+-------------+---------------------+------------+---------------+-----------
  replica1  |        | physical  |        |          | f         | t      |     104288 |      |              | 0/B000148   |                     | reserved   |               | f
+```
+```
+su - postgres
+psql 
+postgres=# select * from pg_stat_replication \gx
+-[ RECORD 1 ]----+------------------------------
+pid              | 104288
+usesysid         | 16384
+usename          | replica
+application_name | 14/main
+client_addr      | 192.168.0.18
+client_hostname  |
+client_port      | 32982
+backend_start    | 2023-01-10 17:58:18.20271+03
+backend_xmin     |
+state            | streaming
+sent_lsn         | 0/B000148
+write_lsn        | 0/B000148
+flush_lsn        | 0/B000148
+replay_lsn       | 0/B000148
+write_lag        |
+flush_lag        |
+replay_lag       |
+sync_priority    | 0
+sync_state       | async
+reply_time       | 2023-01-10 18:07:10.171855+03
 ```
 
 
