@@ -13,6 +13,9 @@ pg_ctlcluster 14 main status
 # Ответ:
 pg_ctl: сервер работает (PID: 5691)
 /usr/lib/postgresql/14/bin/postgres "-D" "/var/lib/postgresql/14/main" "-c" "config_file=/etc/postgresql/14/main/postgresql.conf"
+pg_lsclusters
+Ver Cluster Port Status Owner    Data directory              Log file
+14  main    5432 online postgres /var/lib/postgresql/14/main /var/log/postgresql/postgresql-14-main.log
 ````
 
 
