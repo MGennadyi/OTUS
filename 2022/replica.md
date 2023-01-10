@@ -56,10 +56,11 @@ sudo -u postgres pgbench -i -s 10 otus
 ```
 sudo -u postgres rm -rf /var/lib/postgresql/14/main/*
 ```
-###### Проверка доступности
+###### Проверка доступности себя и соседа:
 ```
 # Через nc
 nc -vz 192.168.0.18 5432
+nc -vz 192.168.0.17 5432
 # Через netstat по портам:
 apt install net-tools -y
 netstat -nlp | grep 5432
