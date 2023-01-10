@@ -37,14 +37,18 @@ echo "host all rewind 0.0.0.0/0 md5" >> /etc/postgresql/14/main/pg_hba.conf
 mkdir /archive
 chown -R postgres:postgres /archive
 ```
+
 ```
-create replica and rewind users with password 12345
+pg_ctlcluster 14 main status
+```
+```
+create replica and rewind users with password 12345  - на видео пропускает
 sudo -u postgres psql -c "create user replica with replication encrypted password '12345'"
 sudo -u postgres psql -c "CREATE USER rewind SUPERUSER encrypted PASSWORD '12345'"
 ```
 ```
-sudo -u postgres psql -c "CREATE DATEBASE sample"
-sudo -u postgres pgbench -i -s 10 sample
+sudo -u postgres psql -c "CREATE DATABASE otus"
+sudo -u postgres pgbench -i -s 10 otus
 ```
 ###### На реплике 
 ```
