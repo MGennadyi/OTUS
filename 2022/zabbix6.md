@@ -53,13 +53,14 @@ GRANT ALL PRIVILEGES ON DATABASE zabbix to zabbix;
 ```
 zcat /usr/share/doc/zabbix-sql-scripts/postgresql/server.sql.gz | sudo -u zabbix psql zabbix
 ```
-##### 5. Настройка конфига zabbix_server:
+##### 5. Настройка конфигов postgresql для zabbix_server:
 ```
 vim /etc/postgresql/14/main/pg_hba.conf
 host    zabbix          zabbix          127.0.0.1/32            md5
 vim /etc/postgresql/14/main/postgresql.conf
 listen_addresses = '*' 
 ```
+##### 6. Настройка конфигов zabbix_server:
 ```
 vim /etc/zabbix/zabbix_server.conf
 DBHost=localhost
@@ -85,6 +86,7 @@ dpkg -l | grep zabbix
 ```
 ##### 6. Настроим Nginx, если установлено: раскомментируем и настроим две верхние позиции- нет таких директорий:
 ```
+# Проверить IP-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 vim /etc/zabbix/nginx.conf !
 vim /etc/nginx/conf.d/zabbix.conf
         listen          80;
