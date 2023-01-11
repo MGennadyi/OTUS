@@ -86,10 +86,10 @@ dpkg -l | grep zabbix
 ```
 ##### 6. Настроим Nginx, если установлено: раскомментируем и настроим две верхние позиции- нет таких директорий:
 ```
-# Проверить IP-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+# Проверить IP-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! port 80 или 8080 должен???????
 vim /etc/zabbix/nginx.conf !
 vim /etc/nginx/conf.d/zabbix.conf
-        listen          80;
+        listen          8080;
         server_name     192.168.0.19;
 vim  /etc/httpd/conf.d/zabbix.conf
 или
@@ -149,10 +149,13 @@ vim /etc/mamomsu/agent.conf
 CREATE USER zbx_monitor WITH PASSWORD '12345' INHERIT;
 GRANT EXECUTE ON FUNCTION pg_catalog.pg_ls_dir(text) TO zbx_monitor;
 GRANT EXECUTE ON FUNCTION pg_catalog.pg_stat_file(text) TO zbx_monitor;
+```
+```
+http://192.168.0.19:8080/index.php
+
 
 
 ```
-
 
 
 
