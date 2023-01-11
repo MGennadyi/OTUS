@@ -96,6 +96,10 @@ vim  /etc/httpd/conf.d/zabbix.conf
 vim /etc/php/7.4/apache2/php.ini
 php_value[date.timezone] = Europe/Moscow
 
+
+vim /etc/zabbix/php-fpm.conf
+php_value[date.timezone] = Europe/Moscow
+
 systemctl restart nginx
 systemctl restart zabbix-server zabbix-agent nginx php7.2-fpm
 systemctl enable zabbix-server zabbix-agent nginx php7.2-fpm
