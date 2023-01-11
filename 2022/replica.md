@@ -66,7 +66,7 @@ netstat -nlp | grep 5432
 sudo -u postgres rm -rf /var/lib/postgresql/14/main/*
 ```
 
-###### Восстановим cluster from master (it will ask for 123 password of replica user, also note that it can take some time to backup restore 500mb)
+###### Восстановим cluster from master 
 ```
 # Restor на реплике:
 sudo -u postgres pg_basebackup --host=192.168.0.17 --port=5432 --username=replica --pgdata=/var/lib/postgresql/14/main/ --progress --write-recovery-conf --create-slot --slot=replica1
