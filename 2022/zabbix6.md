@@ -57,6 +57,8 @@ zcat /usr/share/doc/zabbix-sql-scripts/postgresql/server.sql.gz | sudo -u zabbix
 ```
 vim /etc/postgresql/14/main/pg_hba.conf
 host    zabbix          zabbix          127.0.0.1/32            md5
+vim /etc/postgresql/14/main/postgresql.conf
+listen_addresses = '*' 
 ```
 ```
 vim /etc/zabbix/zabbix_server.conf
@@ -86,7 +88,7 @@ dpkg -l | grep zabbix
 vim /etc/zabbix/nginx.conf !
 vim /etc/nginx/conf.d/zabbix.conf
         listen          80;
-        server_name     192.168.0.17;
+        server_name     192.168.0.19;
 vim  /etc/httpd/conf.d/zabbix.conf
 или
 vim /etc/php/7.4/apache2/php.ini
@@ -99,7 +101,7 @@ systemctl enable zabbix-server zabbix-agent nginx php7.2-fpm
 
 ##### 7. Настройка через web-интерфейс:
 ```
-http://192.168.5.161/zabbix/setup.php
+http://192.168.0.19/zabbix/setup.php
 Default language=RU
 login=Admin
 password=zabbix
