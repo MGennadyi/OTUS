@@ -162,6 +162,39 @@ psql otus -c "select * from test;"
  20
  30
 ```
+#### Удаление слота репликации:
+```
+# Что есть сейчас:
+postgres=# SELECT * FROM pg_replication_slots \gx
+-[ RECORD 1 ]-------+-----------
+slot_name           | replica1
+plugin              |
+slot_type           | physical
+datoid              |
+database            |
+temporary           | f
+active              | f
+active_pid          |
+xmin                |
+catalog_xmin        |
+restart_lsn         | 0/6AD7D7E8
+confirmed_flush_lsn |
+wal_status          | reserved
+safe_wal_size       |
+two_phase           | f
+-----------------------------------
+postgres=# select pg_drop_replication_slot('replica1');
+ pg_drop_replication_slot
+--------------------------
+(1 строка)
+postgres=# SELECT * FROM pg_replication_slots \gx
+(0 строк)
+# Итог: нет слота репликации
+
+
+
+
+```
 
 
 
