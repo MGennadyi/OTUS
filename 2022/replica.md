@@ -190,10 +190,32 @@ postgres=# select pg_drop_replication_slot('replica1');
 postgres=# SELECT * FROM pg_replication_slots \gx
 (0 строк)
 # Итог: нет слота репликации
+------------------------------
+# На реплике:
+sudo -u postgres pg_basebackup --host=192.168.0.17 --port=5432 --username=replica --pgdata=/var/lib/postgresql/14/main/ --progress --write-recovery-conf --create-slot --slot=replica1
 
-
-
-
+Пароль:
+248272/248272 КБ (100%), табличное пространство 1/1
+---------------------------
+# На Мастере:
+postgres=# SELECT * FROM pg_replication_slots \gx
+-[ RECORD 1 ]-------+-----------
+slot_name           | replica1
+plugin              |
+slot_type           | physical
+datoid              |
+database            |
+temporary           | f
+active              | f
+active_pid          |
+xmin                |
+catalog_xmin        |
+restart_lsn         | 0/89000000
+confirmed_flush_lsn |
+wal_status          | reserved
+safe_wal_size       |
+two_phase  
+# Слот репликации опять появился.
 ```
 
 
