@@ -32,7 +32,12 @@ echo "archive_command = 'test ! -f /archive/%f && cp %p /archive/%f'" >>  /etc/p
 
 echo "host replication replica 0.0.0.0/0 md5" >> /etc/postgresql/14/main/pg_hba.conf
 echo "host all rewind 0.0.0.0/0 md5" >> /etc/postgresql/14/main/pg_hba.conf
-
+-----------------------------
+vim /etc/postgresql/14/main/pg_hba.conf
+host all all 192.168.0.0/24            trust
+host postgres postgres 127.0.0.1/32 trust
+systemctl restart postgresql
+psql -p 5432 -h 192.168.0.14 -U postgres
 
 mkdir /archive
 chown -R postgres:postgres /archive
@@ -60,6 +65,7 @@ nc -vz 192.168.0.17 5432
 # Через netstat по портам:
 apt install net-tools -y
 netstat -nlp | grep 5432
+psql -p 5432 -d otus -h 192.168.0.14 -U postgres
 ```
 ###### На реплике 
 ```
