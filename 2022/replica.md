@@ -83,6 +83,7 @@ sudo -u postgres rm -rf /var/lib/postgresql/14/main/*
 ```
 # Restor на реплике:
 sudo -u postgres pg_basebackup --host=192.168.0.17 --port=5432 --username=replica --pgdata=/var/lib/postgresql/14/main/ --progress --write-recovery-conf --create-slot --slot=replica1
+pass:
 # Ответ: 188126/188126 КБ (100%), табличное пространство 1/1  -синхронизация прошла успешно.
 # В ответ на сообщение реплики "waiting  checkpoint", на мастере:
 sudo -u postgres psql -c "checkpoint"
