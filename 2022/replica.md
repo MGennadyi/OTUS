@@ -224,7 +224,15 @@ two_phase
 # Слот репликации опять появился.
 ```
 
-
+##### Генерация милионов записей
+```
+\c otus
+CREATE TABLE test0(i int0);
+INSERT INTO test0 SELECT s.id FROM generate_series(1,1000000000) AS s(id);
+sudo apr inatall pgtop
+sudu -u postgres pg_top
+# Q - текст запроса; E - план; L - блокировки; 
+```
 
 
 
