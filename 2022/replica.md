@@ -23,8 +23,11 @@ Ver Cluster Port Status Owner    Data directory              Log file
 vim /etc/postgresql/14/main/postgresql.conf
 shared_buffers = 6GB
 maintenance_work_mem = 1536MB
-work_mem = 15728kB
+work_mem = 16MB
 max_connections = 1100
+huge_pages = try
+wal_level = replica
+sysnchronous_commit = on
 ```
 ```
 # По умолчанию: listen_addresses = 'localhost' #wal_log_hints = off
@@ -39,12 +42,15 @@ echo "archive_command = 'test ! -f /archive/%f && cp %p /archive/%f'" >>  /etc/p
 
 echo "host replication replica 0.0.0.0/0 md5" >> /etc/postgresql/14/main/pg_hba.conf
 echo "host all rewind 0.0.0.0/0 md5" >> /etc/postgresql/14/main/pg_hba.conf
+echo "host all all 192.168.0.0/24 trust" >> /etc/postgresql/14/main/pg_hba.conf
+echo "host postgres postgres 127.0.0.1/32 trust" >> /etc/postgresql/14/main/pg_hba.conf
 -----------------------------
+# 
 vim /etc/postgresql/14/main/pg_hba.conf
 host all all 192.168.0.0/24            trust
 host postgres postgres 127.0.0.1/32 trust
 systemctl restart postgresql
-psql -p 5432 -h 192.168.0.14 -U postgres
+psql -p 5432 -h 192.168.0.16 -U postgres
 
 mkdir /archive
 chown -R postgres:postgres /archive
@@ -68,7 +74,7 @@ sudo -u postgres pgbench -i -s 10 otus
 ```
 # Через nc
 nc -vz 192.168.0.18 5432
-nc -vz 192.168.0.17 5432
+nc -vz 192.168.0.16 5432
 # Через netstat по портам:
 apt install net-tools -y
 netstat -nlp | grep 5432
@@ -82,7 +88,7 @@ sudo -u postgres rm -rf /var/lib/postgresql/14/main/*
 ###### Восстановим cluster from master 
 ```
 # Restor на реплике:
-sudo -u postgres pg_basebackup --host=192.168.0.17 --port=5432 --username=replica --pgdata=/var/lib/postgresql/14/main/ --progress --write-recovery-conf --create-slot --slot=replica1
+sudo -u postgres pg_basebackup --host=192.168.0.16 --port=5432 --username=replica --pgdata=/var/lib/postgresql/14/main/ --progress --write-recovery-conf --create-slot --slot=replica1
 pass:
 # Ответ: 188126/188126 КБ (100%), табличное пространство 1/1  -синхронизация прошла успешно.
 # В ответ на сообщение реплики "waiting  checkpoint", на мастере:
@@ -238,6 +244,9 @@ two_phase
 
 ##### Генерация милионов записей
 ```
+# С другого хоста:
+psql -p 5432 -d otus -h 192.168.0.16 -U postgres
+CREATE DATABASE otus;
 \c otus
 CREATE TABLE test111(i int);
 INSERT INTO test111 SELECT s.id FROM generate_series(1,1000000000) AS s(id);
