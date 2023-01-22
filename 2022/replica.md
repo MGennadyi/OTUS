@@ -158,8 +158,8 @@ reply_time       | 2023-01-10 18:07:10.171855+03
 ```
 su postgres
 psql -c "CREATE DATABASE otus;"
-psql otus -c "create table test(i int);"
-psql otus -c "insert into test values (10), (20), (30);"
+psql otus -c "create table test00(i int);"
+psql otus -c "insert into test00 values (10), (20), (30);"
 psql otus -c "select * from test;"
  i
 ----
@@ -239,8 +239,8 @@ two_phase
 ##### Генерация милионов записей
 ```
 \c otus
-CREATE TABLE test0(i int0);
-INSERT INTO test0 SELECT s.id FROM generate_series(1,1000000000) AS s(id);
+CREATE TABLE test111(i int);
+INSERT INTO test111 SELECT s.id FROM generate_series(1,1000000000) AS s(id);
 sudo apr inatall pgtop
 sudu -u postgres pg_top
 # Q - текст запроса; E - план; L - блокировки; 
