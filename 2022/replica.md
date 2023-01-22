@@ -20,6 +20,13 @@ Ver Cluster Port Status Owner    Data directory              Log file
 ````
 ###### На обоих нодах:
 ```
+vim /etc/postgresql/14/main/postgresql.conf
+shared_buffers = 6GB
+maintenance_work_mem = 1536MB
+work_mem = 15728kB
+max_connections = 1100
+```
+```
 # По умолчанию: listen_addresses = 'localhost' #wal_log_hints = off
 echo "listen_addresses = '*'" >> /etc/postgresql/14/main/postgresql.conf
 echo "wal_log_hints = on" >> /etc/postgresql/14/main/postgresql.conf
@@ -189,6 +196,10 @@ wal_status          | reserved
 safe_wal_size       |
 two_phase           | f
 -----------------------------------
+postgres=# select pg_drop_replication_slot('replica1');
+ОШИБКА:  слот репликации "replica1" занят процессом с PID 1003
+# Гасим реплику и повторяем
+--------------------------------------------
 postgres=# select pg_drop_replication_slot('replica1');
  pg_drop_replication_slot
 --------------------------
