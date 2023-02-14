@@ -254,6 +254,13 @@ sudo apr inatall pgtop
 sudu -u postgres pg_top
 # Q - текст запроса; E - план; L - блокировки; 
 ```
+```
+# Протетсить команду:
+selest * from pg_is_in_recovery;
+
+
+
+```
 
 
 
