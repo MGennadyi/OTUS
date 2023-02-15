@@ -172,7 +172,7 @@ LIMIT 25;
 ```
 ### Размер базы данных:
 ```
-SELECT pg_size_pretty( pg_database_size( 'otus' ) );
+SELECT pg_size_pretty(pg_database_size('otus'));
 ```
 ### Обнаружение не использ-х индексов
 ```
