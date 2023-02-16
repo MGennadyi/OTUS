@@ -18,16 +18,18 @@ tmpfs              5,0M         4,0K  5,0M            1% /run/lock
 tmpfs              394M          48K  394M            1% /run/user/1000
 tmpfs              394M          44K  394M            1% /run/user/114
 ```
-##### 1. Остановка потоковой архивации
+##### 1. Остановка потоковой архивации (если есть):
 ```
-
+# Из-под перс.УЗ
+sudo systemctl stop  pg_receivewal.core-s-pgaidb01.service
+systemctl status pg_receivewal.core-s-pgaidb01.service
 ```
-
-
-
-
-
-
+#### 2. Архивация собранных WAL 
+```
+sudo -i -u postgres
+2 скрипта
+```
+#### Отключение РК
 
 
 
