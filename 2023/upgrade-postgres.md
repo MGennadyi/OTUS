@@ -39,6 +39,12 @@ crontab -e
 ```
 # Проверка клиентских подключений:
 psql -c "SELECT count(*) FROM pg_stat_activity WHERE backend_type='client backend'"
+postgres@etcd:/home/mgb$ psql -c "SELECT usename FROM pg_stat_activity WHERE backend_type='client backend'"
+ usename
+----------
+ postgres
+(1 строка)
+
 
 postgres@etcd:/home/mgb$ ps -fu postgres
 UID          PID    PPID  C STIME TTY          TIME CMD
