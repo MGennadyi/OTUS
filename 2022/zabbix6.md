@@ -114,10 +114,9 @@ password=zabbix
 ```
 ##### 8. Linux-Agent2
 ```
+# Удаление предыдущего агента:
 apt-get purge --auto-remove zabbix-agent
-# Старая версия:
-# wget https://repo.zabbix.com/zabbix/6.0/debian/pool/main/z/zabbix/zabbix-agent2_6.0.5-1%2Bdebian11_amd64.deb
-# dpkg -i zabbix-agent2_6.0.5-1+debian11_amd64.deb
+
 # Новая версия:
 wget http://repo.zabbix.com/zabbix/6.2/debian/pool/main/z/zabbix/zabbix-agent2_6.2.0-1%2Bdebian11_amd64.deb
 dpkg -i zabbix-agent2_6.2.0-1+debian11_amd64.deb
