@@ -29,7 +29,45 @@ systemctl status pg_receivewal.core-s-pgaidb01.service
 sudo -i -u postgres
 2 скрипта
 ```
-#### Отключение РК
+#### 3. Резервное копирование СУБД
+```
+sudo -i -u postgres
+# Закоментрировать:
+crontab -e
+```
+#### 5. Остановка СУБД
+```
+
+
+```
+#### 6. Подключение репозитория
+```
+mcedit /etc/apt/sources.list.d/pg.list
+
+
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
