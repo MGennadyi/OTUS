@@ -1,4 +1,4 @@
-
+# Мажерное обновление
 ```
 # Что под капотом:
 lsb_release -a
@@ -35,6 +35,25 @@ sudo -i -u postgres
 # Закоментрировать:
 crontab -e
 ```
+#### 4. Подготовка к остановке
+```
+# Проверка клиентских подключений:
+psql -c "SELECT count(*) FROM pg_stat_activity WHERE backend_type='client backend'"
+
+postgres@etcd:/home/mgb$ ps -fu postgres
+UID          PID    PPID  C STIME TTY          TIME CMD
+postgres     535       1  0 16:13 ?        00:00:03 /usr/lib/postgresql/13/bin/postgres -D /var/lib/postgresql/13/main -c config_file=/etc/postgresql/13/main/postgresql.conf
+postgres     537     535  0 16:13 ?        00:00:00 postgres: 13/main: checkpointer
+postgres     538     535  0 16:13 ?        00:00:00 postgres: 13/main: background writer
+postgres     539     535  0 16:13 ?        00:00:00 postgres: 13/main: walwriter
+postgres     540     535  0 16:13 ?        00:00:00 postgres: 13/main: autovacuum launcher
+postgres     541     535  0 16:13 ?        00:00:00 postgres: 13/main: stats collector
+postgres     542     535  0 16:13 ?        00:00:00 postgres: 13/main: logical replication launcher
+postgres   77075   77074  0 19:37 pts/0    00:00:00 bash
+postgres   77692   77075  0 19:38 pts/0    00:00:00 ps -fu postgres
+
+
+```
 #### 5. Остановка СУБД
 ```
 
@@ -42,12 +61,21 @@ crontab -e
 ```
 #### 6. Подключение репозитория
 ```
-mcedit /etc/apt/sources.list.d/pg.list
+# Просмотр доступных пакетов:
+apt list | grep postgresql
+# mcedit /etc/apt/sources.list.d/pg.list
+wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
+sudo sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list'
+```
+#### Создание РО в СКМ
+```
+192.168.0.19:8080/zabbix.php
+обслуживание/создать период (без сбора данных)
+
 
 
 
 ```
-
 
 
 
