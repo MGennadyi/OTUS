@@ -62,6 +62,40 @@ postgres   77075   77074  0 19:37 pts/0    00:00:00 bash
 postgres   77692   77075  0 19:38 pts/0    00:00:00 ps -fu postgres
 # Замена предварительно откоректрированного pg_hba.conf
 mv /backup/12.02.2023/ph_hba.conf-user-off /etc/postgresql/13/main/pg_hba.conf
+psql -c "SELECT pg_reload_conf()"
+# Отключить клиентские соединения:
+postgres@zabbix:/home/mgb$ psql -c "select pg_terminate_backend(pid) FROM pg_stat_activity WHERE datname <> 'postgres'"
+ pg_terminate_backend
+----------------------
+ t
+ t
+ t
+ t
+ t
+ t
+ t
+ t
+ t
+ t
+ t
+ t
+ t
+ t
+ t
+ t
+ t
+ t
+ t
+ t
+ t
+ t
+ t
+ t
+ t
+ t
+ t
+ t
+(28 строк)
 
 ```
 #### 5. Остановка СУБД
@@ -87,7 +121,10 @@ sudo sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)
 
 ```
 
+```
+alter extations pg_stat_stations update
 
+```
 
 
 
