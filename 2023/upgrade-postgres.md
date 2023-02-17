@@ -66,7 +66,7 @@ mv /backup/12.02.2023/ph_hba.conf-user-off /etc/postgresql/13/main/pg_hba.conf
 ```
 #### 5. Остановка СУБД
 ```
-
+Рекомендации: pg_bouncer на паузу; checkpoint
 
 ```
 #### 6. Подключение репозитория
