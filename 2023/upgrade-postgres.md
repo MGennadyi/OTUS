@@ -1,13 +1,17 @@
 # Мажерное обновление
 ```
 # Что под капотом:
-lsb_release -a
-pg_lsclusters
+root@etcd:/home/mgb# lsb_release -a
+No LSB modules are available.
+Distributor ID: Debian
+Description:    Debian GNU/Linux 11 (bullseye)
+Release:        11
+Codename:       bullseye
+-------------------
 root@etcd:/home/mgb# pg_lsclusters
 Ver Cluster Port Status Owner    Data directory              Log file
 13  main    5432 online postgres /var/lib/postgresql/13/main /var/log/postgresql/postgresql-13-main.log
-```
-```
+-------------------
 root@etcd:/home/mgb# df -h
 Файловая система Размер Использовано  Дост Использовано% Cмонтировано в
 udev               1,9G            0  1,9G            0% /dev
@@ -29,13 +33,13 @@ systemctl status pg_receivewal.core-s-pgaidb01.service
 sudo -i -u postgres
 2 скрипта
 ```
-#### 3. Резервное копирование СУБД
+#### 3. Отключаем планировщик:
 ```
 sudo -i -u postgres
 # Закоментрировать:
 crontab -e
 ```
-#### 4. Подготовка к остановке
+#### 4. Отключаем пользователей:
 ```
 # Проверка клиентских подключений:
 psql -c "SELECT count(*) FROM pg_stat_activity WHERE backend_type='client backend'"
@@ -44,8 +48,7 @@ postgres@etcd:/home/mgb$ psql -c "SELECT usename FROM pg_stat_activity WHERE bac
 ----------
  postgres
 (1 строка)
-
-
+-----------------
 postgres@etcd:/home/mgb$ ps -fu postgres
 UID          PID    PPID  C STIME TTY          TIME CMD
 postgres     535       1  0 16:13 ?        00:00:03 /usr/lib/postgresql/13/bin/postgres -D /var/lib/postgresql/13/main -c config_file=/etc/postgresql/13/main/postgresql.conf
@@ -57,7 +60,8 @@ postgres     541     535  0 16:13 ?        00:00:00 postgres: 13/main: stats col
 postgres     542     535  0 16:13 ?        00:00:00 postgres: 13/main: logical replication launcher
 postgres   77075   77074  0 19:37 pts/0    00:00:00 bash
 postgres   77692   77075  0 19:38 pts/0    00:00:00 ps -fu postgres
-
+# Замена предварительно откоректрированного pg_hba.conf
+mv /backup/12.02.2023/ph_hba.conf-user-off /etc/postgresql/13/main/pg_hba.conf
 
 ```
 #### 5. Остановка СУБД
