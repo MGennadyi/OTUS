@@ -36,7 +36,15 @@ tmpfs              394M          44K  394M            1% /run/user/114
 ##### 00. Подготовка до простоя:
 ```
 # Создать задание 2-го уровня на unix:
-1. Подключить репозитория
+1. Подключить репозитории. Проверим:
+apt list | grep  postgresql
+postgresql-pltcl-10-dbgsym/bullseye-pgdg 10.23-1.pgdg110+1 amd64
+postgresql-pltcl-11-dbgsym/bullseye-pgdg 11.19-1.pgdg110+1 amd64
+postgresql-pltcl-12-dbgsym/bullseye-pgdg 12.14-1.pgdg110+1 amd64
+postgresql-pltcl-13-dbgsym/bullseye-pgdg 13.10-1.pgdg110+1 amd64
+postgresql-pltcl-14-dbgsym/bullseye-pgdg 14.7-1.pgdg110+1 amd64
+postgresql-pltcl-15-dbgsym/bullseye-pgdg 15.2-1.pgdg110+1 amd64
+# Обновиться можно.
 2. Предоставить права root
 ```
 ##### 1. Остановка потоковой архивации (если есть):
