@@ -39,7 +39,7 @@ systemctl status pg_receivewal.core-s-pgaidb01.service
 sudo -i -u postgres
 2 скрипта
 ```
-#### 3. Отключаем планировщик:
+#### 3. Отключаем задания в планировщике:
 ```
 sudo -i -u postgres
 # Закоментрировать:
@@ -105,8 +105,18 @@ postgres@zabbix:/home/mgb$ psql -c "select pg_terminate_backend(pid) FROM pg_sta
 
 ```
 #### 5. Остановка СУБД
+###### Рекомендации: pg_bouncer на паузу; checkpoint
 ```
-Рекомендации: pg_bouncer на паузу; checkpoint
+systemctl status postgresql
+# из каталога бинарника: /usr/bin
+pg_ctlcluster 14 main status
+# Ответ: pg_ctl: сервер работает (PID: 545)
+/usr/lib/postgresql/14/bin/postgres "-D" "/var/lib/postgresql/14/main" "-c" "config_file=/etc/postgresql/14/main/postgresql.conf"
+
+systemctl stop postgresql
+# из каталога бинарника: /usr/lib/postgresql/14/bin
+pg_ctl -D /data/pg_data stop
+pg_ctl "-D" "/var/lib/postgresql/14/main" stop - не работает
 
 ```
 #### 6. Подключение репозитория
