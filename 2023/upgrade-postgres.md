@@ -101,10 +101,14 @@ postgres@zabbix:/home/mgb$ psql -c "select pg_terminate_backend(pid) FROM pg_sta
 ----------------------
  t
 (28 строк)
-
 ```
-#### 5. Остановка СУБД
+#### Создание режим обслуживания  в ZABBIX:
+```
+192.168.0.19:8080/zabbix.php
+обслуживание/создать период (без сбора данных)
+```
 ###### Рекомендации: pg_bouncer на паузу; checkpoint
+#### 5. Остановка СУБД
 ```
 systemctl status postgresql
 # из каталога бинарника: /usr/bin
@@ -116,18 +120,6 @@ systemctl stop postgresql
 # из каталога бинарника: /usr/lib/postgresql/14/bin
 pg_ctl -D /data/pg_data stop
 pg_ctl "-D" "/var/lib/postgresql/14/main" stop - не работает
-
-```
-
-#### Создание РО в СКМ
-```
-192.168.0.19:8080/zabbix.php
-обслуживание/создать период (без сбора данных)
-```
-#### Установка пакетов новой версии
-```
-apt install postgresql-14
-apt ibstall postgresql-15
 ```
 #### Перенос данных старого кластера
 ```
@@ -140,6 +132,13 @@ rm /data/pg_data_11/pg_wal
 mv /wal/pg_wal
 mv /log/pg_log
 ```
+
+#### Установка пакетов новой версии
+```
+apt install postgresql-14
+apt ibstall postgresql-15
+```
+
 #### Инициализация нового кластера
 ```
 
