@@ -1,6 +1,17 @@
 # Мажерное обновление POSTGRESQL
 ##### 0. Проверим, что под капотом:
 ```
+# Для postgres-pro: psql -c "select pgpro_version()"
+postgres@zabbix:/home/mgb$ psql -c "select version()"
+                                                           version
+-----------------------------------------------------------------------------------------------------------------------------
+ PostgreSQL 14.4 (Debian 14.4-1.pgdg110+1) on x86_64-pc-linux-gnu, compiled by gcc (Debian 10.2.1-6) 10.2.1 20210110, 64-bit
+postgres@etcd:/home/mgb$ psql -c "select version()"
+                                                          version
+---------------------------------------------------------------------------------------------------------------------------
+ PostgreSQL 13.9 (Debian 13.9-0+deb11u1) on x86_64-pc-linux-gnu, compiled by gcc (Debian 10.2.1-6) 10.2.1 20210110, 64-bit
+(1 строка)
+
 root@etcd:/home/mgb# lsb_release -a
 No LSB modules are available.
 Distributor ID: Debian
@@ -131,6 +142,26 @@ sudo sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)
 ```
 192.168.0.19:8080/zabbix.php
 обслуживание/создать период (без сбора данных)
+```
+#### Установка пакетов новой версии
+```
+apt install postgresql-14
+apt ibstall postgresql-15
+```
+#### Перенос данных старого кластера
+```
+# Из-под УЗ postgres:
+sudo su -i -u postgres
+mkdir /log/pg_log_11
+mv /data/pg_data/ /data/pg_data_11
+chmod 700 /data/pg_data_11
+rm /data/pg_data_11/pg_wal
+mv /wal/pg_wal
+mv /log/pg_log
+```
+#### Инициализация нового кластера
+```
+
 
 
 
