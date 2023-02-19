@@ -36,7 +36,14 @@ tmpfs              394M          44K  394M            1% /run/user/114
 ##### 00. Подготовка до простоя:
 ```
 # Создать задание 2-го уровня на unix:
-1. Подключить репозитории. Проверим:
+1. Подключить репозитории. 
+# Просмотр доступных пакетов ДО:
+apt list | grep postgresql
+# mcedit /etc/apt/sources.list.d/pg.list
+wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
+sudo sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list'
+# Просмотр доступных пакетов ПОСЛЕ:
+Проверим:
 apt list | grep  postgresql
 postgresql-pltcl-10-dbgsym/bullseye-pgdg 10.23-1.pgdg110+1 amd64
 postgresql-pltcl-11-dbgsym/bullseye-pgdg 11.19-1.pgdg110+1 amd64
@@ -93,33 +100,6 @@ postgres@zabbix:/home/mgb$ psql -c "select pg_terminate_backend(pid) FROM pg_sta
  pg_terminate_backend
 ----------------------
  t
- t
- t
- t
- t
- t
- t
- t
- t
- t
- t
- t
- t
- t
- t
- t
- t
- t
- t
- t
- t
- t
- t
- t
- t
- t
- t
- t
 (28 строк)
 
 ```
@@ -138,14 +118,7 @@ pg_ctl -D /data/pg_data stop
 pg_ctl "-D" "/var/lib/postgresql/14/main" stop - не работает
 
 ```
-#### 6. Подключение репозитория
-```
-# Просмотр доступных пакетов:
-apt list | grep postgresql
-# mcedit /etc/apt/sources.list.d/pg.list
-wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
-sudo sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list'
-```
+
 #### Создание РО в СКМ
 ```
 192.168.0.19:8080/zabbix.php
