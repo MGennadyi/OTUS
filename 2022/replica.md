@@ -255,7 +255,7 @@ sudu -u postgres pg_top
 # Q - текст запроса; E - план; L - блокировки; 
 ```
 ```
-# Протетсить команду:
+# Протестить команду:
 selest * from pg_is_in_recovery;
 
 
