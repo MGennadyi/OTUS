@@ -7,6 +7,11 @@ ALTER SYSTEM SET log_filename = 'postgresql-%u.log';
 ALTER SYSTEM SET log_filename = 'postgresql.log';
 SELECT pg_reload_conf();
 ```
+##### Просмотр лог на ошибки:
+```
+grep -E "ERROR|ОШИБКА|DETAIL|FATAL" /var/log/postgresql/postgresql-13-main.log
+
+```
 
 
 
