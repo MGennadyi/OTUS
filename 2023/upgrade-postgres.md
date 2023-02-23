@@ -168,6 +168,10 @@ mv /log/pg_log
 
 
 ```
+#### Копирование конфигов из РК
+```
+
+```
 
 ```
 alter extations pg_stat_stations update
