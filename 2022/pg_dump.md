@@ -62,8 +62,17 @@ COPY 33121
  setval
 --------
   33121
-
-\l+
+postgres@pg:~$ psql -c '\l+';
+                                                                        Список баз данных
+    Имя    | Владелец | Кодировка | LC_COLLATE  |  LC_CTYPE   |     Права доступа     | Размер  | Табл. пространство |                  Описание
+-----------+----------+-----------+-------------+-------------+-----------------------+---------+--------------------+--------------------------------------------
+ demo      | postgres | UTF8      | ru_RU.UTF-8 | ru_RU.UTF-8 |                       | 280 MB  | pg_default         |
+ postgres  | postgres | UTF8      | ru_RU.UTF-8 | ru_RU.UTF-8 |                       | 7901 kB | pg_default         | default administrative connection database
+ template0 | postgres | UTF8      | ru_RU.UTF-8 | ru_RU.UTF-8 | =c/postgres          +| 7753 kB | pg_default         | unmodifiable empty database
+           |          |           |             |             | postgres=CTc/postgres |         |                    |
+ template1 | postgres | UTF8      | ru_RU.UTF-8 | ru_RU.UTF-8 | =c/postgres          +| 7901 kB | pg_default         | default template for new databases
+           |          |           |             |             | postgres=CTc/postgres |         |                    |
+(4 строки)
 ```
 #### Сравнение времени создания бекапов:
 ```
