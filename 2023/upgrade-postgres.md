@@ -65,13 +65,13 @@ systemctl status pg_receivewal.core-s-pgaidb01.service
 sudo -i -u postgres
 2 скрипта
 ```
-#### Создание режим обслуживания  в ZABBIX:
+#### 1. Создание режим обслуживания  в ZABBIX:
 ```
 192.168.0.19:8080/zabbix.php
 обслуживание/создать период (без сбора данных)
 ```
 
-#### 4. Отключаем пользователей от баз данных:
+#### 2. Отключаем пользователей от баз данных:
 ```
 # 1.0 Проверка клиентских подключений:
 psql -c "SELECT count(*) FROM pg_stat_activity WHERE backend_type='client backend'"
@@ -128,6 +128,8 @@ sudo -i -u postgres
 # Закоментрировать:
 crontab -e
 ```
+#### Запуск резервного копирования:
+
 ###### Рекомендации: pg_bouncer на паузу; checkpoint
 #### 5. Остановка СУБД
 ```
@@ -142,7 +144,12 @@ systemctl stop postgresql
 pg_ctl -D /data/pg_data stop
 pg_ctl "-D" "/var/lib/postgresql/14/main" stop - не работает
 ```
-#### Перенос данных старого кластера
+#### 6. Установка пакетов новой версии
+```
+apt install postgresql-14
+apt ibstall postgresql-15
+```
+#### 7. Перенос данных старого кластера
 ```
 # Из-под УЗ postgres:
 sudo su -i -u postgres
@@ -153,14 +160,7 @@ rm /data/pg_data_11/pg_wal
 mv /wal/pg_wal
 mv /log/pg_log
 ```
-
-#### Установка пакетов новой версии
-```
-apt install postgresql-14
-apt ibstall postgresql-15
-```
-
-#### Инициализация нового кластера
+#### 8. Инициализация нового кластера
 ```
 
 
