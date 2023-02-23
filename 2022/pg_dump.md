@@ -36,13 +36,20 @@ echo "create database otus;" | psql
 pg_restore -j 1 -d otus /home/backups/otus4.gz
 pg_restore -j 2 -d otus /home/backups/otus4.gz
 ```
+### Загрузка базы FLY полеты:
 ```
 # Зальем данные:
 cd ~
 sudo wget --quiet https://edu.postgrespro.ru/demo_small.zip
 unzip demo_small.zip
+root@pg:/home/mgb# ls -la
+drwxr-xr-x 14 mgb  mgb       4096 фев 23 16:35  .
+drwxr-xr-x  3 root root      4096 авг 21  2022  ..
+-rw-rw-r--  1 root root 103857328 ноя 11  2016  demo_small.sql
+-rw-r--r--  1 root root  22183920 авг 12  2019  demo_small.zip
+# Меняем права на postgres для demo_small.sql:
 chown postgres /home/mgb/demo_small.sql
-ls -la
+ls -la - другое дело!
 demo_small.sql
 su postgres
 CREATE DATABASE demo;
