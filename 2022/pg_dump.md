@@ -50,10 +50,9 @@ drwxr-xr-x  3 root root      4096 авг 21  2022  ..
 # Меняем права на postgres для demo_small.sql:
 chown postgres /home/mgb/demo_small.sql
 ls -la - другое дело!
-demo_small.sql
-su postgres
-CREATE DATABASE demo;
-psql -d demo < demo_small.sql
+sudo -i -u postgres
+psql -c 'CREATE DATABASE demo';
+psql -d demo < /home/mgb/demo_small.sql
 # Ответ:
 COPY 9
 COPY 104
