@@ -162,8 +162,9 @@ mv /log/pg_log
 ```
 #### 8. Инициализация нового кластера
 ```
-
-
+# PG_PRO
+/opt/pgpro/ent-14/bin/pg-setup initdb --datachecksums --locale=en_US.utf.8 --pgdata=/data/pg_data --waldir=/wal/pg_wal
+# Ванильный
 
 
 
