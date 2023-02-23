@@ -12,7 +12,14 @@ SELECT pg_reload_conf();
 grep -E "ERROR|ОШИБКА|DETAIL|FATAL" /var/log/postgresql/postgresql-13-main.log
 
 ```
-
+# Просмотр директории с данными:
+```
+postgres=# show data_directory;
+       data_directory
+-----------------------------
+ /var/lib/postgresql/13/main
+(1 строка)
+```
 
 
 
