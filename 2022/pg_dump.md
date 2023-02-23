@@ -36,7 +36,7 @@ echo "create database otus;" | psql
 pg_restore -j 1 -d otus /home/backups/otus4.gz
 pg_restore -j 2 -d otus /home/backups/otus4.gz
 ```
-### Загрузка базы FLY полеты:
+### Загрузка демо-базы авиаперевозки:
 ```
 # Зальем данные:
 cd ~
