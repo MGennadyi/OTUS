@@ -71,9 +71,9 @@ sudo -i -u postgres
 # Закоментрировать:
 crontab -e
 ```
-#### 4. Отключаем пользователей:
+#### 4. Отключаем пользователей от баз данных:
 ```
-# Проверка клиентских подключений:
+# 1.0 Проверка клиентских подключений:
 psql -c "SELECT count(*) FROM pg_stat_activity WHERE backend_type='client backend'"
 postgres@etcd:/home/mgb$ psql -c "SELECT usename FROM pg_stat_activity WHERE backend_type='client backend'"
  usename
@@ -92,8 +92,20 @@ postgres     541     535  0 16:13 ?        00:00:00 postgres: 13/main: stats col
 postgres     542     535  0 16:13 ?        00:00:00 postgres: 13/main: logical replication launcher
 postgres   77075   77074  0 19:37 pts/0    00:00:00 bash
 postgres   77692   77075  0 19:38 pts/0    00:00:00 ps -fu postgres
-# Замена предварительно откоректрированного pg_hba.conf
-mv /backup/12.02.2023/ph_hba.conf-user-off /etc/postgresql/13/main/pg_hba.conf
+# 1.1 Подготовка pg_hba.conf-user-off
+mcedit /backup/24.02.2022/pg_hba.conf-user-off
+# TYPE  DATABASE        USER            ADDRESS                 METHOD
+## Обслуживание СУБД:
+
+local   all             postgres                                peer
+host    all             postgres             127.0.0.1/32       md5
+
+# 1.1 Замена предварительно откоректрированного pg_hba.conf
+mkdir -p /backup/24.02.2022
+chown -R postgres /backup/24.02.2022
+cp /etc/postgresql/13/main/pg_hba.conf /backup/24.02.2022/pg_hba.conf-user-off
+cp /etc/postgresql/13/main/pg_hba.conf /backup/24.02.2022/pg_hba.conf-old-cluster
+mv /backup/24.02.2022/ph_hba.conf-user-off /etc/postgresql/13/main/pg_hba.conf
 psql -c "SELECT pg_reload_conf()"
 # Отключить клиентские соединения:
 postgres@zabbix:/home/mgb$ psql -c "select pg_terminate_backend(pid) FROM pg_stat_activity WHERE datname <> 'postgres'"
