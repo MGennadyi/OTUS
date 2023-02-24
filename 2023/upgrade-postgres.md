@@ -211,6 +211,68 @@ Checking for new cluster tablespace directories             ok
 *Кластеры совместимы*
 
 /usr/lib/postgresql/14/bin/pg_upgrade -b /usr/lib/postgresql/13/bin -B /usr/lib/postgresql/14/bin -d /var/lib/postgresql/13/main -D /var/lib/postgresql/14/main -j 2
+/usr/lib/postgresql/14/bin/pg_upgrade -b /usr/lib/postgresql/13/bin -B /usr/lib/postgresql/14/bin -d /etc/postgresql/13/main/ -D /etc/postgresql/14/main/ -j 2
+postgres@pg:~$ /usr/lib/postgresql/14/bin/pg_upgrade -b /usr/lib/postgresql/13/bin -B /usr/lib/postgresql/14/bin -d /etc/postgresql/13/main/ -D /etc/postgresql/14/main/ -j 2
+Finding the real data directory for the source cluster      ok
+Finding the real data directory for the target cluster      ok
+Проведение проверок целостности
+-------------------------------
+Checking cluster versions                                   ok
+Checking database user is the install user                  ok
+Checking database connection settings                       ok
+Checking for prepared transactions                          ok
+Checking for system-defined composite types in user tables  ok
+Checking for reg* data types in user tables                 ok
+Checking for contrib/isn with bigint-passing mismatch       ok
+Checking for user-defined encoding conversions              ok
+Checking for user-defined postfix operators                 ok
+Checking for incompatible polymorphic functions             ok
+Creating dump of global objects                             ok
+Creating dump of database schemas
+                                                            ok
+Checking for presence of required libraries                 ok
+Checking database user is the install user                  ok
+Checking for prepared transactions                          ok
+Checking for new cluster tablespace directories             ok
+
+Если работа pg_upgrade после этого прервётся, вы должны заново выполнить initdb
+для нового кластера, чтобы продолжить.
+
+Выполнение обновления
+---------------------
+Analyzing all rows in the new cluster                       ok
+Freezing all rows in the new cluster                        ok
+Deleting files from new pg_xact                             ok
+Copying old pg_xact to new server                           ok
+Setting oldest XID for new cluster                          ok
+Setting next transaction ID and epoch for new cluster       ok
+Deleting files from new pg_multixact/offsets                ok
+Copying old pg_multixact/offsets to new server              ok
+Deleting files from new pg_multixact/members                ok
+Copying old pg_multixact/members to new server              ok
+Setting next multixact ID and offset for new cluster        ok
+Resetting WAL archives                                      ok
+Setting frozenxid and minmxid counters in new cluster       ok
+Restoring global objects in the new cluster                 ok
+Restoring database schemas in the new cluster
+                                                            ok
+Копирование файлов пользовательских отношений
+                                                            ok
+Setting next OID for new cluster                            ok
+Sync data directory to disk                                 ok
+Creating script to delete old cluster                       ok
+Checking for extension updates                              ok
+
+Обновление завершено
+--------------------
+Статистика оптимизатора утилитой pg_upgrade не переносится.
+Запустив новый сервер, имеет смысл выполнить:
+    /usr/lib/postgresql/14/bin/vacuumdb --all --analyze-in-stages
+
+При запуске этого скрипта будут удалены файлы данных старого кластера:
+    ./delete_old_cluster.sh
+
+
 ```
 
 ```
