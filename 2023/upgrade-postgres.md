@@ -176,12 +176,19 @@ mv /log/pg_log
 /opt/pgpro/ent-14/bin/pg-setup initdb --datachecksums --locale=en_US.utf.8 --pgdata=/data/pg_data --waldir=/wal/pg_wal
 # Ванильный
 pg_upgrade -b /usr/lib/postgresql/13/bin -B /usr/lib/postgresql/14/bin -d /var/lib/postgresql/13/main -D /var/lib/postgresql/14/main [option...]
-
-
 ```
 #### Копирование конфигов из РК
 ```
 
+```
+#### Проверка выполнения обновления:
+```
+mkdir -p /pg_upgrade/1
+chown -R postgres:postgres /pg_upgrade/1
+sudo -u postgres -i
+cd /pg_upgrade/1
+/usr/lib/postgresql/14/bin/pg_upgrade -b /usr/lib/postgresql/13/bin -B /usr/lib/postgresql/14/bin -d /var/lib/postgresql/13/main -D /var/lib/postgresql/14/main --check
+/usr/lib/postgresql/14/bin/pg_upgrade -b /usr/lib/postgresql/13/bin -B /usr/lib/postgresql/14/bin -d /var/lib/postgresql/13/main -D /var/lib/postgresql/14/main -j 2
 ```
 
 ```
