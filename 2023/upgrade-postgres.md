@@ -146,6 +146,8 @@ systemctl stop postgresql
 # из каталога бинарника: /usr/lib/postgresql/14/bin
 pg_ctl -D /data/pg_data stop
 pg_ctl "-D" "/var/lib/postgresql/14/main" stop - не работает
+----------------------
+systemctl stop postgresql@13-main
 ```
 #### 6. Установка пакетов новой версии
 ```
