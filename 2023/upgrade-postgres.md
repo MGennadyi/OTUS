@@ -105,6 +105,7 @@ mcedit /backup/24.02.2022/pg_hba.conf-user-off
 
 local   all             postgres                                peer
 host    all             postgres             127.0.0.1/32       md5
+local   replication     postgres                                peer
 
 cp /backup/24.02.2022/pg_hba.conf-user-off /etc/postgresql/13/main/pg_hba.conf
 psql -c "SELECT pg_reload_conf()"
@@ -129,6 +130,7 @@ sudo -i -u postgres
 crontab -e
 ```
 #### Запуск резервного копирования:
+
 
 ###### Рекомендации: pg_bouncer на паузу; checkpoint
 #### 5. Остановка СУБД
@@ -165,7 +167,7 @@ mv /log/pg_log
 # PG_PRO
 /opt/pgpro/ent-14/bin/pg-setup initdb --datachecksums --locale=en_US.utf.8 --pgdata=/data/pg_data --waldir=/wal/pg_wal
 # Ванильный
-
+pg_upgrade -b /usr/lib/postgresql/13/bin -B /usr/lib/postgresql/14/bin -d /var/lib/postgresql/13/main -D /var/lib/postgresql/14/main [option...]
 
 
 ```
