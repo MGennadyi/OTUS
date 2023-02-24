@@ -187,7 +187,29 @@ mkdir -p /pg_upgrade/1
 chown -R postgres:postgres /pg_upgrade/1
 sudo -u postgres -i
 cd /pg_upgrade/1
-/usr/lib/postgresql/14/bin/pg_upgrade -b /usr/lib/postgresql/13/bin -B /usr/lib/postgresql/14/bin -d /var/lib/postgresql/13/main -D /var/lib/postgresql/14/main --check
+#                          pg_upgrade -b старый_каталог_bin         -B новый_каталог_bin]         -d старый_каталог_конфигурации -D новый_каталог_конфигурации
+postgres@pg:~$ /usr/lib/postgresql/14/bin/pg_upgrade -b /usr/lib/postgresql/13/bin -B /usr/lib/postgresql/14/bin -d /etc/postgresql/13/main/ -D /etc/postgresql/14/main/ --check
+Finding the real data directory for the source cluster      ok
+Finding the real data directory for the target cluster      ok
+Проведение проверок целостности
+-------------------------------
+Checking cluster versions                                   ok
+Checking database user is the install user                  ok
+Checking database connection settings                       ok
+Checking for prepared transactions                          ok
+Checking for system-defined composite types in user tables  ok
+Checking for reg* data types in user tables                 ok
+Checking for contrib/isn with bigint-passing mismatch       ok
+Checking for user-defined encoding conversions              ok
+Checking for user-defined postfix operators                 ok
+Checking for incompatible polymorphic functions             ok
+Checking for presence of required libraries                 ok
+Checking database user is the install user                  ok
+Checking for prepared transactions                          ok
+Checking for new cluster tablespace directories             ok
+
+*Кластеры совместимы*
+
 /usr/lib/postgresql/14/bin/pg_upgrade -b /usr/lib/postgresql/13/bin -B /usr/lib/postgresql/14/bin -d /var/lib/postgresql/13/main -D /var/lib/postgresql/14/main -j 2
 ```
 
