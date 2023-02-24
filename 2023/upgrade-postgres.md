@@ -130,8 +130,9 @@ sudo -i -u postgres
 crontab -e
 ```
 #### Запуск резервного копирования:
-
-
+```
+ /postgres/scripts/atom_basebackup.sh
+```
 ###### Рекомендации: pg_bouncer на паузу; checkpoint
 #### 5. Остановка СУБД
 ```
@@ -155,16 +156,21 @@ apt ibstall postgresql-15
 ```
 # Из-под УЗ postgres:
 sudo su -i -u postgres
-mkdir /log/pg_log_11
-mv /data/pg_data/ /data/pg_data_11
-chmod 700 /data/pg_data_11
-rm /data/pg_data_11/pg_wal
+mkdir -p /log/pg_log_13
+mv /var/lib/postgresql/13/main
+mkdir -p /data/pg_data_13
+mv /var/lib/postgresql/13/main /data/pg_data_13
+# mv /data/pg_data/ /data/pg_data_13
+chmod 700 /data/pg_data_13
+rm /data/pg_data_13/pg_wal
 mv /wal/pg_wal
 mv /log/pg_log
 ```
 #### 8. Инициализация нового кластера
 ```
 # PG_PRO
+/usr/lib/postgresql/14/bin/pg-setup initdb --datachecksums --locale=en_US.utf.8 --pgdata=/data/pg_data --waldir=/wal/pg_wal
+/opt/pgpro/ent-14/bin/pg-setup initdb --datachecksums --locale=en_US.utf.8 --pgdata=/data/pg_data --waldir=/wal/pg_wal
 /opt/pgpro/ent-14/bin/pg-setup initdb --datachecksums --locale=en_US.utf.8 --pgdata=/data/pg_data --waldir=/wal/pg_wal
 # Ванильный
 pg_upgrade -b /usr/lib/postgresql/13/bin -B /usr/lib/postgresql/14/bin -d /var/lib/postgresql/13/main -D /var/lib/postgresql/14/main [option...]
