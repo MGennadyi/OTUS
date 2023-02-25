@@ -1,4 +1,5 @@
 # Мажерное обновление POSTGRESQL
+###### После создания ВМ и уст.postgres создать pg_stat_statements
 ##### 0. Проверим, что под капотом:
 ```
 # Для postgres-pro: psql -c "select pgpro_version()"
