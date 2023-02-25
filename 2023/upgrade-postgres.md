@@ -156,14 +156,14 @@ apt ibstall postgresql-15
 ```
 #### 7. Перенос данных старого кластера
 ```
-# Из-под УЗ postgres:
-sudo su -i -u postgres
+# Из-под УЗ postgres: sudo su -i -u postgres
 mkdir -p /log/pg_log_13
-mv /var/lib/postgresql/13/main
+mv /var/lib/postgresql/13/main /var/lib/postgresql/13/main_13
+chmod 700 /var/lib/postgresql/13/main_13
 mkdir -p /data/pg_data_13
 mv /var/lib/postgresql/13/main /data/pg_data_13
 # mv /data/pg_data/ /data/pg_data_13
-chmod 700 /data/pg_data_13
+chmod 700 /data/pg_data_13 
 rm /data/pg_data_13/pg_wal
 mv /wal/pg_wal
 mv /log/pg_log
