@@ -179,6 +179,9 @@ systemctl stop postgresql@13-main
 ```
 apt install postgresql-14
 apt ibstall postgresql-15
+pg_lsclusters
+pg_ctlcluster 13 main stop
+
 ```
 #### 7. Перенос данных старого кластера
 ```
@@ -209,36 +212,14 @@ pg_upgrade -b /usr/lib/postgresql/13/bin -B /usr/lib/postgresql/14/bin -d /var/l
 ```
 #### Проверка выполнения обновления:
 ```
+root@etcd:/home/mgb# pg_ctlcluster 13 main stop
+root@etcd:/home/mgb# pg_ctlcluster 14 main stop
 mkdir -p /pg_upgrade/1
-chown -R postgres:postgres /pg_upgrade/1
+chown -R postgres:postgres /pg_upgrade
 sudo -u postgres -i
 cd /pg_upgrade/1
 #                          pg_upgrade -b старый_каталог_bin         -B новый_каталог_bin]         -d старый_каталог_конфигурации -D новый_каталог_конфигурации
 postgres@pg:~$ /usr/lib/postgresql/14/bin/pg_upgrade -b /usr/lib/postgresql/13/bin -B /usr/lib/postgresql/14/bin -d /etc/postgresql/13/main/ -D /etc/postgresql/14/main/ --check
-Finding the real data directory for the source cluster      ok
-Finding the real data directory for the target cluster      ok
-Проведение проверок целостности
--------------------------------
-Checking cluster versions                                   ok
-Checking database user is the install user                  ok
-Checking database connection settings                       ok
-Checking for prepared transactions                          ok
-Checking for system-defined composite types in user tables  ok
-Checking for reg* data types in user tables                 ok
-Checking for contrib/isn with bigint-passing mismatch       ok
-Checking for user-defined encoding conversions              ok
-Checking for user-defined postfix operators                 ok
-Checking for incompatible polymorphic functions             ok
-Checking for presence of required libraries                 ok
-Checking database user is the install user                  ok
-Checking for prepared transactions                          ok
-Checking for new cluster tablespace directories             ok
-
-*Кластеры совместимы*
-
-/usr/lib/postgresql/14/bin/pg_upgrade -b /usr/lib/postgresql/13/bin -B /usr/lib/postgresql/14/bin -d /var/lib/postgresql/13/main -D /var/lib/postgresql/14/main -j 2
-/usr/lib/postgresql/14/bin/pg_upgrade -b /usr/lib/postgresql/13/bin -B /usr/lib/postgresql/14/bin -d /etc/postgresql/13/main/ -D /etc/postgresql/14/main/ -j 2
-postgres@pg:~$ /usr/lib/postgresql/14/bin/pg_upgrade -b /usr/lib/postgresql/13/bin -B /usr/lib/postgresql/14/bin -d /etc/postgresql/13/main/ -D /etc/postgresql/14/main/ -j 2
 Finding the real data directory for the source cluster      ok
 Finding the real data directory for the target cluster      ok
 Проведение проверок целостности
@@ -297,15 +278,58 @@ Checking for extension updates                              ok
 
 При запуске этого скрипта будут удалены файлы данных старого кластера:
     ./delete_old_cluster.sh
-
+```
+#### Стартуем новый кластер
+```
+pg_ctlcluster 14 main start
+root@etcd:/home/mgb# pg_lsclusters
+Ver Cluster Port Status Owner    Data directory              Log file
+13  main    5432 down   postgres /var/lib/postgresql/13/main /var/log/postgresql/postgresql-13-main.log
+14  main    5433 online postgres /var/lib/postgresql/14/main /var/log/postgresql/postgresql-14-main.log
+Новый инстанс работает на порту 5433
+```
+#### Правим postgresql.conf установленной 14 версии
+```
+vim /etc/postgresql/14/main/postgresql.conf
+root@etcd:/home/mgb# pg_ctlcluster 14 main stop
+root@etcd:/home/mgb# pg_ctlcluster 14 main start
+root@etcd:/home/mgb# pg_ctlcluster 14 main status
+pg_ctl: сервер работает (PID: 32476)
+/usr/lib/postgresql/14/bin/postgres "-D" "/var/lib/postgresql/14/main" "-c" "config_file=/etc/postgresql/14/main/postgresql.conf"
+```
+#### Выполнение рекомендаций pg_upgrade:
+```
+/usr/lib/postgresql/14/bin/vacuumdb --all --analyze-in-stages
+postgres@etcd:/home/mgb$ /usr/lib/postgresql/14/bin/vacuumdb --all --analyze-in-stages
+vacuumdb: обработка базы данных "demo": Вычисление минимальной статистики для оптимизатора (1 запись)
+vacuumdb: обработка базы данных "postgres": Вычисление минимальной статистики для оптимизатора (1 запись)
+vacuumdb: обработка базы данных "template1": Вычисление минимальной статистики для оптимизатора (1 запись)
+vacuumdb: обработка базы данных "demo": Вычисление средней статистики для оптимизатора (10 записей)
+vacuumdb: обработка базы данных "postgres": Вычисление средней статистики для оптимизатора (10 записей)
+vacuumdb: обработка базы данных "template1": Вычисление средней статистики для оптимизатора (10 записей)
+vacuumdb: обработка базы данных "demo": Вычисление стандартной (полной) статистики для оптимизатора
+vacuumdb: обработка базы данных "postgres": Вычисление стандартной (полной) статистики для оптимизатора
+vacuumdb: обработка базы данных "template1": Вычисление стандартной (полной) статистики для оптимизатора
+```
+#### Удаление старого кластера
+```
+/var/lib/postgresql/delete_old_cluster.sh
+```
+#### Пересоздание pg_stat_stations, так лучше:
+```
+# alter extations pg_stat_stations update
+# Проверить наличие расширения
+psql -c "DROP extension pg_stat_statements;"
+psql -c "create extension pg_stat_statements;"
+```
+### Проверим состояние кластера
+```
+root@etcd:/home/mgb# pg_lsclusters
+Ver Cluster Port Status Owner     Data directory              Log file
+13  main    5432 down   <unknown> /var/lib/postgresql/13/main /var/log/postgresql/postgresql-13-main.log
+14  main    5432 online postgres  /var/lib/postgresql/14/main /var/log/postgresql/postgresql-14-main.log
 
 ```
-
-```
-alter extations pg_stat_stations update
-
-```
-
 
 
 
