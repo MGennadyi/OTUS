@@ -328,9 +328,30 @@ root@etcd:/home/mgb# pg_lsclusters
 Ver Cluster Port Status Owner     Data directory              Log file
 13  main    5432 down   <unknown> /var/lib/postgresql/13/main /var/log/postgresql/postgresql-13-main.log
 14  main    5432 online postgres  /var/lib/postgresql/14/main /var/log/postgresql/postgresql-14-main.log
+```
+#### Проверим БД demo:
+```
+postgres=# \l+
+                                                                        Список баз данных
+    Имя    | Владелец | Кодировка | LC_COLLATE  |  LC_CTYPE   |     Права доступа     | Размер  | Табл. пространство |                  Описание
+-----------+----------+-----------+-------------+-------------+-----------------------+---------+--------------------+--------------------------------------------
+ demo      | postgres | UTF8      | ru_RU.UTF-8 | ru_RU.UTF-8 |                       | 281 MB  | pg_default         |
+ postgres  | postgres | UTF8      | ru_RU.UTF-8 | ru_RU.UTF-8 |                       | 8769 kB | pg_default         | default administrative connection database
+ template0 | postgres | UTF8      | ru_RU.UTF-8 | ru_RU.UTF-8 | =c/postgres          +| 8593 kB | pg_default         | unmodifiable empty database
+           |          |           |             |             | postgres=CTc/postgres |         |                    |
+ template1 | postgres | UTF8      | ru_RU.UTF-8 | ru_RU.UTF-8 | postgres=CTc/postgres+| 8713 kB | pg_default         | default template for new databases
+           |          |           |             |             | =c/postgres           |         |                    |
+(4 строки)
+demo=# \dn+
+                             Список схем
+   Имя    | Владелец |    Права доступа     |        Описание
+----------+----------+----------------------+------------------------
+ bookings | postgres |                      | Авиаперевозки
+ public   | postgres | postgres=UC/postgres+| standard public schema
+          |          | =UC/postgres         |
+(2 строки)
 
 ```
-
 
 
 
