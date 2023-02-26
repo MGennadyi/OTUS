@@ -7,6 +7,7 @@ create extension pg_stat_statements;
 psql -c "SELECT pg_reload_conf();"
 pg_ctlcluster 13 main stop
 pg_ctlcluster 13 main start
+systemctl disable  postgresql
 ```
 ##### 0. Проверим, что под капотом:
 ```
@@ -63,13 +64,13 @@ postgresql-pltcl-15-dbgsym/bullseye-pgdg 15.2-1.pgdg110+1 amd64
 # Обновиться можно.
 2. Предоставить права root
 ```
-##### 1. Остановка потоковой архивации (если есть):
+##### 0. Остановка потоковой архивации (если есть):
 ```
 # Из-под перс.УЗ
 sudo systemctl stop  pg_receivewal.core-s-pgaidb01.service
 systemctl status pg_receivewal.core-s-pgaidb01.service
 ```
-#### 2. Архивация собранных WAL 
+#### 0. Архивация собранных WAL 
 ```
 sudo -i -u postgres
 2 скрипта
@@ -104,11 +105,11 @@ postgres   77692   77075  0 19:38 pts/0    00:00:00 ps -fu postgres
 ```
 ```
 # 1.1 Подготовка и замена предварительно откоректрированного pg_hba.conf
-mkdir -p /backup/24.02.2022
-chown -R postgres /backup/24.02.2022
-cp /etc/postgresql/13/main/pg_hba.conf /backup/24.02.2022/pg_hba.conf-old-cluster
-cp /etc/postgresql/13/main/pg_hba.conf /backup/24.02.2022/pg_hba.conf-user-off
-mcedit /backup/24.02.2022/pg_hba.conf-user-off
+mkdir -p /data/backup/24.02.2022
+chown -R postgres:postgres /data/backup
+cp /etc/postgresql/13/main/pg_hba.conf /data/backup/24.02.2022/pg_hba.conf-old-cluster
+cp /etc/postgresql/13/main/pg_hba.conf /data/backup/24.02.2022/pg_hba.conf-user-off
+mcedit /data/backup/24.02.2022/pg_hba.conf-user-off
 # TYPE  DATABASE        USER            ADDRESS                 METHOD
 ## Обслуживание СУБД:
 
@@ -140,7 +141,12 @@ crontab -e
 ```
 #### Запуск резервного копирования:
 ```
- /postgres/scripts/atom_basebackup.sh
+
+mkdir -p /postgres/scripts
+chown -R postgres:postgres /postgres/scripts
+vim /postgres/scripts/atom_basebackup.sh
+chmod +x /postgres/scripts/atom_basebackup.sh
+/postgres/scripts/atom_basebackup.sh
 ```
 ###### Рекомендации: pg_bouncer на паузу; checkpoint
 #### 5. Остановка СУБД
