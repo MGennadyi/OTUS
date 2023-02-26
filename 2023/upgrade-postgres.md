@@ -9,6 +9,15 @@ pg_ctlcluster 13 main stop
 pg_ctlcluster 13 main start
 systemctl disable  postgresql
 ```
+### Загрузка БД:
+```
+wget --quiet https://edu.postgrespro.ru/demo_small.zip
+unzip demo_small.zip
+ls -la
+chown postgres /home/mgb/demo_small.sql
+psql -c 'CREATE DATABASE demo';
+psql -d demo < /home/mgb/demo_small.sql
+```
 ##### 0. Проверим, что под капотом:
 ```
 # Для postgres-pro: psql -c "select pgpro_version()"
