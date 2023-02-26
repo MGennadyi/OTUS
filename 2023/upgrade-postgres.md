@@ -219,7 +219,11 @@ chown -R postgres:postgres /pg_upgrade
 sudo -u postgres -i
 cd /pg_upgrade/1
 #                          pg_upgrade -b старый_каталог_bin         -B новый_каталог_bin]         -d старый_каталог_конфигурации -D новый_каталог_конфигурации
-postgres@pg:~$ /usr/lib/postgresql/14/bin/pg_upgrade -b /usr/lib/postgresql/13/bin -B /usr/lib/postgresql/14/bin -d /etc/postgresql/13/main/ -D /etc/postgresql/14/main/ --check
+postgres@pg:~$ /usr/lib/postgresql/14/bin/pg_upgrade -b /usr/lib/postgresql/13/bin -B /usr/lib/postgresql/14/bin -d /etc/postgresql/13/main/ -D /etc/postgresql/14/main/ --link --check
+```
+#### Выполнение обновления:
+```
+postgres@pg:~$ /usr/lib/postgresql/14/bin/pg_upgrade -b /usr/lib/postgresql/13/bin -B /usr/lib/postgresql/14/bin -d /etc/postgresql/13/main/ -D /etc/postgresql/14/main/ --link
 Finding the real data directory for the source cluster      ok
 Finding the real data directory for the target cluster      ok
 Проведение проверок целостности
@@ -350,9 +354,21 @@ demo=# \dn+
  public   | postgres | postgres=UC/postgres+| standard public schema
           |          | =UC/postgres         |
 (2 строки)
+```
+#### Удаляем старый кластер:
+```
+root@etcd:/home/mgb# pg_lsclusters
+Ver Cluster Port Status Owner     Data directory              Log file
+13  main    5432 down   <unknown> /var/lib/postgresql/13/main /var/log/postgresql/postgresql-13-main.log
+14  main    5432 online postgres  /var/lib/postgresql/14/main /var/log/postgresql/postgresql-14-main.log
+root@etcd:/home/mgb# pg_dropcluster 13 main
+Warning: corrupted cluster: data directory does not exist
+root@etcd:/home/mgb# pg_lsclusters
+Ver Cluster Port Status Owner    Data directory              Log file
+14  main    5432 online postgres /var/lib/postgresql/14/main /var/log/postgresql/postgresql-14-main.log
+
 
 ```
-
 
 
 
