@@ -1,5 +1,13 @@
 # Мажерное обновление POSTGRESQL
 ###### После создания ВМ и уст.postgres создать pg_stat_statements
+```
+ALTER SYSTEM set shared_preload_libraries = 'pg_stat_statements';
+create extension pg_stat_statements;
+# Необходимо перечитать конфигурацию, но лучше перестартовать:
+psql -c "SELECT pg_reload_conf();"
+pg_ctlcluster 13 main stop
+pg_ctlcluster 13 main start
+```
 ##### 0. Проверим, что под капотом:
 ```
 # Для postgres-pro: psql -c "select pgpro_version()"
