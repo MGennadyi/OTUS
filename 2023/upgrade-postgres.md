@@ -177,11 +177,12 @@ systemctl stop postgresql@13-main
 ```
 #### 6. Установка пакетов новой версии
 ```
+pg_ctlcluster 13 main stop
 apt install postgresql-14
 apt ibstall postgresql-15
 pg_lsclusters
-pg_ctlcluster 13 main stop
-
+# На каком порту v_14 ???
+# Если на 5433 то правим ниже:
 ```
 #### 7. Перенос данных старого кластера
 ```
