@@ -213,7 +213,8 @@ pg_upgrade -b /usr/lib/postgresql/13/bin -B /usr/lib/postgresql/14/bin -d /var/l
 ```
 #### Проверка выполнения обновления:
 ```
-root@etcd:/home/mgb# pg_ctlcluster 13 main stop
+# v_13 должен быть уже остановлен:
+root@etcd:/home/mgb# pg_ctlcluster 13 main status
 root@etcd:/home/mgb# pg_ctlcluster 14 main stop
 mkdir -p /pg_upgrade/1
 chown -R postgres:postgres /pg_upgrade
