@@ -50,7 +50,9 @@ shared_preload_libraries = 'pg_stat_statements'
 systemctl stop patroni
 systemctl start patroni
 create extension pg_stat_statements;
-# Ответ:
+# Необходимо перечитать конфигурацию
+psql -c "SELECT pg_reload_conf();"
+
 ```
 ```
 # ТОП по загрузке CPU:
