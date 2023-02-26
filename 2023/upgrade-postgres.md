@@ -148,6 +148,8 @@ systemctl stop postgresql
 pg_ctl -D /data/pg_data stop
 pg_ctl "-D" "/var/lib/postgresql/14/main" stop - не работает
 ----------------------
+pg_ctlcluster 13 main status
+pg_ctlcluster 13 main stop
 systemctl stop postgresql@13-main
 ```
 #### 6. Установка пакетов новой версии
@@ -175,7 +177,7 @@ mv /log/pg_log
 /usr/lib/postgresql/14/bin/pg-setup initdb --datachecksums --locale=en_US.utf.8 --pgdata=/data/pg_data --waldir=/wal/pg_wal
 /opt/pgpro/ent-14/bin/pg-setup initdb --datachecksums --locale=en_US.utf.8 --pgdata=/data/pg_data --waldir=/wal/pg_wal
 /opt/pgpro/ent-14/bin/pg-setup initdb --datachecksums --locale=en_US.utf.8 --pgdata=/data/pg_data --waldir=/wal/pg_wal
-# Ванильный
+# Ванильный из пакетов не требует инициализации
 pg_upgrade -b /usr/lib/postgresql/13/bin -B /usr/lib/postgresql/14/bin -d /var/lib/postgresql/13/main -D /var/lib/postgresql/14/main [option...]
 ```
 #### Копирование конфигов из РК
