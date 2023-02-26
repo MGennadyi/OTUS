@@ -148,7 +148,7 @@ sudo -i -u postgres
 # Закоментрировать:
 crontab -e
 ```
-#### Запуск резервного копирования:
+#### 4. Запуск резервного копирования:
 ```
 
 mkdir -p /postgres/scripts
@@ -184,7 +184,7 @@ pg_lsclusters
 # На каком порту v_14 ???
 # Если на 5433 то правим ниже:
 ```
-#### 7. Перенос данных старого кластера
+#### Пропускаем перенос данных старого кластера
 ```
 # Из-под УЗ postgres: sudo su -i -u postgres
 mkdir -p /log/pg_log_13
@@ -198,7 +198,7 @@ rm /data/pg_data_13/pg_wal
 mv /wal/pg_wal
 mv /log/pg_log
 ```
-#### 8. Инициализация нового кластера
+#### Пропускаем инициализация нового кластера
 ```
 # PG_PRO
 /usr/lib/postgresql/14/bin/pg-setup initdb --datachecksums --locale=en_US.utf.8 --pgdata=/data/pg_data --waldir=/wal/pg_wal
@@ -207,11 +207,14 @@ mv /log/pg_log
 # Ванильный из пакетов не требует инициализации
 pg_upgrade -b /usr/lib/postgresql/13/bin -B /usr/lib/postgresql/14/bin -d /var/lib/postgresql/13/main -D /var/lib/postgresql/14/main [option...]
 ```
-#### Копирование конфигов из РК
+#### 7. Копирование конфигов из РК
 ```
-
+mkdir -p /pg_upgrade/v_13
+chown -R postgres:postgres /pg_upgrade
+cp /etc/postgresql/13/main/postgresql.conf /pg_upgrade/postgresql.conf
+cp /var/lib/postgresql/13/main /pg_upgrade/postgresql.auto.conf
 ```
-#### Проверка выполнения обновления:
+#### Проверка выполнения обновления: --check:
 ```
 # v_13 должен быть уже остановлен:
 root@etcd:/home/mgb# pg_ctlcluster 13 main status
@@ -219,7 +222,7 @@ root@etcd:/home/mgb# pg_ctlcluster 14 main stop
 mkdir -p /pg_upgrade/1
 chown -R postgres:postgres /pg_upgrade
 sudo -u postgres -i
-cd /pg_upgrade/1
+cd /pg_upgrade/
 #                          pg_upgrade -b старый_каталог_bin         -B новый_каталог_bin]         -d старый_каталог_конфигурации -D новый_каталог_конфигурации
 postgres@pg:~$ /usr/lib/postgresql/14/bin/pg_upgrade -b /usr/lib/postgresql/13/bin -B /usr/lib/postgresql/14/bin -d /etc/postgresql/13/main/ -D /etc/postgresql/14/main/ --link --check
 ```
@@ -294,7 +297,7 @@ Ver Cluster Port Status Owner    Data directory              Log file
 14  main    5433 online postgres /var/lib/postgresql/14/main /var/log/postgresql/postgresql-14-main.log
 Новый инстанс работает на порту 5433
 ```
-#### Правим postgresql.conf установленной 14 версии
+#### Правим postgresql.conf установленной 14 версии:
 ```
 vim /etc/postgresql/14/main/postgresql.conf
 root@etcd:/home/mgb# pg_ctlcluster 14 main stop
@@ -368,7 +371,6 @@ Warning: corrupted cluster: data directory does not exist
 root@etcd:/home/mgb# pg_lsclusters
 Ver Cluster Port Status Owner    Data directory              Log file
 14  main    5432 online postgres /var/lib/postgresql/14/main /var/log/postgresql/postgresql-14-main.log
-
 
 ```
 
