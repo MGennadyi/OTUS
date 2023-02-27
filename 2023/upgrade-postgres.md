@@ -371,9 +371,14 @@ Warning: corrupted cluster: data directory does not exist
 root@etcd:/home/mgb# pg_lsclusters
 Ver Cluster Port Status Owner    Data directory              Log file
 14  main    5432 online postgres /var/lib/postgresql/14/main /var/log/postgresql/postgresql-14-main.log
-
 ```
-
+#### Автозапуск при старте:
+```
+root@etcd:/home/mgb# systemctl enable postgresql
+Synchronizing state of postgresql.service with SysV service script with /lib/systemd/systemd-sysv-install.
+Executing: /lib/systemd/systemd-sysv-install enable postgresql
+Created symlink /etc/systemd/system/multi-user.target.wants/postgresql.service → /lib/systemd/system/postgresql.service.
+```
 
 
 
