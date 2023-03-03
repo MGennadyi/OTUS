@@ -87,11 +87,12 @@ oot@etcd:/home/mgb# systemctl status postgrespro-std-13
 ### 
 ```
 systemctl stop postgrespro-std-13
-
-
-
 ```
 
+```
+/opt/pgpro/std-14/bin/pg_setup initdb --data-checksums --locale=en_US.utf8 --pgdata=/data/pg_data --waldir=/wal/pg_wal
+
+```
 
 
 
