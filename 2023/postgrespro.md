@@ -84,15 +84,34 @@ oot@etcd:/home/mgb# systemctl status postgrespro-std-13
 мар 02 11:32:23 etcd postgres[490]: 2023-03-02 11:32:23.737 MSK [490] ПОДСКАЗКА:  В дальнейшем протоколы будут выводиться в каталог "log".
 мар 02 11:32:23 etcd systemd[1]: Started Postgres Pro std 13 database server.
 ```
-### 
+#### Установка pg_repack:
+```
+
+```
+### Остановка v_13
 ```
 systemctl stop postgrespro-std-13
 ```
-
+# Подготовка директорий:
+```
+mkdir -p /data/pg_data
+mkdir -p /wal/pg_wal
+```
+# Инициалицация нового кластера v_14:
 ```
 /opt/pgpro/std-14/bin/pg_setup initdb --data-checksums --locale=en_US.utf8 --pgdata=/data/pg_data --waldir=/wal/pg_wal
 
 ```
+# Проверка перед обновлением:
+```
+mkdir -p /pg_upgrade
+cd /pg_upgrade
+/opt/pgpro/std-14/bin/pg_upgrade
+
+
+```
+
+
 
 
 
