@@ -217,7 +217,8 @@ chown -R postgres:postgres /pg_upgrade
 cp /etc/postgresql/13/main/postgresql.conf /pg_upgrade/postgresql.conf
 cp /var/lib/postgresql/13/main /pg_upgrade/postgresql.auto.conf
 ```
-#### Проверка выполнения обновления: --check:
+### Проверка выполнения обновления: --check:
+#### V_13 и V_14 должны быть остановлены:
 ```
 # v_13 должен быть уже остановлен:
 root@etcd:/home/mgb# pg_ctlcluster 13 main status
