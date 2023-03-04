@@ -113,10 +113,22 @@ root@etcd:/home/mgb# sudo apt install make
 Настраивается пакет make (4.3-4.1) …
 Обрабатываются триггеры для man-db (2.9.4-2) …
 ```
+### Подготовка к установке pg_repack:
+```
+apt -y install build-essential -y
+sudo apt-get install postgresql-server-dev-all -y
+sudo apt-get install postgresql-common -y
+apt-get install pgxnclient libpq-dev -y
+sudo apt-get install libreadline8
+sudo apt-get install libreadline-dev
+sudo apt-get install libssl-dev
+sudo apt install libgl1-mesa-dev
+```
 #### Установка pg_repack:
 ```
 wget http://api.pgxn.org/dist/pg_repack/1.4.5/pg_repack-1.4.5.zip
 unzip pg_repack-1.4.5.zip
+cd pg_repack-1.4.5
 root@etcd:/home/mgb/pg_repack-1.4.8# make
 make[1]: вход в каталог «/home/mgb/pg_repack-1.4.8/bin»
 Makefile:34: /usr/lib/postgresql/13/lib/pgxs/src/makefiles/pgxs.mk: Нет такого файла или каталога
@@ -127,9 +139,8 @@ make: *** [Makefile:35: all] Ошибка 2
 # По другому:
 # Before building, you might need to install the PostgreSQL development packages (postgresql-devel, etc.):
 libpq-dev
-sudo apt-get install postgresql-server-dev-all -y
-sudo apt-get install postgresql-common -y
-apt-get install pgxnclient libpq-dev -y
+
+add the directory containing pg_config to your $PATH
 and add the directory containing pg_config to your $PATH:
 # PATH=/usr/lib/postgresql/14/bin:$PATH
 export PATH=/opt/pgpro/std-13/bin:$PATH
@@ -201,9 +212,15 @@ PGXS = /usr/lib/postgresql/13/lib/pgxs/src/makefiles/pgxs.mk
 ```
 ```
 make PG_CONFIG=/usr/lib/postgresql/13/bin/pg_config
+```
+```
+cd pg_repack
+
+PG_CONFIG=/usr/lib/postgresql/13/bin/pg_config make
+
+PG_CONFIG=/usr/lib/postgresql/13/bin/pg_config make install
 
 ```
-
 
 
 
