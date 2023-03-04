@@ -123,6 +123,9 @@ sudo apt-get install libreadline8
 sudo apt-get install libreadline-dev
 sudo apt-get install libssl-dev
 sudo apt install libgl1-mesa-dev
+apt install liblz4-dev
+apt-get install zlib1g-dev
+
 ```
 #### Установка pg_repack:
 ```
