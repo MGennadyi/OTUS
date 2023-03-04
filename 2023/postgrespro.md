@@ -132,7 +132,9 @@ sudo apt-get install postgresql-common -y
 apt-get install pgxnclient libpq-dev -y
 and add the directory containing pg_config to your $PATH:
 # PATH=/usr/lib/postgresql/14/bin:$PATH
-PATH=/opt/pgpro/std-13/bin:$PATH
+export PATH=/opt/pgpro/std-13/bin:$PATH
+export PATH="$PATH:/usr/lib/postgresql/13/bin"
+echo $PATH
 root@etcd:/home/mgb# pgxn install pg_repack
 INFO: best version: pg_repack 1.4.8
 INFO: saving /tmp/tmpufzy46wd/pg_repack-1.4.8.zip
@@ -181,6 +183,25 @@ vim /etc/apt/sources.list
 deb http://ftp.de.debian.org/debian buster main
 deb http://ftp.de.debian.org/debian bullseye main 
 ````
+```
+root@etcd:/home/mgb# pg_config
+BINDIR = /usr/lib/postgresql/13/bin
+DOCDIR = /usr/share/doc/postgresql-doc-13
+HTMLDIR = /usr/share/doc/postgresql-doc-13
+INCLUDEDIR = /usr/include/postgresql
+PKGINCLUDEDIR = /usr/include/postgresql
+INCLUDEDIR-SERVER = /usr/include/postgresql/13/server
+LIBDIR = /usr/lib/x86_64-linux-gnu
+PKGLIBDIR = /usr/lib/postgresql/13/lib
+LOCALEDIR = /usr/share/locale
+MANDIR = /usr/share/postgresql/13/man
+SHAREDIR = /usr/share/postgresql/13
+SYSCONFDIR = /etc/postgresql-common
+PGXS = /usr/lib/postgresql/13/lib/pgxs/src/makefiles/pgxs.mk
+
+
+
+```
 
 
 
