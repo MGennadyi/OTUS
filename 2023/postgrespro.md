@@ -125,7 +125,12 @@ make[1]: выход из каталога «/home/mgb/pg_repack-1.4.8/bin»
 make: *** [Makefile:35: all] Ошибка 2
 
 # По другому:
+# Before building, you might need to install the PostgreSQL development packages (postgresql-devel, etc.):
+libpq-dev
+sudo apt-get install postgresql-server-dev-all
+sudo apt-get install postgresql-common 
 apt-get install pgxnclient libpq-dev -y
+and add the directory containing pg_config to your $PATH:
 # PATH=/usr/lib/postgresql/14/bin:$PATH
 PATH=/opt/pgpro/std-13/bin:$PATH
 root@etcd:/home/mgb# pgxn install pg_repack
@@ -134,7 +139,10 @@ INFO: saving /tmp/tmpufzy46wd/pg_repack-1.4.8.zip
 INFO: unpacking: /tmp/tmpufzy46wd/pg_repack-1.4.8.zip
 INFO: building extension
 ERROR: make executable not found: gmake
-
+# Then you can run:
+cd pg_repack
+$ make
+$ sudo make install
 
 
 ```
