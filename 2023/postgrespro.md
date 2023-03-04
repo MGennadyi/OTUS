@@ -198,11 +198,11 @@ MANDIR = /usr/share/postgresql/13/man
 SHAREDIR = /usr/share/postgresql/13
 SYSCONFDIR = /etc/postgresql-common
 PGXS = /usr/lib/postgresql/13/lib/pgxs/src/makefiles/pgxs.mk
-
-
+```
+```
+make PG_CONFIG=/usr/lib/postgresql/13/bin/pg_config
 
 ```
-
 
 
 
