@@ -16,12 +16,10 @@ deb-src https://mirror.yandex.ru/debian-security bullseye-security main
 ```
 deb http://security.debian.org/debian-security stretch/updates main 
 ```
-
-
-
-
-
-
+```
+apt-cache liblz4
+apt install liblz4-dev
+```
 
 
 
