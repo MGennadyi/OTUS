@@ -86,14 +86,48 @@ oot@etcd:/home/mgb# systemctl status postgrespro-std-13
 мар 02 11:32:23 etcd postgres[490]: 2023-03-02 11:32:23.737 MSK [490] ПОДСКАЗКА:  В дальнейшем протоколы будут выводиться в каталог "log".
 мар 02 11:32:23 etcd systemd[1]: Started Postgres Pro std 13 database server.
 ```
+### Установка make
+```
+apt install gmake
+Чтение списков пакетов… Готово
+Построение дерева зависимостей… Готово
+Чтение информации о состоянии… Готово
+E: Невозможно найти пакет gmake
+root@etcd:/home/mgb# sudo apt install make
+Чтение списков пакетов… Готово
+Построение дерева зависимостей… Готово
+Чтение информации о состоянии… Готово
+Предлагаемые пакеты:
+  make-doc
+Следующие НОВЫЕ пакеты будут установлены:
+  make
+Обновлено 0 пакетов, установлено 1 новых пакетов, для удаления отмечено 0 пакетов, и 125 пакетов не обновлено.
+Необходимо скачать 396 kB архивов.
+После данной операции объём занятого дискового пространства возрастёт на 1 630 kB.
+Пол:1 http://deb.debian.org/debian bullseye/main amd64 make amd64 4.3-4.1 [396 kB]
+Получено 396 kB за 0с (1 135 kB/s)
+Выбор ранее не выбранного пакета make.
+(Чтение базы данных … на данный момент установлен 104561 файл и каталог.)
+Подготовка к распаковке …/make_4.3-4.1_amd64.deb …
+Распаковывается make (4.3-4.1) …
+Настраивается пакет make (4.3-4.1) …
+Обрабатываются триггеры для man-db (2.9.4-2) …
+```
 #### Установка pg_repack:
 ```
 wget http://api.pgxn.org/dist/pg_repack/1.4.5/pg_repack-1.4.5.zip
 unzip pg_repack-1.4.5.zip
 # По другому:
-apt-get install pgxnclient
-apt-get install libpq-dev
-pgxn install pg_repack
+apt-get install pgxnclient libpq-dev -y
+# PATH=/usr/lib/postgresql/14/bin:$PATH
+PATH=/opt/pgpro/std-13/bin:$PATH
+root@etcd:/home/mgb# pgxn install pg_repack
+INFO: best version: pg_repack 1.4.8
+INFO: saving /tmp/tmpufzy46wd/pg_repack-1.4.8.zip
+INFO: unpacking: /tmp/tmpufzy46wd/pg_repack-1.4.8.zip
+INFO: building extension
+ERROR: make executable not found: gmake
+
 
 
 ```
