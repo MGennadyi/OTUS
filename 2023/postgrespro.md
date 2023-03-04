@@ -26,13 +26,15 @@ HTTP-запрос отправлен. Ожидание ответа… 200 OK
 
 apt-get update
 apt-get install postgrespro-std-13 -y
+```
+### Установка v_14
+```
 curl -o pgpro-repo-add.sh https://repo.postgrespro.ru/pgpro-14/keys/pgpro-repo-add.sh
 root@etcd:/home/mgb# curl -o pgpro-repo-add.sh https://repo.postgrespro.ru/pgpro-14/keys/pgpro-repo-add.sh
   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
                                  Dload  Upload   Total   Spent    Left  Speed
 100 18239  100 18239    0     0  25981      0 --:--:-- --:--:-- --:--:-- 25944
-root@etcd:/home/mgb# mc
-MoTTY X11 proxy: Unsupported authorisation protocol
+
 
 root@etcd:/home/mgb# sh pgpro-repo-add.sh
 --2023-03-03 19:58:04--  http://repo.postgrespro.ru/std-14/debian/dists/bullseye/main/binary-amd64/Release
