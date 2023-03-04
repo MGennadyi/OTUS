@@ -61,6 +61,8 @@ apt list | grep postgresql
 # mcedit /etc/apt/sources.list.d/pg.list
 wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
 sudo sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list'
+# Обнавляем!!!
+apt update
 # Просмотр доступных пакетов ПОСЛЕ:
 Проверим:
 apt list | grep  postgresql
@@ -178,8 +180,8 @@ systemctl stop postgresql@13-main
 #### 6. Установка пакетов новой версии
 ```
 pg_ctlcluster 13 main stop
-apt install postgresql-14
-apt ibstall postgresql-15
+apt install postgresql-14 -y
+apt ibstall postgresql-15 -y
 pg_lsclusters
 # На каком порту v_14 ???
 # Если на 5433 то правим ниже:
