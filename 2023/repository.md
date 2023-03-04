@@ -1,6 +1,6 @@
 ```
 
-vim /etc/apt/sources.list.d/pgdg.list
+vim /etc/apt/sources.list
 
 ```
 
