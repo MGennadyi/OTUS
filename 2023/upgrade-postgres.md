@@ -176,6 +176,7 @@ pg_ctl "-D" "/var/lib/postgresql/14/main" stop - не работает
 pg_ctlcluster 13 main status
 pg_ctlcluster 13 main stop
 systemctl stop postgresql@13-main
+systemctl disable postgresql@13-main
 ```
 #### 6. Установка пакетов новой версии
 ```
