@@ -25,7 +25,7 @@ HTTP-запрос отправлен. Ожидание ответа… 200 OK
 Чтение списков пакетов… Готово
 
 apt-get update
-apt-get install postgrespro-std-13
+apt-get install postgrespro-std-13 -y
 curl -o pgpro-repo-add.sh https://repo.postgrespro.ru/pgpro-14/keys/pgpro-repo-add.sh
 root@etcd:/home/mgb# curl -o pgpro-repo-add.sh https://repo.postgrespro.ru/pgpro-14/keys/pgpro-repo-add.sh
   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
