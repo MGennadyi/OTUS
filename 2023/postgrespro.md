@@ -117,6 +117,13 @@ root@etcd:/home/mgb# sudo apt install make
 ```
 wget http://api.pgxn.org/dist/pg_repack/1.4.5/pg_repack-1.4.5.zip
 unzip pg_repack-1.4.5.zip
+root@etcd:/home/mgb/pg_repack-1.4.8# make
+make[1]: вход в каталог «/home/mgb/pg_repack-1.4.8/bin»
+Makefile:34: /usr/lib/postgresql/13/lib/pgxs/src/makefiles/pgxs.mk: Нет такого файла или каталога
+make[1]: *** Нет правила для сборки цели «/usr/lib/postgresql/13/lib/pgxs/src/makefiles/pgxs.mk».  Останов.
+make[1]: выход из каталога «/home/mgb/pg_repack-1.4.8/bin»
+make: *** [Makefile:35: all] Ошибка 2
+
 # По другому:
 apt-get install pgxnclient libpq-dev -y
 # PATH=/usr/lib/postgresql/14/bin:$PATH
@@ -156,8 +163,18 @@ mkdir -p /pg_upgrade
 cd /pg_upgrade
 /opt/pgpro/std-14/bin/pg_upgrade
 
-
 ```
+```
+sudo sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list'
+wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
+apt install libpq-dev
+
+vim /etc/apt/sources.list
+deb http://ftp.de.debian.org/debian buster main
+deb http://ftp.de.debian.org/debian bullseye main 
+````
+
+
 
 
 
