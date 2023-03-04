@@ -88,6 +88,13 @@ oot@etcd:/home/mgb# systemctl status postgrespro-std-13
 ```
 #### Установка pg_repack:
 ```
+wget http://api.pgxn.org/dist/pg_repack/1.4.5/pg_repack-1.4.5.zip
+unzip pg_repack-1.4.5.zip
+# По другому:
+apt-get install pgxnclient
+apt-get install libpq-dev
+pgxn install pg_repack
+
 
 ```
 ### Остановка v_13
