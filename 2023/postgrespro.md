@@ -127,8 +127,8 @@ make: *** [Makefile:35: all] Ошибка 2
 # По другому:
 # Before building, you might need to install the PostgreSQL development packages (postgresql-devel, etc.):
 libpq-dev
-sudo apt-get install postgresql-server-dev-all
-sudo apt-get install postgresql-common 
+sudo apt-get install postgresql-server-dev-all -y
+sudo apt-get install postgresql-common -y
 apt-get install pgxnclient libpq-dev -y
 and add the directory containing pg_config to your $PATH:
 # PATH=/usr/lib/postgresql/14/bin:$PATH
