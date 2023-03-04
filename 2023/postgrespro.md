@@ -102,6 +102,11 @@ mkdir -p /wal/pg_wal
 /opt/pgpro/std-14/bin/pg_setup initdb --data-checksums --locale=en_US.utf8 --pgdata=/data/pg_data --waldir=/wal/pg_wal
 
 ```
+### pg_repack
+```
+CREATE EXTENSION pg_repack;
+```
+
 # Проверка перед обновлением:
 ```
 mkdir -p /pg_upgrade
