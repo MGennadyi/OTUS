@@ -429,14 +429,17 @@ Ver Cluster Port Status Owner    Data directory              Log file
 14  main    5433 online postgres /var/lib/postgresql/14/main /var/log/postgresql/postgresql-14-main.log
 
 /pg_upgrade/delete_old_cluster.sh
-```
-
-### Проверим состояние кластера
-```
+# Проверяем:
 root@etcd:/home/mgb# pg_lsclusters
 Ver Cluster Port Status Owner     Data directory              Log file
 13  main    5432 down   <unknown> /var/lib/postgresql/13/main /var/log/postgresql/postgresql-13-main.log
 14  main    5432 online postgres  /var/lib/postgresql/14/main /var/log/postgresql/postgresql-14-main.log
+# Не до конца:
+root@etcd:/home/mgb# pg_dropcluster 13 main
+Warning: corrupted cluster: data directory does not exist
+root@etcd:/home/mgb# pg_lsclusters
+Ver Cluster Port Status Owner    Data directory              Log file
+14  main    5432 online postgres /var/lib/postgresql/14/main /var/log/postgresql/postgresql-14-main.log
 ```
 #### Проверим БД demo:
 ```
@@ -466,11 +469,7 @@ root@etcd:/home/mgb# pg_lsclusters
 Ver Cluster Port Status Owner     Data directory              Log file
 13  main    5432 down   <unknown> /var/lib/postgresql/13/main /var/log/postgresql/postgresql-13-main.log
 14  main    5432 online postgres  /var/lib/postgresql/14/main /var/log/postgresql/postgresql-14-main.log
-root@etcd:/home/mgb# pg_dropcluster 13 main
-Warning: corrupted cluster: data directory does not exist
-root@etcd:/home/mgb# pg_lsclusters
-Ver Cluster Port Status Owner    Data directory              Log file
-14  main    5432 online postgres /var/lib/postgresql/14/main /var/log/postgresql/postgresql-14-main.log
+
 ```
 #### Автозапуск при старте:
 ```
