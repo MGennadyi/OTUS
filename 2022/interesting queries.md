@@ -49,9 +49,32 @@ vim /etc/patroni.yml
 shared_preload_libraries = 'pg_stat_statements'
 systemctl stop patroni
 systemctl start patroni
+postgres=# show shared_preload_libraries;
+ shared_preload_libraries
+--------------------------
+ pg_stat_statements
+(1 строка)
+
 create extension pg_stat_statements;
 # Необходимо перечитать конфигурацию
 psql -c "SELECT pg_reload_conf();"
+=======================================
+vim /etc/postgresql/13/main/postgresql.conf
+#-------------------
+#CLIENT CONNECTION DEFAULTS
+#--------------------
+shared_preload_libraries = 'pg_stat_statements'
+
+
+```
+## pg_repack
+```
+postgres=# ALTER SYSTEM SET shared_preload_libraries = 'pg_repack';
+ALTER SYSTEM
+SELECT pg_reload_conf(); - не поможет. Только стоп/старт
+# Важно: 'pg_stat_statements' -удалиться. По этому правим 
+vim /etc/postgresql/13/main/postgresql.conf
+create extension pg_repack;
 
 ```
 ```
