@@ -156,7 +156,6 @@ crontab -e
 ```
 #### 4. Запуск резервного копирования:
 ```
-
 mkdir -p /postgres/scripts
 chown -R postgres:postgres /postgres/scripts
 vim /postgres/scripts/atom_basebackup.sh
@@ -309,7 +308,7 @@ Ver Cluster Port Status Owner    Data directory              Log file
 
 #### Выполнение обновления:
 ```
-postgres@pg:~$ /usr/lib/postgresql/14/bin/pg_upgrade -b /usr/lib/postgresql/13/bin -B /usr/lib/postgresql/14/bin -d /etc/postgresql/13/main/ -D /etc/postgresql/14/main/ --link
+postgres@etcd:/pg_upgrade$ /usr/lib/postgresql/14/bin/pg_upgrade -b /usr/lib/postgresql/13/bin -B /usr/lib/postgresql/14/bin -d /etc/postgresql/13/main/ -D /etc/postgresql/14/main/ --link
 Finding the real data directory for the source cluster      ok
 Finding the real data directory for the target cluster      ok
 Проведение проверок целостности
@@ -353,12 +352,25 @@ Setting frozenxid and minmxid counters in new cluster       ok
 Restoring global objects in the new cluster                 ok
 Restoring database schemas in the new cluster
                                                             ok
-Копирование файлов пользовательских отношений
+Adding ".old" suffix to old global/pg_control               ok
+
+Если вы захотите запустить старый кластер, вам нужно будет убрать
+расширение ".old" у файла /var/lib/postgresql/13/main/global/pg_control.old.
+Так как применялся режим "ссылок", работа старого кластера
+после того, как будет запущен новый, не гарантируется.
+
+Подключение файлов пользовательских отношений ссылками
                                                             ok
 Setting next OID for new cluster                            ok
 Sync data directory to disk                                 ok
 Creating script to delete old cluster                       ok
-Checking for extension updates                              ok
+Checking for extension updates                              notice
+
+В вашей инсталляции есть расширения, которые надо обновить
+командой ALTER EXTENSION. Скрипт
+    update_extensions.sql
+будучи выполненным администратором БД в psql, обновит все
+эти расширения.
 
 Обновление завершено
 --------------------
@@ -368,6 +380,7 @@ Checking for extension updates                              ok
 
 При запуске этого скрипта будут удалены файлы данных старого кластера:
     ./delete_old_cluster.sh
+
 ```
 #### Стартуем новый кластер
 ```
