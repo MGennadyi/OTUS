@@ -296,7 +296,7 @@ Checking for new cluster tablespace directories             ok
 
 *Кластеры совместимы*  -О чудо!!! Приступаем к обновлению!  Параметр --check - убираем.
 ```
-### Стоп все:
+### Стоп всех СУБД:
 ```
 pg_lsclusters
 pg_ctlcluster 13 main stop
@@ -401,6 +401,13 @@ pg_ctl: сервер работает (PID: 32476)
 /usr/lib/postgresql/14/bin/postgres "-D" "/var/lib/postgresql/14/main" "-c" "config_file=/etc/postgresql/14/main/postgresql.conf"
 ```
 #### Выполнение рекомендаций pg_upgrade:
+#### 1. update_extensions.sql через пересоздание расширения:
+```
+psql
+drop extension pg_stat_statements;
+create extension pg_stat_statements;
+```
+#### 2. vacuumdb --all --analyze
 ```
 /usr/lib/postgresql/14/bin/vacuumdb --all --analyze-in-stages
 postgres@etcd:/home/mgb$ /usr/lib/postgresql/14/bin/vacuumdb --all --analyze-in-stages
@@ -414,17 +421,11 @@ vacuumdb: обработка базы данных "demo": Вычисление 
 vacuumdb: обработка базы данных "postgres": Вычисление стандартной (полной) статистики для оптимизатора
 vacuumdb: обработка базы данных "template1": Вычисление стандартной (полной) статистики для оптимизатора
 ```
-#### Удаление старого кластера
+#### 3. Удаление старого кластера
 ```
 /var/lib/postgresql/delete_old_cluster.sh
 ```
-#### Пересоздание pg_stat_stations, так лучше:
-```
-# alter extations pg_stat_stations update
-# Проверить наличие расширения
-psql -c "DROP extension pg_stat_statements;"
-psql -c "create extension pg_stat_statements;"
-```
+
 ### Проверим состояние кластера
 ```
 root@etcd:/home/mgb# pg_lsclusters
@@ -473,9 +474,7 @@ Synchronizing state of postgresql.service with SysV service script with /lib/sys
 Executing: /lib/systemd/systemd-sysv-install enable postgresql
 Created symlink /etc/systemd/system/multi-user.target.wants/postgresql.service → /lib/systemd/system/postgresql.service.
 ```
-```
-psql -c "CREATE EXTENSION pg_repack" -d demo
-```
+
 
 
 
