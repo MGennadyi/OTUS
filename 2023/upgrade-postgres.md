@@ -423,7 +423,12 @@ vacuumdb: обработка базы данных "template1": Вычислен
 ```
 #### 3. Удаление старого кластера
 ```
-/var/lib/postgresql/delete_old_cluster.sh
+postgres@etcd:/pg_upgrade$ pg_lsclusters
+Ver Cluster Port Status Owner    Data directory              Log file
+13  main    5432 down   postgres /var/lib/postgresql/13/main /var/log/postgresql/postgresql-13-main.log
+14  main    5433 online postgres /var/lib/postgresql/14/main /var/log/postgresql/postgresql-14-main.log
+
+/pg_upgrade/delete_old_cluster.sh
 ```
 
 ### Проверим состояние кластера
