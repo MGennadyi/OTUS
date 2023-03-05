@@ -17,6 +17,10 @@ ls -la
 chown postgres /home/mgb/demo_small.sql
 psql -c 'CREATE DATABASE demo';
 psql -d demo < /home/mgb/demo_small.sql
+\c demo
+Вы подключены к базе данных "demo" как пользователь "postgres".
+demo=# create extension pg_repack; - уст на конкретную БД, к примеру demo.
+CREATE EXTENSION
 ```
 ##### 0. Проверим, что под капотом:
 ```
