@@ -230,6 +230,35 @@ cd /pg_upgrade/
 #                          pg_upgrade -b старый_каталог_bin         -B новый_каталог_bin]         -d старый_каталог_конфигурации -D новый_каталог_конфигурации
 postgres@pg:~$ /usr/lib/postgresql/14/bin/pg_upgrade -b /usr/lib/postgresql/13/bin -B /usr/lib/postgresql/14/bin -d /etc/postgresql/13/main/ -D /etc/postgresql/14/main/ --link --check
 ```
+```
+postgres@etcd:~$ /usr/lib/postgresql/14/bin/pg_upgrade -b /usr/lib/postgresql/13/bin -B /usr/lib/postgresql/14/bin -d /etc/postgresql/13/main/ -D /etc/postgresql/14/main/ --link --check
+Finding the real data directory for the source cluster      ok
+Finding the real data directory for the target cluster      ok
+Проведение проверок целостности
+-------------------------------
+Checking cluster versions                                   ok
+Checking database user is the install user                  ok
+Checking database connection settings                       ok
+Checking for prepared transactions                          ok
+Checking for system-defined composite types in user tables  ok
+Checking for reg* data types in user tables                 ok
+Checking for contrib/isn with bigint-passing mismatch       ok
+Checking for user-defined encoding conversions              ok
+Checking for user-defined postfix operators                 ok
+Checking for incompatible polymorphic functions             ok
+Checking for presence of required libraries                 сбой
+
+В вашей инсталляции есть ссылки на загружаемые библиотеки, отсутствующие
+в новой инсталляции. Вы можете добавить эти библиотеки в новую инсталляцию
+или удалить функции, использующие их, из старой. Список проблемных
+библиотек приведён в файле:
+    loadable_libraries.txt
+
+Ошибка, выполняется выход
+```
+```
+cat /var/lib/postgresql/loadable_libraries.txt
+```
 #### Выполнение обновления:
 ```
 postgres@pg:~$ /usr/lib/postgresql/14/bin/pg_upgrade -b /usr/lib/postgresql/13/bin -B /usr/lib/postgresql/14/bin -d /etc/postgresql/13/main/ -D /etc/postgresql/14/main/ --link
