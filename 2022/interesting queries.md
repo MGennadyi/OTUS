@@ -69,13 +69,16 @@ shared_preload_libraries = 'pg_stat_statements'
 ```
 ## pg_repack
 ```
-postgres=# ALTER SYSTEM SET shared_preload_libraries = 'pg_repack';
+postgres=# ALTER SYSTEM SET shared_preload_libraries = 'pg_repack'; -отключит другие расширения, не применять
 ALTER SYSTEM
 SELECT pg_reload_conf(); - не поможет. Только стоп/старт
 # Важно: 'pg_stat_statements' -удалиться. По этому правим 
 vim /etc/postgresql/13/main/postgresql.conf
-create extension pg_repack;
-
+\c demo
+Вы подключены к базе данных "demo" как пользователь "postgres".
+demo=# create extension pg_repack; - уст на конкретную БД, к примеру demo.
+CREATE EXTENSION
+drop extension pg_repack;
 ```
 ```
 # ТОП по загрузке CPU:
