@@ -230,12 +230,12 @@ root@etcd:/home/mgb# pg_ctlcluster 14 main stop
 mkdir -p /pg_upgrade/1
 chown -R postgres:postgres /pg_upgrade
 sudo -u postgres -i
-cd /pg_upgrade/
+cd /pg_upgrade
 #                          pg_upgrade -b старый_каталог_bin         -B новый_каталог_bin]         -d старый_каталог_конфигурации -D новый_каталог_конфигурации
 postgres@pg:~$ /usr/lib/postgresql/14/bin/pg_upgrade -b /usr/lib/postgresql/13/bin -B /usr/lib/postgresql/14/bin -d /etc/postgresql/13/main/ -D /etc/postgresql/14/main/ --link --check
-```
-```
-postgres@etcd:~$ /usr/lib/postgresql/14/bin/pg_upgrade -b /usr/lib/postgresql/13/bin -B /usr/lib/postgresql/14/bin -d /etc/postgresql/13/main/ -D /etc/postgresql/14/main/ --link --check
+cd /pg_upgrade - обязательно! иначе:
+не удалось открыть файл протокола "pg_upgrade_internal.log": Отказано в доступе
+var/lib/postgresql/
 Finding the real data directory for the source cluster      ok
 Finding the real data directory for the target cluster      ok
 Проведение проверок целостности
@@ -260,9 +260,53 @@ Checking for presence of required libraries                 сбой
 
 Ошибка, выполняется выход
 ```
+### Шеф, все пропало.
 ```
-cat /var/lib/postgresql/loadable_libraries.txt
+# Смотрим:
+postgres@etcd:/pg_upgrade$ cat loadable_libraries.txt
+загрузить библиотеку "$libdir/pg_repack" не удалось: ОШИБКА:  нет доступа к файлу "$libdir/pg_repack": Нет такого файла или каталога
+В базе данных: demo
+pg_ctlcluster 13 main start
+su postgres
+psql # Ругался на demo, значить:
+\c demo
+demo=# drop extension pg_repack;
+DROP EXTENSION
 ```
+#### Прверка можно на не выкл. кластере:
+```
+postgres@etcd:/pg_upgrade$ /usr/lib/postgresql/14/bin/pg_upgrade -b /usr/lib/postgresql/13/bin -B /usr/lib/postgresql/14/bin -d /etc/postgresql/13/main/ -D /etc/postgresql/14/main/ --link --check
+Finding the real data directory for the source cluster      ok
+Finding the real data directory for the target cluster      ok
+Проверка целостности на старом работающем сервере
+-------------------------------------------------
+Checking cluster versions                                   ok
+Checking database user is the install user                  ok
+Checking database connection settings                       ok
+Checking for prepared transactions                          ok
+Checking for system-defined composite types in user tables  ok
+Checking for reg* data types in user tables                 ok
+Checking for contrib/isn with bigint-passing mismatch       ok
+Checking for user-defined encoding conversions              ok
+Checking for user-defined postfix operators                 ok
+Checking for incompatible polymorphic functions             ok
+Checking for presence of required libraries                 ok
+Checking database user is the install user                  ok
+Checking for prepared transactions                          ok
+Checking for new cluster tablespace directories             ok
+
+*Кластеры совместимы*  -О чудо!!! Приступаем к обновлению!  Параметр --check - убираем.
+```
+### Стоп все:
+```
+pg_lsclusters
+pg_ctlcluster 13 main stop
+root@etcd:/home/mgb/pg_repack-1.4.5# pg_lsclusters
+Ver Cluster Port Status Owner    Data directory              Log file
+13  main    5432 down   postgres /var/lib/postgresql/13/main /var/log/postgresql/postgresql-13-main.log
+14  main    5433 down   postgres /var/lib/postgresql/14/main /var/log/postgresql/postgresql-14-main.log
+```
+
 #### Выполнение обновления:
 ```
 postgres@pg:~$ /usr/lib/postgresql/14/bin/pg_upgrade -b /usr/lib/postgresql/13/bin -B /usr/lib/postgresql/14/bin -d /etc/postgresql/13/main/ -D /etc/postgresql/14/main/ --link
