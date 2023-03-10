@@ -16,6 +16,10 @@ ii  postgresql-client-11                  11.18-1.pgdg110+1               amd64 
 ii  postgresql-client-common              246.pgdg110+1                   all          manager for multiple PostgreSQL client versions
 ii  postgresql-common                     246.pgdg110+1                   all          PostgreSQL database-cluster manager
 ```
+# Удаление postgresql-14:
+```
+apt purge postgresql-14 -y
+```
 
 
 
