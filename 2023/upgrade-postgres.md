@@ -159,8 +159,12 @@ crontab -e
 mkdir -p /postgres/scripts
 chown -R postgres:postgres /postgres/scripts
 vim /postgres/scripts/atom_basebackup.sh
+vim /postgres/scripts/create_arwd_role.sh
 chmod +x /postgres/scripts/atom_basebackup.sh
+chmod +x /postgres/scripts/create_arwd_role.sh
+su postgres
 /postgres/scripts/atom_basebackup.sh
+/postgres/scripts/create_arwd_role.sh
 ```
 ###### Рекомендации: pg_bouncer на паузу; checkpoint
 #### 5. Остановка СУБД
