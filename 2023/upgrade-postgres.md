@@ -154,10 +154,11 @@ sudo -i -u postgres
 # Закоментрировать:
 crontab -e
 ```
-#### 4. Запуск резервного копирования:
+#### 4. Запуск резервного копирования создания ролей:
 ```
 mkdir -p /postgres/scripts
 chown -R postgres:postgres /postgres/scripts
+# вставляем содержимое скриптов:
 vim /postgres/scripts/atom_basebackup.sh
 vim /postgres/scripts/create_arwd_role.sh
 chmod +x /postgres/scripts/atom_basebackup.sh
