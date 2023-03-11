@@ -154,18 +154,25 @@ sudo -i -u postgres
 # Закоментрировать:
 crontab -e
 ```
-#### 4. Запуск резервного копирования создания ролей:
+#### 4. Запуск резервного копирования и создания ролей:
 ```
 mkdir -p /postgres/scripts
 chown -R postgres:postgres /postgres/scripts
 # вставляем содержимое скриптов:
 vim /postgres/scripts/atom_basebackup.sh
 vim /postgres/scripts/create_arwd_role.sh
+vim /postgres/scripts/create_arwd_role.config
 chmod +x /postgres/scripts/atom_basebackup.sh
 chmod +x /postgres/scripts/create_arwd_role.sh
 su postgres
 /postgres/scripts/atom_basebackup.sh
 /postgres/scripts/create_arwd_role.sh
+```
+###### Когфиг скрипта
+```
+bin_path=/usr/lib/postgresql/13/bin
+ARWD_GROUP_ROLE=arwd_role
+PORT="5432"
 ```
 ###### Рекомендации: pg_bouncer на паузу; checkpoint
 #### 5. Остановка СУБД
