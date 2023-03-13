@@ -490,7 +490,13 @@ Synchronizing state of postgresql.service with SysV service script with /lib/sys
 Executing: /lib/systemd/systemd-sysv-install enable postgresql
 Created symlink /etc/systemd/system/multi-user.target.wants/postgresql.service → /lib/systemd/system/postgresql.service.
 ```
+```
+pg_setup service enable  -?
+pg_setup service start
+pg_ctl stop -D /data/pg_data
 
+
+```
 
 
 
