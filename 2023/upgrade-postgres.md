@@ -511,10 +511,11 @@ vim /etc/postgres/14/main/pg_hba.conf
 host all all 0.0.0.0/0 trust
 psql -p 5432 -d postgres -h 192.168.0.19 -U postgres
 ```
+### Проверка порта
+```
+ss tulpn
 
-
-
-
+```
 
 
 
