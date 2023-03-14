@@ -513,7 +513,7 @@ psql -p 5432 -d postgres -h 192.168.0.19 -U postgres
 ```
 ### Проверка порта
 ```
-ss tulpn
+ss -tulpn
 
 ```
 
