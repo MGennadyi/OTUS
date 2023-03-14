@@ -497,7 +497,13 @@ pg_ctl stop -D /data/pg_data
 
 
 ```
-
+```
+telnet etcd 5432
+telnet zabbix 5432
+vim /var/lib/pgpro/std-13/data/pg_hba.conf
+vim /etc/postgres/14/main/pg_hba.conf
+host all all 0.0.0.0/0 trust
+```
 
 
 
