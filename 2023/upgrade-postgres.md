@@ -491,8 +491,9 @@ Executing: /lib/systemd/systemd-sysv-install enable postgresql
 Created symlink /etc/systemd/system/multi-user.target.wants/postgresql.service → /lib/systemd/system/postgresql.service.
 ```
 ```
-pg_setup service enable  -?
-pg_setup service start
+pg-setup service enable
+pg-setup service start
+pg-setup service status
 pg_ctl stop -D /data/pg_data
 
 
@@ -500,9 +501,15 @@ pg_ctl stop -D /data/pg_data
 ```
 telnet etcd 5432
 telnet zabbix 5432
+nmap -v -Pn 192.168.0.19 -p 5432
+nmap -v -Pn 192.168.0.17 -p 5432
+
+
+
 vim /var/lib/pgpro/std-13/data/pg_hba.conf
 vim /etc/postgres/14/main/pg_hba.conf
 host all all 0.0.0.0/0 trust
+psql -p 5432 -d postgres -h 192.168.0.19 -U postgres
 ```
 
 
