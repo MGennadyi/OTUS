@@ -485,10 +485,34 @@ Ver Cluster Port Status Owner     Data directory              Log file
 ```
 #### Автозапуск при старте:
 ```
-root@etcd:/home/mgb# systemctl enable postgresql
+root@master:/home/mgb# systemctl status postgresql
+● postgresql.service - PostgreSQL RDBMS
+     Loaded: loaded (/lib/systemd/system/postgresql.service; disabled; vendor preset: enabled)
+     Active: inactive (dead)
+=================================================
+root@master:/home/mgb# systemctl enable postgresql
 Synchronizing state of postgresql.service with SysV service script with /lib/systemd/systemd-sysv-install.
 Executing: /lib/systemd/systemd-sysv-install enable postgresql
 Created symlink /etc/systemd/system/multi-user.target.wants/postgresql.service → /lib/systemd/system/postgresql.service.
+===============================================
+root@master:/home/mgb# systemctl status postgresql
+● postgresql.service - PostgreSQL RDBMS
+     Loaded: loaded (/lib/systemd/system/postgresql.service; enabled; vendor preset: enabled)
+     Active: inactive (dead)
+========RESTART======================================
+systemctl stop postgresql
+sudo reboot
+================================
+root@master:/home/mgb# systemctl status postgresql
+● postgresql.service - PostgreSQL RDBMS
+     Loaded: loaded (/lib/systemd/system/postgresql.service; enabled; vendor preset: enabled)
+     Active: active (exited) since Wed 2023-03-15 10:23:22 MSK; 53s ago
+    Process: 811 ExecStart=/bin/true (code=exited, status=0/SUCCESS)
+   Main PID: 811 (code=exited, status=0/SUCCESS)
+        CPU: 2ms
+
+мар 15 10:23:22 master systemd[1]: Starting PostgreSQL RDBMS...
+мар 15 10:23:22 master systemd[1]: Finished PostgreSQL RDBMS.
 ```
 ```
 pg-setup service enable
