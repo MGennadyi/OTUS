@@ -118,6 +118,11 @@ postgres     542     535  0 16:13 ?        00:00:00 postgres: 13/main: logical r
 postgres   77075   77074  0 19:37 pts/0    00:00:00 bash
 postgres   77692   77075  0 19:38 pts/0    00:00:00 ps -fu postgres
 ```
+### Подготовка директорий скипта бекапа:
+```
+mkdir -p /postgres/scripts
+chown -R postgres:postgres
+```
 ```
 # 1.1 Подготовка и замена предварительно откоректрированного pg_hba.conf
 mkdir -p /data/backup/24.02.2022
@@ -540,7 +545,9 @@ psql -p 5432 -d postgres -h 192.168.0.19 -U postgres
 ss -tulpn
 
 ```
-
+```
+chmod -R 777 /tmp
+```
 
 
 
