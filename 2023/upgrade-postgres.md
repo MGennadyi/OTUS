@@ -118,10 +118,21 @@ postgres     542     535  0 16:13 ?        00:00:00 postgres: 13/main: logical r
 postgres   77075   77074  0 19:37 pts/0    00:00:00 bash
 postgres   77692   77075  0 19:38 pts/0    00:00:00 ps -fu postgres
 ```
-### Подготовка директорий скипта бекапа:
+### Подготовка директорий скрипта бекапа:
 ```
 mkdir -p /postgres/scripts
-chown -R postgres:postgres
+mkdir -p /backup
+chown -R postgres:postgres /postgres/scripts
+chown -R postgres:postgres /backup
+```
+### Бекап скриптом atom_basebackup.sh:
+```
+# Загрузить atom_basebackup.sh/basebackup.sh - определиться с именем
+chmod +x /postgres/scripts/atom_basebackup.sh
+или
+chmod +x /postgres/scripts/basebackup.sh
+/postgres/scripts/atom_basebackup.sh
+/postgres/scripts/basebackup.sh
 ```
 ```
 # 1.1 Подготовка и замена предварительно откоректрированного pg_hba.conf
