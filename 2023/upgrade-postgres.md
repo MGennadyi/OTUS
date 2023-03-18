@@ -184,7 +184,7 @@ su postgres
 /postgres/scripts/atom_basebackup.sh
 /postgres/scripts/create_arwd_role.sh
 ```
-###### Когфиг скрипта
+###### Конфиг скрипта create_arwd_role.config
 ```
 bin_path=/usr/lib/postgresql/13/bin
 ARWD_GROUP_ROLE=arwd_role
