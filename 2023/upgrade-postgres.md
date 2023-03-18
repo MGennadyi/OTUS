@@ -184,9 +184,15 @@ su postgres
 /postgres/scripts/atom_basebackup.sh
 /postgres/scripts/create_arwd_role.sh
 ```
-###### Конфиг скрипта create_arwd_role.config
+###### Конфиг роли ванильный postgres 
 ```
 bin_path=/usr/lib/postgresql/13/bin
+ARWD_GROUP_ROLE=arwd_role
+PORT="5432"
+```
+###### Конфиг роли postgresPRO
+```
+bin_path=/opt/pgpro/std-13/bin
 ARWD_GROUP_ROLE=arwd_role
 PORT="5432"
 ```
