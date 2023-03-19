@@ -305,7 +305,7 @@ Checking for presence of required libraries                 сбой
 
 Ошибка, выполняется выход
 ```
-### Шеф, все пропало.
+### Ошибка, выполняется выход. Шеф, все пропало.
 ```
 # Смотрим:
 postgres@etcd:/pg_upgrade$ cat ./loadable_libraries.txt
