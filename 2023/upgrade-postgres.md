@@ -308,7 +308,8 @@ Checking for presence of required libraries                 сбой
 ### Шеф, все пропало.
 ```
 # Смотрим:
-postgres@etcd:/pg_upgrade$ cat loadable_libraries.txt
+postgres@etcd:/pg_upgrade$ cat ./loadable_libraries.txt
+
 загрузить библиотеку "$libdir/pg_repack" не удалось: ОШИБКА:  нет доступа к файлу "$libdir/pg_repack": Нет такого файла или каталога
 В базе данных: demo
 pg_ctlcluster 13 main start
