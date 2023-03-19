@@ -22,7 +22,7 @@ psql -d demo < /home/mgb/demo_small.sql
 demo=# create extension pg_repack; - уст на конкретную БД, к примеру demo.
 CREATE EXTENSION
 ```
-##### 0. Проверим, что под капотом:
+##### 0. Проверим, что под капотом POSTGRES PRO:
 ```
 # Для postgres-pro: psql -c "select pgpro_version()"
 postgres@zabbix:/home/mgb$ psql -c "select version()"
@@ -34,7 +34,17 @@ postgres@etcd:/home/mgb$ psql -c "select version()"
 ---------------------------------------------------------------------------------------------------------------------------
  PostgreSQL 13.9 (Debian 13.9-0+deb11u1) on x86_64-pc-linux-gnu, compiled by gcc (Debian 10.2.1-6) 10.2.1 20210110, 64-bit
 (1 строка)
-
+```
+##### 0. Проверим, что под капотом ванильный POSTGRES:
+```
+postgres@etcd:/home/mgb$ psql -c "select version()"
+                                                            version
+-------------------------------------------------------------------------------------------------------------------------------
+ PostgreSQL 13.10 (Debian 13.10-1.pgdg110+1) on x86_64-pc-linux-gnu, compiled by gcc (Debian 10.2.1-6) 10.2.1 20210110, 64-bit
+(1 строка)
+```
+###### Какая ОС:
+```
 root@etcd:/home/mgb# lsb_release -a
 No LSB modules are available.
 Distributor ID: Debian
