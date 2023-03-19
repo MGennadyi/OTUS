@@ -130,6 +130,8 @@ postgres   77692   77075  0 19:38 pts/0    00:00:00 ps -fu postgres
 ```
 ### Подготовка директорий скрипта бекапа:
 ```
+mkdir -p /pg_upgrade
+chown -R postgres:postgres /pg_upgrade
 mkdir -p /postgres/scripts
 mkdir -p /backup
 chown -R postgres:postgres /postgres/scripts
