@@ -1,4 +1,9 @@
 # Установка postgrespro-std-13
+#### Просмотр доступных пакетов
+```
+# Просмотр доступных пакетов ДО:
+apt list | grep postgresql
+```
 ```
 root@etcd:/home/mgb# curl -o pgpro-repo-add.sh https://repo.postgrespro.ru/pgpro-13/keys/pgpro-repo-add.sh
   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
