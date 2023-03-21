@@ -3,9 +3,9 @@
 ```
 ALTER SYSTEM set shared_preload_libraries = 'pg_stat_statements';
 create extension pg_stat_statements;
-# или
+# или (из-под root):
 vim /etc/postgresql/13/main/postgresql.conf
-shared_preload_libraries = ‘pg_stat_statements’
+shared_preload_libraries = 'pg_stat_statements' # (change requires restart)
 CREATE EXTENSION pg_stat_statements;
 # Необходимо перечитать конфигурацию, но лучше перестартовать:
 psql -c "SELECT pg_reload_conf();"
