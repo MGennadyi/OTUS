@@ -141,6 +141,14 @@ mkdir -p /backup
 chown -R postgres:postgres /postgres/scripts
 chown -R postgres:postgres /backup
 ```
+#### 7. Резервная копия конфигов действующей СУБД:
+```
+mkdir -p /pg_upgrade
+chown -R postgres:postgres /pg_upgrade
+cp /etc/postgresql/13/main/postgresql.conf /pg_upgrade/postgresql.conf_v13
+cp /var/lib/postgresql/13/main/postgresql.auto.conf /pg_upgrade/postgresql.auto.conf_v13
+cp /etc/postgresql/13/main/pg_hba.conf /pg_upgrade/pg_hba.conf_v13
+```
 ### Бекап скриптом atom_basebackup.sh:
 ```
 # Загрузить atom_basebackup.sh/basebackup.sh - определиться с именем
@@ -199,6 +207,14 @@ chmod +x /postgres/scripts/create_arwd_role.sh
 su postgres
 /postgres/scripts/atom_basebackup.sh
 /postgres/scripts/create_arwd_role.sh
+```
+#### 7. Копирование конфигов из РК
+```
+mkdir -p /pg_upgrade/v_13
+chown -R postgres:postgres /pg_upgrade
+cp /etc/postgresql/13/main/postgresql.conf /pg_upgrade/postgresql.conf_v13
+cp /var/lib/postgresql/13/main/postgresql.auto.conf /pg_upgrade/postgresql.auto.conf_v13
+cp /etc/postgresql/13/main/pg_hba.conf /pg_upgrade/pg_hba.conf_v13
 ```
 ###### Конфиг роли ванильный postgres 
 ```
@@ -267,20 +283,14 @@ mv /log/pg_log
 # Ванильный из пакетов не требует инициализации
 pg_upgrade -b /usr/lib/postgresql/13/bin -B /usr/lib/postgresql/14/bin -d /var/lib/postgresql/13/main -D /var/lib/postgresql/14/main [option...]
 ```
-#### 7. Копирование конфигов из РК
-```
-mkdir -p /pg_upgrade/v_13
-chown -R postgres:postgres /pg_upgrade
-cp /etc/postgresql/13/main/postgresql.conf /pg_upgrade/postgresql.conf
-cp /var/lib/postgresql/13/main /pg_upgrade/postgresql.auto.conf
-```
+
 ### Проверка выполнения обновления: --check:
 #### V_13 и V_14 должны быть остановлены:
 ```
 # v_13 должен быть уже остановлен:
 root@etcd:/home/mgb# pg_ctlcluster 13 main status
 root@etcd:/home/mgb# pg_ctlcluster 14 main stop
-mkdir -p /pg_upgrade/1
+mkdir -p /pg_upgrade
 chown -R postgres:postgres /pg_upgrade
 sudo -u postgres -i
 cd /pg_upgrade
