@@ -518,6 +518,11 @@ demo=# \dn+
           |          | =UC/postgres         |
 (2 строки)
 ```
+#### Возвращаем уделенной расширение pg_repack:
+```
+CREATE EXTENSION pg_repack;
+
+```
 #### Удаляем старый кластер:
 ```
 root@etcd:/home/mgb# pg_lsclusters
