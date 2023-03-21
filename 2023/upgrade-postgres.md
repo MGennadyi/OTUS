@@ -132,7 +132,7 @@ postgres     542     535  0 16:13 ?        00:00:00 postgres: 13/main: logical r
 postgres   77075   77074  0 19:37 pts/0    00:00:00 bash
 postgres   77692   77075  0 19:38 pts/0    00:00:00 ps -fu postgres
 ```
-### Подготовка директорий скрипта бекапа:
+### Подготовим служебную директорию для обновления:
 ```
 mkdir -p /pg_upgrade
 chown -R postgres:postgres /pg_upgrade
