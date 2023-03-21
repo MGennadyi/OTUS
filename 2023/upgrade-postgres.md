@@ -234,7 +234,11 @@ apt install postgresql-14 -y
 apt ibstall postgresql-15 -y
 pg_lsclusters
 # На каком порту v_14 ???
-# Если на 5433 то правим ниже:
+root@etcd:/home/mgb# pg_lsclusters
+Ver Cluster Port Status Owner    Data directory              Log file
+13  main    5432 online postgres /var/lib/postgresql/13/main /var/log/postgresql/postgresql-13-main.log
+14  main    5433 online postgres /var/lib/postgresql/14/main /var/log/postgresql/postgresql-14-main.log
+# 5433 Будем то правим позже!!!!!!!!!!!!!!!!!!!!!!!!:
 ```
 #### Пропускаем перенос данных старого кластера
 ```
