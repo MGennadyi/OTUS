@@ -3,6 +3,9 @@
 ```
 ALTER SYSTEM set shared_preload_libraries = 'pg_stat_statements';
 create extension pg_stat_statements;
+# или
+shared_preload_libraries = ‘pg_stat_statements’
+CREATE EXTENSION pg_stat_statements;
 # Необходимо перечитать конфигурацию, но лучше перестартовать:
 psql -c "SELECT pg_reload_conf();"
 pg_ctlcluster 13 main stop
