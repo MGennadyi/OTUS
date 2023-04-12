@@ -6,7 +6,7 @@ postgres     583       1  0 15:58 ?        00:00:00 /usr/lib/postgresql/14/bin/p
 ```
 ```
 vim /etc/postgresql/14/main/postgresql.conf
-log_filename = 'postgresql-$u.log'
+log_filename = 'postgresql-%u.log'
 mkdir -p /log/pg_log
 chown -R postgres:postgres /log/pg_log
 ALTER SYSTEM SET logging_collector = 'on';
