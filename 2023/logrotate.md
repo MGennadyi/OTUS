@@ -30,6 +30,10 @@ logrotate 3.18.0
 ```
 ### Запуск от postgres:
 ```
+cp /usr/sbin/logrotate /postgres/scripts/
+chown postgres:postgres /postgres/scripts/logrotate
+```
+```
 vim /postgres/scripts/logrotate.conf
 /log/pg_log/*.log
 {
@@ -41,6 +45,12 @@ vim /postgres/scripts/logrotate.conf
     maxage 30
 }
 ```
+```
+crontab -e
+# compresslog
+0 */1 * * * /postgres/scripts/logrotate /postgres/scripts/logrotate.conf --state /postgres/scripts/logrotate-state
 
+
+```
 
 
