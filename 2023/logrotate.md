@@ -50,7 +50,6 @@ crontab -e
 # compresslog
 0 */1 * * * /postgres/scripts/logrotate /postgres/scripts/logrotate.conf --state /postgres/scripts/logrotate-state
 
-
 ```
 
 
