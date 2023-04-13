@@ -15,3 +15,32 @@ ALTER SYSTEM SET log_rotation_age = '1d';
 ALTER SYSTEM SET log_directory = '/log/pg_log';
 SELECT pg_reload_conf();
 ```
+
+```
+root@zabbix:/home/mgb# logrotate --version
+logrotate 3.18.0
+
+    Default mail command:       /usr/bin/mail
+    Default compress command:   /bin/gzip
+    Default uncompress command: /bin/gunzip
+    Default compress extension: .gz
+    Default state file path:    /var/lib/logrotate/status
+    ACL support:                yes
+    SELinux support:            yes
+```
+### Запуск от postgres:
+```
+vim /postgres/scripts/logrotate.conf
+/log/pg_log/*.log
+{
+    rotate 99
+    size 10k
+    missingok
+    compress
+    notifempty
+    maxage 30
+}
+```
+
+
+
