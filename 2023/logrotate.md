@@ -46,6 +46,9 @@ vim /postgres/scripts/logrotate.conf
 }
 ```
 ```
+chown postgres:postgres /postgres/scripts/logrotate.conf
+```
+```
 crontab -e
 # compresslog
 0 */1 * * * /postgres/scripts/logrotate /postgres/scripts/logrotate.conf --state /postgres/scripts/logrotate-state
