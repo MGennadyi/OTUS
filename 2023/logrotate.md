@@ -13,6 +13,7 @@ ALTER SYSTEM SET logging_collector = 'on';
 ALTER SYSTEM SET log_rotation_size = '0';
 ALTER SYSTEM SET log_rotation_age = '1d';
 ALTER SYSTEM SET log_directory = '/log/pg_log';
+ALTER SYSTEM SET log_statement = "all";
 SELECT pg_reload_conf();
 ```
 
@@ -43,6 +44,7 @@ vim /postgres/scripts/logrotate.conf
     compress
     notifempty
     maxage 30
+    copytruncate
 }
 ```
 ```
