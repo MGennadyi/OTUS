@@ -13,7 +13,9 @@ ALTER SYSTEM SET logging_collector = 'on';
 ALTER SYSTEM SET log_rotation_size = '0';
 ALTER SYSTEM SET log_rotation_age = '1d';
 ALTER SYSTEM SET log_directory = '/log/pg_log';
-ALTER SYSTEM SET log_statement = "all";
+ALTER SYSTEM SET log_rotation_size = "10";
+ALTER SYSTEM SET log_truncate_on_rotation = "on";
+
 SELECT pg_reload_conf();
 ```
 
