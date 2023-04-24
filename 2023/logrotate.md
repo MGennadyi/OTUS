@@ -109,6 +109,22 @@ postgres=# select name, setting from pg_settings where name like '%log%';
  syslog_split_messages             | on
  wal_log_hints                     | off
 (41 строка)
-
 ```
+### Настройка fstab:
+```
+vim /etc/fstab
+# Для временных файлов:
+tmpfs /tempdb tmpfs size=1G, uid=postgres, gid=postgres 0 0
+# Для логов:
+tmpfs /log tmpfs size=1MB, uid=postgres, gid=postgres 0 0
+```
+
+
+
+
+
+
+
+
+
 
