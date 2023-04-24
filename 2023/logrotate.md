@@ -62,4 +62,53 @@ crontab -e
 ```
 COPY postgres_log FROM '/full/path/to/logfile.csv' WITH csv;
 ```
+### Настройка лога:
+```
+postgres=# select name, setting from pg_settings where name like '%log%';
+               name                |       setting
+-----------------------------------+----------------------
+ log_autovacuum_min_duration       | -1
+ log_checkpoints                   | off
+ log_connections                   | off
+ log_destination                   | stderr
+ log_directory                     | /log/pg_log
+ log_disconnections                | off
+ log_duration                      | off
+ log_error_verbosity               | default
+ log_executor_stats                | off
+ log_file_mode                     | 0600
+ log_filename                      | postgresql-%u-%H.log
+ log_hostname                      | off
+ log_line_prefix                   | %m [%p] %q%u@%d
+ log_lock_waits                    | off
+ log_min_duration_sample           | -1
+ log_min_duration_statement        | -1
+ log_min_error_statement           | error
+ log_min_messages                  | warning
+ log_parameter_max_length          | -1
+ log_parameter_max_length_on_error | 0
+ log_parser_stats                  | off
+ log_planner_stats                 | off
+ log_recovery_conflict_waits       | off
+ log_replication_commands          | off
+ log_rotation_age                  | 1440
+ log_rotation_size                 | 10
+ log_statement                     | all
+ log_statement_sample_rate         | 1
+ log_statement_stats               | off
+ log_temp_files                    | -1
+ log_timezone                      | Europe/Moscow
+ log_transaction_sample_rate       | 0
+ log_truncate_on_rotation          | on
+ logging_collector                 | on
+ logical_decoding_work_mem         | 65536
+ max_logical_replication_workers   | 4
+ syslog_facility                   | local0
+ syslog_ident                      | postgres
+ syslog_sequence_numbers           | on
+ syslog_split_messages             | on
+ wal_log_hints                     | off
+(41 строка)
+
+```
 
