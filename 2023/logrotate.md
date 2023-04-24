@@ -114,9 +114,9 @@ postgres=# select name, setting from pg_settings where name like '%log%';
 ```
 vim /etc/fstab
 # Для временных файлов:
-tmpfs /tempdb tmpfs size=1G, uid=postgres, gid=postgres 0 0
+tmpfs /tempdb tmpfs size=1G,uid=postgres,gid=postgres 0 0
 # Для логов:
-tmpfs /log tmpfs size=1MB, uid=postgres, gid=postgres 0 0
+tmpfs /log tmpfs size=1MB,uid=postgres,gid=postgres 0 0
 ```
 
 
