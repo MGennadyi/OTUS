@@ -116,7 +116,10 @@ vim /etc/fstab
 # Для временных файлов:
 tmpfs /tempdb tmpfs size=1G,uid=postgres,gid=postgres 0 0
 # Для логов:
-tmpfs /log tmpfs size=1MB,uid=postgres,gid=postgres 0 0
+tmpfs /log tmpfs size=1M,uid=postgres,gid=postgres 0 0
+```
+```
+ALTER SYSTEM SET stats_temp_directory = '/tempdb';
 ```
 
 
