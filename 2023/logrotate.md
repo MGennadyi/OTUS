@@ -136,10 +136,18 @@ logrotation_size = '1M' - переключится на другой лог
 rotation size =10k сработает сжатие
 ls -lhr /log/pg_log
 -rw------- 1 postgres postgres 1,1M апр 24 18:31 zabbix-2023-04-24_182507.log
-
-
 ```
+### Локали:
+```
+decimal_point "<U002C>" на decimal_point "<U002E>"
+include "kpdl(comma) на //include "kpdl(comma)"
+decimal_point   "<U002E>"
+decimal_point   "<U002C>"
+mon_decimal_point "<U002E>"
 
+vim /usr/share/i18n/locales/ru_RU
+sudo dpkg-reconfigure locales
+```
 
 
 
