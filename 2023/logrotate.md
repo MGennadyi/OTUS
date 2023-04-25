@@ -51,12 +51,19 @@ vim /postgres/scripts/logrotate.conf
 }
 ```
 ```
+vim /postgres/scripts/rotsize.sh
+chmod +x /postgres/scripts/rotsize.sh
+```
+```
 chown postgres:postgres /postgres/scripts/logrotate.conf
+chown postgres:postgres /postgres/scripts/rotsize.sh
 ```
 ```
 crontab -e
-# compresslog
+# Сжатие логов
 0 */1 * * * /postgres/scripts/logrotate /postgres/scripts/logrotate.conf --state /postgres/scripts/logrotate-state
+# Удаление логов
+5 */1 * * * /postgres/scripts/rotsize.sh
 ```
 ### Импорт логов
 ```
@@ -121,7 +128,17 @@ tmpfs /log tmpfs size=1M,uid=postgres,gid=postgres 0 0
 ```
 ALTER SYSTEM SET stats_temp_directory = '/tempdb';
 ```
+```
+chown -R postgres:postgres /log
+```
+```
+logrotation_size = '1M' - переключится на другой лог
+rotation size =10k сработает сжатие
+ls -lhr /log/pg_log
+-rw------- 1 postgres postgres 1,1M апр 24 18:31 zabbix-2023-04-24_182507.log
 
+
+```
 
 
 
