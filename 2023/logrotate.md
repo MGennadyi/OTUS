@@ -148,6 +148,20 @@ mon_decimal_point "<U002E>"
 vim /usr/share/i18n/locales/ru_RU
 sudo dpkg-reconfigure locales
 ```
+### Исходный конфиг:
+```
+postgres@zabbix:/home/mgb$ cat /postgres/scripts/logrotate.conf
+/log/pg_log/*.log
+{
+        rotate 99
+        size 1M
+        missingok
+        compress
+        delaycompress
+        notifempty
+        maxage 1
+}
+```
 
 
 
