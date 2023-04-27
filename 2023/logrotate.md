@@ -162,10 +162,15 @@ postgres@zabbix:/home/mgb$ cat /postgres/scripts/logrotate.conf
         maxage 1
 }
 ```
+### postgresql.auto.conf
+```
+show log_filename;
+         log_filename
+-------------------------------
+ zabbix-%u-%Y-%m-%d_%H%M%S.log
+(1 строка)
 
-
-
-
+```
 
 
 
