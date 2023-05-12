@@ -127,6 +127,10 @@ tmpfs /log tmpfs size=100M,uid=postgres,gid=postgres 0 0
 ```
 ```
 ALTER SYSTEM SET stats_temp_directory = '/tempdb';
+postgres=# select pg_reload_conf();
+ pg_reload_conf
+----------------
+ t
 ```
 ```
 chown -R postgres:postgres /log
