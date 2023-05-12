@@ -131,6 +131,42 @@ postgres=# select pg_reload_conf();
  pg_reload_conf
 ----------------
  t
+ # Проверка:
+ postgres@etcd:/home/mgb$ ls -la /tempdb
+drwxr-xr-x  2 postgres postgres 4096 мая 12 13:41 .
+drwxr-xr-x 22 root     root     4096 мая 12 13:33 ..
+-rw-------  1 postgres postgres 1244 мая 12 13:41 db_0.stat
+-rw-------  1 postgres postgres 3191 мая 12 13:40 db_13445.stat
+-rw-------  1 postgres postgres 1952 мая 12 13:41 db_1.stat
+-rw-------  1 postgres postgres 1352 мая 12 13:41 global.stat
+postgres@etcd:/home/mgb$ df -h
+Файловая система Размер Использовано  Дост Использовано% Cмонтировано в
+udev               1,9G            0  1,9G            0% /dev
+tmpfs              394M         948K  393M            1% /run
+/dev/sda1          6,9G         5,5G  1,1G           85% /
+tmpfs              2,0G          44K  2,0G            1% /dev/shm
+tmpfs              5,0M         4,0K  5,0M            1% /run/lock
+tmpfs              394M          44K  394M            1% /run/user/114
+tmpfs              394M          40K  394M            1% /run/user/1000
+postgres@etcd:/home/mgb$ lsblk
+NAME   MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
+sda      8:0    0    8G  0 disk
+├─sda1   8:1    0    7G  0 part /
+├─sda2   8:2    0    1K  0 part
+└─sda5   8:5    0  975M  0 part [SWAP]
+sr0     11:0    1 1024M  0 rom
+root@etcd:/home/mgb# mount /tempdb
+mount: /tempdb: can't find in /etc/fstab.
+# Раскоментируем fstab и mount /tempdb выполняется без ошибки.
+root@etcd:/home/mgb# df -h
+Файловая система Размер Использовано  Дост Использовано% Cмонтировано в
+tmpfs              394M         964K  393M            1% /run
+tmpfs              2,0G          44K  2,0G            1% /dev/shm
+tmpfs              5,0M         4,0K  5,0M            1% /run/lock
+tmpfs              394M          44K  394M            1% /run/user/114
+tmpfs              394M          40K  394M            1% /run/user/1000
+tmpfs              1,0G          16K  1,0G            1% /tempdb
+
 ```
 ```
 chown -R postgres:postgres /log
