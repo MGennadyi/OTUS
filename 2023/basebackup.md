@@ -46,6 +46,7 @@ SELECT pg_reload_conf();
 
 version=0.2
 LOG_FILE=/postgres/scripts/atom_basebackup.log
+# Директория архивирования данных:
 backup=/data/backup/"$(date '+%Y_%m_%d')"
 
 mkdir -p $backup  # -p не выдает ошибку, если такой каталог уже существует
