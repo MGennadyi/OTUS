@@ -7,17 +7,31 @@ mkdir -p /postgres
 chown -R postgres:postgres /postgres
 mkdir -p /log
 chown -R postgres:postgres /log
+mkdir -p /wal
+chown -R postgres:postgres /wal
+mkdir -p /tempdb
+chown -R postgres:postgres /tempdb
+vim /etc/fstab
+tmpfs /tempdb tmpfs size=500M,uid=postgres,gid=postgres 0 0
+mount /tempdb
 ```
 ```
 sudo -i -u postgres
 mkdir -p /backup/SRK
 mkdir -p /postgres/scripts
 mkdir -p /log/pg_log
+mkdir -p /wal/pg_wal
 ```
 ```
 ALTER SYSTEM SET log_directory = '/log/pg_log';
 ALTER SYSTEM SET log_filename = 'postgresql-%u.log';
 ALTER SYSTEM SET log_filename = 'postgresql.log';
+ALTER SYSTEM SET log_filename = 'postgresql-%u.log';
+ALTER SYSTEM SET logging_collector = 'on';
+ALTER SYSTEM SET log_connection = 'on';
+ALTER SYSTEM SET wal_compression = 'on';
+ALTER SYSTEM SET stats_temp_directory = '/tempdb';
+ALTER SYSTEM SET archive_mode = 'on';
 SELECT pg_reload_conf();
 
 ```
