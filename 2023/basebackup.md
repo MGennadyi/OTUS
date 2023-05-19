@@ -20,6 +20,7 @@ sudo -i -u postgres
 mkdir -p /backup/SRK
 mkdir -p /postgres/scripts
 mkdir -p /log/pg_log
+mkdir -p /log/llog  # Для ротирования логов
 mkdir -p /wal/pg_wal
 ```
 ```
@@ -28,7 +29,6 @@ ALTER SYSTEM SET log_filename = 'postgresql-%u.log';
 ALTER SYSTEM SET log_filename = 'postgresql.log';
 ALTER SYSTEM SET log_filename = 'postgresql-%u.log';
 ALTER SYSTEM SET logging_collector = 'on';
-ALTER SYSTEM SET log_connection = 'on';
 ALTER SYSTEM SET wal_compression = 'on';
 ALTER SYSTEM SET stats_temp_directory = '/tempdb';
 ALTER SYSTEM SET archive_mode = 'on';
