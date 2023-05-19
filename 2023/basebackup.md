@@ -1,3 +1,21 @@
+# BASEBACKUP
+#### Подготовка:
+```
+mkdir -p /backup
+chown -R postgres:postgres /backup
+mkdir -p /postgres
+chown -R postgres:postgres /postgres
+mkdir -p /log
+chown -R postgres:postgres /log
+
+chown -R postgres:postgres /log/pg_log
+ALTER SYSTEM SET log_directory = '/log/pg_log';
+ALTER SYSTEM SET log_filename = 'postgresql-%u.log';
+ALTER SYSTEM SET log_filename = 'postgresql.log';
+SELECT pg_reload_conf();
+
+```
+
 ```
 #!/bin/bash
 # скрипт делает basebackup СУБД
