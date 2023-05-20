@@ -38,7 +38,7 @@ ALTER SYSTEM SET archive_mode = 'on';
 SELECT pg_reload_conf();
 
 ```
-#### basebackup.sh
+#### СКРИПТ basebackup.sh
 ```
 #!/bin/bash
 # скрипт делает basebackup СУБД
@@ -63,7 +63,6 @@ pg_basebackup --format=tar --gzip -U postgres --checkpoint=fast --progress --pgd
 echo "КОНЕЦ: "$(date '+%d-%m-%Y_%H:%M:%S') >> $LOG_FILE
 exit 0
 
-
 # Наблюдать за процессом
 watch -n 1 "ps ax | grep atom_basebackup | grep -v grep; tail -n 20 /postgres/scripts/atom_basebackup.log; df /data; df -h /data; du -s /backup/*"
 
@@ -77,3 +76,49 @@ watch -n 1 "ps ax | grep atom_basebackup | grep -v grep; tail -n 20 /postgres/sc
 # m h  dom mon dow   command
 # 00 21 21  *   *     /postgres/scripts/atom_basebackup.sh
 ```
+###### Перенос данных в паралельный кластер:
+```
+# Создание паралельного кластера:
+pg_createcluster 14 main2
+pg_lsclusters
+# Остнавливаем main2:
+
+# Удаляем данные из main2:
+sudo rm -rf /var/lib/postgresql/14/main2
+# Перенос данных в main2:
+pg_basebackup -p 5432 -D /var/lib/postgresql/14/main2
+# Стуртуем кластер
+pg_ctlcluster 14 main2 start
+# Смотрим как стартовал
+pg_lsclusters
+# Смотрим в main2:
+psql -p 5433
+\c otus
+otus=# select * from test;
+ i
+----
+ 10
+ 20
+ 30
+(3 строки)
+
+
+
+
+
+
+
+
+
+```
+
+
+
+
+
+
+
+
+
+
+
