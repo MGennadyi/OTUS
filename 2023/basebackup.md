@@ -121,8 +121,21 @@ select * from test_main2;
 ```
 psql -p 5432
 CREATE DATABASE otus_main;
+\q
 date && pg_dump -p 5433 otus | psql -p 5432 --set ON_ERROR_STOP=on otus_main >> /backup/restore_db.log 2>&1 && date 
 cat /backup/restore_db.log
+psql -p 5432
+postgres=# \c otus_main
+select * from test_main2;
+ i
+----
+  1
+  2
+  3
+ 10
+ 20
+ 30
+(6 строк)
 
 
 
