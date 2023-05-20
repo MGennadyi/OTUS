@@ -448,7 +448,7 @@ pg_restore -j 1 -d otus /home/backups/otus4.gz
 pg_restore -j 2 -d otus /home/backups/otus4.gz
 ```
 # PG_BASEBACKUP
-###### HРбота по протоколу репликации. Проверим, что есть настройки по умолчанию для физич-го резервирования:
+###### Работа по протоколу репликации. Проверим, что есть настройки по умолчанию для физич-го резервирования:
 ```
 postgres=# SELECT name, setting FROM pg_settings WHERE name IN ('wal_level','max_wal_senders');
       name       | setting
@@ -485,7 +485,7 @@ pg_ctlcluster 14 main2 start
 pg_lsclusters
 14  main    5432 online postgres /var/lib/postgresql/14/main  /var/log/postgresql/postgresql-14-main.log
 14  main2   5433 online postgres /var/lib/postgresql/14/main2 /var/log/postgresql/postgresql-14-main2.log
-psql -p5433
+psql -p 5433
 \c otus
 otus=# select * from test;
  i
