@@ -81,19 +81,20 @@ watch -n 1 "ps ax | grep atom_basebackup | grep -v grep; tail -n 20 /postgres/sc
 # Создание паралельного кластера:
 pg_createcluster 14 main2
 pg_lsclusters
-# Остнавливаем main2:
-
+# main2 не запущен:
 # Удаляем данные из main2:
-sudo rm -rf /var/lib/postgresql/14/main2
+rm -rf /var/lib/postgresql/14/main2
 # Перенос данных в main2:
-pg_basebackup -p 5432 -D /var/lib/postgresql/14/main2
+pg_basebackup -p 5432 --pgdata=/var/lib/postgresql/14/main2
 # Стуртуем кластер
-pg_ctlcluster 14 main2 start
+pg_ctlcluster 14 main2 start # Ругается, но стартует:
+Warning: the cluster will not be running as a systemd service. Consider using systemctl:
+systemctl start postgresql@14-main2
 # Смотрим как стартовал
-pg_lsclusters
+pg_lsclusters # или
+systemctl status postgresql@14-main2
 # Смотрим в main2:
 psql -p 5433
-\c otus
 otus=# select * from test;
  i
 ----
@@ -101,6 +102,20 @@ otus=# select * from test;
  20
  30
 (3 строки)
+# Заполняем БД otus тестовой инф-ии:
+\c otus
+CREATE table test_main2(i int);
+INSERT INTO test_main2 values (1), (2), (3), (10), (20), (30);
+select * from test_main2;
+ i
+----
+  1
+  2
+  3
+ 10
+ 20
+ 30
+(6 строк)
 
 
 
