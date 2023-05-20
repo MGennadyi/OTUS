@@ -102,7 +102,7 @@ otus=# select * from test;
  20
  30
 (3 строки)
-# Заполняем БД otus тестовой инф-ии:
+# Заполняем в main2 БД otus тестовой инф-ии:
 \c otus
 CREATE table test_main2(i int);
 INSERT INTO test_main2 values (1), (2), (3), (10), (20), (30);
@@ -116,8 +116,13 @@ select * from test_main2;
  20
  30
 (6 строк)
-
-
+```
+### Логический перенос из main2 otus в main otus_main:
+```
+psql -p 5432
+CREATE DATABASE otus_main;
+date && pg_dump -p 5433 otus | psql -p 5432 --set ON_ERROR_STOP=on otus_main >> /backup/restore_db.log 2>&1 && date 
+cat /backup/restore_db.log
 
 
 
