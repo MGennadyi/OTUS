@@ -1,5 +1,5 @@
 # BASEBACKUP
-#### Подготовка:
+#### Подготовка директорий:
 ```
 mkdir -p /backup
 chown -R postgres:postgres /backup
@@ -49,7 +49,7 @@ SELECT pg_reload_conf();
 
 version=0.2
 LOG_FILE=/postgres/scripts/atom_basebackup.log
-# Директория архивирования данных:
+# Директория сжатого архива данных:
 backup=/backup/SRK/"$(date '+%Y_%m_%d')"
 
 mkdir -p $backup  # -p не выдает ошибку, если такой каталог уже существует
