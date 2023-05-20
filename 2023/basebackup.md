@@ -14,6 +14,8 @@ chown -R postgres:postgres /tempdb
 vim /etc/fstab
 tmpfs /tempdb tmpfs size=500M,uid=postgres,gid=postgres 0 0
 mount /tempdb
+vim /postgres/scripts/atom_basebackup.sh
+chmod +x /postgres/scripts/atom_basebackup.sh
 ```
 ```
 sudo -i -u postgres
@@ -22,6 +24,7 @@ mkdir -p /postgres/scripts
 mkdir -p /log/pg_log
 mkdir -p /log/llog  # Для ротирования логов
 mkdir -p /wal/pg_wal
+
 ```
 ```
 ALTER SYSTEM SET log_directory = '/log/pg_log';
@@ -35,7 +38,7 @@ ALTER SYSTEM SET archive_mode = 'on';
 SELECT pg_reload_conf();
 
 ```
-
+#### basebackup.sh
 ```
 #!/bin/bash
 # скрипт делает basebackup СУБД
@@ -47,7 +50,7 @@ SELECT pg_reload_conf();
 version=0.2
 LOG_FILE=/postgres/scripts/atom_basebackup.log
 # Директория архивирования данных:
-backup=/data/backup/"$(date '+%Y_%m_%d')"
+backup=/backup/SRK/"$(date '+%Y_%m_%d')"
 
 mkdir -p $backup  # -p не выдает ошибку, если такой каталог уже существует
 
@@ -65,12 +68,12 @@ exit 0
 watch -n 1 "ps ax | grep atom_basebackup | grep -v grep; tail -n 20 /postgres/scripts/atom_basebackup.log; df /data; df -h /data; du -s /backup/*"
 
 # Инсталляция
-vim /postgres/scripts/atom_basebackup.sh
-chmod 0770 /postgres/scripts/atom_basebackup.sh
-chown postgres:postgres /postgres/scripts/atom_basebackup.sh
+#vim /postgres/scripts/atom_basebackup.sh
+#chmod 0770 /postgres/scripts/atom_basebackup.sh  #или:
+#chmod +x /postgres/scripts/atom_basebackup.sh
+#chown postgres:postgres /postgres/scripts/atom_basebackup.sh
 
 # Установить задачу atom_basebackup.sh в crontab -e
 # m h  dom mon dow   command
 # 00 21 21  *   *     /postgres/scripts/atom_basebackup.sh
-
 ```
