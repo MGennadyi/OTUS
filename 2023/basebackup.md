@@ -24,6 +24,7 @@ mkdir -p /postgres/scripts
 mkdir -p /log/pg_log
 mkdir -p /log/llog  # Для ротирования логов
 mkdir -p /wal/pg_wal
+mkdir -p /backup/wal_arc_archive
 
 ```
 ```
@@ -35,6 +36,7 @@ ALTER SYSTEM SET logging_collector = 'on';
 ALTER SYSTEM SET wal_compression = 'on';
 ALTER SYSTEM SET stats_temp_directory = '/tempdb';
 ALTER SYSTEM SET archive_mode = 'on';
+ALTER SYSTEM SET archive_command = 'test ! -f /backup/wal_arc_archive/%f && cp %p /backup/wal_arc_archive/%f';
 SELECT pg_reload_conf();
 
 ```
@@ -137,15 +139,14 @@ select * from test_main2;
  20
  30
 (6 строк)
-
-
-
-
+```
+#### Работа с wal
+```
+archive_command = 'test ! -f /backup/wal_arc_archive/%f && cp %p /backup/wal_arc_archive/%f'
 
 
 
 ```
-
 
 
 
