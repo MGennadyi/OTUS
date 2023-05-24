@@ -143,15 +143,17 @@ select * from test_main2;
 #### Работа с wal
 ```
 archive_command = 'test ! -f /backup/wal_arc_archive/%f && cp %p /backup/wal_arc_archive/%f'
-
-
+```
+```
+CREATE DATABASE ttt;
+ALTER DATABASE ttt RENAME TO qwerty;
 
 ```
-
-
-
-
-
+```
+sudo wget --quiet https://edu.postgrespro.ru/demo_small.zip
+unzip demo_small.zip
+chown postgres /home/mgb/demo_small.sql
+```
 
 
 
