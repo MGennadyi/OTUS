@@ -153,6 +153,9 @@ ALTER DATABASE ttt RENAME TO qwerty;
 sudo wget --quiet https://edu.postgrespro.ru/demo_small.zip
 unzip demo_small.zip
 chown postgres /home/mgb/demo_small.sql
+sudo -i -u postgres
+psql -c 'CREATE DATABASE demo';
+psql -d demo < /home/mgb/demo_small.sql
 ```
 
 
