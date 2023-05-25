@@ -9,10 +9,21 @@ mkdir /home/backups/1
 ```
 # Задача теста: сравнение по времени, по потокам, загрузки CPU, загрузки hdd:
 # При -Fc практически не будет сжатия; d (directory); -j (потоки); -F d (указ.формат.вывода d=директория) c (custom); -f (вывод в директорию путь обязателен);
+-------------------------------------
 # Простой вариант бекапа, в SQL-скрипте :
 pg_dump -U postgres dbname > outfile
+psql -U postgres dbname < infile
+-----------------------------------
+# Ключ –inserts позволяет сделать бекап в формате SQL БД=otus; таблица=codes:
+pg_dump -U postgres --inserts otus -t codes > codes_backup`date +%d.%m.%Y-%H.%M`.sql
+------------------------------
 time pg_dump -U postgres -d demo --create > /backups/pg_dump/demo1.sql
 # Ответ: real    0m1,888s 0m1,917s
+------------------------------
+# Бекап только одной таблицы codes из БД otus
+pg_dump -U postgres otus -t codes > codes_backup`date +%d.%m.%Y-%H.%M`.sql
+
+
 # Простой со сжатием, в 2,8 раза меньше весит:
 time pg_dump -d demo --create | gzip > /home/backups/demo1.gz
 # real    0m5,829s 0m5,685s 0m5,682s
@@ -23,13 +34,16 @@ time pg_dump -j 2 -Fd demo -f /home/backups/pg_dump/111
 rm /home/backups/pg_dump/111/*
 real    0m3,420s
 du -sh /home/backups/pg_dump/111 22M
-# —format=формат
-—format=p — формирует текстовый SQL-скрипт;
-—format=c — формирует резервную копию в архивном формате;
-—format=d — формирует копию в directory-формате;
-—format=t — формирует копию в формате tar.
+# -—format=формат
+-—format=p — формирует текстовый SQL-скрипт;
+-—format=c — формирует резервную копию в архивном формате;
+-—format=d — формирует копию в directory-формате;
+-—format=t — формирует копию в формате tar.
 # В виде архива -Ft:
 pg_dump -Ft zabbix > /backup/zabbix.tar
+----------------------------
+# Восстановление данных БД mbillcz5054 из сжатого бекапа. Создание исключенной таблицы.
+gunzip -c mbillcz5054_backup.sql.gz | psql -U postgres mbillcz5054
 # Архив с оглавлением для pg_restore (-Fc в виде бинарного файла): 
 time pg_dump -d demo -Fc > /home/backups/pg_dump/demo11.gz
 # Восстановление-1:
@@ -39,6 +53,14 @@ psql < /home/backups/3.sql
 # Восстановление-2 (drop/create/pg_restore):
 echo "drop database otus;" | psql
 echo "create database otus;" | psql
+-----------------------------
+# БД testdb уже существует:
+pg_restore -U postgres -Ft -d testdb < testdb.tar
+# БД testdb нет:
+pg_restore -U postgres -Ft -C -d testdb < testdb.tar
+# восстановление из файла резервной копии back_it.sql:
+psql -f back_it.sql
+
 # Рассмотреть время выполнения в различных вариантах -j:
 pg_restore -j 1 -d otus /home/backups/otus4.gz
 pg_restore -j 2 -d otus /home/backups/otus4.gz
