@@ -37,6 +37,7 @@ ALTER SYSTEM SET wal_compression = 'on';
 ALTER SYSTEM SET stats_temp_directory = '/tempdb';
 ALTER SYSTEM SET archive_mode = 'on';
 ALTER SYSTEM SET archive_command = 'test ! -f /backup/wal_arc_archive/%f && cp %p /backup/wal_arc_archive/%f';
+ALTER USER postgres WITH PASSWORD '12345';
 SELECT pg_reload_conf();
 
 ```
@@ -160,9 +161,9 @@ sudo -i -u postgres
 psql -c 'CREATE DATABASE demo';
 # Заливка исходных данных:
 psql -d demo < /backup/demo_small.sql
-# psql -d demo < /backup/demo_small.sql
+
 # Выгрузка на скорость
-time pg_dump demo > /backup/demo_main.sql
+time pg_dump -C -h localhost -U postgres 'demo' > /backup/demo_main.sql
 postgres@backup-restore:~$ time pg_dump -d demo > /backup/demo_main.sql
 real    0m1,801s
 user    0m0,417s
@@ -179,7 +180,18 @@ create database demo_main2;
 time psql -p 5433 -d demo_main2 < /backup/demo_main.sql
 real    0m18,920s
 ```
-###### Зыгрузка 18,9сек выгрузка 1,8 сек
-
+###### Загрузка 18,9 сек, выгрузка 1,8 сек. Разница в 10раз!!!
+```
+postgres@backup-restore:~$ time pg_dump -C -h localhost -U postgres 'demo' > /backup/demo_main.sql
+Пароль:
+real    0m4,585s
+user    0m0,585s
+sys     0m0,318s
+time psql -p 5433 -U postgres < /backup/demo_main.sql > /backup/dump_in.log 2>&1
+#!/bin/bash
+# скрипт делает dummp БД
+pg_dump -C -h localhost -U postgres 'demo' > /backup/demo_main.sql && psql -p 5433 -U postgres < /backup/demo_main.sql
+real    0m23,693s
+```
 
 
