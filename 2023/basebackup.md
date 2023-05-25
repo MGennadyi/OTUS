@@ -188,10 +188,38 @@ real    0m4,585s
 user    0m0,585s
 sys     0m0,318s
 time psql -p 5433 -U postgres < /backup/demo_main.sql > /backup/dump_in.log 2>&1
+```
+#### BASH-скрипт
+```
+vim /postgres/scripts/dump.sh
 #!/bin/bash
 # скрипт делает dummp БД
 pg_dump -C -h localhost -U postgres 'demo' > /backup/demo_main.sql && psql -p 5433 -U postgres < /backup/demo_main.sql
 real    0m23,693s
 ```
+````
+time pg_dump -C -h localhost -U postgres -d demo -Fd > /backup/dump
+time pg_dump -C -h localhost -U postgres -j 4 -d demo -Fd -f /backup/dump
+# Восстановление в 1 поток:
+postgres@backup-restore:~$ time pg_restore -p 5433 -j 1 -d newdb /backup/dump
+real    0m19,033s
+postgres=# drop database newdb;
+DROP DATABASE
+postgres=# create database newdb;
+CREATE DATABASE
+```
+#### DUMP-RESTORE -F d = 25 сек:
+```
+postgres@backup-restore:~$ time /postgres/scripts/dump_d.sh
+Пароль:
+Пароль:
+real    0m25,629s
+user    0m5,457s
+sys     0m0,244s
+
+
+
+
+
 
 
