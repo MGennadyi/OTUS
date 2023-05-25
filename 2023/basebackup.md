@@ -149,16 +149,37 @@ CREATE DATABASE ttt;
 ALTER DATABASE ttt RENAME TO qwerty;
 
 ```
+### Перенос DEMO_SMALL.sql
 ```
 sudo wget --quiet https://edu.postgrespro.ru/demo_small.zip
+chown postgres:postgres /home/mgb/demo_small.zip
 unzip demo_small.zip
+chown postgres:postgres /home/mgb/demo_small.sql
 chown postgres /home/mgb/demo_small.sql
 sudo -i -u postgres
 psql -c 'CREATE DATABASE demo';
-psql -d demo < /home/mgb/demo_small.sql
+# Заливка исходных данных:
+psql -d demo < /backup/demo_small.sql
+# psql -d demo < /backup/demo_small.sql
+# Выгрузка на скорость
+time pg_dump demo > /backup/demo_main.sql
+postgres@backup-restore:~$ time pg_dump -d demo > /backup/demo_main.sql
+real    0m1,801s
+user    0m0,417s
+sys     0m0,470s
+postgres@backup-restore:~$ ls -la /backup
+итого 202868
+drwxr-xr-x  4 postgres postgres      4096 мая 25 14:34 .
+drwxr-xr-x 24 root     root          4096 мая 19 19:18 ..
+-rw-r--r--  1 postgres postgres 103857451 мая 25 14:34 demo_main.sql
+-rw-rw-r--  1 postgres postgres 103857328 ноя 11  2016 demo_small.sql
 ```
-
-
+```
+create database demo_main2;
+time psql -p 5433 -d demo_main2 < /backup/demo_main.sql
+real    0m18,920s
+```
+###### Зыгрузка 18,9сек выгрузка 1,8 сек
 
 
 
