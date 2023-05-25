@@ -10,9 +10,10 @@ mkdir /home/backups/1
 # Задача теста: сравнение по времени, по потокам, загрузки CPU, загрузки hdd:
 # При -Fc практически не будет сжатия; d (directory); -j (потоки); -F d (указ.формат.вывода d=директория) c (custom); -f (вывод в директорию путь обязателен);
 # Простой вариант бекапа, в SQL-скрипте :
-time pg_dump -d demo --create > /home/backups/pg_dump/demo1.sql
+pg_dump -U postgres dbname > outfile
+time pg_dump -U postgres -d demo --create > /backups/pg_dump/demo1.sql
 # Ответ: real    0m1,888s 0m1,917s
-# Простой со сжатием, в 2,8 раза меньше весит: 
+# Простой со сжатием, в 2,8 раза меньше весит:
 time pg_dump -d demo --create | gzip > /home/backups/demo1.gz
 # real    0m5,829s 0m5,685s 0m5,682s
 ls -lh /home/backups/pg_dump/
@@ -22,8 +23,14 @@ time pg_dump -j 2 -Fd demo -f /home/backups/pg_dump/111
 rm /home/backups/pg_dump/111/*
 real    0m3,420s
 du -sh /home/backups/pg_dump/111 22M
-
-# Архив с оглавлением для pg_restore. : 
+# —format=формат
+—format=p — формирует текстовый SQL-скрипт;
+—format=c — формирует резервную копию в архивном формате;
+—format=d — формирует копию в directory-формате;
+—format=t — формирует копию в формате tar.
+# В виде архива -Ft:
+pg_dump -Ft zabbix > /backup/zabbix.tar
+# Архив с оглавлением для pg_restore (-Fc в виде бинарного файла): 
 time pg_dump -d demo -Fc > /home/backups/pg_dump/demo11.gz
 # Восстановление-1:
 drop database otus;
