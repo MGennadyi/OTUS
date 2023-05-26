@@ -285,5 +285,6 @@ scp /backup/dump/* root@192.168.0.19:/backup/dump
 time scp -r /backup/dump root@192.168.0.19:/backup/dump
 time scp /backup/dump/* root@192.168.0.19:/backup/dump
 ```
-
-
+```
+pg_restore -p 5432 -h localhost -j 4 -d demo /backup/dump
+```
