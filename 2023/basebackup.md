@@ -150,17 +150,26 @@ CREATE DATABASE ttt;
 ALTER DATABASE ttt RENAME TO qwerty;
 
 ```
-### Перенос DEMO_SMALL.sql
+### Перенос DEMO_SMALL.sql demo_big.sql
 ```
+wget --quiet https://edu.postgrespro.ru/demo-big.zip
+chown postgres:postgres /home/mgb/demo-big.zip
+unzip demo-big.zip -d /backup
+mv demo-big-20170815.sql demo_big.sql
+chown postgres:postgres /backup/demo_big.sql
 sudo wget --quiet https://edu.postgrespro.ru/demo_small.zip
 chown postgres:postgres /home/mgb/demo_small.zip
 unzip demo_small.zip
 chown postgres:postgres /home/mgb/demo_small.sql
 chown postgres /home/mgb/demo_small.sql
+```
+#### Предварительная загрузка данных:
+```
 sudo -i -u postgres
-psql -c 'CREATE DATABASE demo';
+psql -p 5433 -c 'CREATE DATABASE demo';
 # Заливка исходных данных:
-psql -d demo < /backup/demo_small.sql
+time psql -p 5433 -d demo < /backup/demo_small.sql
+time psql -p 5433 -d demo < /backup/demo_big.sql
 
 # Выгрузка на скорость
 time pg_dump -C -h localhost -U postgres 'demo' > /backup/demo_main.sql
@@ -180,7 +189,7 @@ create database demo_main2;
 time psql -p 5433 -d demo_main2 < /backup/demo_main.sql
 real    0m18,920s
 ```
-###### Загрузка 18,9 сек, выгрузка 1,8 сек. Разница в 10раз!!!
+###### Тест Загрузка/выгрузка 1,8/18,9 сек. Разница в 10раз!!!
 ```
 postgres@backup-restore:~$ time pg_dump -C -h localhost -U postgres 'demo' > /backup/demo_main.sql
 Пароль:
@@ -189,6 +198,9 @@ user    0m0,585s
 sys     0m0,318s
 time psql -p 5433 -U postgres < /backup/demo_main.sql > /backup/dump_in.log 2>&1
 ```
+#### Предварительная загрузка
+
+
 #### BASH-скрипт PGDUMP = 23 сек:
 ```
 vim /postgres/scripts/dump.sh
@@ -230,9 +242,13 @@ real    0m25,629s
 user    0m5,457s
 sys     0m0,244s
 ```
+### SSH
+```
+vim /etc/ssh/sshd_config
+PasswordAuthentication yes
+PermitRootLogin yes
+ssh 192.168.0.19
 
-
-
-
+```
 
 
