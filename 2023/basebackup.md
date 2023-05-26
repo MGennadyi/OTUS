@@ -200,7 +200,7 @@ create database demo_main2;
 time psql -p 5433 -d demo_main2 < /backup/demo_main.sql
 real    0m18,920s
 ```
-###### Тест Загрузка/выгрузка 1,8/18,9 сек. Разница в 10раз!!! 186s/19,442s
+###### Тест: Загрузка/выгрузка 1,8/18,9 сек. 186s/19,442s=9.8 раз
 ```
 postgres@backup-restore:~$ time pg_dump -C -h localhost -U postgres 'demo' > /backup/demo_main.sql
 Пароль:
