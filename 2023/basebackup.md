@@ -278,10 +278,12 @@ PasswordAuthentication yes
 PermitRootLogin yes
 # Первый раз лучше зайти, чтоб прописались ключи: 
 ssh 192.168.0.19
-# Копирование директории
+# Копирование директории:
 scp -r /backup/dump root@192.168.0.16:/backup/dump
-Копирование содержимого директории:
-scp /backup/dump/* root@192.168.0.16:/backup/dump
+# Копирование содержимого директории:
+scp /backup/dump/* root@192.168.0.19:/backup/dump
+time scp -r /backup/dump root@192.168.0.19:/backup/dump
+time scp /backup/dump/* root@192.168.0.19:/backup/dump
 ```
 
 
