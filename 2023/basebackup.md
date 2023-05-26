@@ -200,7 +200,7 @@ create database demo_main2;
 time psql -p 5433 -d demo_main2 < /backup/demo_main.sql
 real    0m18,920s
 ```
-###### Тест: Загрузка/выгрузка 1,8/18,9 сек. 186s/19,442s=9.8 раз
+###### Тест psq: Загрузка/выгрузка 1,8/18,9 сек. 186s/19,442s=9.8 раз
 ```
 postgres@backup-restore:~$ time pg_dump -C -h localhost -U postgres 'demo' > /backup/demo_main.sql
 Пароль:
@@ -209,9 +209,22 @@ user    0m0,585s
 sys     0m0,318s
 time psql -p 5433 -U postgres < /backup/demo_main.sql > /backup/dump_in.log 2>&1
 ```
-#### Предварительная загрузка
+#### Тест -Fd SIZE=888/233MB=3.8 раза 220/34сек=6.5 34/18=1.8 220/186=1.2
+```
+# Филатов Евгений утверждал pg_restore медленнее -?? 
+psql -c "SELECT pg_terminate_backend(pid) FROM pg_stat_activity"
+psql -p 5432 -c 'DROP DATABASE demo';
+psql -p 5432 -c 'CREATE DATABASE demo';
+time pg_dump -p 5433 -C -h localhost -U postgres -j 4 -d demo -Fd -f /backup/dump
+Пароль:
+real    0m34,332s
+u -sh /backup/dump
+233M    /backup/dump
+postgres@backup-restore:/postgres/scripts$ time pg_restore -p 5432 -h localhost -j 4 -d demo /backup/dump
+Пароль:
+real    3m40,516s
 
-
+```
 #### BASH-скрипт PGDUMP = 23 сек:
 ```
 vim /postgres/scripts/dump.sh
