@@ -169,13 +169,21 @@ sudo -i -u postgres
 psql -p 5433 -c 'drop DATABASE demo';
 psql -p 5433 -c 'CREATE DATABASE demo';
 # Заливка исходных данных demo_small.sql demo_big.sql:
-time psql -p 5433 -d demo < /backup/demo_small.sql
+# time psql -p 5433 -d demo < /backup/demo_small.sql
 time psql -p 5433 -d demo < /backup/demo_big.sql
+real    3m6,641s
 real    3m46,939s
 user    0m6,404s
 sys     0m1,253s
+root@backup-restore:/backup# df -h
+Файловая система Размер Использовано  Дост Использовано% Cмонтировано в
+udev               2,4G            0  2,4G            0% /dev
+tmpfs              477M         980K  476M            1% /run
+/dev/sda1           16G          11G  4,0G           73% /
+df -h /var/lib/postgresql/14/main2/pg_wal
 # Выгрузка на скорость
-time pg_dump -C -h localhost -U postgres 'demo' > /backup/demo_main.sql
+time pg_dump -C -p 5433 -h localhost -U postgres 'demo' > /backup/demo_main.sql
+real    0m19,442s
 postgres@backup-restore:~$ time pg_dump -d demo > /backup/demo_main.sql
 real    0m1,801s
 user    0m0,417s
@@ -192,7 +200,7 @@ create database demo_main2;
 time psql -p 5433 -d demo_main2 < /backup/demo_main.sql
 real    0m18,920s
 ```
-###### Тест Загрузка/выгрузка 1,8/18,9 сек. Разница в 10раз!!!
+###### Тест Загрузка/выгрузка 1,8/18,9 сек. Разница в 10раз!!! 186s/19,442s
 ```
 postgres@backup-restore:~$ time pg_dump -C -h localhost -U postgres 'demo' > /backup/demo_main.sql
 Пароль:
