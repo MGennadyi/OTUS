@@ -224,7 +224,7 @@ postgres@backup-restore:/postgres/scripts$ time pg_restore -p 5432 -h localhost 
 Пароль:
 real    3m40,516s
 ```
-#### Тест пайплан: 185 сек/186+19=205 сек. Пайплан чуть быстрее.
+#### Тест пайплан demo_big: 185 сек/186+19=205 сек. Пайплан чуть быстрее.
 ```
 
 time pg_dump -p 5432 demo | psql -p 5433 --set ON_ERROR_STOP=on demo
@@ -276,8 +276,12 @@ sys     0m0,244s
 vim /etc/ssh/sshd_config
 PasswordAuthentication yes
 PermitRootLogin yes
+# Первый раз лучше зайти, чтоб прописались ключи: 
 ssh 192.168.0.19
-
+# Копирование директории
+scp -r /backup/dump root@192.168.0.16:/backup/dump
+Копирование содержимого директории:
+scp /backup/dump/* root@192.168.0.16:/backup/dump
 ```
 
 
