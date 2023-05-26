@@ -166,11 +166,14 @@ chown postgres /home/mgb/demo_small.sql
 #### Предварительная загрузка данных:
 ```
 sudo -i -u postgres
+psql -p 5433 -c 'drop DATABASE demo';
 psql -p 5433 -c 'CREATE DATABASE demo';
-# Заливка исходных данных:
+# Заливка исходных данных demo_small.sql demo_big.sql:
 time psql -p 5433 -d demo < /backup/demo_small.sql
 time psql -p 5433 -d demo < /backup/demo_big.sql
-
+real    3m46,939s
+user    0m6,404s
+sys     0m1,253s
 # Выгрузка на скорость
 time pg_dump -C -h localhost -U postgres 'demo' > /backup/demo_main.sql
 postgres@backup-restore:~$ time pg_dump -d demo > /backup/demo_main.sql
