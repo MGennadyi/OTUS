@@ -224,7 +224,7 @@ postgres@backup-restore:/postgres/scripts$ time pg_restore -p 5432 -h localhost 
 Пароль:
 real    3m40,516s
 ```
-#### Тест пайплан: 185 сек/186+19=205 сек
+#### Тест пайплан: 185 сек/186+19=205 сек. Пайплан чуть быстрее.
 ```
 
 time pg_dump -p 5432 demo | psql -p 5433 --set ON_ERROR_STOP=on demo
