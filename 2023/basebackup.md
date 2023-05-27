@@ -251,18 +251,19 @@ DROP DATABASE
 postgres=# create database newdb;
 CREATE DATABASE
 ```
-### BASH-скрипт DUMP-RESTORE -F d = 25 сек:
+### BASH-скрипт: DUMP-RESTORE -Fd = 25 сек:
 ```
-psql -c "CREATE EXTENSION citus;"
 #!/bin/bash
 # скрипт делает dummp БД
-rm -rf /backup/dump
+rm -rf /backup/dump/*
 psql -c "DROP DATABASE demo;"
 psql -c "CREATE DATABASE demo;"
 pg_dump -p 5432 -C -h localhost -U postgres -j 4 -d demo -Fd -f /backup/dump && pg_restore -p 5433 -h localhost -j 4 -d demo /backup/dump
-
-
-
+---------------------
+# Восстановление: 1. Создать БД. 2. Восстановить туда данные
+psql -c "CREATE DATABASE demo;"
+pg_restore -p 5432 -h localhost -j 4 -d demo /backup/dump
+real    3m12,585s
 
 postgres@backup-restore:~$ time /postgres/scripts/dump_d.sh
 Пароль:
