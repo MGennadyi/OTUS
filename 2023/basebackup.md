@@ -166,7 +166,7 @@ chown postgres /home/mgb/demo_small.sql
 #### Предварительная загрузка данных:
 ```
 sudo -i -u postgres
-psql -p 5433 -c 'drop DATABASE demo';
+psql -p 5433 -c 'drop DATABASE demo';  -указать OWNER !!!
 psql -p 5433 -c 'CREATE DATABASE demo';
 # Заливка исходных данных demo_small.sql demo_big.sql:
 # time psql -p 5433 -d demo < /backup/demo_small.sql
@@ -213,7 +213,7 @@ time psql -p 5433 -U postgres < /backup/demo_main.sql > /backup/dump_in.log 2>&1
 ```
 # Филатов Евгений утверждал pg_restore медленнее -?? 
 psql -c "SELECT pg_terminate_backend(pid) FROM pg_stat_activity"
-psql -p 5432 -c 'DROP DATABASE demo';
+psql -p 5432 -c 'DROP DATABASE demo';    -указать OWNER !!!
 psql -p 5432 -c 'CREATE DATABASE demo';
 time pg_dump -p 5433 -C -h localhost -U postgres -j 4 -d demo -Fd -f /backup/dump
 Пароль:
@@ -256,12 +256,12 @@ CREATE DATABASE
 #!/bin/bash
 # скрипт делает dummp БД
 rm -rf /backup/dump/*
-psql -c "DROP DATABASE demo;"
+psql -c "DROP DATABASE demo;"  -указать OWNER !!!
 psql -c "CREATE DATABASE demo;"
 pg_dump -p 5432 -C -h localhost -U postgres -j 4 -d demo -Fd -f /backup/dump && pg_restore -p 5433 -h localhost -j 4 -d demo /backup/dump
 ---------------------
 # Восстановление: 1. Создать БД. 2. Восстановить туда данные
-psql -c "CREATE DATABASE demo;"
+psql -c "CREATE DATABASE demo;"  -указать OWNER !!!
 pg_restore -p 5432 -h localhost -j 4 -d demo /backup/dump
 real    3m12,585s
 
