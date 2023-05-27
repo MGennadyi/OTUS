@@ -280,12 +280,32 @@ sudo systemctl restart sshd
 # Первый раз лучше зайти, чтоб прописались ключи: 
 ssh 192.168.0.19
 # Копирование директории:
-scp -r /backup/dump root@192.168.0.16:/backup/dump
+time scp -r /backup/dump root@192.168.0.16:/backup
+time scp -r /backup/dump root@192.168.0.19:/backup
 # Копирование содержимого директории:
-scp /backup/dump/* root@192.168.0.19:/backup/dump
-time scp -r /backup/dump root@192.168.0.19:/backup/dump
+time scp /backup/dump/* root@192.168.0.19:/backup/dump
 time scp /backup/dump/* root@192.168.0.19:/backup/dump
 ```
+```
+postgres@backup-restore:~$ time scp -r /backup/dump root@192.168.0.17:/backup
+root@192.168.0.17's password:
+3402.dat.gz                                                                                                                                                               100%   69MB  66.5MB/s   00:01
+3403.dat.gz                                                                                                                                                               100%   87MB  47.8MB/s   00:01
+3395.dat.gz                                                                                                                                                               100%  321   293.2KB/s   00:00
+3401.dat.gz                                                                                                                                                               100% 3047     2.2MB/s   00:00
+3397.dat.gz                                                                                                                                                               100%   53MB  48.5MB/s   00:01
+toc.dat                                                                                                                                                                   100%   40KB  21.9MB/s   00:00
+3398.dat.gz                                                                                                                                                               100%   20MB  45.2MB/s   00:00
+3399.dat.gz                                                                                                                                                               100% 3319KB  47.6MB/s   00:00
+3396.dat.gz                                                                                                                                                               100% 5682     5.8MB/s   00:00
+
+real    0m8,192s
+user    0m1,076s
+sys     0m1,915s
+
+
+```
+
 ```
 pg_restore -p 5432 -h localhost -j 4 -d demo /backup/dump
 ```
