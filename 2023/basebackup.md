@@ -276,6 +276,7 @@ sys     0m0,244s
 vim /etc/ssh/sshd_config
 PasswordAuthentication yes
 PermitRootLogin yes
+sudo systemctl restart sshd
 # Первый раз лучше зайти, чтоб прописались ключи: 
 ssh 192.168.0.19
 # Копирование директории:
