@@ -260,12 +260,12 @@ CREATE DATABASE
 #!/bin/bash
 # скрипт делает dummp БД
 rm -rf /backup/dump/*
-psql -c "DROP DATABASE demo;"  -указать OWNER !!!
-psql -c "CREATE DATABASE demo;"
+psql -c "DROP DATABASE demo;"
+psql -c "CREATE DATABASE demo owner expert;"    -указать OWNER !!!
 pg_dump -p 5432 -C -h localhost -U postgres -j 4 -d demo -Fd -f /backup/dump && pg_restore -p 5433 -h localhost -j 4 -d demo /backup/dump
 ---------------------
 # Восстановление: 1. Создать БД. 2. Восстановить туда данные
-psql -c "CREATE DATABASE demo;"  -указать OWNER !!!
+psql -c "CREATE DATABASE demo owner expert;"  -указать OWNER !!!
 pg_restore -p 5432 -h localhost -j 4 -d demo /backup/dump
 real    3m12,585s
 
