@@ -38,6 +38,8 @@ ALTER SYSTEM SET stats_temp_directory = '/tempdb';
 ALTER SYSTEM SET archive_mode = 'on';
 ALTER SYSTEM SET archive_command = 'test ! -f /backup/wal_arc_archive/%f && cp %p /backup/wal_arc_archive/%f';
 ALTER USER postgres WITH PASSWORD '12345';
+CREATE USER expert WITH PASSWORD '12345';  user-с правом входа
+CREATE USET evsemkin LOGIN password '12345';
 SELECT pg_reload_conf();
 
 ```
@@ -125,6 +127,8 @@ select * from test_main2;
 # 7. Создаем место куда переносим данные:
 psql -p 5432
 CREATE DATABASE otus_main;
+
+CREATE DATABASE otus_main owner expert;
 \q
 date && pg_dump -p 5433 otus | psql -p 5432 --set ON_ERROR_STOP=on otus_main >> /backup/restore_db.log 2>&1 && date 
 cat /backup/restore_db.log
