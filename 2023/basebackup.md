@@ -39,7 +39,7 @@ ALTER SYSTEM SET archive_mode = 'on';
 ALTER SYSTEM SET archive_command = 'test ! -f /backup/wal_arc_archive/%f && cp %p /backup/wal_arc_archive/%f';
 ALTER USER postgres WITH PASSWORD '12345';
 CREATE USER expert WITH PASSWORD '12345';  user-с правом входа
-CREATE USET evsemkin LOGIN password '12345';
+CREATE USER evsemkin LOGIN password '12345';
 SELECT pg_reload_conf();
 
 ```
@@ -313,4 +313,5 @@ sys     0m1,915s
 
 ```
 pg_restore -p 5432 -h localhost -j 4 -d demo /backup/dump
+pg_dumpall -p 5432 -h localhost --globals-only > /backups/roles_and_users.sql
 ```
