@@ -192,11 +192,12 @@ chown postgres /home/mgb/demo_small.sql
 #### Предварительная загрузка данных:
 ```
 sudo -i -u postgres
-psql -p 5433 -c 'drop DATABASE demo';  -указать OWNER !!!
-psql -p 5433 -c 'CREATE DATABASE demo';
+psql -p 5433 -c 'drop DATABASE demo';  
+psql -p 5433 -c 'CREATE DATABASE demo owner expert'; -указать OWNER !!!
 # Заливка исходных данных demo_small.sql demo_big.sql:
 # time psql -p 5433 -d demo < /backup/demo_small.sql
 time psql -p 5433 -d demo < /backup/demo_big.sql
+time psql -p 5432 -d demo < /backup/demo_big.sql
 real    3m6,641s
 real    3m46,939s
 user    0m6,404s
@@ -332,7 +333,7 @@ sys     0m1,915s
 
 
 ```
-
+#### Выгрузка ролей:
 ```
 pg_restore -p 5432 -h localhost -j 4 -d demo /backup/dump
 pg_dumpall -p 5432 -h localhost --globals-only > /backup/roles_and_users.sql
