@@ -335,5 +335,5 @@ sys     0m1,915s
 
 ```
 pg_restore -p 5432 -h localhost -j 4 -d demo /backup/dump
-pg_dumpall -p 5432 -h localhost --globals-only > /backups/roles_and_users.sql
+pg_dumpall -p 5432 -h localhost --globals-only > /backup/roles_and_users.sql
 ```
