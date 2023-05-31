@@ -319,8 +319,6 @@ sudo systemctl daemon-reload
 pg_ctlcluster 14 main2 start
 # Контрольные суммы:
 
-
-
 su postgres
 /usr/lib/postgresql/14/bin/pg_ctl restart -D /var/lib/postgresql/14/main2
 pg_ctl: файл PID "/var/lib/postgresql/14/main2/postmaster.pid" не существует
@@ -342,6 +340,13 @@ pg_ctl: файл PID "/var/lib/postgresql/14/main2/postmaster.pid" не суще
  прекращение ожидания
 pg_ctl: не удалось запустить сервер
 Изучите протокол выполнения.
+```
+#### .pgpass
+```
+# переход в домашнюю директорию postgres:
+sudo -i -u postgres
+ls -la
+chmod 0600 .pgpass
 ```
 ##### Теплое резервирование:
 ```
