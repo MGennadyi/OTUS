@@ -341,7 +341,7 @@ pg_ctl: файл PID "/var/lib/postgresql/14/main2/postmaster.pid" не суще
 pg_ctl: не удалось запустить сервер
 Изучите протокол выполнения.
 ```
-#### .pgpass
+#### .pgpass = -rw----
 ```
 # переход в домашнюю директорию postgres:
 sudo -i -u postgres
