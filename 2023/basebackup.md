@@ -44,6 +44,7 @@ CREATE USER avesenin LOGIN password '12345';
 ALTER USER avesenin WITH LOGIN password '12345';
 psql -c "CREATE DATABASE demo owner expert;"
 SELECT pg_reload_conf();
+SELECT pg_switch_wal();
 ```
 #### Создание групповой роли create_arwd_group.sh на БД demo;
 ```
