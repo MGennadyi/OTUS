@@ -47,6 +47,14 @@ psql -c "CREATE DATABASE demo owner expert;"
 SELECT pg_reload_conf();
 SELECT pg_switch_wal();
 ```
+#### Путь к бинарникам:
+```
+sudo -i -u postgres
+vim ~/bash_profile
+export PATH=/opt/pgpro/ent-14/bin/:$PATH
+export PATH=/usr/lib/postgresql/14/bin/:$PATH
+
+```
 #### Создание групповой роли create_arwd_group.sh на БД demo;
 ```
 # Правим строку пути к бинарникамиЭ
