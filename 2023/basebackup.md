@@ -36,6 +36,7 @@ ALTER SYSTEM SET logging_collector = 'on';
 ALTER SYSTEM SET wal_compression = 'on';
 ALTER SYSTEM SET stats_temp_directory = '/tempdb';
 ALTER SYSTEM SET archive_mode = 'on';
+ALTER SYSTEM SET archive_timeout = '600';
 ALTER SYSTEM SET archive_command = 'test ! -f /backup/wal_arc_archive/%f && cp %p /backup/wal_arc_archive/%f';
 ALTER USER postgres WITH PASSWORD '12345';
 CREATE USER expert WITH PASSWORD '12345';  user-с правом входа
