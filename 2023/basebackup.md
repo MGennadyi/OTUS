@@ -364,7 +364,7 @@ clucster_name = '14/main2'
 data_directory = '/backup/restore/pg_data'
 #post = 5432 - закоментировать.
 ident_file = не правим
-
+export PATH=/usr/lib/postgresql/14/bin/:$PATH
 
 
 
