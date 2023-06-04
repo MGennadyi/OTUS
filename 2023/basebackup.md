@@ -358,6 +358,7 @@ pgbench -i -s 1 otus
 #### Изменения postgresql.conf
 ```
 clucster_name = '14/main2'
+ident_file = 
 
 
 
