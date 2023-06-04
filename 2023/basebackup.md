@@ -355,10 +355,15 @@ pg_dumpall -p 5432 -h localhost --globals-only > /backup/roles_and_users.sql
 pgbench -h 192.168.5.165 -p 5432 -U postgres -i -s 100 -F 80 testpgbench
 pgbench -i -s 1 otus
 ```
-#### Изменения postgresql.conf
+#### Правка в паралельном кластере:
 ```
+cp /conf.d /backup/restore/pg_data/
+cp postgresql.conf /backup/restore/pg_data/
+# postgresql.conf: имя кластера:
 clucster_name = '14/main2'
-ident_file = 
+data_directory = '/backup/restore/pg_data'
+#post = 5432 - закоментировать.
+ident_file = не правим
 
 
 
