@@ -340,11 +340,15 @@ toc.dat                                                                         
 real    0m8,192s
 user    0m1,076s
 sys     0m1,915s
-
-
 ```
 #### Выгрузка ролей:
 ```
 pg_restore -p 5432 -h localhost -j 4 -d demo /backup/dump
 pg_dumpall -p 5432 -h localhost --globals-only > /backup/roles_and_users.sql
+```
+#### PGBENCH
+```
+pgbench -h 192.168.5.165 -p 5432 -U postgres -i -s 100 -F 80 testpgbench
+pgbench -i -s 1 otus
+
 ```
