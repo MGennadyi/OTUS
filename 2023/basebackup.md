@@ -47,6 +47,10 @@ psql -c "CREATE DATABASE demo owner expert;"
 SELECT pg_reload_conf();
 SELECT pg_switch_wal();
 ```
+```
+show wal_level;
+
+```
 #### Путь к бинарникам:
 ```
 sudo -i -u postgres
@@ -350,5 +354,26 @@ pg_dumpall -p 5432 -h localhost --globals-only > /backup/roles_and_users.sql
 ```
 pgbench -h 192.168.5.165 -p 5432 -U postgres -i -s 100 -F 80 testpgbench
 pgbench -i -s 1 otus
+```
+#### Изменения postgresql.conf
+```
+clucster_name = '14/main2'
+
+
+
+
 
 ```
+
+
+
+
+
+
+
+
+
+
+
+
+
