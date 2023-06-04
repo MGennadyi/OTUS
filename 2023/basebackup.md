@@ -365,12 +365,31 @@ data_directory = '/backup/restore/pg_data'
 #post = 5432 - закоментировать.
 ident_file = не правим
 export PATH=/usr/lib/postgresql/14/bin/:$PATH
-
-
-
-
 ```
-
+```
+postgres@master:~$ ps -aux | grep postgres
+postgres    7497  0.0  0.7 214648 29364 ?        Ss   14:50   0:00 /usr/lib/postgresql/14/bin/postgres -D /var/lib/postgresql/14/main -c config_file=/etc/postgresql/14/main/postgresql.conf
+postgres    7499  0.0  0.7 214856 28564 ?        Ss   14:50   0:00 postgres: 14/main: checkpointer
+postgres    7500  0.0  0.1 214792  6136 ?        Ss   14:50   0:00 postgres: 14/main: background writer
+postgres    7501  0.0  0.2 214648 10220 ?        Ss   14:50   0:00 postgres: 14/main: walwriter
+postgres    7502  0.0  0.2 215344  9056 ?        Ss   14:50   0:00 postgres: 14/main: autovacuum launcher
+postgres    7503  0.0  0.1 214648  6304 ?        Ss   14:50   0:00 postgres: 14/main: archiver last was 000000010000000000000037
+postgres    7504  0.0  0.1  69372  5204 ?        Ss   14:50   0:00 postgres: 14/main: stats collector
+postgres    7505  0.0  0.1 215184  6932 ?        Ss   14:50   0:00 postgres: 14/main: logical replication launcher
+root        7518  0.0  0.1  10752  5140 pts/1    S    14:50   0:00 sudo -i -u postgres
+postgres    7519  0.0  0.1   8060  4824 pts/1    S    14:50   0:00 -bash
+postgres    7869  0.0  0.2  20600 10016 pts/1    S+   15:32   0:02 mc
+postgres    7871  0.0  0.0   7164  3840 pts/3    Ss+  15:32   0:00 bash -rcfile .bashrc
+root        7957  0.0  0.1  10752  5136 pts/0    S    15:41   0:00 sudo -i -u postgres
+postgres    7958  0.0  0.1   7928  4668 pts/0    S    15:41   0:00 -bash
+postgres    8389  0.0  3.8 4431144 155048 ?      Ss   16:06   0:00 /usr/lib/postgresql/14/bin/postgres -D /backup/restore/pg_data -p 5433
+postgres    8390  0.0  1.8 4431480 75152 ?       Ss   16:06   0:00 postgres: 14/main2: startup recovering 000000010000000000000032
+postgres    8395  0.0  0.1 4431144 6372 ?        Ss   16:06   0:00 postgres: 14/main2: checkpointer
+postgres    8396  0.0  0.8 4431144 35556 ?       Ss   16:06   0:00 postgres: 14/main2: background writer
+postgres    8398  0.0  0.1  69380  5076 ?        Ss   16:06   0:00 postgres: 14/main2: stats collector
+postgres    8449  0.0  0.0   9948  3616 pts/0    R+   16:16   0:00 ps -aux
+postgres    8450  0.0  0.0   6400   636 pts/0    S+   16:16   0:00 grep postgres
+```
 
 
 
