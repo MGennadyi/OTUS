@@ -390,13 +390,16 @@ postgres    8398  0.0  0.1  69380  5076 ?        Ss   16:06   0:00 postgres: 14/
 postgres    8449  0.0  0.0   9948  3616 pts/0    R+   16:16   0:00 ps -aux
 postgres    8450  0.0  0.0   6400   636 pts/0    S+   16:16   0:00 grep postgres
 ```
-
-
-
-
-
-
-
+### Восстановление целевой копии basebackup
+```
+systemctl stop postgresql
+rm -rf /var/lib/postgresql/14/main/*
+tar -xzf /backup/2023_06_04/base.tar.gz -C /var/lib/postgresql/14/main
+tar -xzf /backup/2023_06_04/pg_wal.tar.gz -C /var/lib/postgresql/14/main/pg_wal
+systemctl start postgresql
+systemctl status postgresql
+psql
+```
 
 
 
