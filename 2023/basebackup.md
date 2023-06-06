@@ -405,6 +405,7 @@ rm -rf /var/lib/postgresql/14/main/*
 tar -xzf /backup/2023_06_04/base.tar.gz -C /var/lib/postgresql/14/main
 tar -xzf /backup/2023_06_04/pg_wal.tar.gz -C /var/lib/postgresql/14/main/pg_wal
 systemctl start postgresql
+# При успешном восстановлении recovery.conf должен переименоваться в recovery.done 
 systemctl status postgresql
 psql
 ```
