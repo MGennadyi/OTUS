@@ -52,6 +52,8 @@ ALTER SYSTEM SET archive_command = 'gzip < %p > /backup/wal_arc_archive/%f.gz'
 ALTER SYSTEM SET archive_command = 'pg_compresslog %p - | gzip > /backup/wal_arc_archive/%f'
 restore_command = 'gunzip < /backup/wal_arc_archive/%f.gz > %p'
 restore_command = 'gunzip < /mnt/server/archivedir/%f | pg_decompresslog - %p'
+# Сжатие и отправка в хранилище:
+archive_command = 'gzip -c -9 %p | ssh foobackup@[backupServerIp] "set -e; test ! -f /var/lib/postgresql/backups/[clientName]/wal/%f.gz; cat > /var/lib/postgresql/backups/[clientName]/wal/%f.gz.part; gzip -t /var/lib/postgresql/backups/[clientName]/wal/%f.gz.part; sync /var/lib/postgresql/backups/[clientName]/wal/%f.gz.part;  mv /var/lib/postgresql/backups/[clientName]/wal/%f.gz.part /var/lib/postgresql/backups/[clientName]/wal/%f.gz"'       # command to use to archive a logfile segment
 ```
 ```
 show wal_level;
