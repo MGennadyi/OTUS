@@ -289,6 +289,20 @@ vim /postgres/scripts/dump.sh
 pg_dump -C -h localhost -U postgres 'demo' > /backup/demo_main.sql && psql -p 5433 -U postgres < /backup/demo_main.sql
 real    0m23,693s
 ```
+#### BASH-скрипт PG_DUMPALL =  сек:
+```
+vim /postgres/scripts/dumpall.sh
+#!/bin/bash
+# скрипт делает dummpall
+pg_dumpall -C -h localhost -U postgres > /backup/dumpall.sql
+```
+#### BASH-скрипт restore_DUMPALL =  сек:
+```
+vim /postgres/scripts/dumpall.sh
+#!/bin/bash
+# скрипт делает dummpall
+psql -p 5433 -U postgres < /backup/demo_main.sqll
+```
 ```
 time pg_dump -C -h localhost -U postgres -d demo -Fd > /backup/dump
 time pg_dump -C -h localhost -U postgres -j 4 -d demo -Fd -f /backup/dump
