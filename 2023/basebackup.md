@@ -294,7 +294,12 @@ real    0m23,693s
 vim /postgres/scripts/dumpall.sh
 #!/bin/bash
 # скрипт делает dummpall
-pg_dumpall -C -h localhost -U postgres > /backup/dumpall.sql
+pg_dumpall -h localhost -U postgres > /backup/dumpall.sql
+```
+### Полученную копию можно восстановить с помощью psql:
+```
+pg_dumpall -h localhost -U postgres < /backup/dumpall.sql
+psql -f /backup/dumpall.sql postgres
 ```
 #### BASH-скрипт restore_DUMPALL =  сек:
 ```
