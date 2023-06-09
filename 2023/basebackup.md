@@ -49,7 +49,8 @@ SELECT pg_switch_wal();
 ```
 ```
 ALTER SYSTEM SET archive_command = 'gzip < %p > /backup/wal_arc_archive/%f.gz'
-ALTER SYSTEM SET archive_command = 'pg_compresslog %p - | gzip > /backup/wal_arc_archive/%f.gz'
+
+ALTER SYSTEM SET archive_command = 'pg_compresslog %p - | gzip > /backup/wal_arc_archive/%f.gz';
 restore_command = 'gunzip < /backup/wal_arc_archive/%f.gz | pg_decompresslog - %p'
 --------------------------------------------
 restore_command = 'gunzip < /backup/wal_arc_archive/%f.gz > %p'
