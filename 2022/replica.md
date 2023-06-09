@@ -35,9 +35,11 @@ echo "listen_addresses = '*'" >> /etc/postgresql/14/main/postgresql.conf
 echo "wal_log_hints = on" >> /etc/postgresql/14/main/postgresql.conf
 ---------------
 echo "archive_mode = on" >>  /etc/postgresql/14/main/postgresql.conf
-echo "archive_command = 'test ! -f /archive/%f && cp %p /archive/%f'" >>  /etc/postgresql/14/main/postgresql.conf
-# echo "archive_cleanup_command = 'pg_archivecleanup /archive %r'" >>  /etc/postgresql/14/main/postgresql.conf
-# echo "restore_command = 'cp /archive/%f %p'" >>  /etc/postgresql/14/main/postgresql.conf
+echo "archive_command = 'pg_compresslog %p - | gzip > /backup/wal_arc_archive/%f.gz'" >>  /etc/postgresql/14/main/postgresql.conf
+# или так лучше:
+ALTER SYSTEM SET archive_command = 'gzip < %p > /backup/wal_arc_archive/%f.gz'
+ALTER SYSTEM SET archive_command = 'pg_compresslog %p - | gzip > /backup/wal_arc_archive/%f.gz'
+------------------
 
 
 echo "host replication replica 0.0.0.0/0 md5" >> /etc/postgresql/14/main/pg_hba.conf
