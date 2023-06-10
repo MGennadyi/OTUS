@@ -69,10 +69,6 @@ create replica and rewind users with password 12345  - на видео проп�
 sudo -u postgres psql -c "create user replica with replication encrypted password '12345'"
 sudo -u postgres psql -c "CREATE USER rewind SUPERUSER encrypted PASSWORD '12345'"
 ```
-```
-sudo -u postgres psql -c "CREATE DATABASE otus"
-sudo -u postgres pgbench -i -s 10 otus
-```
 ###### Проверка доступности себя и соседа:
 ```
 # Через nc
@@ -253,7 +249,6 @@ safe_wal_size       |
 two_phase  
 # Слот репликации опять появился.
 ```
-
 ##### Генерация милионов записей
 ```
 # С другого хоста:
@@ -269,11 +264,10 @@ sudu -u postgres pg_top
 ```
 # Протестить команду:
 selest * from pg_is_in_recovery;
-
-
-
 ```
-
+```
+sudo -u postgres pgbench -i -s 10 otus
+```
 
 
 
