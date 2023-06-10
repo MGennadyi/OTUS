@@ -38,6 +38,7 @@ ALTER SYSTEM SET stats_temp_directory = '/tempdb';
 ALTER SYSTEM SET archive_mode = 'on';   # Требуется restart службы
 ALTER SYSTEM SET archive_timeout = '600';   #Каждые 10 мин переключение на новый wal
 ALTER SYSTEM SET archive_command = 'test ! -f /backup/wal_arc_archive/%f && cp %p /backup/wal_arc_archive/%f';
+ALTER SYSTEM SET wal_log_hints = 'on';
 ALTER USER postgres WITH PASSWORD '12345';
 CREATE USER expert WITH PASSWORD '12345';  user-с правом входа
 CREATE USER evsemkin LOGIN password '12345';
