@@ -27,7 +27,8 @@ work_mem = 16MB
 max_connections = 1100
 huge_pages = try
 wal_level = replica
-sysnchronous_commit = on
+show synchronous_commit;
+on
 ```
 ```
 # По умолчанию: listen_addresses = 'localhost' #wal_log_hints = off
