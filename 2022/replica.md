@@ -83,7 +83,7 @@ apt install net-tools -y
 netstat -nlp | grep 5432
 psql -p 5432 -d otus -h 192.168.0.14 -U postgres
 ```
-### Заполнение тестовыми данными:
+### Заполнение тестовыми данными на master:
 ```
 psql -p 5432
 CREATE DATABASE otus;
