@@ -72,11 +72,14 @@ sudo -u postgres psql -c "CREATE USER rewind SUPERUSER encrypted PASSWORD '12345
 ```
 # Через nc
 nc -vz 192.168.0.18 5432
+nc -vz 192.168.0.17 5432
+# Ответ:
+master [192.168.0.17] 5432 (postgresql) open
 nc -vz 192.168.0.16 5432
 # Через netstat по портам:
 apt install net-tools -y
 netstat -nlp | grep 5432
-psql -p 5432 -d otus -h 192.168.0.14 -U postgres
+psql -p 5432 -d otus -h 192.168.0.17 -U postgres
 ```
 ### Заполнение тестовыми данными на master:
 ```
