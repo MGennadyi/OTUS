@@ -109,6 +109,18 @@ sudo -u postgres pg_basebackup --host=192.168.0.17 --port=5432 --username=replic
 # В ответ на сообщение реплики "waiting  checkpoint", на мастере:
 sudo -u postgres psql -c "checkpoint"
 ```
+#### На реплике V_15:
+```
+systemctl start postgrespro-std-15
+/c otus
+otus=# select * from test;
+ i
+---
+ 1
+ 2
+ 3
+(3 строки)
+```
 ###### Проверим, что изменилось V_14:
 ```
 # На slave: 
@@ -150,28 +162,28 @@ safe_wal_size       |
 two_phase           | f
 ```
 ```
- select * from pg_stat_replication \gx
+ postgres=# select * from pg_stat_replication \gx
 -[ RECORD 1 ]----+------------------------------
-pid              | 104288
-usesysid         | 16384
+pid              | 5673
+usesysid         | 16392
 usename          | replica
-application_name | 14/main
-client_addr      | 192.168.0.18
+application_name | walreceiver
+client_addr      | 192.168.0.16
 client_hostname  |
-client_port      | 32982
-backend_start    | 2023-01-10 17:58:18.20271+03
+client_port      | 39674
+backend_start    | 2023-06-10 16:52:55.103514+03
 backend_xmin     |
 state            | streaming
-sent_lsn         | 0/B000148
-write_lsn        | 0/B000148
-flush_lsn        | 0/B000148
-replay_lsn       | 0/B000148
+sent_lsn         | 0/E000060
+write_lsn        | 0/E000060
+flush_lsn        | 0/E000060
+replay_lsn       | 0/E000060
 write_lag        |
 flush_lag        |
 replay_lag       |
 sync_priority    | 0
 sync_state       | async
-reply_time       | 2023-01-10 18:07:10.171855+03
+reply_time       | 2023-06-10 16:59:59.824104+03
 ```
 ###### На мастер: Создаем и заполнение новую таблицу :
 ```
@@ -218,7 +230,9 @@ two_phase           | f
 -----------------------------------
 postgres=# select pg_drop_replication_slot('replica1');
 ОШИБКА:  слот репликации "replica1" занят процессом с PID 1003
-# Гасим реплику и повторяем
+# Гасим реплику
+systemctl stop postgrespro-std-15
+# и повторяем
 --------------------------------------------
 postgres=# select pg_drop_replication_slot('replica1');
  pg_drop_replication_slot
