@@ -30,6 +30,7 @@ wal_level = replica
 show synchronous_commit;
 on
 ```
+#### Конфигурируем:
 ```
 # По умолчанию: listen_addresses = 'localhost' #wal_log_hints = off
 echo "listen_addresses = '*'" >> /etc/postgresql/14/main/postgresql.conf
@@ -40,7 +41,7 @@ echo "archive_command = 'pg_compresslog %p - | gzip > /backup/wal_arc_archive/%f
 # или так лучше:
 ALTER SYSTEM SET archive_command = 'gzip < %p > /backup/wal_arc_archive/%f.gz'
 ALTER SYSTEM SET archive_command = 'pg_compresslog %p - | gzip > /backup/wal_arc_archive/%f.gz'
-show listen_addresses;  # по умолчанию =  localhost
+show listen_addresses;  # по умолчанию =  localhost. Подключиться из вне не получится!
 ALTER SYSTEM SET listen_addresses = '*';   # restart service   !!!!!
 ------------------
 echo "host replication replica 0.0.0.0/0 md5" >> /etc/postgresql/14/main/pg_hba.conf
@@ -93,19 +94,22 @@ select * from test;
 ###### На реплике удаляем содержимое pg_data:
 ```
 rm -rf /var/lib/postgresql/14/main/*  # V_14
+systemctl stop postgrespro-std-15
 rm -rf /var/lib/pgpro/std-15/data/*   # V_15
 ```
 ###### Восстановление реплики from master=192.168.0.17: 
 ```
 # Restor на реплике=192.168.0.16:
-sudo -u postgres pg_basebackup --host=192.168.0.17 --port=5432 --username=replica --pgdata=/var/lib/postgresql/14/main/ --progress --write-recovery-conf --create-slot --slot=replica1
+sudo -i -u postgres
+pg_basebackup --host=192.168.0.17 --port=5432 --username=replica --pgdata=/var/lib/postgresql/14/main/ --progress --write-recovery-conf --create-slot --slot=replica1
+sudo -i -u postgres
 sudo -u postgres pg_basebackup --host=192.168.0.17 --port=5432 --username=replica --pgdata=/var/lib/pgpro/std-15/data/ --progress --write-recovery-conf --create-slot --slot=replica1
-pass:
+Вводим pass:
 # Ответ: 188126/188126 КБ (100%), табличное пространство 1/1  -синхронизация прошла успешно.
 # В ответ на сообщение реплики "waiting  checkpoint", на мастере:
 sudo -u postgres psql -c "checkpoint"
 ```
-###### Проверим, что изменилось:
+###### Проверим, что изменилось V_14:
 ```
 # На slave: 
 cat /var/lib/postgresql/14/main/postgresql.auto.conf
@@ -118,7 +122,7 @@ primary_slot_name = 'replica1'
 ls -la /var/lib/postgresql/14/main/ | grep standby
 -rw-------  1 postgres postgres      0 янв 10 17:44 standby.signal
 ```
-###### На slave
+###### На slave V_14:
 ```
 pg_ctlcluster 14 main start
 pg_lsclusters
@@ -127,8 +131,6 @@ pg_lsclusters
 ```
 ###### На master check replication slots:
 ```
-su - postgres
-psql
 postgres=# select * from pg_replication_slots \gx
 -[ RECORD 1 ]-------+----------
 slot_name           | replica1
@@ -137,11 +139,11 @@ slot_type           | physical
 datoid              |
 database            |
 temporary           | f
-active              | t
-active_pid          | 104288
+active              | f
+active_pid          |
 xmin                |
 catalog_xmin        |
-restart_lsn         | 0/B000148
+restart_lsn         | 0/C000000
 confirmed_flush_lsn |
 wal_status          | reserved
 safe_wal_size       |
