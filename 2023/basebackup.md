@@ -31,10 +31,9 @@ mkdir -p /backup/wal_arc_archive
 ALTER SYSTEM SET log_directory = '/log/pg_log';
 ALTER SYSTEM SET log_filename = 'postgresql-%u.log';
 ALTER SYSTEM SET log_filename = 'postgresql.log';
-ALTER SYSTEM SET log_filename = 'postgresql-%u.log';
 ALTER SYSTEM SET logging_collector = 'on';
-ALTER SYSTEM SET wal_compression = 'on';    # pglz
-ALTER SYSTEM SET wal_compression = 'pglz';    # для V_15
+ALTER SYSTEM SET wal_compression = 'on';    # для V_14
+ALTER SYSTEM SET wal_compression = 'pglz';    # для V_15=on для v_14
 ALTER SYSTEM SET stats_temp_directory = '/tempdb';
 ALTER SYSTEM SET archive_mode = 'on';   # Требуется restart службы
 ALTER SYSTEM SET archive_timeout = '600';   #Каждые 10 мин переключение на новый wal
