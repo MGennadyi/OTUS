@@ -40,6 +40,8 @@ echo "archive_command = 'pg_compresslog %p - | gzip > /backup/wal_arc_archive/%f
 # или так лучше:
 ALTER SYSTEM SET archive_command = 'gzip < %p > /backup/wal_arc_archive/%f.gz'
 ALTER SYSTEM SET archive_command = 'pg_compresslog %p - | gzip > /backup/wal_arc_archive/%f.gz'
+show listen_addresses;  # по умолчанию =  localhost
+ALTER SYSTEM SET listen_addresses = '*';   # restart service   !!!!!
 ------------------
 echo "host replication replica 0.0.0.0/0 md5" >> /etc/postgresql/14/main/pg_hba.conf
 echo "host all rewind 0.0.0.0/0 md5" >> /etc/postgresql/14/main/pg_hba.conf
