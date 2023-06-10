@@ -83,14 +83,12 @@ apt install net-tools -y
 netstat -nlp | grep 5432
 psql -p 5432 -d otus -h 192.168.0.14 -U postgres
 ```
-###### На реплике 
+###### На реплике удаляем содержимое pg_data:
 ```
 rm -rf /var/lib/postgresql/14/main/*  # V_14
 rm -rf /var/lib/pgpro/std-15/data/*   # V_15
-
 ```
-
-###### Восстановим cluster from master 
+###### Восстановление реплики from master: 
 ```
 # Restor на реплике:
 sudo -u postgres pg_basebackup --host=192.168.0.16 --port=5432 --username=replica --pgdata=/var/lib/postgresql/14/main/ --progress --write-recovery-conf --create-slot --slot=replica1
