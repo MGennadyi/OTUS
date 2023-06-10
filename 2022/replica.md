@@ -41,22 +41,18 @@ echo "archive_command = 'pg_compresslog %p - | gzip > /backup/wal_arc_archive/%f
 ALTER SYSTEM SET archive_command = 'gzip < %p > /backup/wal_arc_archive/%f.gz'
 ALTER SYSTEM SET archive_command = 'pg_compresslog %p - | gzip > /backup/wal_arc_archive/%f.gz'
 ------------------
-
-
 echo "host replication replica 0.0.0.0/0 md5" >> /etc/postgresql/14/main/pg_hba.conf
 echo "host all rewind 0.0.0.0/0 md5" >> /etc/postgresql/14/main/pg_hba.conf
 echo "host all all 192.168.0.0/24 trust" >> /etc/postgresql/14/main/pg_hba.conf
 echo "host postgres postgres 127.0.0.1/32 trust" >> /etc/postgresql/14/main/pg_hba.conf
 -----------------------------
 # 
+mcedit /var/lib/pgpro/std-15/data/pg_hba.conf
 vim /etc/postgresql/14/main/pg_hba.conf
 host all all 192.168.0.0/24            trust
 host postgres postgres 127.0.0.1/32 trust
 systemctl restart postgresql
-psql -p 5432 -h 192.168.0.16 -U postgres
-
-mkdir /archive
-chown -R postgres:postgres /archive
+psql -p 5432 -h 192.168.0.17 -U postgres
 ```
 ###### Применим изменения на всех нодах:
 ```
@@ -65,9 +61,10 @@ pg_ctlcluster 14 main stop
 pg_ctlcluster 14 main start
 ```
 ```
+ALTER USER postgres WITH PASSWORD '12345';
 create replica and rewind users with password 12345  - на видео пропускает
-sudo -u postgres psql -c "create user replica with replication encrypted password '12345'"
-sudo -u postgres psql -c "CREATE USER rewind SUPERUSER encrypted PASSWORD '12345'"
+sudo -u postgres psql -c "CREATE USER replica with replication encrypted password '12345'"  # на MASTER, на реплике все удалится.
+sudo -u postgres psql -c "CREATE USER rewind SUPERUSER encrypted PASSWORD '12345'"  # не делал
 ```
 ###### Проверка доступности себя и соседа:
 ```
@@ -93,10 +90,11 @@ select * from test;
 rm -rf /var/lib/postgresql/14/main/*  # V_14
 rm -rf /var/lib/pgpro/std-15/data/*   # V_15
 ```
-###### Восстановление реплики from master: 
+###### Восстановление реплики from master=192.168.0.17: 
 ```
-# Restor на реплике:
-sudo -u postgres pg_basebackup --host=192.168.0.16 --port=5432 --username=replica --pgdata=/var/lib/postgresql/14/main/ --progress --write-recovery-conf --create-slot --slot=replica1
+# Restor на реплике=192.168.0.16:
+sudo -u postgres pg_basebackup --host=192.168.0.17 --port=5432 --username=replica --pgdata=/var/lib/postgresql/14/main/ --progress --write-recovery-conf --create-slot --slot=replica1
+sudo -u postgres pg_basebackup --host=192.168.0.17 --port=5432 --username=replica --pgdata=/var/lib/pgpro/std-15/data/ --progress --write-recovery-conf --create-slot --slot=replica1
 pass:
 # Ответ: 188126/188126 КБ (100%), табличное пространство 1/1  -синхронизация прошла успешно.
 # В ответ на сообщение реплики "waiting  checkpoint", на мастере:
