@@ -88,7 +88,15 @@ postgres=# grant readonly_role_demo to avesenin;
 GRANT ROLE
 postgres=# grant arwd_role_demo to evsemkin;
 GRANT ROLE
-
+```
+#### Создание и заполнение тестовых данных:
+```
+psql -p 5432
+CREATE DATABASE otus;
+\c otus
+CREATE table test(i int);
+INSERT INTO test values (1), (2), (3);
+select * from test;
 ```
 #### СКРИПТ basebackup.sh
 ```
