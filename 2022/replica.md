@@ -83,6 +83,15 @@ apt install net-tools -y
 netstat -nlp | grep 5432
 psql -p 5432 -d otus -h 192.168.0.14 -U postgres
 ```
+### Заполнение тестовыми данными:
+```
+psql -p 5432
+CREATE DATABASE otus;
+\c otus
+CREATE table test(i int);
+INSERT INTO test values (1), (2), (3);
+select * from test;
+```
 ###### На реплике удаляем содержимое pg_data:
 ```
 rm -rf /var/lib/postgresql/14/main/*  # V_14
