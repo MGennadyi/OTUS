@@ -85,7 +85,9 @@ psql -p 5432 -d otus -h 192.168.0.14 -U postgres
 ```
 ###### На реплике 
 ```
-sudo -u postgres rm -rf /var/lib/postgresql/14/main/*
+rm -rf /var/lib/postgresql/14/main/*  # V_14
+rm -rf /var/lib/pgpro/std-15/data/*   # V_15
+
 ```
 
 ###### Восстановим cluster from master 
