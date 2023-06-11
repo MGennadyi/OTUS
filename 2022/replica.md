@@ -87,6 +87,7 @@ CREATE DATABASE otus;
 CREATE table test(i int);
 INSERT INTO test values (1), (2), (3);
 select * from test;
+INSERT INTO test values (4);
 ```
 ###### На реплике удаляем содержимое pg_data:
 ```
