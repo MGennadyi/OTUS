@@ -63,8 +63,8 @@ systemctl start postgrespro-std-15
 ```
 ALTER USER postgres WITH PASSWORD '12345';
 create replica and rewind users with password 12345  - на видео пропускает
-sudo -u postgres psql -c "CREATE USER replica with replication encrypted password '12345'"  # на MASTER, на реплике все удалится.
-sudo -u postgres psql -c "CREATE USER rewind SUPERUSER encrypted PASSWORD '12345'"  # не делал
+CREATE USER replica with replication encrypted password '12345';  # на MASTER, на реплике все удалится.
+"CREATE USER rewind SUPERUSER encrypted PASSWORD '12345';  # не делал
 ```
 ###### Проверка доступности себя и соседа:
 ```
