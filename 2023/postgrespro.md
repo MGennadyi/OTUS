@@ -169,6 +169,7 @@ CREATE EXTENSION pg_repack;
 ##### Остановка v_13
 ```
 systemctl stop postgrespro-std-13
+systemctl stop postgrespro-std-14
 ```
 #### Подготовка директорий:
 ```
@@ -178,6 +179,10 @@ mkdir -p /wal/pg_wal
 #### Инициалицация нового кластера v_14:
 ```
 /opt/pgpro/std-14/bin/pg_setup initdb --data-checksums --locale=en_US.utf8 --pgdata=/data/pg_data --waldir=/wal/pg_wal
+/opt/pgpro/std-14/bin/pg-setup initdb --data-checksums --locale=en_US.utf8 --pgdata=/data/pg_data --waldir=/wal/pg_wal  # pg-setup через дефис
+If you want to setup second postgres instance in /data/pg_data use /opt/pgpro/std-14/bin/initdb directly and configure service
+startup manually.
+
 ```
 # Проверка перед обновлением:
 ```
