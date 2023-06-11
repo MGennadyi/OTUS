@@ -1,5 +1,5 @@
 # Физическая репликация
-
+### Подготовить 2 хоста
 ###### Уст. postgresql-14
 ```
 sudo sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list'
@@ -63,6 +63,7 @@ pg_ctlcluster 14 main status
 pg_ctlcluster 14 main stop
 pg_ctlcluster 14 main start
 ```
+### На master создать пользователя, от имени которого будет реплицироваться БД, предоставить права подключения, перечитать конфиг:
 ```
 ALTER USER postgres WITH PASSWORD '12345';
 create replica and rewind users with password 12345  - на видео пропускает
@@ -284,6 +285,7 @@ sudu -u postgres pg_top
 ```
 pg_ctl -w -D  /var/lib/postgresql/14/main promoute
 pg_ctl -w -D /var/lib/pgpro/std-15/data/ promote
+select pg_promote();
 ```
 ```
 sudo -u postgres pgbench -i -s 10 otus
