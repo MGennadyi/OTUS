@@ -280,12 +280,15 @@ sudo apr inatall pgtop
 sudu -u postgres pg_top
 # Q - текст запроса; E - план; L - блокировки; 
 ```
+### Перевод реплики в stand by режим
 ```
-# Протестить команду:
-selest * from pg_is_in_recovery;
+pg_ctl -w -D  /var/lib/postgresql/14/main promoute
+pg_ctl -w -D /var/lib/pgpro/std-15/data/ promote
 ```
 ```
 sudo -u postgres pgbench -i -s 10 otus
+# Протестить команду:
+# select * from pg_is_in_recovery; - не работает
 ```
 
 
