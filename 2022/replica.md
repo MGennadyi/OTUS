@@ -35,14 +35,14 @@ ALTER SYSTEM SET wal_log_hints = 'on';
 ALTER SYSTEM SET archive_command = 'pg_compresslog %p - | gzip > /backup/wal_arc_archive/%f.gz'
 show listen_addresses;  # по умолчанию =  localhost. Подключиться из вне не получится!
 ALTER SYSTEM SET listen_addresses = '*';   # restart service   !!!!!
-ALTER SYSTEM SET listen_addresses = '0.0.0/0';   # restart service   !!!!!
+ALTER SYSTEM SET listen_addresses = '0.0.0.0';   # restart service   !!!!!
 ------------------
 На master создать пользователя, от имени которого будет реплицироваться БД, предоставить права подключения:
 # host all rewind 0.0.0.0/0 md5
 # host postgres postgres 127.0.0.1/32 trust
 ALTER USER postgres WITH PASSWORD '12345';
-CREATE USER replica with replication encrypted password '12345'  # на MASTER, на реплике все удалится.
-CREATE USER rewind SUPERUSER encrypted PASSWORD '12345'  # не делал
+CREATE USER replica with replication encrypted password '12345';  # на MASTER, на реплике все удалится.
+CREATE USER rewind SUPERUSER encrypted PASSWORD '12345';  # не делал
 -----------------------------
 mcedit /var/lib/pgpro/std-15/data/pg_hba.conf
 mcedit /etc/postgresql/14/main/pg_hba.conf
