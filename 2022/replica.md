@@ -37,15 +37,16 @@ show listen_addresses;  # по умолчанию =  localhost. Подключи
 ALTER SYSTEM SET listen_addresses = '*';   # restart service   !!!!!
 ALTER SYSTEM SET listen_addresses = '0.0.0/0';   # restart service   !!!!!
 ------------------
-На master создать пользователя, от имени которого будет реплицироваться БД, предоставить права подключения, перечитать конфиг:
+На master создать пользователя, от имени которого будет реплицироваться БД, предоставить права подключения:
 # host all rewind 0.0.0.0/0 md5
 # host postgres postgres 127.0.0.1/32 trust
+ALTER USER postgres WITH PASSWORD '12345';
+CREATE USER replica with replication encrypted password '12345'  # на MASTER, на реплике все удалится.
+CREATE USER rewind SUPERUSER encrypted PASSWORD '12345'  # не делал
 -----------------------------
-# 
 mcedit /var/lib/pgpro/std-15/data/pg_hba.conf
-vim /etc/postgresql/14/main/pg_hba.conf
-host all all 192.168.0.0/24            trust
-host postgres postgres 127.0.0.1/32 trust
+mcedit /etc/postgresql/14/main/pg_hba.conf
+host postgres postgres 127.0.0.1/32 trust  # Проверить
 systemctl restart postgresql
 psql -p 5432 -h 192.168.0.17 -U postgres
 ```
@@ -54,6 +55,9 @@ psql -p 5432 -h 192.168.0.17 -U postgres
 pg_ctlcluster 14 main status
 pg_ctlcluster 14 main stop
 pg_ctlcluster 14 main start
+systemctl status postgrespro-std-15
+systemctl stop postgrespro-std-15
+systemctl start postgrespro-std-15
 ```
 ### На master создать пользователя, от имени которого будет реплицироваться БД, предоставить права подключения, перечитать конфиг:
 ```
@@ -86,6 +90,7 @@ select * from test;
 ```
 ###### На реплике удаляем содержимое pg_data:
 ```
+systemctl stop postgrespro-std-14
 rm -rf /var/lib/postgresql/14/main/*  # V_14
 systemctl stop postgrespro-std-15
 rm -rf /var/lib/pgpro/std-15/data/*   # V_15
