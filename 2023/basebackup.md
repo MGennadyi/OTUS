@@ -16,6 +16,8 @@ tmpfs /tempdb tmpfs size=500M,uid=postgres,gid=postgres 0 0
 mount /tempdb
 vim /postgres/scripts/atom_basebackup.sh
 chmod +x /postgres/scripts/atom_basebackup.sh
+mkdir -p /data
+chown -R postgres:postgres /data
 ```
 ```
 sudo -i -u postgres
@@ -25,7 +27,7 @@ mkdir -p /log/pg_log
 mkdir -p /log/llog  # Для ротирования логов
 mkdir -p /wal/pg_wal
 mkdir -p /backup/wal_arc_archive
-
+mkdir -p /data/pg_data
 ```
 ```
 ALTER SYSTEM SET log_directory = '/log/pg_log';
