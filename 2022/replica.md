@@ -47,6 +47,7 @@ CREATE USER rewind SUPERUSER encrypted PASSWORD '12345';  # не делал
 mcedit /var/lib/pgpro/std-15/data/pg_hba.conf
 mcedit /etc/postgresql/14/main/pg_hba.conf
 host postgres postgres 127.0.0.1/32 trust  # Проверить
+host replication replication 192.168.0.16/32 md5
 systemctl restart postgresql
 psql -p 5432 -h 192.168.0.17 -U postgres
 ```
@@ -69,6 +70,7 @@ CREATE USER replica with replication encrypted password '12345';  # на MASTER,
 ###### Проверка доступности себя и соседа:
 ```
 # Через nc
+sudo -i -u postgres
 nc -vz 192.168.0.18 5432
 nc -vz 192.168.0.17 5432
 # Ответ:
