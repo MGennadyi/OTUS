@@ -21,10 +21,11 @@ Ver Cluster Port Status Owner    Data directory              Log file
 ###### На обоих нодах:
 ```
 vim /etc/postgresql/14/main/postgresql.conf
-huge_pages = try
-wal_level = replica
+show huge_pages; = try;
+show wal_level; = replica;
 show synchronous_commit;
 on
+show wal_log_hints;
 ```
 #### Конфигурируем:
 ```
@@ -105,7 +106,7 @@ rm -rf /var/lib/pgpro/std-15/data/*   # V_15
 sudo -i -u postgres
 pg_basebackup --host=192.168.0.17 --port=5432 --username=replica --pgdata=/var/lib/postgresql/14/main/ --progress --write-recovery-conf --create-slot --slot=replica1
 sudo -i -u postgres
-sudo -u postgres pg_basebackup --host=192.168.0.17 --port=5432 --username=replica --pgdata=/var/lib/pgpro/std-14/data/ --progress --write-recovery-conf --create-slot --slot=replica1
+pg_basebackup --host=192.168.0.17 --port=5432 --username=replica --pgdata=/var/lib/pgpro/std-14/data/ --progress --write-recovery-conf --create-slot --slot=replica1
 Вводим pass:
 # Ответ: 188126/188126 КБ (100%), табличное пространство 1/1  -синхронизация прошла успешно.
 # В ответ на сообщение реплики "waiting  checkpoint", на мастере:
@@ -116,6 +117,7 @@ primary_conninfo = 'user=replica password=12345 channel_binding=prefer host=192.
 ```
 #### На реплике V_15:
 ```
+systemctl start postgrespro-std-14
 systemctl start postgrespro-std-15
 /c otus
 otus=# select * from test;
@@ -194,8 +196,8 @@ reply_time       | 2023-06-10 16:59:59.824104+03
 ```
 su postgres
 psql -c "CREATE DATABASE otus;"
-psql otus -c "create table test00(i int);"
-psql otus -c "insert into test00 values (10), (20), (30);"
+psql otus -c "create table test(i int);"
+insert into test values (10), (20), (30);
 psql otus -c "select * from test;"
  i
 ----
@@ -211,6 +213,8 @@ psql otus -c "select * from test;"
  10
  20
  30
+ insert into test values (4);
+ в транзакции в режиме "только чтение" нельзя выполнить INSERT
 ```
 #### Удаление слота репликации:
 ```
