@@ -37,10 +37,9 @@ show listen_addresses;  # по умолчанию =  localhost. Подключи
 ALTER SYSTEM SET listen_addresses = '*';   # restart service   !!!!!
 ALTER SYSTEM SET listen_addresses = '0.0.0/0';   # restart service   !!!!!
 ------------------
-echo "host replication replica 0.0.0.0/0 md5" >> /etc/postgresql/14/main/pg_hba.conf
-echo "host all rewind 0.0.0.0/0 md5" >> /etc/postgresql/14/main/pg_hba.conf
-echo "host all all 192.168.0.0/24 trust" >> /etc/postgresql/14/main/pg_hba.conf
-echo "host postgres postgres 127.0.0.1/32 trust" >> /etc/postgresql/14/main/pg_hba.conf
+На master создать пользователя, от имени которого будет реплицироваться БД, предоставить права подключения, перечитать конфиг:
+# host all rewind 0.0.0.0/0 md5
+# host postgres postgres 127.0.0.1/32 trust
 -----------------------------
 # 
 mcedit /var/lib/pgpro/std-15/data/pg_hba.conf
