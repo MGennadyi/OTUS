@@ -47,7 +47,8 @@ CREATE USER rewind SUPERUSER encrypted PASSWORD '12345';  # не делал
 mcedit /var/lib/pgpro/std-15/data/pg_hba.conf
 mcedit /etc/postgresql/14/main/pg_hba.conf
 host postgres postgres 127.0.0.1/32 trust  # Проверить
-host replication replication 192.168.0.16/32 md5
+host replication replica 192.168.0.16/32 md5
+host all postgres 192.168.0.16/32 md5
 systemctl restart postgresql
 psql -p 5432 -h 192.168.0.17 -U postgres
 ```
@@ -104,11 +105,14 @@ rm -rf /var/lib/pgpro/std-15/data/*   # V_15
 sudo -i -u postgres
 pg_basebackup --host=192.168.0.17 --port=5432 --username=replica --pgdata=/var/lib/postgresql/14/main/ --progress --write-recovery-conf --create-slot --slot=replica1
 sudo -i -u postgres
-sudo -u postgres pg_basebackup --host=192.168.0.17 --port=5432 --username=replica --pgdata=/var/lib/pgpro/std-15/data/ --progress --write-recovery-conf --create-slot --slot=replica1
+sudo -u postgres pg_basebackup --host=192.168.0.17 --port=5432 --username=replica --pgdata=/var/lib/pgpro/std-14/data/ --progress --write-recovery-conf --create-slot --slot=replica1
 Вводим pass:
 # Ответ: 188126/188126 КБ (100%), табличное пространство 1/1  -синхронизация прошла успешно.
 # В ответ на сообщение реплики "waiting  checkpoint", на мастере:
 sudo -u postgres psql -c "checkpoint"
+cat /var/lib/pgpro/std-14/data/postgresql.auto.conf
+primary_conninfo = 'user=replica password=12345 channel_binding=prefer host=192.168.0.17 port=5432 sslmode=prefer sslcompression=0 sslsni=1 ssl_min_protocol_version=TLSv1.2 gssencmode=prefer krbsrvname=postgres target_session_attrs=any'
+
 ```
 #### На реплике V_15:
 ```
