@@ -97,7 +97,7 @@ rm -rf /var/lib/postgresql/14/main/*  # V_14
 systemctl stop postgrespro-std-15
 rm -rf /var/lib/pgpro/std-15/data/*   # V_15
 ```
-###### Восстановление реплики from master=192.168.0.17: 
+###### Создание реплики from master=192.168.0.17: 
 ```
 # Restor на реплике=192.168.0.16:
 sudo -i -u postgres
