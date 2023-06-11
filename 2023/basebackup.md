@@ -32,7 +32,6 @@ mkdir -p /data/pg_data
 ```
 ALTER SYSTEM SET log_directory = '/log/pg_log';
 ALTER SYSTEM SET log_filename = 'postgresql-%u.log';
-ALTER SYSTEM SET log_filename = 'postgresql.log';
 ALTER SYSTEM SET logging_collector = 'on';
 ALTER SYSTEM SET wal_compression = 'on';    # для V_14
 ALTER SYSTEM SET wal_compression = 'pglz';    # для V_15=on для v_14
