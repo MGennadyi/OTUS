@@ -21,10 +21,6 @@ Ver Cluster Port Status Owner    Data directory              Log file
 ###### На обоих нодах:
 ```
 vim /etc/postgresql/14/main/postgresql.conf
-shared_buffers = 6GB
-maintenance_work_mem = 1536MB
-work_mem = 16MB
-max_connections = 1100
 huge_pages = try
 wal_level = replica
 show synchronous_commit;
@@ -33,16 +29,13 @@ on
 #### Конфигурируем:
 ```
 # По умолчанию: listen_addresses = 'localhost' #wal_log_hints = off
-echo "listen_addresses = '*'" >> /etc/postgresql/14/main/postgresql.conf
-echo "wal_log_hints = on" >> /etc/postgresql/14/main/postgresql.conf
----------------
-echo "archive_mode = on" >>  /etc/postgresql/14/main/postgresql.conf
-echo "archive_command = 'pg_compresslog %p - | gzip > /backup/wal_arc_archive/%f.gz'" >>  /etc/postgresql/14/main/postgresql.conf
-# или так лучше:
-ALTER SYSTEM SET archive_command = 'gzip < %p > /backup/wal_arc_archive/%f.gz'
+ALTER SYSTEM SET listen_addresses = '0.0.0.0/0';
+ALTER SYSTEM SET wal_log_hints = 'on';
+# ALTER SYSTEM SET archive_command = 'gzip < %p > /backup/wal_arc_archive/%f.gz'
 ALTER SYSTEM SET archive_command = 'pg_compresslog %p - | gzip > /backup/wal_arc_archive/%f.gz'
 show listen_addresses;  # по умолчанию =  localhost. Подключиться из вне не получится!
 ALTER SYSTEM SET listen_addresses = '*';   # restart service   !!!!!
+ALTER SYSTEM SET listen_addresses = '0.0.0/0';   # restart service   !!!!!
 ------------------
 echo "host replication replica 0.0.0.0/0 md5" >> /etc/postgresql/14/main/pg_hba.conf
 echo "host all rewind 0.0.0.0/0 md5" >> /etc/postgresql/14/main/pg_hba.conf
