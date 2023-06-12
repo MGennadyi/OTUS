@@ -143,8 +143,6 @@ chown -R postgres:postgres /backup
 ```
 #### 7. Резервная копия конфигов действующей СУБД:
 ```
-mkdir -p /pg_upgrade
-chown -R postgres:postgres /pg_upgrade
 cp /etc/postgresql/13/main/postgresql.conf /pg_upgrade/postgresql.conf_v13
 cp /var/lib/postgresql/13/main/postgresql.auto.conf /pg_upgrade/postgresql.auto.conf_v13
 cp /etc/postgresql/13/main/pg_hba.conf /pg_upgrade/pg_hba.conf_v13
