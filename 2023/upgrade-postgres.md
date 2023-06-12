@@ -247,7 +247,7 @@ Ver Cluster Port Status Owner    Data directory              Log file
 14  main    5433 online postgres /var/lib/postgresql/14/main /var/log/postgresql/postgresql-14-main.log
 # 5433 Будем то правим позже!!!!!!!!!!!!!!!!!!!!!!!!:
 ```
-#### Пропускаем перенос данных старого кластера
+##### Пропускаем - перенос данных старого кластера
 ```
 # Из-под УЗ postgres: sudo su -i -u postgres
 mkdir -p /log/pg_log_13
@@ -261,7 +261,7 @@ rm /data/pg_data_13/pg_wal
 mv /wal/pg_wal
 mv /log/pg_log
 ```
-#### Пропускаем инициализацию нового кластера
+##### Пропускаем - инициализацию нового кластера
 ```
 # PG_PRO
 /usr/lib/postgresql/14/bin/pg-setup initdb --datachecksums --locale=en_US.utf.8 --pgdata=/data/pg_data --waldir=/wal/pg_wal
@@ -283,7 +283,7 @@ sudo -u postgres -i
 cd /pg_upgrade  # запуск, находясь в директории !!! ОБЯЗАТЕЛЬНО!
 # Документация: pg_upgrade -b старый_каталог_bin         -B новый_каталог_bin         -d старый_каталог_конфигурации -D новый_каталог_конфигурации
 # PRO
-opt/pgpro/std-14/bin/pg_upgrade -b opt/pgpro/std-14/bin/ -B /var/lib/pgpro/std-14/data -d /var/lib/pgpro/std-14/data -D /var/lib/pgpro/std-15/data --link --check
+opt/pgpro/std-14/bin/pg_upgrade -b opt/pgpro/std-14/bin/ -B /opt/pgpro/std-15/bin/ -d /var/lib/pgpro/std-14/data/ -D /var/lib/pgpro/std-15/data/ --link --check
 # Ванильный
 postgres@pg:~$ /usr/lib/postgresql/14/bin/pg_upgrade -b /usr/lib/postgresql/13/bin -B /usr/lib/postgresql/14/bin -d /etc/postgresql/13/main/ -D /etc/postgresql/14/main/ --link --check
 cd /pg_upgrade - обязательно! иначе:
@@ -360,8 +360,7 @@ Ver Cluster Port Status Owner    Data directory              Log file
 13  main    5432 down   postgres /var/lib/postgresql/13/main /var/log/postgresql/postgresql-13-main.log
 14  main    5433 down   postgres /var/lib/postgresql/14/main /var/log/postgresql/postgresql-14-main.log
 ```
-
-#### Выполнение обновления:
+### Выполнение обновления:
 ```
 postgres@etcd:/pg_upgrade$ /usr/lib/postgresql/14/bin/pg_upgrade -b /usr/lib/postgresql/13/bin -B /usr/lib/postgresql/14/bin -d /etc/postgresql/13/main/ -D /etc/postgresql/14/main/ --link
 Finding the real data directory for the source cluster      ok
