@@ -295,6 +295,21 @@ pg_ctl -w -D  /var/lib/postgresql/14/main promoute
 pg_ctl -w -D /var/lib/pgpro/std-15/data/ promote
 select pg_promote();
 ```
+### V_15 установится на 5432, поэтому
+```
+vim /var/lib/pgpro/std-14/data/postgresql.conf
+
+
+
+
+```
+
+
+
+
+
+
+
 ```
 sudo -u postgres pgbench -i -s 10 otus
 # Протестить команду:
