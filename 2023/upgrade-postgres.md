@@ -1,5 +1,39 @@
 # Мажерное обновление POSTGRESQL
-###### После создания ВМ и уст.postgres создать pg_stat_statements
+##### 1. Установить Postgres. Проверим, что под капотом POSTGRES PRO:
+```
+# Для postgres-pro: psql -c "select pgpro_version()"
+postgres@zabbix:/home/mgb$ psql -c "select version()"
+                                                           version
+-----------------------------------------------------------------------------------------------------------------------------
+ PostgreSQL 14.4 (Debian 14.4-1.pgdg110+1) on x86_64-pc-linux-gnu, compiled by gcc (Debian 10.2.1-6) 10.2.1 20210110, 64-bit
+postgres@etcd:/home/mgb$ psql -c "select version()"
+                                                          version
+---------------------------------------------------------------------------------------------------------------------------
+ PostgreSQL 13.9 (Debian 13.9-0+deb11u1) on x86_64-pc-linux-gnu, compiled by gcc (Debian 10.2.1-6) 10.2.1 20210110, 64-bit
+(1 строка)
+```
+###### 1.0 Какая ОС:
+```
+root@etcd:/home/mgb# lsb_release -a
+No LSB modules are available.
+Distributor ID: Debian
+Description:    Debian GNU/Linux 11 (bullseye)
+Release:        11
+Codename:       bullseye
+-------------------
+root@etcd:/home/mgb# pg_lsclusters
+Ver Cluster Port Status Owner    Data directory              Log file
+13  main    5432 online postgres /var/lib/postgresql/13/main /var/log/postgresql/postgresql-13-main.log
+```
+##### 1.0 Проверим, что под капотом ванильный POSTGRES:
+```
+postgres@etcd:/home/mgb$ psql -c "select version()"
+                                                            version
+-------------------------------------------------------------------------------------------------------------------------------
+ PostgreSQL 13.10 (Debian 13.10-1.pgdg110+1) on x86_64-pc-linux-gnu, compiled by gcc (Debian 10.2.1-6) 10.2.1 20210110, 64-bit
+(1 строка)
+```
+###### 1.1 Cоздать pg_stat_statements
 ```
 ALTER SYSTEM set shared_preload_libraries = 'pg_stat_statements';
 create extension pg_stat_statements;
@@ -13,7 +47,7 @@ pg_ctlcluster 13 main stop
 pg_ctlcluster 13 main start
 systemctl disable  postgresql
 ```
-### Загрузка БД:
+### 1.2 Загрузка БД:
 ```
 wget --quiet https://edu.postgrespro.ru/demo_small.zip
 unzip demo_small.zip
@@ -26,50 +60,6 @@ psql -d demo < /home/mgb/demo_small.sql
 demo=# create extension pg_repack; - уст на конкретную БД, к примеру demo.
 CREATE EXTENSION
 ```
-##### 0. Проверим, что под капотом POSTGRES PRO:
-```
-# Для postgres-pro: psql -c "select pgpro_version()"
-postgres@zabbix:/home/mgb$ psql -c "select version()"
-                                                           version
------------------------------------------------------------------------------------------------------------------------------
- PostgreSQL 14.4 (Debian 14.4-1.pgdg110+1) on x86_64-pc-linux-gnu, compiled by gcc (Debian 10.2.1-6) 10.2.1 20210110, 64-bit
-postgres@etcd:/home/mgb$ psql -c "select version()"
-                                                          version
----------------------------------------------------------------------------------------------------------------------------
- PostgreSQL 13.9 (Debian 13.9-0+deb11u1) on x86_64-pc-linux-gnu, compiled by gcc (Debian 10.2.1-6) 10.2.1 20210110, 64-bit
-(1 строка)
-```
-##### 0. Проверим, что под капотом ванильный POSTGRES:
-```
-postgres@etcd:/home/mgb$ psql -c "select version()"
-                                                            version
--------------------------------------------------------------------------------------------------------------------------------
- PostgreSQL 13.10 (Debian 13.10-1.pgdg110+1) on x86_64-pc-linux-gnu, compiled by gcc (Debian 10.2.1-6) 10.2.1 20210110, 64-bit
-(1 строка)
-```
-###### Какая ОС:
-```
-root@etcd:/home/mgb# lsb_release -a
-No LSB modules are available.
-Distributor ID: Debian
-Description:    Debian GNU/Linux 11 (bullseye)
-Release:        11
-Codename:       bullseye
--------------------
-root@etcd:/home/mgb# pg_lsclusters
-Ver Cluster Port Status Owner    Data directory              Log file
-13  main    5432 online postgres /var/lib/postgresql/13/main /var/log/postgresql/postgresql-13-main.log
--------------------
-root@etcd:/home/mgb# df -h
-Файловая система Размер Использовано  Дост Использовано% Cмонтировано в
-udev               1,9G            0  1,9G            0% /dev
-tmpfs              394M         984K  393M            1% /run
-/dev/sda1          6,9G         3,8G  2,8G           59% /
-tmpfs              2,0G          16K  2,0G            1% /dev/shm
-tmpfs              5,0M         4,0K  5,0M            1% /run/lock
-tmpfs              394M          48K  394M            1% /run/user/1000
-tmpfs              394M          44K  394M            1% /run/user/114
-``` 
 ##### 00. Подготовка до простоя:
 ```
 # Создать задание 2-го уровня на unix:
@@ -99,17 +89,11 @@ postgresql-pltcl-15-dbgsym/bullseye-pgdg 15.2-1.pgdg110+1 amd64
 sudo systemctl stop  pg_receivewal.core-s-pgaidb01.service
 systemctl status pg_receivewal.core-s-pgaidb01.service
 ```
-#### 0. Архивация собранных WAL 
-```
-sudo -i -u postgres
-2 скрипта
-```
-#### 1. Создание режим обслуживания  в ZABBIX:
+#### 1.0 Создание режим обслуживания  в ZABBIX:
 ```
 192.168.0.19:8080/zabbix.php
 обслуживание/создать период (без сбора данных)
 ```
-
 #### 2. Отключаем пользователей от баз данных:
 ```
 # 1.0 Проверка клиентских подключений:
