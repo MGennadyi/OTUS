@@ -235,13 +235,12 @@ systemctl disable postgresql@13-main
 ```
 systemctl stop postgrespro-std-15
 ```
-#### 9. Установка пакетов новой версии
+#### 9. Установка пакетов новой версии v_14:
 ```
 pg_ctlcluster 13 main stop
 apt install postgresql-14 -y
-apt install postgresql-15 -y
 pg_lsclusters
-# На каком порту v_14 ???
+# v_14 установился на слудующем порту 5433:
 root@etcd:/home/mgb# pg_lsclusters
 Ver Cluster Port Status Owner    Data directory              Log file
 13  main    5432 online postgres /var/lib/postgresql/13/main /var/log/postgresql/postgresql-13-main.log
@@ -262,7 +261,7 @@ rm /data/pg_data_13/pg_wal
 mv /wal/pg_wal
 mv /log/pg_log
 ```
-#### Пропускаем инициализация нового кластера
+#### Пропускаем инициализацию нового кластера
 ```
 # PG_PRO
 /usr/lib/postgresql/14/bin/pg-setup initdb --datachecksums --locale=en_US.utf.8 --pgdata=/data/pg_data --waldir=/wal/pg_wal
@@ -281,8 +280,11 @@ root@etcd:/home/mgb# pg_ctlcluster 14 main stop
 mkdir -p /pg_upgrade
 chown -R postgres:postgres /pg_upgrade
 sudo -u postgres -i
-cd /pg_upgrade
-#                          pg_upgrade -b старый_каталог_bin         -B новый_каталог_bin]         -d старый_каталог_конфигурации -D новый_каталог_конфигурации
+cd /pg_upgrade  # запуск, находясь в директории !!! ОБЯЗАТЕЛЬНО!
+# Документация: pg_upgrade -b старый_каталог_bin         -B новый_каталог_bin         -d старый_каталог_конфигурации -D новый_каталог_конфигурации
+# PRO
+opt/pgpro/std-14/bin/pg_upgrade -b opt/pgpro/std-14/bin/ -B /var/lib/pgpro/std-14/data -d /var/lib/pgpro/std-14/data -D /var/lib/pgpro/std-15/data --link --check
+# Ванильный
 postgres@pg:~$ /usr/lib/postgresql/14/bin/pg_upgrade -b /usr/lib/postgresql/13/bin -B /usr/lib/postgresql/14/bin -d /etc/postgresql/13/main/ -D /etc/postgresql/14/main/ --link --check
 cd /pg_upgrade - обязательно! иначе:
 не удалось открыть файл протокола "pg_upgrade_internal.log": Отказано в доступе
