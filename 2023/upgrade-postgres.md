@@ -143,6 +143,9 @@ chown -R postgres:postgres /backup
 ```
 #### 7. Резервная копия конфигов действующей СУБД:
 ```
+# v_14
+cp /var/lib/pgpro/std-14/data/postgresql.conf /pg_upgrade/
+# v_13
 cp /etc/postgresql/13/main/postgresql.conf /pg_upgrade/postgresql.conf_v13
 cp /var/lib/postgresql/13/main/postgresql.auto.conf /pg_upgrade/postgresql.auto.conf_v13
 cp /etc/postgresql/13/main/pg_hba.conf /pg_upgrade/pg_hba.conf_v13
@@ -244,6 +247,9 @@ pg_ctlcluster 13 main status
 pg_ctlcluster 13 main stop
 systemctl stop postgresql@13-main
 systemctl disable postgresql@13-main
+```
+```
+systemctl stop postgrespro-std-15
 ```
 #### 6. Установка пакетов новой версии
 ```
