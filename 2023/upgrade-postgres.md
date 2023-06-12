@@ -255,7 +255,7 @@ systemctl stop postgrespro-std-15
 ```
 pg_ctlcluster 13 main stop
 apt install postgresql-14 -y
-apt ibstall postgresql-15 -y
+apt install postgresql-15 -y
 pg_lsclusters
 # На каком порту v_14 ???
 root@etcd:/home/mgb# pg_lsclusters
