@@ -89,12 +89,12 @@ postgresql-pltcl-15-dbgsym/bullseye-pgdg 15.2-1.pgdg110+1 amd64
 sudo systemctl stop  pg_receivewal.core-s-pgaidb01.service
 systemctl status pg_receivewal.core-s-pgaidb01.service
 ```
-#### 1.0 Создание режим обслуживания  в ZABBIX:
+#### 1.3 Создание режим обслуживания  в ZABBIX:
 ```
 192.168.0.19:8080/zabbix.php
 обслуживание/создать период (без сбора данных)
 ```
-#### 2. Отключаем пользователей от баз данных:
+#### 1.4 Отключаем пользователей от баз данных:
 ```
 # 1.0 Проверка клиентских подключений:
 psql -c "SELECT count(*) FROM pg_stat_activity WHERE backend_type='client backend'"
@@ -116,7 +116,7 @@ postgres     542     535  0 16:13 ?        00:00:00 postgres: 13/main: logical r
 postgres   77075   77074  0 19:37 pts/0    00:00:00 bash
 postgres   77692   77075  0 19:38 pts/0    00:00:00 ps -fu postgres
 ```
-### Подготовим служебную директорию для обновления:
+### 2. Подготовим служебную директорию для обновления:
 ```
 mkdir -p /pg_upgrade
 chown -R postgres:postgres /pg_upgrade
@@ -125,7 +125,7 @@ mkdir -p /backup
 chown -R postgres:postgres /postgres/scripts
 chown -R postgres:postgres /backup
 ```
-#### 7. Резервная копия конфигов действующей СУБД:
+#### 2.1 Резервная копия конфигов действующей СУБД:
 ```
 # v_14
 cp /var/lib/pgpro/std-14/data/postgresql.conf /pg_upgrade/
@@ -134,7 +134,7 @@ cp /etc/postgresql/13/main/postgresql.conf /pg_upgrade/postgresql.conf_v13
 cp /var/lib/postgresql/13/main/postgresql.auto.conf /pg_upgrade/postgresql.auto.conf_v13
 cp /etc/postgresql/13/main/pg_hba.conf /pg_upgrade/pg_hba.conf_v13
 ```
-### Бекап скриптом atom_basebackup.sh:
+### 3. Бекап скриптом atom_basebackup.sh:
 ```
 # Загрузить atom_basebackup.sh/basebackup.sh - определиться с именем
 chmod +x /postgres/scripts/atom_basebackup.sh
@@ -144,7 +144,7 @@ chmod +x /postgres/scripts/basebackup.sh
 /postgres/scripts/basebackup.sh
 ```
 ```
-# 1.1 Подготовка и замена предварительно откоректрированного pg_hba.conf
+# 3.1 Подготовка и замена предварительно откоректрированного pg_hba.conf
 mkdir -p /data/backup/24.02.2022
 chown -R postgres:postgres /data/backup
 cp /etc/postgresql/13/main/pg_hba.conf /data/backup/24.02.2022/pg_hba.conf-old-cluster
@@ -165,7 +165,7 @@ postgres@zabbix:/home/mgb$ psql -c "select pg_terminate_backend(pid) FROM pg_sta
 ----------------------
  t
 (28 строк)
-# 1.2 Проверка клиентских подключений:
+# 2.2 Проверка клиентских подключений:
 psql -c "SELECT count(*) FROM pg_stat_activity WHERE backend_type='client backend'"
  count
 -------
@@ -173,13 +173,13 @@ psql -c "SELECT count(*) FROM pg_stat_activity WHERE backend_type='client backen
 (1 строка)
 # Потому что открыто 2 сессии
 ```
-#### 3. Отключаем задания в планировщике:
+#### 4. Отключаем задания в планировщике:
 ```
 sudo -i -u postgres
 # Закоментрировать:
 crontab -e
 ```
-#### 4. Запуск резервного копирования и создания ролей:
+#### 5. Запуск резервного копирования и создания ролей:
 ```
 mkdir -p /postgres/scripts
 chown -R postgres:postgres /postgres/scripts
@@ -214,7 +214,7 @@ ARWD_GROUP_ROLE=arwd_role
 PORT="5432"
 ```
 ###### Рекомендации: pg_bouncer на паузу; checkpoint
-#### 5. Остановка СУБД
+#### 8. Остановка СУБД
 ```
 systemctl status postgresql
 # из каталога бинарника: /usr/bin
@@ -235,7 +235,7 @@ systemctl disable postgresql@13-main
 ```
 systemctl stop postgrespro-std-15
 ```
-#### 6. Установка пакетов новой версии
+#### 9. Установка пакетов новой версии
 ```
 pg_ctlcluster 13 main stop
 apt install postgresql-14 -y
@@ -272,7 +272,7 @@ mv /log/pg_log
 pg_upgrade -b /usr/lib/postgresql/13/bin -B /usr/lib/postgresql/14/bin -d /var/lib/postgresql/13/main -D /var/lib/postgresql/14/main [option...]
 ```
 
-### Проверка выполнения обновления: --check:
+### 10. Проверка выполнения обновления: --check:
 #### V_13 и V_14 должны быть остановлены:
 ```
 # v_13 должен быть уже остановлен:
