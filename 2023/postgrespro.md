@@ -176,13 +176,12 @@ systemctl stop postgrespro-std-14
 mkdir -p /data/pg_data
 mkdir -p /wal/pg_wal
 ```
-#### Инициалицация нового кластера v_14:
+#### Пропускаем - Инициалицация нового кластера v_14:
 ```
 /opt/pgpro/std-14/bin/pg_setup initdb --data-checksums --locale=en_US.utf8 --pgdata=/data/pg_data --waldir=/wal/pg_wal
 /opt/pgpro/std-14/bin/pg-setup initdb --data-checksums --locale=en_US.utf8 --pgdata=/data/pg_data --waldir=/wal/pg_wal  # pg-setup через дефис
 If you want to setup second postgres instance in /data/pg_data use /opt/pgpro/std-14/bin/initdb directly and configure service
 startup manually.
-
 ```
 # Проверка перед обновлением:
 ```
@@ -254,7 +253,6 @@ root@etcd:/home/mgb# systemctl status postgrespro-std-15
 июн 09 15:56:41 etcd postgres[2906]: 2023-06-09 15:56:41.258 MSK [2906] СООБЩЕНИЕ:  передача вывода в протокол процессу сбора протоколов
 июн 09 15:56:41 etcd postgres[2906]: 2023-06-09 15:56:41.258 MSK [2906] ПОДСКАЗКА:  В дальнейшем протоколы будут выводиться в каталог "log".
 июн 09 15:56:41 etcd systemd[1]: Started Postgres Pro std 15 database server.
-
 ```
 
 
