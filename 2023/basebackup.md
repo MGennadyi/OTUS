@@ -42,6 +42,7 @@ ALTER SYSTEM SET archive_command = 'test ! -f /backup/wal_arc_archive/%f && cp %
 ALTER SYSTEM SET wal_log_hints = 'on';
 ALTER USER postgres WITH PASSWORD '12345';
 CREATE USER expert WITH PASSWORD '12345';  user-с правом входа
+CREATE USER red WITH PASSWORD '12345';  user-с правом входа
 CREATE USER evsemkin LOGIN password '12345';
 CREATE USER avesenin LOGIN password '12345';
 ALTER USER avesenin WITH LOGIN password '12345';
