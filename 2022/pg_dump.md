@@ -119,16 +119,11 @@ real    0m5,125s
 real    0m1,232s
 ```
 ```
-pg_ctl start -D 
-
-
-
-
-
-
-
-
-
+pg_ctl -D /data/pg_data/ start
+```
+### PG_DUMPALL
+```
+pg_dumpall --quote-all-identifiers --verbose --file /backup/dump/dump_all.dmp >> /backup/dump/dump_all.log 2>&1
 ```
 
 
