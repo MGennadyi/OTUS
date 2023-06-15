@@ -124,7 +124,7 @@ pg_ctl -D /data/pg_data/ start
 ### PG_DUMPALL
 ```
 # Создание:
-pg_dumpall --quote-all-identifiers --verbose --file /backup/dump/dump_all.dmp >> /backup/dump/dump_all.log 2>&1
+pg_dumpall --quote-all-identifiers --verbose /backup/dump/dump_all.dmp >> /backup/dump/dump_all.log 2>&1
 # Восстановление:
 psql -f /backup/dump/dump_all.dmp >> /backup/dump/import.log
 # Просмотр лога
