@@ -294,6 +294,10 @@ sudu -u postgres pg_top
 pg_ctl -w -D  /var/lib/postgresql/14/main promoute
 pg_ctl -w -D /var/lib/pgpro/std-15/data/ promote
 select pg_promote();
+# Проверка:
+select pg_is_in_recovery();
+если f=не реплика
+
 ```
 ### V_15 установится на 5432, поэтому
 ```
