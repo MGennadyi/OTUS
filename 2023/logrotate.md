@@ -11,8 +11,8 @@ log_filename = 'postgresql-%u.log'
 mkdir -p /log/pg_log
 chown -R postgres:postgres /log/pg_log
 ALTER SYSTEM SET logging_collector = 'on';
-ALTER SYSTEM SET log_rotation_size = '0';
-ALTER SYSTEM SET log_rotation_age = '1d';
+ALTER SYSTEM SET log_rotation_size = '550MB';
+ALTER SYSTEM SET log_rotation_age = '0';
 ALTER SYSTEM SET log_directory = '/log/pg_log';
 ALTER SYSTEM SET log_rotation_size = "10";
 ALTER SYSTEM SET log_truncate_on_rotation = "on";
@@ -47,7 +47,9 @@ vim /postgres/scripts/logrotate.conf
     compress
     notifempty
     maxage 30
-    copytruncate
+    postgrorate
+                /postgres/scripts/logclean.sh
+    endscript
 }
 ```
 ```
@@ -62,8 +64,6 @@ chown postgres:postgres /postgres/scripts/rotsize.sh
 crontab -e
 # Сжатие логов
 0 */1 * * * /postgres/scripts/logrotate /postgres/scripts/logrotate.conf --state /postgres/scripts/logrotate-state
-# Удаление логов
-5 */1 * * * /postgres/scripts/rotsize.sh
 ```
 ### Импорт логов
 ```
