@@ -5,10 +5,14 @@ UID          PID    PPID  C STIME TTY          TIME CMD
 postgres     583       1  0 15:58 ?        00:00:00 /usr/lib/postgresql/14/bin/postgres -D /var/lib/postgresql/14/main -c config_file=/etc/postgresql/14/main/postgresql.conf
 ```
 ```
-vim /etc/postgresql/14/main/postgresql.conf
-log_filename = 'postgresql-%u.log'
 mkdir -p /log/pg_log
+mkdir -p /log/llog
 chown -R postgres:postgres /log/pg_log
+chown -R postgres:postgres /log/llog
+```
+```
+vim /etc/postgresql/14/main/postgresql.conf
+ALTER SYSTEM SET log_filename = 'postgresql-%Y-%m-%d_%H%M%S.log'
 ALTER SYSTEM SET logging_collector = 'on';
 ALTER SYSTEM SET log_rotation_size = '500MB';
 # При нулевом значении смена файлов по времени не производится:
