@@ -6,15 +6,14 @@ postgres     583       1  0 15:58 ?        00:00:00 /usr/lib/postgresql/14/bin/p
 ```
 ```
 vim /etc/postgresql/14/main/postgresql.conf
-log_filename = 'postgresql-%a.log'
 log_filename = 'postgresql-%u.log'
 mkdir -p /log/pg_log
 chown -R postgres:postgres /log/pg_log
 ALTER SYSTEM SET logging_collector = 'on';
-ALTER SYSTEM SET log_rotation_size = '550MB';
+ALTER SYSTEM SET log_rotation_size = '500MB';
+# При нулевом значении смена файлов по времени не производится:
 ALTER SYSTEM SET log_rotation_age = '0';
 ALTER SYSTEM SET log_directory = '/log/pg_log';
-ALTER SYSTEM SET log_rotation_size = "10";
 ALTER SYSTEM SET log_truncate_on_rotation = "on";
 
 SELECT pg_reload_conf();
@@ -194,7 +193,7 @@ postgres@zabbix:/home/mgb$ cat /postgres/scripts/logrotate.conf
 /log/pg_log/*.log
 {
         rotate 99
-        size 1M
+        size 500M
         missingok
         compress
         delaycompress
