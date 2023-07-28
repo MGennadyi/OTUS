@@ -2,7 +2,8 @@
 #### Просмотр доступных пакетов
 ```
 # Просмотр доступных пакетов ДО:
-apt list | grep postgresql
+apt list | grep -E "postgresql|postgrespro"
+yum list | grep -E "postgresql|postgrespro"
 ```
 ```
 root@etcd:/home/mgb# curl -o pgpro-repo-add.sh https://repo.postgrespro.ru/pgpro-13/keys/pgpro-repo-add.sh
