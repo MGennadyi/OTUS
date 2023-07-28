@@ -1,11 +1,11 @@
 # Установка postgrespro-std-13
-#### Просмотр доступных пакетов
+#### Просмотр доступных пакетов ДО:
 ```
-# Просмотр доступных пакетов ДО:
 apt list | grep -E "postgresql|postgrespro"
 yum list | grep -E "postgresql|postgrespro"
 apt info postgrespro-std-14-server
 ```
+# Установка репозитория postgrespro-std-13
 ```
 root@etcd:/home/mgb# curl -o pgpro-repo-add.sh https://repo.postgrespro.ru/pgpro-13/keys/pgpro-repo-add.sh
   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
@@ -34,7 +34,7 @@ HTTP-запрос отправлен. Ожидание ответа… 200 OK
 apt-get update
 apt-get install postgrespro-std-13 -y
 ```
-#### Просмотр доступных пакетов для установки:
+#### Просмотр доступных пакетов после установки репозитория:
 ```
 apt list | grep -E "postgrespro"
 
