@@ -32,6 +32,11 @@ HTTP-запрос отправлен. Ожидание ответа… 200 OK
 apt-get update
 apt-get install postgrespro-std-13 -y
 ```
+#### Просмотр доступных пакетов для установки:
+```
+apt list | grep -E "postgrespro"
+
+```
 ### Установка v_14
 ```
 curl -o pgpro-repo-add.sh https://repo.postgrespro.ru/pgpro-14/keys/pgpro-repo-add.sh
