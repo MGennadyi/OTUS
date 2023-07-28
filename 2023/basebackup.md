@@ -75,7 +75,7 @@ export PATH=/usr/lib/postgresql/14/bin/:$PATH
 ```
 #### Создание групповой роли create_arwd_group.sh на БД demo;
 ```
-# Правим строку пути к бинарникамиЭ
+# Правим строку пути к бинарниками в конфиге:
 vim /postgres/scripts/create_group.config
 bin_path=/usr/lib/postgresql/14/bin
 # Вешаем роль на бд demo:
