@@ -12,7 +12,7 @@ postgres@etcd:/home/mgb$ psql -c "select version()"
  PostgreSQL 13.9 (Debian 13.9-0+deb11u1) on x86_64-pc-linux-gnu, compiled by gcc (Debian 10.2.1-6) 10.2.1 20210110, 64-bit
 (1 строка)
 ```
-###### 1.0 Какая ОС:
+##### 1.0 Какая ОС:
 ```
 root@etcd:/home/mgb# lsb_release -a
 No LSB modules are available.
@@ -234,6 +234,11 @@ systemctl disable postgresql@13-main
 ```
 ```
 systemctl stop postgrespro-std-15
+```
+#### Проверка доступных пакетов для установки
+```
+
+
 ```
 #### 9. Установка пакетов новой версии v_14:
 ```
