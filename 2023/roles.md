@@ -22,6 +22,10 @@ GRANT ROLE
 postgres=# grant arwd_role_demo to evsemkin;
 GRANT ROLE
 ```
+```
+
+
+```
 
 
 
