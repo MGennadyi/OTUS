@@ -3,6 +3,11 @@
 ```
 CREATE USER gbsemkin LOGIN password '12345';  user-с правом входа
 ```
+#### Создание роли в СУБД:
+```
+
+
+```
 #### Схема:
 ```
 CREATE SCHEMA oil;
