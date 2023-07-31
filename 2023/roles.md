@@ -1,4 +1,8 @@
 # Роли, права.
+#### Создание пользователя с правом входа
+```
+CREATE USER gbsemkin LOGIN password '12345';  user-с правом входа
+```
 #### Схема:
 ```
 CREATE SCHEMA oil;
