@@ -5,7 +5,8 @@ CREATE USER gbsemkin WITH LOGIN password '12345';  user-с правом вход
 ```
 #### 2. Создание роли в СУБД (если нет роли):
 ```
-./create_readonly_group.sh --list demo
+# Назначаем роль на БД:
+bash /postgres/scripts/create_role/create_readonly_group.sh --list demo
 ```
 #### 3. Присвоение/назначение пользователю роль: 
 ```
