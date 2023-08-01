@@ -11,6 +11,14 @@ Grant privileges from readonly_role:
 List databases: demo
 Granted role "readonly_role_demo" for database "demo" successfully.
 Role creation comleted.
+-----------------------------------
+postgres@backup-restore:/home/mgb$ bash /postgres/scripts/create_role/create_readonly_group.sh --list otus
+Grant privileges from readonly_role:
+List databases: otus
+Role readonly_role_otus created successfully.
+Granted role "readonly_role_otus" for database "otus" successfully.
+Role creation comleted.
+
 ```
 ```
 demo=# \du+
@@ -27,7 +35,12 @@ demo=# \du+
 ```
 #### 3. Присвоение/назначение пользователю роль: 
 ```
-GRANT readonly_role to gbsemkin;
+GRANT readonly_role_demo to gbsemkin;
+postgres=# GRANT readonly_role_demo to gbsemkin;
+ЗАМЕЧАНИЕ:  роль "gbsemkin" уже включена в роль "readonly_role_demo"
+GRANT ROLE
+postgres=# GRANT readonly_role_otus to gbsemkin;
+GRANT ROLE
 ```
 #### Схема:
 ```
