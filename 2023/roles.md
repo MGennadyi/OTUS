@@ -27,7 +27,7 @@ demo=# \du+
 ```
 #### 3. Присвоение/назначение пользователю роль: 
 ```
-grant readonly_role to gbsemkin;
+GRANT readonly_role to gbsemkin;
 ```
 #### Схема:
 ```
