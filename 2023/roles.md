@@ -1,7 +1,7 @@
 # Роли, права.
 #### 1. Заведение нового пользователя с правом входа:
 ```
-CREATE USER gbsemkin LOGIN password '12345';  user-с правом входа
+CREATE USER gbsemkin WITH LOGIN password '12345';  user-с правом входа
 ```
 #### 2. Создание роли в СУБД (если нет роли):
 ```
