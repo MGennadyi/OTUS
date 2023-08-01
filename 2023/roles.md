@@ -7,6 +7,10 @@ CREATE USER gbsemkin WITH LOGIN password '12345';  user-с правом вход
 ```
 # Назначаем роль на БД demo:
 bash /postgres/scripts/create_role/create_readonly_group.sh --list demo
+Grant privileges from readonly_role:
+List databases: demo
+Granted role "readonly_role_demo" for database "demo" successfully.
+Role creation comleted.
 ```
 #### 3. Присвоение/назначение пользователю роль: 
 ```
