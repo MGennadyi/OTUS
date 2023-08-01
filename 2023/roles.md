@@ -12,6 +12,19 @@ List databases: demo
 Granted role "readonly_role_demo" for database "demo" successfully.
 Role creation comleted.
 ```
+```
+demo=# \du+
+                                                          Список ролей
+      Имя роли      |                                Атрибуты                                 |      Член ролей      | Описание
+--------------------+-------------------------------------------------------------------------+----------------------+----------
+ arwd_role_demo     | Вход запрещён                                                           | {}                   |
+ avesenin           |                                                                         | {readonly_role_demo} |
+ evsemkin           |                                                                         | {arwd_role_demo}     |
+ expert             |                                                                         | {}                   |
+ gbsemkin           |                                                                         | {}                   |
+ postgres           | Суперпользователь, Создаёт роли, Создаёт БД, Репликация, Пропускать RLS | {}                   |
+ readonly_role_demo | Вход запрещён  
+```
 #### 3. Присвоение/назначение пользователю роль: 
 ```
 grant readonly_role to gbsemkin;
