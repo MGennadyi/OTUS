@@ -20,6 +20,7 @@ Granted role "readonly_role_otus" for database "otus" successfully.
 Role creation comleted.
 
 ```
+#### Роль на конкретную базу - создается роль_имя_базы:
 ```
 demo=# \du+
                                                           Список ролей
