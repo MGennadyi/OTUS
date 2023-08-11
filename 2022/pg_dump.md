@@ -135,6 +135,19 @@ psql -f /backup/dump/dump_all.dmp >> /backup/dump/import.log
 # Просмотр лога
 grep -E "ERROR|ОШИБКА|DETAIL|CONTEXT" /backup/dump/import.log
 ```
-
+### PG_DUMP
+```
+DBNAME=otus
+FNAME=`date +%F`_$DBNAME
+DIRDUMP=/backup/dump
+echo ----------------------------- pg_dump $FNAME
+date
+pg_dump -U postgres -v --file=$DIRDUMP/$FNAME.dmp $DBNAME  >> $DIRDUMP/$FNAME.dmp.log 2>&1
+grep -E "ERROR|ОШИБКА|DETAIL|CONTEXT|FATAL" $DIRDUMP/$FNAME.dmp.log
+tail -n 10 $DIRDUMP/$FNAME.dmp.log
+tail -n 10 $DIRDUMP/$FNAME.dmp
+ls -lah $DIRDUMP
+date
+```
 
 
