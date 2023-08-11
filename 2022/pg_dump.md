@@ -123,8 +123,12 @@ pg_ctl -D /data/pg_data/ start
 ```
 ### PG_DUMPALL
 ```
+# Создание: -не работает
+pg_dumpall --quote-all-identifiers --verbose /backup/dump/dump_all.dmp >> /backup/dump/dump_all.log 2>&1  -не работает
 # Создание:
-pg_dumpall --quote-all-identifiers --verbose /backup/dump/dump_all.dmp >> /backup/dump/dump_all.log 2>&1
+pg_dump -U postgres --file=/backup/2023_08_11.sql имя_бд >> /backup/2023_08_11/имя_бд.log 2>&1
+grep -E "ERROR|ошибка|DETAIL|CONTEXT|FATAL" /backup/2023_08_11/имя_бд.log
+
 # Восстановление:
 psql -f /backup/dump/dump_all.dmp >> /backup/dump/import.log
 # Просмотр лога
