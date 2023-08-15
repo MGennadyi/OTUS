@@ -106,7 +106,7 @@ psql -c "SELECT usename FROM pg_stat_activity WHERE backend_type='client backend
 ```
 #### 1.3 Проверка запущенных процессов от имени postgres: 
 ```
-postgres@etcd:/home/mgb$ ps -fu postgres
+ps -fu postgres
 UID          PID    PPID  C STIME TTY          TIME CMD
 postgres     535       1  0 16:13 ?        00:00:03 /usr/lib/postgresql/13/bin/postgres -D /var/lib/postgresql/13/main -c config_file=/etc/postgresql/13/main/postgresql.conf
 postgres     537     535  0 16:13 ?        00:00:00 postgres: 13/main: checkpointer
