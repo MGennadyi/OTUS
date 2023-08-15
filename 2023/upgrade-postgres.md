@@ -94,16 +94,18 @@ systemctl status pg_receivewal.core-s-pgaidb01.service
 192.168.0.19:8080/zabbix.php
 обслуживание/создать период (без сбора данных)
 ```
-#### 1.4 Отключаем пользователей от баз данных:
+#### 1.4 Проверка клиентских подключений:
 ```
-# 1.0 Проверка клиентских подключений:
 psql -c "SELECT count(*) FROM pg_stat_activity WHERE backend_type='client backend'"
-postgres@etcd:/home/mgb$ psql -c "SELECT usename FROM pg_stat_activity WHERE backend_type='client backend'"
+psql -c "SELECT usename FROM pg_stat_activity WHERE backend_type='client backend'"
  usename
 ----------
  postgres
 (1 строка)
 -----------------
+```
+#### Проверка запущенных процессов от имени postgres: 
+```
 postgres@etcd:/home/mgb$ ps -fu postgres
 UID          PID    PPID  C STIME TTY          TIME CMD
 postgres     535       1  0 16:13 ?        00:00:03 /usr/lib/postgresql/13/bin/postgres -D /var/lib/postgresql/13/main -c config_file=/etc/postgresql/13/main/postgresql.conf
@@ -115,6 +117,10 @@ postgres     541     535  0 16:13 ?        00:00:00 postgres: 13/main: stats col
 postgres     542     535  0 16:13 ?        00:00:00 postgres: 13/main: logical replication launcher
 postgres   77075   77074  0 19:37 pts/0    00:00:00 bash
 postgres   77692   77075  0 19:38 pts/0    00:00:00 ps -fu postgres
+```
+#### Отключение пользователей от БД otus:
+```
+psql -c "SELECT pg_terminate_backend(pid) FROM pg_stat_activity WHERE datname='otus';"
 ```
 ### 2. Подготовим служебную директорию для обновления:
 ```
