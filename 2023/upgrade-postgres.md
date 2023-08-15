@@ -89,12 +89,12 @@ postgresql-pltcl-15-dbgsym/bullseye-pgdg 15.2-1.pgdg110+1 amd64
 sudo systemctl stop  pg_receivewal.core-s-pgaidb01.service
 systemctl status pg_receivewal.core-s-pgaidb01.service
 ```
-#### 1.3 Создание режим обслуживания  в ZABBIX:
+#### 1.1 Создание режим обслуживания  в ZABBIX:
 ```
 192.168.0.19:8080/zabbix.php
 обслуживание/создать период (без сбора данных)
 ```
-#### 1.4 Проверка клиентских подключений:
+#### 1.2 Проверка клиентских подключений:
 ```
 psql -c "SELECT count(*) FROM pg_stat_activity WHERE backend_type='client backend'"
 psql -c "SELECT usename FROM pg_stat_activity WHERE backend_type='client backend'"
@@ -104,7 +104,7 @@ psql -c "SELECT usename FROM pg_stat_activity WHERE backend_type='client backend
 (1 строка)
 -----------------
 ```
-#### Проверка запущенных процессов от имени postgres: 
+#### 1.3 Проверка запущенных процессов от имени postgres: 
 ```
 postgres@etcd:/home/mgb$ ps -fu postgres
 UID          PID    PPID  C STIME TTY          TIME CMD
@@ -118,7 +118,7 @@ postgres     542     535  0 16:13 ?        00:00:00 postgres: 13/main: logical r
 postgres   77075   77074  0 19:37 pts/0    00:00:00 bash
 postgres   77692   77075  0 19:38 pts/0    00:00:00 ps -fu postgres
 ```
-#### Отключение пользователей от БД otus:
+#### 1.4 Отключение пользователей от БД otus:
 ```
 psql -c "SELECT pg_terminate_backend(pid) FROM pg_stat_activity WHERE datname='otus';"
 ```
