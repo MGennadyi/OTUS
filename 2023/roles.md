@@ -3,7 +3,7 @@
 ```
 CREATE USER gbsemkin WITH LOGIN password '12345';  user-с правом входа
 CREATE USER gbsemkin WITH LOGIN password '12345';
-create USER iibutikov password '****' valid until '2023-09-15 23:59:00.+03';
+create USER iibutikov password '****' valid until '2023-09-15 23:59:00+03';
 ```
 #### 2. Создание роли в СУБД (если нет роли):
 ```
