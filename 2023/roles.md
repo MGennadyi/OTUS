@@ -3,6 +3,8 @@
 ```
 CREATE USER gbsemkin WITH LOGIN password '12345';  user-с правом входа, команда WITH LOGIN - лишняя.
 CREATE USER gbsemkin password '12345';
+ALTER USER "gren-d-DALysko" WITH LOGIN;  -задать право на логин
+ALTER USER "gren-d-DALysko" WITH PASSWORD 'new_password'; -смена пароля
 create USER iibutikov password '****' valid until '2023-09-15 23:59:00+03';
 ```
 #### 2. Создание роли в СУБД (если нет роли):
