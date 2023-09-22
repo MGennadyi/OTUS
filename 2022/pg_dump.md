@@ -58,8 +58,8 @@ echo "create database otus;" | psql
 pg_restore -U postgres -Ft -d testdb < testdb.tar
 # БД testdb нет:
 pg_restore -U postgres -Ft -C -d testdb < testdb.tar
-# восстановление из файла резервной копии back_it.sql:
-psql -f back_it.sql
+# Восстановление из файла резервной копии back_it.sql:
+psql -f /backup/back_it.sql -U postgres 
 
 # Рассмотреть время выполнения в различных вариантах -j:
 pg_restore -j 1 -d otus /home/backups/otus4.gz
