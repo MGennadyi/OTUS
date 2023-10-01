@@ -29,9 +29,12 @@ OOM-Killer можно не только включать и выключать. 
 2: ядро не будет резервировать больше памяти, чем указано в параметре overcommit_ratio.
 ```
 ```
-root@backup-restore:/backup# echo 1 > /proc/sys/vm/overcommit_memory  -vim не проходит
-root@backup-restore:/backup# cat /proc/sys/vm/overcommit_memory
-1
+root@backup-restore:/home/mgb# cat /proc/sys/vm/overcommit_memory  -после перезагрузки изм нет
+0
+vim /etc/sysctl.conf`-только так
+vm.overcommit_memory = 1
+
+
 ```
 
 
