@@ -101,7 +101,7 @@ CREATE table test(i int);
 INSERT INTO test values (1), (2), (3);
 select * from test;
 ```
-#### СКРИПТ basebackup.sh
+#### СКРИПТ atom_basebackup.sh - единоразовый бекап
 ```
 #!/bin/bash
 # скрипт делает basebackup СУБД
