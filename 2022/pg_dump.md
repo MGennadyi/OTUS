@@ -125,6 +125,8 @@ pg_ctl -D /data/pg_data/ start
 ```
 # Создание: -не работает
 pg_dumpall --quote-all-identifiers --verbose /backup/dump/dump_all.dmp >> /backup/dump/dump_all.log 2>&1  -не работает
+pg_dumpall --quote-all-identifiers --verbose --file=/backup/dump/dumpall.dmp 2> /backup/dump/dumpall.dmp.log от Лосева работает
+real    0m17,066s
 # Создание:
 pg_dump -U postgres --file=/backup/2023_08_11.sql имя_бд >> /backup/2023_08_11/имя_бд.log 2>&1
 pg_dump -U postgres --file=/backup/2023_08_11.sql otus >> /backup/2023_08_11/otus.log 2>&1
@@ -132,6 +134,7 @@ grep -E "ERROR|ошибка|DETAIL|CONTEXT|FATAL" /backup/2023_08_11/имя_бд
 
 # Восстановление:
 psql -f /backup/dump/dump_all.dmp >> /backup/dump/import.log
+psql -f /backup/dump/dumpall.dmp >> /backup/dump/dumpall_restore.dmp.log 2>&1 - от Лосева
 # Просмотр лога
 grep -E "ERROR|ОШИБКА|DETAIL|CONTEXT" /backup/dump/import.log
 ```
