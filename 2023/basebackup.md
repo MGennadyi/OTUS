@@ -33,16 +33,16 @@ mkdir -p /data/pg_data
 ALTER SYSTEM SET log_directory = '/log/pg_log';
 ALTER SYSTEM SET log_filename = 'postgresql-%u.log';
 ALTER SYSTEM SET logging_collector = 'on';
-ALTER SYSTEM SET wal_compression = 'on';    # для V_14
-ALTER SYSTEM SET wal_compression = 'pglz';    # для V_15=on для v_14
+ALTER SYSTEM SET wal_compression = 'on';            # для V_14
+ALTER SYSTEM SET wal_compression = 'pglz';          # для V_15=on для v_14
 ALTER SYSTEM SET stats_temp_directory = '/tempdb';  # Для v_14 и ниже.
 ALTER SYSTEM SET archive_mode = 'on';   # Требуется restart службы
 ALTER SYSTEM SET archive_timeout = '600';   #Каждые 10 мин переключение на новый wal
 ALTER SYSTEM SET archive_command = 'test ! -f /backup/wal_arc_archive/%f && cp %p /backup/wal_arc_archive/%f';
 ALTER SYSTEM SET wal_log_hints = 'on';
 ALTER USER postgres WITH PASSWORD '12345';
-CREATE USER expert WITH PASSWORD '12345';  user-с правом входа
-CREATE USER red WITH PASSWORD '12345';  user-с правом входа
+CREATE USER expert WITH PASSWORD '12345';  # user-с правом входа
+CREATE USER red WITH PASSWORD '12345';     # user-с правом входа
 CREATE USER evsemkin LOGIN password '12345';
 CREATE USER avesenin LOGIN password '12345';
 ALTER USER avesenin WITH LOGIN password '12345';
@@ -71,7 +71,6 @@ sudo -i -u postgres
 vim ~/bash_profile
 export PATH=/opt/pgpro/ent-14/bin/:$PATH
 export PATH=/usr/lib/postgresql/14/bin/:$PATH
-
 ```
 #### Создание групповой роли create_arwd_group.sh на БД demo;
 ```
