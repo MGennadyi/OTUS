@@ -31,6 +31,12 @@ mkdir -p /data/pg_data
 ```
 ```
 # нет log_rotate для переключения на следующий день
+log_destination = stderr
+log_rotate_size = '0'
+log_rotate_age = '1d'
+log_checkpoints = 'on'
+log_trancate_on_rotation = 'on'
+checkpoint_timeout = '15min'
 ALTER SYSTEM SET log_directory = '/log/pg_log';
 ALTER SYSTEM SET log_filename = 'postgresql-%u.log';
 ALTER SYSTEM SET logging_collector = 'on';
@@ -38,7 +44,7 @@ ALTER SYSTEM SET wal_compression = 'on';            # для V_14
 ALTER SYSTEM SET wal_compression = 'pglz';          # для V_15=on для v_14
 ALTER SYSTEM SET stats_temp_directory = '/tempdb';  # Для v_14 и ниже.
 ALTER SYSTEM SET archive_mode = 'on';   # Требуется restart службы
-ALTER SYSTEM SET archive_timeout = '600';   #Каждые 10 мин переключение на новый wal
+ALTER SYSTEM SET archive_timeout = '30min';   #Каждые 600=10 мин переключение на новый wal
 ALTER SYSTEM SET archive_command = 'test ! -f /backup/wal_arc_archive/%f && cp %p /backup/wal_arc_archive/%f';
 ALTER SYSTEM SET wal_log_hints = 'on';
 ALTER USER postgres WITH PASSWORD '12345';
