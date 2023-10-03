@@ -29,6 +29,7 @@ mkdir -p /wal/pg_wal
 mkdir -p /backup/wal_arc_archive
 mkdir -p /data/pg_data
 ```
+### postresql.auto.conf
 ```
 ALTER SYSTEM SET log_destination = 'stderr';
 ALTER SYSTEM SET log_rotate_size = '0';
