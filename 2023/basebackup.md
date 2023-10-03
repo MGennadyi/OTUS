@@ -70,8 +70,10 @@ show wal_level;
 ```
 sudo -i -u postgres
 vim ~/bash_profile
-export PATH=/opt/pgpro/ent-14/bin/:$PATH
-export PATH=/usr/lib/postgresql/14/bin/:$PATH
+export PATH=/opt/pgpro/ent-14/bin/:$PATH        # Pg_pro-14
+export PATH=/usr/lib/postgresql/14/bin/:$PATH   # ванильный-14
+export PATH=/opt/pgpro/ent-15/bin/:$PATH        # Pg_pro-15
+export PATH=/usr/lib/postgresql/15/bin/:$PATH   # ванильный-15
 ```
 #### Создание групповой роли create_arwd_group.sh на БД demo;
 ```
