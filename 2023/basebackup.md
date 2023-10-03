@@ -30,7 +30,7 @@ mkdir -p /backup/wal_arc_archive
 mkdir -p /data/pg_data
 ```
 ```
-нет log_rotate !
+# нет log_rotate для переключения на следующий день
 ALTER SYSTEM SET log_directory = '/log/pg_log';
 ALTER SYSTEM SET log_filename = 'postgresql-%u.log';
 ALTER SYSTEM SET logging_collector = 'on';
