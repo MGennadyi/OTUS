@@ -139,7 +139,7 @@ watch -n 1 "ps ax | grep atom_basebackup | grep -v grep; tail -n 20 /postgres/sc
 # m h  dom mon dow   command
 # 00 21 21  *   *     /postgres/scripts/atom_basebackup.sh
 ```
-###### Перенос данных в паралельный кластер:
+#### Перенос данных в паралельный кластер:
 ```
 # 1. Создание паралельного кластера:
 pg_createcluster 14 main2
@@ -203,7 +203,7 @@ select * from test_main2;
  30
 (6 строк)
 ```
-#### Работа с wal
+### Работа с wal
 ```
 archive_command = 'test ! -f /backup/wal_arc_archive/%f && cp %p /backup/wal_arc_archive/%f'
 ```
@@ -225,7 +225,7 @@ unzip demo_small.zip
 chown postgres:postgres /home/mgb/demo_small.sql
 chown postgres /home/mgb/demo_small.sql
 ```
-#### Предварительная загрузка данных:
+### Предварительная загрузка данных:
 ```
 sudo -i -u postgres
 psql -p 5433 -c 'drop DATABASE demo';  
@@ -263,7 +263,7 @@ create database demo_main2;
 time psql -p 5433 -d demo_main2 < /backup/demo_main.sql
 real    0m18,920s
 ```
-###### Тест psq: Загрузка/выгрузка 1,8/18,9 сек. 186s/19,442s=9.8 раз
+### Тест psq: Загрузка/выгрузка 1,8/18,9 сек. 186s/19,442s=9.8 раз
 ```
 postgres@backup-restore:~$ time pg_dump -C -h localhost -U postgres 'demo' > /backup/demo_main.sql
 Пароль:
@@ -272,7 +272,7 @@ user    0m0,585s
 sys     0m0,318s
 time psql -p 5433 -U postgres < /backup/demo_main.sql > /backup/dump_in.log 2>&1
 ```
-#### Тест -Fd SIZE=888/233MB=3.8 раза 220/34сек=6.5 34/18=1.8 220/186=1.2
+### Тест -Fd SIZE=888/233MB=3.8 раза 220/34сек=6.5 34/18=1.8 220/186=1.2
 ```
 # Филатов Евгений утверждал pg_restore медленнее -?? 
 psql -c "SELECT pg_terminate_backend(pid) FROM pg_stat_activity"
@@ -287,13 +287,13 @@ postgres@backup-restore:/postgres/scripts$ time pg_restore -p 5432 -h localhost 
 Пароль:
 real    3m40,516s
 ```
-#### Тест пайплан demo_big: 185 сек/186+19=205 сек. Пайплан чуть быстрее.
+### Тест пайплан demo_big: 185 сек/186+19=205 сек. Пайплан чуть быстрее.
 ```
 
 time pg_dump -p 5432 demo | psql -p 5433 --set ON_ERROR_STOP=on demo
 real    3m5,470s
 ```
-#### BASH-скрипт PGDUMP = 23 сек:
+### BASH-скрипт PGDUMP = 23 сек:
 ```
 vim /postgres/scripts/dump.sh
 #!/bin/bash
@@ -301,7 +301,7 @@ vim /postgres/scripts/dump.sh
 pg_dump -C -h localhost -U postgres 'demo' > /backup/demo_main.sql && psql -p 5433 -U postgres < /backup/demo_main.sql
 real    0m23,693s
 ```
-#### BASH-скрипт PG_DUMPALL =  сек:
+### BASH-скрипт PG_DUMPALL =  сек:
 ```
 vim /postgres/scripts/dumpall.sh
 #!/bin/bash
@@ -313,7 +313,7 @@ pg_dumpall -h localhost -U postgres > /backup/dumpall.sql
 pg_dumpall -h localhost -U postgres < /backup/dumpall.sql
 psql -f /backup/dumpall.sql postgres
 ```
-#### BASH-скрипт restore_DUMPALL =  сек:
+### BASH-скрипт restore_DUMPALL =  сек:
 ```
 vim /postgres/scripts/dumpall.sh
 #!/bin/bash
@@ -386,17 +386,17 @@ real    0m8,192s
 user    0m1,076s
 sys     0m1,915s
 ```
-#### Выгрузка ролей:
+### Выгрузка ролей:
 ```
 pg_restore -p 5432 -h localhost -j 4 -d demo /backup/dump
 pg_dumpall -p 5432 -h localhost --globals-only > /backup/roles_and_users.sql
 ```
-#### PGBENCH
+### PGBENCH
 ```
 pgbench -h 192.168.5.165 -p 5432 -U postgres -i -s 100 -F 80 testpgbench
 pgbench -i -s 1 otus
 ```
-#### Правка в паралельном кластере:
+### Правка в паралельном кластере:
 ```
 cp /conf.d /backup/restore/pg_data/
 cp postgresql.conf /backup/restore/pg_data/
