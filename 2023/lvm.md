@@ -3,26 +3,24 @@
 fdisk -l
 lsblk
 ```
+### Создание физического тома /dev/sdb
 ```
 [root@localhost mgb]# pvcreate /dev/sdb
   Physical volume "/dev/sdb" successfully created.
 ```
+### Смотрим, что получилось
 ```
 [root@localhost mgb]# pvs
   PV         VG       Fmt  Attr PSize   PFree
   /dev/sda2  ro_redos lvm2 a--   <9,26g      0
   /dev/sdb            lvm2 ---  <20,41g <20,41g
 ```
+### Создание Volume group "vg_backup": 
 ```
-[root@localhost mgb]# vgcreate vg_backup /dev/sdb
-  Volume group "vg_backup" successfully created
+vgcreate vg_backup /dev/sdb
+Volume group "vg_backup" successfully created
 ```
-```
-[root@localhost mgb]# pvs
-  PV         VG        Fmt  Attr PSize   PFree
-  /dev/sda2  ro_redos  lvm2 a--   <9,26g      0
-  /dev/sdb   vg_backup lvm2 a--  <20,41g <20,41g
-```
+### Смотрим, что получилось:
 ```
 root@localhost mgb]# vgs
   VG        #PV #LV #SN Attr   VSize   VFree
@@ -36,7 +34,7 @@ root@localhost mgb]# vgs
   root ro_redos -wi-ao----  8,23g
   swap ro_redos -wi-ao---- <1,03g
 ```
-### Создание логического тома
+### Создание логического тома lv_backup на 10Gb
 ```
 [root@localhost mgb]# lvcreate vg_backup -n lv_backup --size 10GB
   Logical volume "lv_backup" created.
@@ -53,7 +51,7 @@ root@localhost mgb]# vgs
 Do you really want to remove active logical volume vg_backup/lv_backup? [y/n]: y
   Logical volume "lv_backup" successfully removed
 ```
-### Создание LVM, еще раз
+### Создание еще раз логического тома lv_backup на 20Gb
 ```
 [root@localhost mgb]# lvcreate vg_backup -n lv_backup --size 20g
   Logical volume "lv_backup" created.
@@ -66,6 +64,7 @@ Do you really want to remove active logical volume vg_backup/lv_backup? [y/n]: y
   swap      ro_redos  -wi-ao---- <1,03g
   lv_backup vg_backup -wi-a----- 20,00g
 ```
+### devmapper
 ```
 [root@localhost mgb]# ls -la /dev/mapper/vg_backup-lv_backup
 lrwxrwxrwx. 1 root root 7 окт  4 10:45 /dev/mapper/vg_backup-lv_backup -> ../dm-2
