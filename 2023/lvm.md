@@ -126,7 +126,7 @@ pvcreate /dev/sdc
 vgcreate vg_wal /dev/sdc
 ```
 ```
-lvcreate vg_wal -n lv_backup --size 8GB
+lvcreate vg_wal -n lv_wal --size 8GB
 ```
 ```
 mkfs.ext4 /dev/mapper/vg_wal-lv_wal
