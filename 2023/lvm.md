@@ -131,17 +131,19 @@ lvcreate vg_wal -n lv_wal --size 8GB
 ```
 mkfs.ext4 /dev/mapper/vg_wal-lv_wal
 ```
-FSTAB
+```
+mkdir /wal
+```
+### FSTAB
 ```
 vim /etc/fstab
 # Для /backup
 /dev/mapper/vg_backup-lv_backup                     /backup         ext4    defaults        1 1
-
+/dev/mapper/vg_wal-lv_wal                     /wal         ext4    defaults        1 1
 # Для временных файлов:
 tmpfs /tempdb tmpfs size=1G,uid=postgres,gid=postgres 0 0
 # Для логов:
 tmpfs /log tmpfs size=100M,uid=postgres,gid=postgres 0 0
-
 ```
 
 
