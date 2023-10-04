@@ -53,9 +53,43 @@ root@localhost mgb]# vgs
 Do you really want to remove active logical volume vg_backup/lv_backup? [y/n]: y
   Logical volume "lv_backup" successfully removed
 ```
-
-
-
+### Создание LVM, еще раз
+```
+[root@localhost mgb]# lvcreate vg_backup -n lv_backup --size 20g
+  Logical volume "lv_backup" created.
+```
+### Что получилось:
+```
+[root@localhost mgb]# lvs
+  LV        VG        Attr       LSize  Pool Origin Data%  Meta%  Move Log Cpy%Sync Convert
+  root      ro_redos  -wi-ao----  8,23g
+  swap      ro_redos  -wi-ao---- <1,03g
+  lv_backup vg_backup -wi-a----- 20,00g
+```
+```
+[root@localhost mgb]# ls -la /dev/mapper/vg_backup-lv_backup
+lrwxrwxrwx. 1 root root 7 окт  4 10:45 /dev/mapper/vg_backup-lv_backup -> ../dm-2
+```
+### Создание файловой системы:
+```
+[root@localhost mgb]# mkfs.ext4 /dev/mapper/vg_backup-lv_backup
+mke2fs 1.44.6 (5-Mar-2019)
+Creating filesystem with 5242880 4k blocks and 1310720 inodes
+```
+### Монтирование /backup
+```
+mkdir /backup
+mount /dev/mapper/vg_backup-lv_backup /backup
+[root@localhost mgb]# df -h
+Файловая система                Размер Использовано  Дост Использовано% Cмонтировано в
+devtmpfs                          4,0M            0  4,0M            0% /dev
+tmpfs                             2,0G            0  2,0G            0% /dev/shm
+tmpfs                             786M         1,9M  784M            1% /run
+/dev/mapper/ro_redos-root         8,1G         2,3G  5,3G           31% /
+/dev/sda1                         974M          66M  841M            8% /boot
+tmpfs                             393M            0  393M            0% /run/user/1000
+/dev/mapper/vg_backup-lv_backup    20G          24K   19G            1% /backup
+```
 
 
 
