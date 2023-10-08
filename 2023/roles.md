@@ -91,10 +91,14 @@ GRANT ROLE
 ```
 ### Исправляю ошибку:
 ```
+create database "db1" with owner "owner_test";
+```
+```
 CREATE USER owner_test password '12345';
-
-
-
+ALTER USER owner_test WITH SUPERUSER;
+ALTER TABLE tab_test OWNER TO owner_test;
+ALTER TABLE employee_information OWNER TO owner_test;
+create table test_table (column_name varchar(50)) OWNER TO owner_test;
 ```
 
 
