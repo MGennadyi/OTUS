@@ -100,11 +100,21 @@ ALTER TABLE tab_test OWNER TO owner_test;
 ALTER TABLE employee_information OWNER TO owner_test;
 create table test_table (column_name varchar(50)) OWNER TO owner_test;
 ```
+```
+select * from pg_tables where tableowner = 'owner_test';
+ schemaname | tablename  | tableowner | tablespace | hasindexes | hasrules | hastriggers | rowsecurity
+------------+------------+------------+------------+------------+----------+-------------+-------------
+ public     | test_table | owner_test |            | f          | f        | f           | f
+```
+```
+DROP TABLE IF EXISTS test_table;
+```
+```
+SELECT 'DROP TABLE ' || test_table || ' ' CASCADE;' \ FROM pg_catalog WHERE tableowner = 'owner_test';
+> /tmp/droptables
 
 
-
-
-
+```
 
 
 
