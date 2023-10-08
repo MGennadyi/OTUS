@@ -89,6 +89,13 @@ GRANT ROLE
 postgres=# grant arwd_role_demo to evsemkin;
 GRANT ROLE
 ```
+### Исправляю ошибку:
+```
+CREATE USER owner_test password '12345';
+
+
+
+```
 
 
 
