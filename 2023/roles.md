@@ -6,6 +6,7 @@ CREATE USER gbsemkin password '12345';
 ALTER USER "gren-d-DALysko" WITH LOGIN;  -задать право на логин
 ALTER USER "gren-d-DALysko" WITH PASSWORD 'new_password'; -смена пароля
 create USER iibutikov password '****' valid until '2023-09-15 23:59:00+03';
+ALTER USER user_name WITH PASSWORD '12345';
 ```
 #### 2. Создание роли в СУБД (если нет роли):
 ```
