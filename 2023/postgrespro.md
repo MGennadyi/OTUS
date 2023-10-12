@@ -47,7 +47,6 @@ root@etcd:/home/mgb# curl -o pgpro-repo-add.sh https://repo.postgrespro.ru/pgpro
                                  Dload  Upload   Total   Spent    Left  Speed
 100 18239  100 18239    0     0  25981      0 --:--:-- --:--:-- --:--:-- 25944
 
-
 root@etcd:/home/mgb# sh pgpro-repo-add.sh
 --2023-03-03 19:58:04--  http://repo.postgrespro.ru/std-14/debian/dists/bullseye/main/binary-amd64/Release
 Распознаётся repo.postgrespro.ru (repo.postgrespro.ru)… 213.171.56.11
@@ -55,11 +54,8 @@ root@etcd:/home/mgb# sh pgpro-repo-add.sh
 HTTP-запрос отправлен. Ожидание ответа… 200 OK
 Длина: 137 [application/octet-stream]
 Сохранение в: «STDOUT»
-
 -                                                  100%[================================================================================================================>]     137  --.-KB/s    за 0s
-
 /2023-03-03 19:58:05 (11,1 MB/s) - записан в stdout [137/137]
-
 Сущ:1 http://security.debian.org/debian-security bullseye-security InRelease
 Сущ:2 http://deb.debian.org/debian bullseye InRelease
 Сущ:3 http://deb.debian.org/debian bullseye-updates InRelease
@@ -71,20 +67,16 @@ HTTP-запрос отправлен. Ожидание ответа… 200 OK
 
 apt-get update
 apt-get install postgrespro-std-14
+systemctl status postgrespro-std-14
 # Новая версия 14 установлена.
 ```
-```
-oot@etcd:/home/mgb# systemctl status postgrespro-std-13
-● postgrespro-std-13.service - Postgres Pro std 13 database server
-     Loaded: loaded (/lib/systemd/system/postgrespro-std-13.service; enabled; vendor preset: enabled)
-     Active: active (running) since Thu 2023-03-02 11:32:23 MSK; 1 day 7h ago
-    ```
 ### Установка 15
 ```
 wget http://repo.postgrespro.ru/std-15/keys/pgpro-repo-add.sh
 sh pgpro-repo-add.sh
 sudo apt update
 sudo apt install postgrespro-std-15
+systemctl status postgrespro-std-15
 ```
 ##### Установка make
 ```
@@ -125,7 +117,6 @@ sudo apt-get install libssl-dev
 sudo apt install libgl1-mesa-dev
 apt install liblz4-dev
 apt-get install zlib1g-dev
-
 ```
 #### Установка pg_repack:
 ```
@@ -161,10 +152,11 @@ $ make
 $ sudo make install
 CREATE EXTENSION pg_repack;
 ```
-##### Остановка v_13
+##### Остановка postgrespro-std
 ```
 systemctl stop postgrespro-std-13
 systemctl stop postgrespro-std-14
+systemctl stop postgrespro-std-15
 ```
 #### Подготовка директорий:
 ```
@@ -183,7 +175,6 @@ startup manually.
 mkdir -p /pg_upgrade
 cd /pg_upgrade
 /opt/pgpro/std-14/bin/pg_upgrade
-
 ```
 ```
 sudo sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list'
