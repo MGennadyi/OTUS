@@ -2,32 +2,31 @@
 #### Подготовка директорий:
 ```
 mkdir -p /backup
+mkdir -p /backup/base_backup
+mkdir -p /backup/wal_arc_archive
+mkdir -p /backup/srk
 chown -R postgres:postgres /backup
 mkdir -p /postgres
+mkdir -p /postgres/scripts
 chown -R postgres:postgres /postgres
 mkdir -p /log
+mkdir -p /log/pg_log
+mkdir -p /log/llog  # Для ротирования логов
 chown -R postgres:postgres /log
 mkdir -p /wal
+mkdir -p /wal/pg_wal
 chown -R postgres:postgres /wal
+vim /postgres/scripts/atom_basebackup.sh
+chmod +x /postgres/scripts/atom_basebackup.sh
+mkdir -p /data
+mkdir -p /data/pg_data
+chown -R postgres:postgres /data
+# Для версии <15:
 mkdir -p /tempdb
 chown -R postgres:postgres /tempdb
 vim /etc/fstab
 tmpfs /tempdb tmpfs size=500M,uid=postgres,gid=postgres 0 0
 mount /tempdb
-vim /postgres/scripts/atom_basebackup.sh
-chmod +x /postgres/scripts/atom_basebackup.sh
-mkdir -p /data
-chown -R postgres:postgres /data
-```
-```
-sudo -i -u postgres
-mkdir -p /backup/SRK
-mkdir -p /postgres/scripts
-mkdir -p /log/pg_log
-mkdir -p /log/llog  # Для ротирования логов
-mkdir -p /wal/pg_wal
-mkdir -p /backup/wal_arc_archive
-mkdir -p /data/pg_data
 ```
 ### postresql.auto.conf
 ```
