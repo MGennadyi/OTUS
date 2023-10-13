@@ -8,69 +8,23 @@ apt info postgrespro-std-14-server
 # Установка репозитория postgrespro-std-13
 ```
 root@etcd:/home/mgb# curl -o pgpro-repo-add.sh https://repo.postgrespro.ru/pgpro-13/keys/pgpro-repo-add.sh
-  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
-                                 Dload  Upload   Total   Spent    Left  Speed
-100 18239  100 18239    0     0  26743      0 --:--:-- --:--:-- --:--:-- 26743
-
-root@etcd:/home/mgb# sh pgpro-repo-add.sh
---2023-03-03 19:53:48--  http://repo.postgrespro.ru/std-13/debian/dists/bullseye/main/binary-amd64/Release
-Распознаётся repo.postgrespro.ru (repo.postgrespro.ru)… 213.171.56.11
-Подключение к repo.postgrespro.ru (repo.postgrespro.ru)|213.171.56.11|:80... соединение установлено.
-HTTP-запрос отправлен. Ожидание ответа… 200 OK
-Длина: 137 [application/octet-stream]
-Сохранение в: «STDOUT»
--                                                  100%[================================================================================================================>]     137  --.-KB/s    за 0s
-
-/2023-03-03 19:53:49 (9,95 MB/s) - записан в stdout [137/137]
-
-Сущ:1 http://deb.debian.org/debian bullseye InRelease
-Сущ:2 http://security.debian.org/debian-security bullseye-security InRelease
-Сущ:3 http://deb.debian.org/debian bullseye-updates InRelease
-Пол:4 http://repo.postgrespro.ru/std-13/debian bullseye InRelease [3 560 B]
-Пол:5 http://repo.postgrespro.ru/std-13/debian bullseye/main amd64 Packages [11,6 kB]
-Получено 15,1 kB за 2с (7 276 B/s)
-Чтение списков пакетов… Готово
-
 apt-get update
 apt-get install postgrespro-std-13 -y
 ```
 #### Просмотр доступных пакетов после установки репозитория:
 ```
 apt list | grep -E "postgrespro"
-
 ```
 ### Установка v_14
 ```
 curl -o pgpro-repo-add.sh https://repo.postgrespro.ru/pgpro-14/keys/pgpro-repo-add.sh
 root@etcd:/home/mgb# curl -o pgpro-repo-add.sh https://repo.postgrespro.ru/pgpro-14/keys/pgpro-repo-add.sh
-  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
-                                 Dload  Upload   Total   Spent    Left  Speed
-100 18239  100 18239    0     0  25981      0 --:--:-- --:--:-- --:--:-- 25944
-
-root@etcd:/home/mgb# sh pgpro-repo-add.sh
---2023-03-03 19:58:04--  http://repo.postgrespro.ru/std-14/debian/dists/bullseye/main/binary-amd64/Release
-Распознаётся repo.postgrespro.ru (repo.postgrespro.ru)… 213.171.56.11
-Подключение к repo.postgrespro.ru (repo.postgrespro.ru)|213.171.56.11|:80... соединение установлено.
-HTTP-запрос отправлен. Ожидание ответа… 200 OK
-Длина: 137 [application/octet-stream]
-Сохранение в: «STDOUT»
--                                                  100%[================================================================================================================>]     137  --.-KB/s    за 0s
-/2023-03-03 19:58:05 (11,1 MB/s) - записан в stdout [137/137]
-Сущ:1 http://security.debian.org/debian-security bullseye-security InRelease
-Сущ:2 http://deb.debian.org/debian bullseye InRelease
-Сущ:3 http://deb.debian.org/debian bullseye-updates InRelease
-Сущ:4 http://repo.postgrespro.ru/std-13/debian bullseye InRelease
-Пол:5 http://repo.postgrespro.ru/std-14/debian bullseye InRelease [3 560 B]
-Пол:6 http://repo.postgrespro.ru/std-14/debian bullseye/main amd64 Packages [12,6 kB]
-Получено 16,1 kB за 2с (7 296 B/s)
-Чтение списков пакетов… Готово
-
 apt-get update
 apt-get install postgrespro-std-14
 systemctl status postgrespro-std-14
 # Новая версия 14 установлена.
 ```
-### Установка 15
+### Установка V_15
 ```
 wget http://repo.postgrespro.ru/std-15/keys/pgpro-repo-add.sh
 sh pgpro-repo-add.sh
@@ -88,21 +42,9 @@ systemctl status postgrespro-std-15.service
         CPU: 376ms
      CGroup: /system.slice/postgrespro-std-15.service
              ├─2841 /opt/pgpro/std-15/bin/postgres -D /var/lib/pgpro/std-15/data
-             ├─2842 postgres: logger
-             ├─2844 postgres: checkpointer
-             ├─2845 postgres: background writer
-             ├─2847 postgres: walwriter
-             ├─2848 postgres: autovacuum launcher
-             └─2849 postgres: logical replication launcher
-
-окт 13 09:59:54 etcd systemd[1]: Starting Postgres Pro std 15 database server...
-окт 13 09:59:54 etcd postgres[2841]: 2023-10-13 09:59:54.444 MSK [2841] СООБЩЕНИЕ:  передача вывода в протокол процессу сбора протоколов
-окт 13 09:59:54 etcd postgres[2841]: 2023-10-13 09:59:54.444 MSK [2841] ПОДСКАЗКА:  В дальнейшем протоколы будут выводиться в каталог "log".
-окт 13 09:59:54 etcd systemd[1]: Started Postgres Pro std 15 database server.
 ```
 ```
 # БД уст. в /var/lib/pgpro/std-15/data
-
 ```
 ##### Установка make
 ```
