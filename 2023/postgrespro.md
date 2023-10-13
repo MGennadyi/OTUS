@@ -46,7 +46,10 @@ systemctl status postgrespro-std-15.service
 ```
 # БД уст. в /var/lib/pgpro/std-15/data
 # Добавит установленные программы в путь поиска PATH:
-/opt/pgpro/std-15/bin/pg-wrapper links update
+/opt/pgpro/std-15/bin/pg-wrapper links updatemc
+echo $PATH
+/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games
+
 ```
 ##### Установка make
 ```
