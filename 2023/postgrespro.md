@@ -149,7 +149,7 @@ postgrespro-std-14-server                       install
 ```
 ### Удаление пакетов postgrespro-std:
 ```
-apt remove 
+apt remove postgrespro-std-15
 apt purge postgrespro-std-15
 # Удалит зависимые пакеты, что бы не удалять все в ручную:
 apt autoremove
