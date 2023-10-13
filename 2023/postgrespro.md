@@ -164,7 +164,8 @@ mkdir -p /wal/pg_wal
 /opt/pgpro/std-14/bin/pg-setup initdb --data-checksums --locale=en_US.utf8 --pgdata=/data/pg_data --waldir=/wal/pg_wal  # pg-setup через дефис
 /opt/pgpro/std-15/bin/pg-setup initdb --data-checksums --locale=en_US.utf8 --pgdata=/data/pg_data --waldir=/wal/pg_wal
 If you want to setup second postgres instance in /data/pg_data use /opt/pgpro/std-14/bin/initdb directly and configure service startup manually. USE:
-/opt/pgpro/std-15/bin/initdb directly
+/opt/pgpro/std-15/bin/initdb directly and configure service startup manually.
+/opt/pgpro/std-15/bin/pg-setup initdb --data-checksums --locale=en_US.utf8 --pgdata=/data/pg_data --waldir=/wal/pg_wal
 ```
 # Проверка перед обновлением:
 ```
