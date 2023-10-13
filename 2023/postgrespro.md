@@ -174,7 +174,7 @@ dpkg --get-selections | grep -v deinstall | grep postgres
 mkdir -p /data/pg_data
 mkdir -p /wal/pg_wal
 ```
-#### Пропускаем - Инициалицация нового кластера v_14:
+### Инициалицация нового кластера v_14:
 ```
 /opt/pgpro/std-14/bin/pg-setup initdb --data-checksums --locale=en_US.utf8 --pgdata=/data/pg_data --waldir=/wal/pg_wal  # pg-setup через дефис
 /opt/pgpro/std-15/bin/pg-setup initdb --data-checksums --locale=en_US.utf8 --pgdata=/data/pg_data --waldir=/wal/pg_wal
