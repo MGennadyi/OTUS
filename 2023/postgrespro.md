@@ -76,7 +76,33 @@ wget http://repo.postgrespro.ru/std-15/keys/pgpro-repo-add.sh
 sh pgpro-repo-add.sh
 sudo apt update
 sudo apt install postgrespro-std-15
-systemctl status postgrespro-std-15
+# Проверка
+systemctl status postgrespro-std-15.service
+● postgrespro-std-15.service - Postgres Pro std 15 database server
+     Loaded: loaded (/lib/systemd/system/postgrespro-std-15.service; enabled; vendor preset: enabled)
+     Active: active (running) since Fri 2023-10-13 09:59:54 MSK; 6min ago
+    Process: 2839 ExecStartPre=/opt/pgpro/std-15/bin/check-db-dir ${PGDATA} (code=exited, status=0/SUCCESS)
+   Main PID: 2841 (postgres)
+      Tasks: 7 (limit: 4662)
+     Memory: 48.5M
+        CPU: 376ms
+     CGroup: /system.slice/postgrespro-std-15.service
+             ├─2841 /opt/pgpro/std-15/bin/postgres -D /var/lib/pgpro/std-15/data
+             ├─2842 postgres: logger
+             ├─2844 postgres: checkpointer
+             ├─2845 postgres: background writer
+             ├─2847 postgres: walwriter
+             ├─2848 postgres: autovacuum launcher
+             └─2849 postgres: logical replication launcher
+
+окт 13 09:59:54 etcd systemd[1]: Starting Postgres Pro std 15 database server...
+окт 13 09:59:54 etcd postgres[2841]: 2023-10-13 09:59:54.444 MSK [2841] СООБЩЕНИЕ:  передача вывода в протокол процессу сбора протоколов
+окт 13 09:59:54 etcd postgres[2841]: 2023-10-13 09:59:54.444 MSK [2841] ПОДСКАЗКА:  В дальнейшем протоколы будут выводиться в каталог "log".
+окт 13 09:59:54 etcd systemd[1]: Started Postgres Pro std 15 database server.
+```
+```
+# БД уст. в /var/lib/pgpro/std-15/data
+
 ```
 ##### Установка make
 ```
