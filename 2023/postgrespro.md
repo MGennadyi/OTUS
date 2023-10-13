@@ -46,7 +46,7 @@ systemctl status postgrespro-std-15.service
 ```
 # БД уст. в /var/lib/pgpro/std-15/data
 # Добавит установленные программы в путь поиска PATH:
-/opt/pgpro/std-15/bin/pg-wrapper links updatemc
+/opt/pgpro/std-15/bin/pg-wrapper links update
 echo $PATH
 /usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games
 
@@ -166,6 +166,43 @@ mkdir -p /wal/pg_wal
 If you want to setup second postgres instance in /data/pg_data use /opt/pgpro/std-14/bin/initdb directly and configure service startup manually. USE:
 /opt/pgpro/std-15/bin/initdb directly and configure service startup manually.
 /opt/pgpro/std-15/bin/pg-setup initdb --data-checksums --locale=en_US.utf8 --pgdata=/data/pg_data --waldir=/wal/pg_wal
+/opt/pgpro/std-15/bin/pg-setup initdb --data-checksums --pgdata=/data/pg_data --waldir=/wal/pg_wal   -без locale.
+Initalizing database...
+OK
+root@etcd:/home/mgb# cat /data/initdb.pg_data.log
+Файлы, относящиеся к этой СУБД, будут принадлежать пользователю "postgres".
+От его имени также будет запускаться процесс сервера.
+
+Кластер баз данных будет инициализирован со следующими параметрами локали:
+  провайдер:   icu
+  локаль ICU:  ru-RU
+  LC_COLLATE:  ru_RU.UTF-8
+  LC_CTYPE:    ru_RU.UTF-8
+  LC_MESSAGES: ru_RU.UTF-8
+  LC_MONETARY: ru_RU.UTF-8
+  LC_NUMERIC:  ru_RU.UTF-8
+  LC_TIME:     ru_RU.UTF-8
+В качестве кодировки БД по умолчанию установлена "UTF8".
+Выбрана конфигурация текстового поиска по умолчанию "russian".
+
+Контроль целостности страниц данных включён.
+
+исправление прав для существующего каталога /data/pg_data... ок
+исправление прав для существующего каталога /wal/pg_wal... ок
+создание подкаталогов... ок
+выбирается реализация динамической разделяемой памяти... posix
+выбирается значение max_connections по умолчанию... 100
+выбирается значение shared_buffers по умолчанию... 128MB
+выбирается часовой пояс по умолчанию... Europe/Moscow
+создание конфигурационных файлов... ок
+выполняется подготовительный скрипт... ок
+выполняется заключительная инициализация... ок
+сохранение данных на диске... ок
+
+Готово. Теперь вы можете запустить сервер баз данных:
+
+    /opt/pgpro/std-15/bin/pg_ctl -D /data/pg_data -l файл_журнала start
+
 ```
 # Проверка перед обновлением:
 ```
