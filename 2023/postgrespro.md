@@ -149,7 +149,8 @@ postgrespro-std-14-server                       install
 ```
 ### Удаление пакетов postgrespro-std:
 ```
-apt purge postgrespro-std-14
+apt remove 
+apt purge postgrespro-std-15
 # Удалит зависимые пакеты, что бы не удалять все в ручную:
 apt autoremove
 dpkg --get-selections | grep -v deinstall | grep postgres
@@ -262,17 +263,6 @@ root@etcd:/home/mgb# systemctl status postgrespro-std-15
         CPU: 263ms
      CGroup: /system.slice/postgrespro-std-15.service
              ├─2906 /opt/pgpro/std-15/bin/postgres -D /var/lib/pgpro/std-15/data
-             ├─2907 postgres: logger
-             ├─2908 postgres: checkpointer
-             ├─2909 postgres: background writer
-             ├─2911 postgres: walwriter
-             ├─2912 postgres: autovacuum launcher
-             └─2913 postgres: logical replication launcher
-
-июн 09 15:56:41 etcd systemd[1]: Starting Postgres Pro std 15 database server...
-июн 09 15:56:41 etcd postgres[2906]: 2023-06-09 15:56:41.258 MSK [2906] СООБЩЕНИЕ:  передача вывода в протокол процессу сбора протоколов
-июн 09 15:56:41 etcd postgres[2906]: 2023-06-09 15:56:41.258 MSK [2906] ПОДСКАЗКА:  В дальнейшем протоколы будут выводиться в каталог "log".
-июн 09 15:56:41 etcd systemd[1]: Started Postgres Pro std 15 database server.
 ```
 
 
