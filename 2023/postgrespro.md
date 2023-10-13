@@ -29,7 +29,15 @@ systemctl status postgrespro-std-14
 wget http://repo.postgrespro.ru/std-15/keys/pgpro-repo-add.sh
 sh pgpro-repo-add.sh
 sudo apt update
-sudo apt install postgrespro-std-15
+apt install postgrespro-std-15 # Полная установка
+apt install postgrespro-std-15-server  # Не полная установка
+dpkg --get-selections | grep -v deinstall | grep postgres   # Проверка установленных пакетов
+postgrespro-std-15-client                       install
+postgrespro-std-15-contrib                      install
+postgrespro-std-15-libs:amd64                   install
+postgrespro-std-15-server                       install
+
+
 # Проверка
 systemctl status postgrespro-std-15.service
 ● postgrespro-std-15.service - Postgres Pro std 15 database server
@@ -146,6 +154,12 @@ postgrespro-std-14-client                       install
 postgrespro-std-14-contrib                      install
 postgrespro-std-14-libs:amd64                   install
 postgrespro-std-14-server                       install
+------------------
+postgrespro-std-15-client                       install
+postgrespro-std-15-contrib                      install
+postgrespro-std-15-libs:amd64                   install
+postgrespro-std-15-server                       install
+
 ```
 ### Удаление пакетов postgrespro-std:
 ```
