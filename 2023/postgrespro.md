@@ -158,6 +158,29 @@ systemctl stop postgrespro-std-13
 systemctl stop postgrespro-std-14
 systemctl stop postgrespro-std-15
 ```
+### Список установленных пакетов
+```
+apt list installed | grep postgres
+postgrespro-std-14-client/неизвестно,now 14.8.2-1.bullseye amd64 [установлен, автоматически]
+postgrespro-std-14-contrib/неизвестно,now 14.8.2-1.bullseye amd64 [установлен, автоматически]
+postgrespro-std-14-libs/неизвестно,now 14.8.2-1.bullseye amd64 [установлен, автоматически]
+postgrespro-std-14-server/неизвестно,now 14.8.2-1.bullseye amd64 [установлен, автоматически]
+postgrespro-std-14/неизвестно,now 14.8.2-1.bullseye amd64 [установлен]
+# Без лишней информации:
+dpkg --get-selections | grep -v deinstall | grep postgres
+postgrespro-std-14                              install
+postgrespro-std-14-client                       install
+postgrespro-std-14-contrib                      install
+postgrespro-std-14-libs:amd64                   install
+postgrespro-std-14-server                       install
+```
+### Удаление пакетов postgrespro-std:
+```
+apt purge postgrespro-std-14
+# Удалит зависимые пакеты, что бы не удалять все в ручную:
+apt autoremove
+dpkg --get-selections | grep -v deinstall | grep postgres
+```
 #### Подготовка директорий:
 ```
 mkdir -p /data/pg_data
