@@ -166,6 +166,7 @@ dpkg --get-selections | grep -v deinstall | grep postgres
 ```
 mkdir -p /data/pg_data
 mkdir -p /wal/pg_wal
+mkdir /backup/wal_arc_archive
 ```
 ### Инициалицация нового кластера v_14 v_15:
 ```
