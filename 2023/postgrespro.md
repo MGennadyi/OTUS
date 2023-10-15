@@ -1,10 +1,4 @@
-# Установка postgrespro-std-13
-#### Просмотр доступных пакетов ДО:
-```
-apt list | grep -E "postgresql|postgrespro"
-yum list | grep -E "postgresql|postgrespro"
-apt info postgrespro-std-14-server
-```
+# Установка postgrespro-std
 ### Локаль
 ```
 localectl status
@@ -56,6 +50,9 @@ apt-get install postgrespro-std-13 -y
 ```
 #### Просмотр доступных пакетов после установки репозитория:
 ```
+apt list | grep -E "postgresql|postgrespro"
+yum list | grep -E "postgresql|postgrespro"
+apt info postgrespro-std-14-server
 apt list | grep -E "postgrespro"
 ```
 ### Установка v_14
@@ -80,16 +77,7 @@ postgrespro-std-15-client                       install
 postgrespro-std-15-contrib                      install
 postgrespro-std-15-libs:amd64                   install
 postgrespro-std-15-server                       install
-# Вариант установки № 2
-apt install postgrespro-std-15-server  # Не полная установка, требуется инициализация БД
-dpkg --get-selections | grep -v deinstall | grep postgres   # Проверка установленных пакетов
-postgrespro-std-15-client                       install
-postgrespro-std-15-contrib                      install
-postgrespro-std-15-libs:amd64                   install
-postgrespro-std-15-server                       install
-
-
-# Проверка
+# Проверка установки. Пути дефолтные:
 systemctl status postgrespro-std-15.service
 ● postgrespro-std-15.service - Postgres Pro std 15 database server
      Loaded: loaded (/lib/systemd/system/postgrespro-std-15.service; enabled; vendor preset: enabled)
@@ -101,21 +89,44 @@ systemctl status postgrespro-std-15.service
         CPU: 376ms
      CGroup: /system.slice/postgrespro-std-15.service
              ├─2841 /opt/pgpro/std-15/bin/postgres -D /var/lib/pgpro/std-15/data
+
+# Вариант установки № 2
+apt install postgrespro-std-15-server  # Не полная установка, требуется инициализация БД
+dpkg --get-selections | grep -v deinstall | grep postgres   # Проверка установленных пакетов
+postgrespro-std-15-client                       install
+postgrespro-std-15-contrib                      install
+postgrespro-std-15-libs:amd64                   install
+postgrespro-std-15-server                       install
+# Проверка установки. Пути указанные в строке инициализации:
+systemctl status postgrespro-std-15.service
+● postgrespro-std-15.service - Postgres Pro std 15 database server
+     Loaded: loaded (/lib/systemd/system/postgrespro-std-15.service; disabled; vendor preset: enabled)
+     Active: active (running) since Sun 2023-10-15 18:33:42 MSK; 1s ago
+    Process: 1005 ExecStartPre=/opt/pgpro/std-15/bin/check-db-dir ${PGDATA} (code=exited, status=0/SUCCESS)
+   Main PID: 1007 (postgres)
+      Tasks: 7 (limit: 4662)
+     Memory: 45.4M
+        CPU: 93ms
+     CGroup: /system.slice/postgrespro-std-15.service
+             ├─1007 /opt/pgpro/std-15/bin/postgres -D /data/pg_data
+             ├─1008 postgres: logger
+             ├─1009 postgres: checkpointer
+             ├─1010 postgres: background writer
+             ├─1012 postgres: walwriter
+             ├─1013 postgres: autovacuum launcher
+             └─1014 postgres: logical replication launcher
+
+Oct 15 18:33:42 etcd systemd[1]: Starting Postgres Pro std 15 database server...
+Oct 15 18:33:42 etcd postgres[1007]: 2023-10-15 18:33:42.832 MSK [1007] LOG:  redirecting log output to logging collector process
+Oct 15 18:33:42 etcd postgres[1007]: 2023-10-15 18:33:42.832 MSK [1007] HINT:  Future log output will appear in directory "log".
+Oct 15 18:33:42 etcd systemd[1]: Started Postgres Pro std 15 database server.
 ```
+### Добавит установленные программы в путь поиска PATH pg-wrapper:
 ```
-# БД уст. в /var/lib/pgpro/std-15/data
 # Добавит установленные программы в путь поиска PATH:
 /opt/pgpro/std-15/bin/pg-wrapper links update
 echo $PATH
 /usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games
-```
-
-
-##### Остановка postgrespro-std
-```
-systemctl stop postgrespro-std-13
-systemctl stop postgrespro-std-14
-systemctl stop postgrespro-std-15
 ```
 ### Список установленных пакетов
 ```
@@ -137,7 +148,6 @@ postgrespro-std-15-client                       install
 postgrespro-std-15-contrib                      install
 postgrespro-std-15-libs:amd64                   install
 postgrespro-std-15-server                       install
-
 ```
 ### Удаление пакетов postgrespro-std:
 ```
@@ -147,22 +157,20 @@ apt purge postgrespro-std-15
 apt autoremove
 dpkg --get-selections | grep -v deinstall | grep postgres
 ```
-#### Подготовка директорий:
+#### Подготовка директорий перед инициализацией:
 ```
 mkdir -p /data/pg_data
 mkdir -p /wal/pg_wal
 ```
 ### Инициалицация нового кластера v_14:
 ```
-/opt/pgpro/std-14/bin/pg-setup initdb --data-checksums --locale=en_US.utf8 --pgdata=/data/pg_data --waldir=/wal/pg_wal  # pg-setup через дефис
+/opt/pgpro/std-14/bin/pg-setup initdb --data-checksums --locale=en_US.utf8 --pgdata=/data/pg_data --waldir=/wal/pg_wal
+# Успешная инициализация:
 /opt/pgpro/std-15/bin/pg-setup initdb --data-checksums --locale=en_US.utf8 --pgdata=/data/pg_data --waldir=/wal/pg_wal
-If you want to setup second postgres instance in /data/pg_data use /opt/pgpro/std-14/bin/initdb directly and configure service startup manually. USE:
-/opt/pgpro/std-15/bin/initdb directly and configure service startup manually.
-/opt/pgpro/std-15/bin/pg-setup initdb --data-checksums --locale=en_US.utf8 --pgdata=/data/pg_data --waldir=/wal/pg_wal
-/opt/pgpro/std-15/bin/pg-setup initdb --data-checksums --pgdata=/data/pg_data --waldir=/wal/pg_wal   -без locale.
 Initalizing database...
 OK
-root@etcd:/home/mgb# cat /data/initdb.pg_data.log
+# Просмотр лога:
+cat /data/initdb.pg_data.log
 Файлы, относящиеся к этой СУБД, будут принадлежать пользователю "postgres".
 От его имени также будет запускаться процесс сервера.
 
@@ -177,9 +185,7 @@ root@etcd:/home/mgb# cat /data/initdb.pg_data.log
   LC_TIME:     ru_RU.UTF-8
 В качестве кодировки БД по умолчанию установлена "UTF8".
 Выбрана конфигурация текстового поиска по умолчанию "russian".
-
 Контроль целостности страниц данных включён.
-
 исправление прав для существующего каталога /data/pg_data... ок
 исправление прав для существующего каталога /wal/pg_wal... ок
 создание подкаталогов... ок
@@ -191,11 +197,8 @@ root@etcd:/home/mgb# cat /data/initdb.pg_data.log
 выполняется подготовительный скрипт... ок
 выполняется заключительная инициализация... ок
 сохранение данных на диске... ок
-
 Готово. Теперь вы можете запустить сервер баз данных:
-
-    /opt/pgpro/std-15/bin/pg_ctl -D /data/pg_data -l файл_журнала start
-
+/opt/pgpro/std-15/bin/pg_ctl -D /data/pg_data -l файл_журнала start
 ```
 # Проверка перед обновлением:
 ```
