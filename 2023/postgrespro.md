@@ -72,8 +72,16 @@ systemctl status postgrespro-std-14
 wget http://repo.postgrespro.ru/std-15/keys/pgpro-repo-add.sh
 sh pgpro-repo-add.sh
 sudo apt update
-apt install postgrespro-std-15 # Полная установка
-apt install postgrespro-std-15-server  # Не полная установка
+# Вариант установки № 1
+apt install postgrespro-std-15         # Полная установка, в том числе и инициализация по умолчанию:
+dpkg --get-selections | grep -v deinstall | grep postgres   # Проверка установленных пакетов
+postgrespro-std-15                              install
+postgrespro-std-15-client                       install
+postgrespro-std-15-contrib                      install
+postgrespro-std-15-libs:amd64                   install
+postgrespro-std-15-server                       install
+# Вариант установки № 2
+apt install postgrespro-std-15-server  # Не полная установка, требуется инициализация БД
 dpkg --get-selections | grep -v deinstall | grep postgres   # Проверка установленных пакетов
 postgrespro-std-15-client                       install
 postgrespro-std-15-contrib                      install
@@ -100,82 +108,9 @@ systemctl status postgrespro-std-15.service
 /opt/pgpro/std-15/bin/pg-wrapper links update
 echo $PATH
 /usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games
+```
 
-```
-##### Установка make
-```
-apt install gmake
-Чтение списков пакетов… Готово
-Построение дерева зависимостей… Готово
-Чтение информации о состоянии… Готово
-E: Невозможно найти пакет gmake
-root@etcd:/home/mgb# sudo apt install make
-Чтение списков пакетов… Готово
-Построение дерева зависимостей… Готово
-Чтение информации о состоянии… Готово
-Предлагаемые пакеты:
-  make-doc
-Следующие НОВЫЕ пакеты будут установлены:
-  make
-Обновлено 0 пакетов, установлено 1 новых пакетов, для удаления отмечено 0 пакетов, и 125 пакетов не обновлено.
-Необходимо скачать 396 kB архивов.
-После данной операции объём занятого дискового пространства возрастёт на 1 630 kB.
-Пол:1 http://deb.debian.org/debian bullseye/main amd64 make amd64 4.3-4.1 [396 kB]
-Получено 396 kB за 0с (1 135 kB/s)
-Выбор ранее не выбранного пакета make.
-(Чтение базы данных … на данный момент установлен 104561 файл и каталог.)
-Подготовка к распаковке …/make_4.3-4.1_amd64.deb …
-Распаковывается make (4.3-4.1) …
-Настраивается пакет make (4.3-4.1) …
-Обрабатываются триггеры для man-db (2.9.4-2) …
-```
-##### Подготовка к установке pg_repack:
-```
-apt -y install build-essential -y
-sudo apt-get install postgresql-server-dev-all -y
-sudo apt-get install postgresql-common -y
-apt-get install pgxnclient libpq-dev -y
-sudo apt-get install libreadline8
-sudo apt-get install libreadline-dev
-sudo apt-get install libssl-dev
-sudo apt install libgl1-mesa-dev
-apt install liblz4-dev
-apt-get install zlib1g-dev
-```
-#### Установка pg_repack:
-```
-wget http://api.pgxn.org/dist/pg_repack/1.4.5/pg_repack-1.4.5.zip
-unzip pg_repack-1.4.5.zip
-cd pg_repack-1.4.5
-root@etcd:/home/mgb/pg_repack-1.4.8# make
-make[1]: вход в каталог «/home/mgb/pg_repack-1.4.8/bin»
-Makefile:34: /usr/lib/postgresql/13/lib/pgxs/src/makefiles/pgxs.mk: Нет такого файла или каталога
-make[1]: *** Нет правила для сборки цели «/usr/lib/postgresql/13/lib/pgxs/src/makefiles/pgxs.mk».  Останов.
-make[1]: выход из каталога «/home/mgb/pg_repack-1.4.8/bin»
-make: *** [Makefile:35: all] Ошибка 2
 
-# По другому:
-# Before building, you might need to install the PostgreSQL development packages (postgresql-devel, etc.):
-libpq-dev
-
-add the directory containing pg_config to your $PATH
-and add the directory containing pg_config to your $PATH:
-# PATH=/usr/lib/postgresql/14/bin:$PATH
-export PATH=/opt/pgpro/std-13/bin:$PATH
-export PATH="$PATH:/usr/lib/postgresql/13/bin"
-echo $PATH
-root@etcd:/home/mgb# pgxn install pg_repack
-INFO: best version: pg_repack 1.4.8
-INFO: saving /tmp/tmpufzy46wd/pg_repack-1.4.8.zip
-INFO: unpacking: /tmp/tmpufzy46wd/pg_repack-1.4.8.zip
-INFO: building extension
-ERROR: make executable not found: gmake
-# Then you can run:
-cd pg_repack
-$ make
-$ sudo make install
-CREATE EXTENSION pg_repack;
-```
 ##### Остановка postgrespro-std
 ```
 systemctl stop postgrespro-std-13
@@ -322,6 +257,121 @@ root@etcd:/home/mgb# systemctl status postgrespro-std-15
              ├─2906 /opt/pgpro/std-15/bin/postgres -D /var/lib/pgpro/std-15/data
 ```
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+##### Установка make
+```
+apt install gmake
+Чтение списков пакетов… Готово
+Построение дерева зависимостей… Готово
+Чтение информации о состоянии… Готово
+E: Невозможно найти пакет gmake
+root@etcd:/home/mgb# sudo apt install make
+Чтение списков пакетов… Готово
+Построение дерева зависимостей… Готово
+Чтение информации о состоянии… Готово
+Предлагаемые пакеты:
+  make-doc
+Следующие НОВЫЕ пакеты будут установлены:
+  make
+Обновлено 0 пакетов, установлено 1 новых пакетов, для удаления отмечено 0 пакетов, и 125 пакетов не обновлено.
+Необходимо скачать 396 kB архивов.
+После данной операции объём занятого дискового пространства возрастёт на 1 630 kB.
+Пол:1 http://deb.debian.org/debian bullseye/main amd64 make amd64 4.3-4.1 [396 kB]
+Получено 396 kB за 0с (1 135 kB/s)
+Выбор ранее не выбранного пакета make.
+(Чтение базы данных … на данный момент установлен 104561 файл и каталог.)
+Подготовка к распаковке …/make_4.3-4.1_amd64.deb …
+Распаковывается make (4.3-4.1) …
+Настраивается пакет make (4.3-4.1) …
+Обрабатываются триггеры для man-db (2.9.4-2) …
+```
+##### Подготовка к установке pg_repack:
+```
+apt -y install build-essential -y
+sudo apt-get install postgresql-server-dev-all -y
+sudo apt-get install postgresql-common -y
+apt-get install pgxnclient libpq-dev -y
+sudo apt-get install libreadline8
+sudo apt-get install libreadline-dev
+sudo apt-get install libssl-dev
+sudo apt install libgl1-mesa-dev
+apt install liblz4-dev
+apt-get install zlib1g-dev
+```
+#### Установка pg_repack:
+```
+wget http://api.pgxn.org/dist/pg_repack/1.4.5/pg_repack-1.4.5.zip
+unzip pg_repack-1.4.5.zip
+cd pg_repack-1.4.5
+root@etcd:/home/mgb/pg_repack-1.4.8# make
+make[1]: вход в каталог «/home/mgb/pg_repack-1.4.8/bin»
+Makefile:34: /usr/lib/postgresql/13/lib/pgxs/src/makefiles/pgxs.mk: Нет такого файла или каталога
+make[1]: *** Нет правила для сборки цели «/usr/lib/postgresql/13/lib/pgxs/src/makefiles/pgxs.mk».  Останов.
+make[1]: выход из каталога «/home/mgb/pg_repack-1.4.8/bin»
+make: *** [Makefile:35: all] Ошибка 2
+
+# По другому:
+# Before building, you might need to install the PostgreSQL development packages (postgresql-devel, etc.):
+libpq-dev
+
+add the directory containing pg_config to your $PATH
+and add the directory containing pg_config to your $PATH:
+# PATH=/usr/lib/postgresql/14/bin:$PATH
+export PATH=/opt/pgpro/std-13/bin:$PATH
+export PATH="$PATH:/usr/lib/postgresql/13/bin"
+echo $PATH
+root@etcd:/home/mgb# pgxn install pg_repack
+INFO: best version: pg_repack 1.4.8
+INFO: saving /tmp/tmpufzy46wd/pg_repack-1.4.8.zip
+INFO: unpacking: /tmp/tmpufzy46wd/pg_repack-1.4.8.zip
+INFO: building extension
+ERROR: make executable not found: gmake
+# Then you can run:
+cd pg_repack
+$ make
+$ sudo make install
+CREATE EXTENSION pg_repack;
+```
 
 
 
