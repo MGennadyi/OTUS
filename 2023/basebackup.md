@@ -44,7 +44,7 @@ ALTER SYSTEM SET wal_compression = 'pglz';          # для V_15=on для v_14
 ALTER SYSTEM SET stats_temp_directory = '/tempdb';  # Для v_14 и ниже.
 ALTER SYSTEM SET archive_mode = 'on';               # Требуется restart службы
 ALTER SYSTEM SET archive_timeout = '30min';         #Каждые 600=10 мин переключение на новый wal
-ALTER SYSTEM SET archive_command = 'test ! -f /backup/wal_arc_archive/%f && cp %p /backup/wal_arc_archive/%f';
+ALTER SYSTEM SET archive_command = 'test ! -f /backup/wal_arc_archive/%f && cp %p /backup/wal_arc_archive/%f'; -нужен рестарт
 ALTER SYSTEM SET wal_log_hints = 'on';
 ALTER USER postgres WITH PASSWORD '12345';
 CREATE USER expert WITH PASSWORD '12345';  # user-с правом входа
