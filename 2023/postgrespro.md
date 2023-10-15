@@ -5,6 +5,32 @@ apt list | grep -E "postgresql|postgrespro"
 yum list | grep -E "postgresql|postgrespro"
 apt info postgrespro-std-14-server
 ```
+### Локаль
+```
+localectl status
+System Locale: LANG=ru_RU.UTF-8
+       VC Keymap: n/a
+      X11 Layout: us,ru
+       X11 Model: pc105
+     X11 Variant: ,
+     X11 Options: grp:alt_shift_toggle,grp_led:scroll
+# или
+locale -a
+C
+C.UTF-8
+POSIX
+ru_RU.utf8
+# Изменение локали:
+localectl set-locale LANG=en_US.utf-8
+localectl set-locale LANG=en_US.utf-8
+root@etcd:/home/mgb# localectl status
+   System Locale: LANG=en_US.utf-8
+       VC Keymap: n/a
+      X11 Layout: us,ru
+       X11 Model: pc105
+     X11 Variant: ,
+     X11 Options: grp:alt_shift_toggle,grp_led:scroll
+```
 # Установка репозитория postgrespro-std-13
 ```
 root@etcd:/home/mgb# curl -o pgpro-repo-add.sh https://repo.postgrespro.ru/pgpro-13/keys/pgpro-repo-add.sh
