@@ -31,10 +31,10 @@ mount /tempdb
 ### postresql.auto.conf
 ```
 ALTER SYSTEM SET log_destination = 'stderr';
-ALTER SYSTEM SET log_rotate_size = '0';
-ALTER SYSTEM SET log_rotate_age = '1d';
+ALTER SYSTEM SET log_rotate_size = '0'; -v_15 ERROR:  unrecognized configuration parameter
+ALTER SYSTEM SET log_rotate_age = '1d'; -v_15 ERROR:  unrecognized configuration parameter
 ALTER SYSTEM SET log_checkpoints = 'on';
-ALTER SYSTEM SET log_trancate_on_rotation = 'on';
+ALTER SYSTEM SET log_trancate_on_rotation = 'on';  -v_15 ERROR:  unrecognized configuration parameter
 ALTER SYSTEM SET checkpoint_timeout = '15min';
 ALTER SYSTEM SET log_directory = '/log/pg_log';
 ALTER SYSTEM SET log_filename = 'postgresql-%u.log';
