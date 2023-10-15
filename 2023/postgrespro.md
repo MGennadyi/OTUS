@@ -1,5 +1,5 @@
 # Установка postgrespro-std
-### Локаль
+### Проверка локали:
 ```
 localectl status
 System Locale: LANG=ru_RU.UTF-8
@@ -42,9 +42,9 @@ LC_MEASUREMENT="en_US.utf-8"
 LC_IDENTIFICATION="en_US.utf-8"
 LC_ALL=
 ```
-# Установка репозитория postgrespro-std-13
+### Установка postgrespro-std-13
 ```
-root@etcd:/home/mgb# curl -o pgpro-repo-add.sh https://repo.postgrespro.ru/pgpro-13/keys/pgpro-repo-add.sh
+curl -o pgpro-repo-add.sh https://repo.postgrespro.ru/pgpro-13/keys/pgpro-repo-add.sh
 apt-get update
 apt-get install postgrespro-std-13 -y
 ```
@@ -162,7 +162,7 @@ dpkg --get-selections | grep -v deinstall | grep postgres
 mkdir -p /data/pg_data
 mkdir -p /wal/pg_wal
 ```
-### Инициалицация нового кластера v_14:
+### Инициалицация нового кластера v_14 v_15:
 ```
 /opt/pgpro/std-14/bin/pg-setup initdb --data-checksums --locale=en_US.utf8 --pgdata=/data/pg_data --waldir=/wal/pg_wal
 # Успешная инициализация:
@@ -200,107 +200,89 @@ cat /data/initdb.pg_data.log
 Готово. Теперь вы можете запустить сервер баз данных:
 /opt/pgpro/std-15/bin/pg_ctl -D /data/pg_data -l файл_журнала start
 ```
-# Проверка перед обновлением:
 ```
-mkdir -p /pg_upgrade
-cd /pg_upgrade
-/opt/pgpro/std-14/bin/pg_upgrade
+ls -lhr /data/pg_data/
+total 132K
+-rw------- 1 postgres postgres   79 Oct 15 18:33 postmaster.pid
+-rw------- 1 postgres postgres   52 Oct 15 18:33 postmaster.opts
+-rw------- 1 postgres postgres  30K Oct 15 18:33 postgresql.conf
+-rw------- 1 postgres postgres   88 Oct 15 18:33 postgresql.auto.conf
+drwx------ 2 postgres postgres 4.0K Oct 15 18:33 pg_xact
+lrwxrwxrwx 1 postgres postgres   11 Oct 15 18:33 pg_wal -> /wal/pg_wal
+-rw------- 1 postgres postgres    3 Oct 15 18:33 PG_VERSION
+drwx------ 2 postgres postgres 4.0K Oct 15 18:33 pg_twophase
+drwx------ 2 postgres postgres 4.0K Oct 15 18:33 pg_tblspc
+drwx------ 2 postgres postgres 4.0K Oct 15 18:33 pg_subtrans
+drwx------ 2 postgres postgres 4.0K Oct 15 18:33 pg_stat_tmp
+drwx------ 2 postgres postgres 4.0K Oct 15 18:33 pg_stat
+drwx------ 2 postgres postgres 4.0K Oct 15 18:33 pg_snapshots
+drwx------ 2 postgres postgres 4.0K Oct 15 18:33 pg_serial
+drwx------ 2 postgres postgres 4.0K Oct 15 18:33 pg_replslot
+drwx------ 2 postgres postgres 4.0K Oct 15 18:33 pg_notify
+drwx------ 4 postgres postgres 4.0K Oct 15 18:33 pg_multixact
+drwx------ 4 postgres postgres 4.0K Oct 15 18:38 pg_logical
+-rw------- 1 postgres postgres 1.6K Oct 15 18:33 pg_ident.conf
+-rw------- 1 postgres postgres 4.5K Oct 15 18:33 pg_hba.conf
+drwx------ 2 postgres postgres 4.0K Oct 15 18:33 pg_dynshmem
+drwx------ 2 postgres postgres 4.0K Oct 15 18:33 pg_commit_ts
+drwx------ 2 postgres postgres 4.0K Oct 15 18:33 log
+drwx------ 2 postgres postgres 4.0K Oct 15 18:36 global
+-rw------- 1 postgres postgres   44 Oct 15 18:33 current_logfiles
+drwx------ 5 postgres postgres 4.0K Oct 15 18:33 base
 ```
+Требуется настройка логов:
 ```
-sudo sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list'
-wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
-apt install libpq-dev
+root@etcd:/home/mgb# ls -lhr /log/pg_log/
+total 0
+```
 
-vim /etc/apt/sources.list
-deb http://ftp.de.debian.org/debian buster main
-deb http://ftp.de.debian.org/debian bullseye main 
-````
-```
-root@etcd:/home/mgb# pg_config
-BINDIR = /usr/lib/postgresql/13/bin
-DOCDIR = /usr/share/doc/postgresql-doc-13
-HTMLDIR = /usr/share/doc/postgresql-doc-13
-INCLUDEDIR = /usr/include/postgresql
-PKGINCLUDEDIR = /usr/include/postgresql
-INCLUDEDIR-SERVER = /usr/include/postgresql/13/server
-LIBDIR = /usr/lib/x86_64-linux-gnu
-PKGLIBDIR = /usr/lib/postgresql/13/lib
-LOCALEDIR = /usr/share/locale
-MANDIR = /usr/share/postgresql/13/man
-SHAREDIR = /usr/share/postgresql/13
-SYSCONFDIR = /etc/postgresql-common
-PGXS = /usr/lib/postgresql/13/lib/pgxs/src/makefiles/pgxs.mk
-```
-```
-make PG_CONFIG=/usr/lib/postgresql/13/bin/pg_config
-```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ```
 cd pg_repack
 PG_CONFIG=/usr/lib/postgresql/13/bin/pg_config make
 PG_CONFIG=/usr/lib/postgresql/13/bin/pg_config make install
 ```
-### Установка v_15
 ```
-wget https://repo.postgrespro.ru/std-15/keys/pgpro-repo-add.sh
-sh pgpro-repo-add.sh
-apt-get update
-apt-get install postgrespro-std-15
+make PG_CONFIG=/usr/lib/postgresql/13/bin/pg_config
 ```
-```
-root@etcd:/home/mgb# systemctl status postgrespro-std-15
-● postgrespro-std-15.service - Postgres Pro std 15 database server
-     Loaded: loaded (/lib/systemd/system/postgrespro-std-15.service; enabled; vendor preset: enabled)
-     Active: active (running) since Fri 2023-06-09 15:56:41 MSK; 1min 54s ago
-    Process: 2904 ExecStartPre=/opt/pgpro/std-15/bin/check-db-dir ${PGDATA} (code=exited, status=0/SUCCESS)
-   Main PID: 2906 (postgres)
-      Tasks: 7 (limit: 4662)
-     Memory: 47.4M
-        CPU: 263ms
-     CGroup: /system.slice/postgrespro-std-15.service
-             ├─2906 /opt/pgpro/std-15/bin/postgres -D /var/lib/pgpro/std-15/data
-```
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 ##### Установка make
 ```
 apt install gmake
