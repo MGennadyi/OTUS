@@ -121,7 +121,12 @@ Oct 15 18:33:42 etcd postgres[1007]: 2023-10-15 18:33:42.832 MSK [1007] LOG:  re
 Oct 15 18:33:42 etcd postgres[1007]: 2023-10-15 18:33:42.832 MSK [1007] HINT:  Future log output will appear in directory "log".
 Oct 15 18:33:42 etcd systemd[1]: Started Postgres Pro std 15 database server.
 ```
-### Добавит установленные программы в путь поиска PATH pg-wrapper:
+### Запуск не получится:
+```
+postgres@etcd:~$ psql
+-bash: psql: command not found
+```
+### !!! Добавить установленные пакеты postgres-pro в путь поиска PATH pg-wrapper:  обязательно!!!
 ```
 # Добавит установленные программы в путь поиска PATH:
 /opt/pgpro/std-15/bin/pg-wrapper links update
