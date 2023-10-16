@@ -69,8 +69,8 @@ systemctl status postgrespro-std-14
 wget http://repo.postgrespro.ru/std-15/keys/pgpro-repo-add.sh
 sh pgpro-repo-add.sh
 sudo apt update
-# Вариант установки № 1
-apt install postgrespro-std-15         # Полная установка, в том числе и инициализация по умолчанию:
+# Вариант установки № 1 - # Установка по умолчанию, в том числе и инициализация:
+apt install postgrespro-std-15         
 dpkg --get-selections | grep -v deinstall | grep postgres   # Проверка установленных пакетов
 postgrespro-std-15                              install
 postgrespro-std-15-client                       install
@@ -90,8 +90,8 @@ systemctl status postgrespro-std-15.service
      CGroup: /system.slice/postgrespro-std-15.service
              ├─2841 /opt/pgpro/std-15/bin/postgres -D /var/lib/pgpro/std-15/data
 
-# Вариант установки № 2
-apt install postgrespro-std-15-server  # Не полная установка, требуется инициализация БД
+# Вариант установки № 2 - # Установка с заданными параметрами через отдельную инициализацию БД:
+apt install postgrespro-std-15-server  
 dpkg --get-selections | grep -v deinstall | grep postgres   # Проверка установленных пакетов
 postgrespro-std-15-client                       install
 postgrespro-std-15-contrib                      install
