@@ -438,7 +438,7 @@ postgres    8398  0.0  0.1  69380  5076 ?        Ss   16:06   0:00 postgres: 14/
 postgres    8449  0.0  0.0   9948  3616 pts/0    R+   16:16   0:00 ps -aux
 postgres    8450  0.0  0.0   6400   636 pts/0    S+   16:16   0:00 grep postgres
 ```
-### Восстановление целевой копии basebackup
+### Восстановление целевой копии basebackup в main:
 ```
 systemctl stop postgresql
 rm -rf /var/lib/postgresql/14/main/*
@@ -448,6 +448,12 @@ systemctl start postgresql
 # При успешном восстановлении recovery.conf должен переименоваться в recovery.done 
 systemctl status postgresql
 psql
+```
+### Восстановление basebackup как параллельным инстансом, то уменьшим буфера :
+```
+archive_command = 'true'
+shared_buffers = '4096MB'
+effective_cache_size = '1228MB'
 ```
 ### PITR
 ```
