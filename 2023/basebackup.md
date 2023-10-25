@@ -451,7 +451,8 @@ psql
 ```
 ### Восстановление basebackup как параллельным инстансом, то уменьшим буфера :
 ```
-archive_command = 'true'
+archive_command = 'true' # Откл архивирование wal
+archive_mode = 'off' # Откл архивирование wal
 shared_buffers = '4096MB'
 effective_cache_size = '1228MB'
 ```
