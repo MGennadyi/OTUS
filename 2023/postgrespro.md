@@ -64,7 +64,7 @@ apt-get install postgrespro-std-14
 systemctl status postgrespro-std-14
 # Новая версия 14 установлена.
 ```
-### Установка V_15
+### Установка V_15 Вариант по умолчанию:
 ```
 wget http://repo.postgrespro.ru/std-15/keys/pgpro-repo-add.sh
 sh pgpro-repo-add.sh
@@ -91,7 +91,9 @@ systemctl status postgrespro-std-15.service
         CPU: 376ms
      CGroup: /system.slice/postgrespro-std-15.service
              ├─2841 /opt/pgpro/std-15/bin/postgres -D /var/lib/pgpro/std-15/data
-
+```
+### Установка V_15 Вариант по заданными параметрами через отдельную инициализацию БД:
+```
 # Вариант установки № 2 - # Установка с заданными параметрами через отдельную инициализацию БД:
 apt install postgrespro-std-15-server  
 dpkg --get-selections | grep -v deinstall | grep postgres   # Проверка установленных пакетов
