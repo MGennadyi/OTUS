@@ -95,6 +95,7 @@ systemctl status postgrespro-std-15.service
 ### Установка V_15 Вариант по заданными параметрами через отдельную инициализацию БД:
 ```
 # Вариант установки № 2 - # Установка с заданными параметрами через отдельную инициализацию БД:
+yum install postgrespro-std-15-server
 apt install postgrespro-std-15-server  
 dpkg --get-selections | grep -v deinstall | grep postgres   # Проверка установленных пакетов
 postgrespro-std-15-client                       install
