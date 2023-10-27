@@ -16,7 +16,7 @@ cd /backup
  DUMPALLDIR=/backup/$WORKDIR
  time pg_dumpall --quote-all-identifiers --verbose --file $DUMPALLDIR/dumpall.dmp >> $DUMPALLDIR/dumpall.dmp.log 2>&1
  ```
-### Проверка
+### Проверка лога dumpall
 ```
 grep -E "ERROR|ОШИБКА|DETAIL|CONTEXT|FATAL|ВАЖНО|ПАНИКА|PANIC|ПОДРОБНОСТИ|ПРЕДУПРЕЖДЕНИЕ" $DUMPALLDIR/dumpall.dmp.log
 tail -n 10 $DUMPALLDIR/dumpall.dmp.log
