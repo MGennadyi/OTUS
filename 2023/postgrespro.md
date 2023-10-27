@@ -69,7 +69,9 @@ systemctl status postgrespro-std-14
 wget http://repo.postgrespro.ru/std-15/keys/pgpro-repo-add.sh
 sh pgpro-repo-add.sh
 sudo apt update
+sudo yum update
 # Вариант установки № 1 - # Установка по умолчанию, в том числе и инициализация:
+yum install postgrespro-std-15 
 apt install postgrespro-std-15         
 dpkg --get-selections | grep -v deinstall | grep postgres   # Проверка установленных пакетов
 postgrespro-std-15                              install
