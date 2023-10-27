@@ -22,9 +22,9 @@ grep -E "ERROR|ОШИБКА|DETAIL|CONTEXT|FATAL|ВАЖНО|ПАНИКА|PANIC|�
 tail -n 10 $DUMPALLDIR/dumpall.dmp.log
 tail -n 10 $DUMPALLDIR/dumpall.dmp
 ```
-### Делаем дамп БД-источник
+### dump БД-источник
 ```
-/opt/pgpro/ent-11/bin/pg_dump -C -h localhost -U postgres 'bd_ist' > /data/copy_db/bd_ist.bac
+time pg_dump -C -h localhost -U postgres 'bd_ist' > /data/copy_db/bd_ist.bac
 ```
 ### Замена инструкции в дампе: имя БД-источника на целевое имя БД-цель
 ```
@@ -37,7 +37,7 @@ time pg_dump -U postgres test_test > /backup/dump/test_test.dmp
 time pg_dump -U postgres -d test_test --create | gzip > /backup/dump/test_test.dmp.gz
 ```
 
- ```
+```
 cat /backup/op286466.sh
 # pg_dump
 DUMPDIR=/backup/"$(date '+%Y_%m_%d')"/pg_dump
