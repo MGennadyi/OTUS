@@ -48,35 +48,31 @@ time pg_dump -U postgres -v --file=$DUMPDIR/$DBNAME.dmp $DBNAME  >> $DUMPDIR/$DB
 
 scp /backup/data/pg_dump/name_db.dmp mgb@destination_serer:/tmp/
 
-Заливаем в postgres – по ошибке!!!:
-
-time psql -U postgres < /backup/dump/prod_sut.dmp > /backup/dump/prod_sut.log 2>&1
-
-Правильно!!!:
-
-CREATE DATABASE test_test owner owner_name_user;
-На целевом сервере:
-
-time psql -U postgres -d test_test < /backup/dump/prod_sut_.dmp >> /backup/dump/prod_sut.dmp.log 2>&1
- 
-
-
-Удаление целевой БД на целевом сервере
-
-DROP DATABASE "test_test";
- 
-
-Создаем целевую БД test_test, уже без данных с owner_целевого сервера:
-
-CREATE DATABASE test_test owner owner_test;
- 
-
-Копирование данных  из дампа исх.БД в целевую БД
-
-time psql -U postgres -d test_test < /backup/dump/prod_sut_rusburm.dmp >> /backup/dump/prod_sut_rusburm.dmp.log 2>&1
- 
-
+### НЕ ВЕРНО!!!:
 ```
+time psql -U postgres < /backup/dump/prod_sut.dmp > /backup/dump/prod_sut.log 2>&1
+```
+### Правильно!!!:
+```
+CREATE DATABASE test_test owner owner_name_user;
+```
+### На целевом сервере:
+```
+time psql -U postgres -d test_test < /backup/dump/prod_sut_.dmp >> /backup/dump/prod_sut.dmp.log 2>&1
+``` 
+
+### Удаление целевой БД на целевом сервере
+```
+DROP DATABASE "test_test";
+ ```
+### Создаем пустую целевую БД test_test:
+```
+CREATE DATABASE test_test owner owner_test;
+ ```
+### Загрузка данных из дампа исх.БД в целевую БД:
+```
+time psql -U postgres -d test_test < /backup/dump/prod_sut_rusburm.dmp >> /backup/dump/prod_sut_rusburm.dmp.log 2>&1
+ ```
 
 
 
