@@ -123,8 +123,10 @@ pg_ctl -D /data/pg_data/ start
 ```
 ### PG_DUMPALL
 ```
-pg_dumpall --quote-all-identifiers --verbose --file=/backup/dump/dumpall.dmp 2> /backup/dump/dumpall.dmp.log от Лосева работает
+mkdir /backup/dump/
+pg_dumpall --quote-all-identifiers --verbose --file=/backup/dump/dumpall.dmp 2> /backup/dump/dumpall.dmp.log # от Лосева -работает
 real    0m17,066s
+pg_dumpall --quote-all-identifiers --verbose | gzip -c > /backup/dump/dumpall.gz 2> /backup/dump/dumpall.gz.log
 # Создание:
 pg_dump -U postgres --file=/backup/2023_08_11.sql имя_бд >> /backup/2023_08_11/имя_бд.log 2>&1
 pg_dump -U postgres --file=/backup/2023_08_11.sql otus >> /backup/2023_08_11/otus.log 2>&1
