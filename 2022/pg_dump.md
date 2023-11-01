@@ -22,9 +22,9 @@ time pg_dump -U postgres -d demo --create > /backups/pg_dump/demo1.sql
 ------------------------------
 # Бекап только одной таблицы codes из БД otus
 pg_dump -U postgres otus -t codes > codes_backup`date +%d.%m.%Y-%H.%M`.sql
-
-
-# Простой со сжатием, в 2,8 раза меньше весит:
+```
+# Со сжатием, в 2,8 раза меньше весит:
+```
 time pg_dump -d demo --create | gzip > /home/backups/demo1.gz
 # real    0m5,829s 0m5,685s 0m5,682s
 ls -lh /home/backups/pg_dump/
@@ -41,8 +41,9 @@ du -sh /home/backups/pg_dump/111 22M
 -—format=t — формирует копию в формате tar.
 # В виде архива -Ft:
 pg_dump -Ft zabbix > /backup/zabbix.tar
-----------------------------
+```
 # Восстановление данных БД mbillcz5054 из сжатого бекапа. Создание исключенной таблицы.
+```
 gunzip -c mbillcz5054_backup.sql.gz | psql -U postgres mbillcz5054
 # Архив с оглавлением для pg_restore (-Fc в виде бинарного файла): 
 time pg_dump -d demo -Fc > /home/backups/pg_dump/demo11.gz
