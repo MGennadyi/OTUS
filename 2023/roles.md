@@ -125,11 +125,22 @@ DROP TABLE IF EXISTS test_table;
 ```
 SELECT 'DROP TABLE ' || test_table || ' ' CASCADE;' \ FROM pg_catalog WHERE tableowner = 'owner_test';
 > /tmp/droptables
-
-
 ```
-
-
+### Назначаю роль для всех:
+```
+postgres@backup-restore:/postgres/scripts/create_role$ /postgres/scripts/create_role/create_readonly_group.sh --all
+Grant privileges from readonly_role:
+Select databases:  otus otus_main qwerty demo
+Granted role "readonly_role" for database "otus" successfully.
+Granted role "readonly_role" for database "otus_main" successfully.
+Granted role "readonly_role" for database "qwerty" successfully.
+Granted role "readonly_role" for database "demo" successfully.
+Role creation comleted.
+```
+```
+CREATE USER gossopka WITH LOGIN password '12345';
+GRANT readonly_role to gossopka;
+```
 
 
 
