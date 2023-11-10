@@ -8,6 +8,14 @@ ALTER USER "gren-d-DALysko" WITH PASSWORD 'new_password'; -смена парол
 create USER iibutikov password '****' valid until '2023-09-15 23:59:00+03';
 ALTER USER user_name WITH PASSWORD '12345';
 ```
+### Сделать скрипт исполняемым:
+```
+chmod +x /postgres/scripts/create_role/create_readonly_group.sh
+```
+```
+/postgres/scripts/create_role/create_readonly_group.sh --all
+
+```
 #### 2. Создание роли в СУБД (если нет роли):
 ```
 # Назначаем роль на БД demo:
