@@ -141,6 +141,24 @@ Role creation comleted.
 CREATE USER gossopka WITH LOGIN password '12345';
 GRANT readonly_role to gossopka;
 ```
+```
+postgres=# GRANT readonly_role to gossopka;
+GRANT ROLE
+postgres=# \du+
+                                                                   Список ролей
+      Имя роли      |                                Атрибуты                                 |               Член ролей                | Описание
+--------------------+-------------------------------------------------------------------------+-----------------------------------------+----------
+ arwd_role_demo     | Вход запрещён                                                           | {}                                      |
+ avesenin           |                                                                         | {readonly_role_demo}                    |
+ evsemkin           |                                                                         | {arwd_role_demo}                        |
+ expert             |                                                                         | {}                                      |
+ gbsemkin           |                                                                         | {readonly_role_demo,readonly_role_otus} |
+ gossopka           |                                                                         | {readonly_role}                         |
+ postgres           | Суперпользователь, Создаёт роли, Создаёт БД, Репликация, Пропускать RLS | {}                                      |
+ readonly_role      | Вход запрещён                                                           | {}                                      |
+ readonly_role_demo | Вход запрещён                                                           | {}                                      |
+ readonly_role_otus | Вход запрещён     
+```
 
 
 
