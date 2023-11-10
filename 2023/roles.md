@@ -12,9 +12,9 @@ ALTER USER user_name WITH PASSWORD '12345';
 ```
 chmod +x /postgres/scripts/create_role/create_readonly_group.sh
 ```
+### Назначаю роль для всех объектов:
 ```
 /postgres/scripts/create_role/create_readonly_group.sh --all
-
 ```
 #### 2. Создание роли в СУБД (если нет роли):
 ```
@@ -55,6 +55,10 @@ postgres=# GRANT readonly_role_demo to gbsemkin;
 GRANT ROLE
 postgres=# GRANT readonly_role_otus to gbsemkin;
 GRANT ROLE
+```
+### Назначаем 
+```
+GRANT readonly_role to gbsemkin;
 ```
 #### Схема:
 ```
