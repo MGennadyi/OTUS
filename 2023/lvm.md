@@ -141,12 +141,13 @@ vim /etc/fstab
 /dev/mapper/vg_backup-lv_backup                     /backup         ext4    defaults        1 1
 /dev/mapper/vg_wal-lv_wal                     /wal         ext4    defaults        1 1
 /dev/mapper/vg_data-lv_data                     /data         ext4    defaults        1 1
+/dev/mapper/vg_log-lv_log                     /log         ext4    defaults        1 1
 # Для временных файлов:
 tmpfs /tempdb tmpfs size=1G,uid=postgres,gid=postgres 0 0
 # Для логов:
-tmpfs /log tmpfs size=100M,uid=postgres,gid=postgres 0 0
+# tmpfs /log tmpfs size=100M,uid=postgres,gid=postgres 0 0
 ```
-### Добавление/создание нового тома sdd: 
+### Добавление/создание нового тома /DATA на sdd: 
 ```
 pvcreate /dev/sdd
 # Что получилось:
@@ -194,4 +195,52 @@ tmpfs                             786M         1,9M  784M            1% /run
 tmpfs                             393M            0  393M            0% /run/user/1000
 /dev/mapper/vg_backup-lv_backup    20G          24K   19G            1% /backup
 ```
-
+### Добавление/создание нового тома /log на sde: 
+```
+[root@192 mgb]# pvcreate /dev/sde
+  Physical volume "/dev/sde" successfully created.
+# Что получилось:
+[root@192 mgb]# pvs
+  PV         VG        Fmt  Attr PSize   PFree
+  /dev/sda2  ro_redos  lvm2 a--   <9,26g       0
+  /dev/sdb   vg_backup lvm2 a--  <20,41g  416,00m
+  /dev/sdc   vg_wal    lvm2 a--   <8,00g 1020,00m
+  /dev/sdd   vg_data   lvm2 a--   <8,00g   96,00m
+  /dev/sde             lvm2 ---    2,50g    2,50g
+```
+### Создание нового Volume group "vg_log": 
+```
+vgcreate vg_log /dev/sde
+Volume group "vg_data" successfully created
+```
+### Создание логического тома lv_data на 8Gb
+```
+[root@192 mgb]# lvcreate vg_log -n lv_log --size 2.5GB
+  Logical volume "lv_log" created.
+```
+### Создание файловой системы:
+```
+[root@localhost mgb]# mkfs.ext4 /dev/mapper/vg_log-lv_log
+Creating filesystem with 2071552 4k blocks and 518144 inodes
+Filesystem UUID: 892063d7-314b-435b-ab7d-5420e4e8ac63
+Superblock backups stored on blocks:
+        32768, 98304, 163840, 229376, 294912, 819200, 884736, 1605632
+Allocating group tables: done
+Writing inode tables: done
+Creating journal (16384 blocks): done
+Writing superblocks and filesystem accounting information: done
+```
+### Монтирование /backup
+```
+mkdir /log
+mount /dev/mapper/vg_log-lv_log /log
+[root@localhost mgb]# df -h
+Файловая система                Размер Использовано  Дост Использовано% Cмонтировано в
+devtmpfs                          4,0M            0  4,0M            0% /dev
+tmpfs                             2,0G            0  2,0G            0% /dev/shm
+tmpfs                             786M         1,9M  784M            1% /run
+/dev/mapper/ro_redos-root         8,1G         2,3G  5,3G           31% /
+/dev/sda1                         974M          66M  841M            8% /boot
+tmpfs                             393M            0  393M            0% /run/user/1000
+/dev/mapper/vg_backup-lv_backup    20G          24K   19G            1% /backup
+```
