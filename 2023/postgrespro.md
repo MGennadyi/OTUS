@@ -131,10 +131,12 @@ Oct 15 18:33:42 etcd systemd[1]: Started Postgres Pro std 15 database server.
 postgres@etcd:~$ psql
 -bash: psql: command not found
 ```
-### !!! Добавить установленные пакеты postgres-pro в путь поиска PATH pg-wrapper:  обязательно!!!
+### !!! Добавить установленные пакеты postgres-pro в путь поиска PATH pg-wrapper:  обязательно!!! -из-под root
 ```
 # Добавит установленные программы в путь поиска PATH:
-/opt/pgpro/std-15/bin/pg-wrapper links update
+[root@192 wal]# /opt/pgpro/std-15/bin/pg-wrapper links update
+Updating /etc/man_db.conf
+
 echo $PATH
 /usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games
 ```
@@ -159,8 +161,22 @@ postgrespro-std-15-contrib                      install
 postgrespro-std-15-libs:amd64                   install
 postgrespro-std-15-server                       install
 ```
-### Удаление пакетов postgrespro-std:
+
 ```
+[root@192 mgb]# yum list installed | grep postgres
+postgrespro-std-15-client.x86_64         15.4.2-1.el7                   @postgrespro-std-15
+postgrespro-std-15-libs.x86_64           15.4.2-1.el7                   @postgrespro-std-15
+postgrespro-std-15-server.x86_64         15.4.2-1.el7                   @postgrespro-std-15
+postgresql.x86_64                        12.12-2.el7                    @updates
+```
+
+### Удаление пакетов postgrespro-std -RedOS:
+```
+yum remove postgrespro-std-15 
+yum remove postgrespro-std-15-client
+yum remove postgrespro-std-15-libs
+yum remove postgresql
+----------------
 apt remove postgrespro-std-15
 apt purge postgrespro-std-15
 # Удалит зависимые пакеты, что бы не удалять все в ручную:
@@ -170,35 +186,42 @@ dpkg --get-selections | grep -v deinstall | grep postgres
 #### Подготовка директорий перед инициализацией:
 ```
 mkdir -p /data/pg_data
+chown -R postgres:postgres /data
 mkdir -p /wal/pg_wal
+chown -R postgres:postgres /wal
 mkdir /backup/wal_arc_archive
+chown -R postgres:postgres /backup
+chown -R postgres:postgres /log
 ```
-### Инициалицация нового кластера v_14 v_15:
+### Инициалицация нового кластера v_14 v_15 из-под root:
 ```
 /opt/pgpro/std-14/bin/pg-setup initdb --data-checksums --locale=en_US.utf8 --pgdata=/data/pg_data --waldir=/wal/pg_wal
 # Успешная инициализация:
-/opt/pgpro/std-15/bin/pg-setup initdb --data-checksums --locale=en_US.utf8 --pgdata=/data/pg_data --waldir=/wal/pg_wal
+/opt/pgpro/std-15/bin/pg-setup initdb --data-checksums --locale=en_US.utf8 --pgdata=/data --waldir=/wal
+[root@192 wal]# /opt/pgpro/std-15/bin/pg-setup initdb --data-checksums --locale=en_US.utf8 --pgdata=/data --waldir=/wal
 Initalizing database...
 OK
 # Просмотр лога:
-cat /data/initdb.pg_data.log
+[postgres@192 ~]$ cat /initdb.data.log
 Файлы, относящиеся к этой СУБД, будут принадлежать пользователю "postgres".
 От его имени также будет запускаться процесс сервера.
 
 Кластер баз данных будет инициализирован со следующими параметрами локали:
   провайдер:   icu
-  локаль ICU:  ru-RU
-  LC_COLLATE:  ru_RU.UTF-8
-  LC_CTYPE:    ru_RU.UTF-8
-  LC_MESSAGES: ru_RU.UTF-8
-  LC_MONETARY: ru_RU.UTF-8
-  LC_NUMERIC:  ru_RU.UTF-8
-  LC_TIME:     ru_RU.UTF-8
+  локаль ICU:  en-US
+  LC_COLLATE:  en_US.utf8
+  LC_CTYPE:    en_US.utf8
+  LC_MESSAGES: en_US.utf8
+  LC_MONETARY: en_US.utf8
+  LC_NUMERIC:  en_US.utf8
+  LC_TIME:     en_US.utf8
 В качестве кодировки БД по умолчанию установлена "UTF8".
-Выбрана конфигурация текстового поиска по умолчанию "russian".
+Выбрана конфигурация текстового поиска по умолчанию "english".
+
 Контроль целостности страниц данных включён.
-исправление прав для существующего каталога /data/pg_data... ок
-исправление прав для существующего каталога /wal/pg_wal... ок
+
+исправление прав для существующего каталога /data... ок
+исправление прав для существующего каталога /wal... ок
 создание подкаталогов... ок
 выбирается реализация динамической разделяемой памяти... posix
 выбирается значение max_connections по умолчанию... 100
@@ -209,7 +232,8 @@ cat /data/initdb.pg_data.log
 выполняется заключительная инициализация... ок
 сохранение данных на диске... ок
 Готово. Теперь вы можете запустить сервер баз данных:
-/opt/pgpro/std-15/bin/pg_ctl -D /data/pg_data -l файл_журнала start
+/opt/pgpro/std-15/bin/pg_ctl -D /data -l файл_журнала start
+
 ```
 ```
 ls -lhr /data/pg_data/
@@ -243,7 +267,9 @@ drwx------ 5 postgres postgres 4.0K Oct 15 18:33 base
 ```
 Требуется настройка логов:
 ```
-root@etcd:/home/mgb# ls -lhr /log/pg_log/
+root@etcd:/home/mgb# ls -lhr /log/
+log_directory = '/log'
+log_line_prefix = '%m [%p] %u@%d/%a'
 total 0
 ```
 
