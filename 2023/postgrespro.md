@@ -140,7 +140,7 @@ Updating /etc/man_db.conf
 echo $PATH
 /usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games
 ```
-### Список установленных пакетов
+### Список установленных пакетов DEBIAN
 ```
 apt list installed | grep postgres
 postgrespro-std-14-client/неизвестно,now 14.8.2-1.bullseye amd64 [установлен, автоматически]
@@ -161,7 +161,7 @@ postgrespro-std-15-contrib                      install
 postgrespro-std-15-libs:amd64                   install
 postgrespro-std-15-server                       install
 ```
-
+### Список установленных пакетов RedOS
 ```
 [root@192 mgb]# yum list installed | grep postgres
 postgrespro-std-15-client.x86_64         15.4.2-1.el7                   @postgrespro-std-15
@@ -172,10 +172,12 @@ postgresql.x86_64                        12.12-2.el7                    @updates
 
 ### Удаление пакетов postgrespro-std -RedOS:
 ```
-yum remove postgrespro-std-15 
+yum remove postgrespro-std-15-server
 yum remove postgrespro-std-15-client
 yum remove postgrespro-std-15-libs
 yum remove postgresql
+rm /etc/dafault/postgrespro-std-15
+
 ----------------
 apt remove postgrespro-std-15
 apt purge postgrespro-std-15
