@@ -269,6 +269,7 @@ drwx------ 5 postgres postgres 4.0K Oct 15 18:33 base
 ```
 Требуется настройка логов:
 ```
+vim /data/postgresql.auto.conf
 root@etcd:/home/mgb# ls -lhr /log/
 log_directory = '/log'
 log_line_prefix = '%m [%p] %u@%d/%a'
