@@ -274,7 +274,11 @@ log_line_prefix = '%m [%p] %u@%d/%a'
 # Просмотр:
 ls -lhr /log/
 ```
-
+### /tempdb
+```
+ALTER SYSTEM SET stats_temp_directory = '/tempdb';
+postgres=# select pg_reload_conf();
+```
 
 
 
