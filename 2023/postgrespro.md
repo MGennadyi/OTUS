@@ -177,7 +177,7 @@ yum remove postgrespro-std-15-client
 yum remove postgrespro-std-15-libs
 yum remove postgresql
 rm /etc/dafault/postgrespro-std-15
-
+rm /initdb.data.log
 ----------------
 apt remove postgrespro-std-15
 apt purge postgrespro-std-15
@@ -268,10 +268,11 @@ drwx------ 5 postgres postgres 4.0K Oct 15 18:33 base
 Требуется настройка логов:
 ```
 vim /data/postgresql.auto.conf
-root@etcd:/home/mgb# ls -lhr /log/
 log_directory = '/log'
 log_line_prefix = '%m [%p] %u@%d/%a'
-total 0
+/opt/pgpro/std-15/bin/pg_ctl -D /data start
+# Просмотр:
+ls -lhr /log/
 ```
 
 
