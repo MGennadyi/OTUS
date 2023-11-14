@@ -197,8 +197,6 @@ chown -R postgres:postgres /log
 ```
 ### Инициалицация нового кластера v_14 v_15 из-под root:
 ```
-/opt/pgpro/std-14/bin/pg-setup initdb --data-checksums --locale=en_US.utf8 --pgdata=/data/pg_data --waldir=/wal/pg_wal
-# Успешная инициализация:
 /opt/pgpro/std-15/bin/pg-setup initdb --data-checksums --locale=en_US.utf8 --pgdata=/data --waldir=/wal
 [root@192 wal]# /opt/pgpro/std-15/bin/pg-setup initdb --data-checksums --locale=en_US.utf8 --pgdata=/data --waldir=/wal
 Initalizing database...
