@@ -266,13 +266,13 @@ drwx------ 5 postgres postgres 4.0K Oct 15 18:33 base
 ```
 Требуется настройка логов:
 ```
-vim /data/postgresql.auto.conf
+mcedit /data/postgresql.auto.conf
 log_directory = '/log'
 log_line_prefix = '%m [%p] %u@%d/%a'
 /opt/pgpro/std-15/bin/pg_ctl -D /data start
 # Просмотр:
-ls -lhr /log
-ls -lhr /wal
+ls -lh /log
+ls -lh /wal
 ```
 ### /tempdb
 ```
