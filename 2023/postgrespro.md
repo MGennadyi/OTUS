@@ -271,7 +271,8 @@ log_directory = '/log'
 log_line_prefix = '%m [%p] %u@%d/%a'
 /opt/pgpro/std-15/bin/pg_ctl -D /data start
 # Просмотр:
-ls -lhr /log/
+ls -lhr /log
+ls -lhr /wal
 ```
 ### /tempdb
 ```
