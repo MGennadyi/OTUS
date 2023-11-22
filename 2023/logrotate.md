@@ -7,8 +7,7 @@ postgres     583       1  0 15:58 ?        00:00:00 /usr/lib/postgresql/14/bin/p
 ```
 mkdir -p /log/pg_log
 mkdir -p /log/llog
-chown -R postgres:postgres /log/pg_log
-chown -R postgres:postgres /log/llog
+chown -R postgres:postgres /log
 ```
 ```
 vim /etc/postgresql/14/main/postgresql.conf
