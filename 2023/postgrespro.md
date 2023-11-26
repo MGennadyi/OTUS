@@ -192,7 +192,8 @@ mkdir -p /wal/pg_wal
 chown -R postgres:postgres /wal
 mkdir /backup/wal_arc_archive
 chown -R postgres:postgres /backup
-chown -R postgres:postgres /log
+mkdir -p /log/pg_log
+chown -R postgres:postgres /log/pg_log
 ```
 ### Инициалицация нового кластера v_14 v_15 из-под root:
 ```
