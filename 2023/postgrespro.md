@@ -268,12 +268,12 @@ drwx------ 5 postgres postgres 4.0K Oct 15 18:33 base
 Требуется настройка логов:
 ```
 mcedit /data/postgresql.auto.conf
-log_directory = '/log'
+log_directory = '/log/pg_log'
 log_line_prefix = '%m [%p] %u@%d/%a'
-/opt/pgpro/std-15/bin/pg_ctl -D /data start
+/opt/pgpro/std-15/bin/pg_ctl -D /data/pg_data start
 # Просмотр:
-ls -lh /log
-ls -lh /wal
+ls -lh /log/pg_log
+ls -lh /wal/pg_wal
 ```
 ### /tempdb
 ```
