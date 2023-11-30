@@ -8,6 +8,7 @@ postgres     583       1  0 15:58 ?        00:00:00 /usr/lib/postgresql/14/bin/p
 ```
 mkdir -p /log/pg_log
 mkdir -p /log/llog
+mkdir -p /postgres/scripts/logrotate
 chown -R postgres:postgres /log
 ```
 ### 2. Правка конфигов
@@ -38,7 +39,7 @@ logrotate 3.18.0
 ```
 ### Запуск от postgres:
 ```
-cp /usr/sbin/logrotate /postgres/scripts/
+cp /usr/sbin/logrotate /postgres/scripts/logrotate
 chown postgres:postgres /postgres/scripts/logrotate
 ```
 ### Настройка конфига logrotate
