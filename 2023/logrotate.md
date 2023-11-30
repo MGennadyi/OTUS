@@ -4,13 +4,13 @@ root@zabbix:/home/mgb# ps -fu postgres
 UID          PID    PPID  C STIME TTY          TIME CMD
 postgres     583       1  0 15:58 ?        00:00:00 /usr/lib/postgresql/14/bin/postgres -D /var/lib/postgresql/14/main -c config_file=/etc/postgresql/14/main/postgresql.conf
 ```
-### Подготовка директорий
+### 1. Подготовка директорий
 ```
 mkdir -p /log/pg_log
 mkdir -p /log/llog
 chown -R postgres:postgres /log
 ```
-### Правка конфигов
+### 2. Правка конфигов
 ```
 vim /etc/postgresql/14/main/postgresql.conf
 ALTER SYSTEM SET log_filename = 'postgresql-%Y-%m-%d_%H%M%S.log'
