@@ -123,6 +123,7 @@ postgres=# SHOW synchronous_commit;
 # Инициализация:
 time pgbench -i -s 100 -F 80 -U postgres otus
 done in 185.96 s (drop tables 0.42 s, create tables 0.09 s, client-side generate 57.41 s, vacuum 75.85 s, primary keys 52.18 s). real    3m6,037s
+# На PostgresPro-15 done in 33.92 s (drop tables 0.00 s, create tables 0.00 s, client-side generate 27.60 s, vacuum 0.32 s, primary keys 5.99 s).
 
 # Запуск теста на 100 соединений:
 time pgbench -c 100 -j 1 -P 10 -T 100 -U postgres otus
