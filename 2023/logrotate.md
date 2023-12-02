@@ -12,7 +12,24 @@ chown -R postgres:postgres /log
 mkdir -p /postgres/scripts/logrotate
 chown -R postgres:postgres /postgres
 ```
-### 2. Правка конфигов
+### Создание logrotate+logrotate.conf
+```
+cp /usr/sbin/logrotate /postgres/scripts/logrotate/
+vim /postgres/scripts/logrotate.conf
+/log/pg_log/*.log -rt|head -n -1|sed 's/^/\/log\/pg_log\//'
+{
+    rotate 99
+    size 500M
+    missingok
+    compress
+    ifempty
+    maxage 1
+    postgrorate
+                /postgres/scripts/logrotate/logclean.sh
+    endscript
+}
+```
+### 2. Правка конфигов postgresql.auto.confpostgresql.auto.conf
 ```
 vim /data/pg_data/postgresql.auto.conf
 ALTER SYSTEM SET log_filename = 'postgresql-%Y-%m-%d_%H%M%S.log'
@@ -40,23 +57,11 @@ logrotate 3.18.0
 ```
 ### Запуск от postgres:
 ```
-cp /usr/sbin/logrotate /postgres/scripts/logrotate/
+
 ```
 ### Настройка конфига logrotate
 ```
-vim /postgres/scripts/logrotate.conf
-/log/pg_log/*.log
-{
-    rotate 99
-    size 500M
-    missingok
-    compress
-    notifempty
-    maxage 30
-    postgrorate
-                /postgres/scripts/logrotate/logclean.sh
-    endscript
-}
+
 ```
 ```
 vim /postgres/scripts/logrotate/logclean.sh
