@@ -39,6 +39,7 @@ ALTER SYSTEM SET log_rotation_size = '500MB';
 ALTER SYSTEM SET log_rotation_age = '0';
 ALTER SYSTEM SET log_directory = '/log/pg_log';
 ALTER SYSTEM SET log_truncate_on_rotation = "on";
+ALTER SYSTEM SET log_statement = 'all';  - что пишем в журнал.
 
 SELECT pg_reload_conf();
 ```
