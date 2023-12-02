@@ -8,12 +8,13 @@ postgres     583       1  0 15:58 ?        00:00:00 /usr/lib/postgresql/14/bin/p
 ```
 mkdir -p /log/pg_log
 mkdir -p /log/llog
-mkdir -p /postgres/scripts/logrotate
 chown -R postgres:postgres /log
+mkdir -p /postgres/scripts/logrotate
+chown -R postgres:postgres /postgres
 ```
 ### 2. Правка конфигов
 ```
-vim /etc/postgresql/14/main/postgresql.conf
+vim /data/pg_data/postgresql.auto.conf
 ALTER SYSTEM SET log_filename = 'postgresql-%Y-%m-%d_%H%M%S.log'
 ALTER SYSTEM SET logging_collector = 'on';
 ALTER SYSTEM SET log_rotation_size = '500MB';
@@ -39,8 +40,7 @@ logrotate 3.18.0
 ```
 ### Запуск от postgres:
 ```
-cp /usr/sbin/logrotate /postgres/scripts/logrotate
-chown postgres:postgres /postgres/scripts/logrotate
+cp /usr/sbin/logrotate /postgres/scripts/logrotate/
 ```
 ### Настройка конфига logrotate
 ```
@@ -48,19 +48,19 @@ vim /postgres/scripts/logrotate.conf
 /log/pg_log/*.log
 {
     rotate 99
-    size 10k
+    size 500M
     missingok
     compress
     notifempty
     maxage 30
     postgrorate
-                /postgres/scripts/logclean.sh
+                /postgres/scripts/logrotate/logclean.sh
     endscript
 }
 ```
 ```
-vim /postgres/scripts/rotsize.sh
-chmod +x /postgres/scripts/rotsize.sh
+vim /postgres/scripts/logclean.sh
+chmod +x /postgres/scripts/logrotate/logclean.sh
 ```
 ```
 chown postgres:postgres /postgres/scripts/logrotate.conf
@@ -69,7 +69,7 @@ chown postgres:postgres /postgres/scripts/rotsize.sh
 ```
 crontab -e
 # Сжатие логов
-0 */1 * * * /postgres/scripts/logrotate /postgres/scripts/logrotate.conf --state /postgres/scripts/logrotate-state
+*/5 * * * * /postgres/scripts/logrotate/logrotate /postgres/scripts/logrotate/logrotate.conf --state /postgres/logrotate/scripts/logrotate-state
 ```
 ### Импорт логов
 ```
