@@ -59,12 +59,12 @@ vim /postgres/scripts/logrotate.conf
 }
 ```
 ```
-vim /postgres/scripts/logclean.sh
+vim /postgres/scripts/logrotate/logclean.sh
 chmod +x /postgres/scripts/logrotate/logclean.sh
 ```
 ```
-chown postgres:postgres /postgres/scripts/logrotate.conf
-chown postgres:postgres /postgres/scripts/rotsize.sh
+chown postgres:postgres /postgres/scripts/logrotate/logrotate.conf
+chown postgres:postgres /postgres/scripts/logrotate/logclean.sh
 ```
 ```
 crontab -e
