@@ -60,7 +60,7 @@ host    zabbix          zabbix          127.0.0.1/32            md5
 vim /etc/postgresql/14/main/postgresql.conf
 listen_addresses = '*' 
 ```
-##### 6. Настройка конфигов zabbix_server:
+### 6. Настройка конфигов zabbix_server:
 ```
 vim /etc/zabbix/zabbix_server.conf
 DBHost=localhost
@@ -84,7 +84,7 @@ systemctl status apache2
 ```
 dpkg -l | grep zabbix
 ```
-##### 6. Настроим Nginx, если установлено: раскомментируем и настроим две верхние позиции- нет таких директорий:
+### 6. Настроим Nginx, если установлено: раскомментируем и настроим две верхние позиции- нет таких директорий:
 ```
 # Проверить IP-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! port 80 или 8080 должен???????
 vim /etc/zabbix/nginx.conf !
@@ -105,7 +105,7 @@ systemctl restart zabbix-server zabbix-agent nginx php7.2-fpm
 systemctl enable zabbix-server zabbix-agent nginx php7.2-fpm
 ```
 
-##### 7. Настройка через web-интерфейс:
+### 7. Настройка через web-интерфейс:
 ```
 http://192.168.0.19/zabbix/setup.php
 Default language=RU
@@ -139,7 +139,9 @@ vim /etc/zabbix/zabbix_agent2.conf
 Server=192.168.0.19  # Домашний сервер
 ServerActive=192.168.0.19
 Hostname=localhost
+# restart+автозапуск (его не было).
 systemctl restart zabbix-agent2
+systemctl enable zabbix-agent2
 ```
 ##### 9. MAMONSU
 ```
