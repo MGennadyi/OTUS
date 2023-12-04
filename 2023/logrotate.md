@@ -48,6 +48,7 @@ vim /postgres/scripts/logrotate/logclean.sh
 chmod +x /postgres/scripts/logrotate/logclean.sh
 ```
 # 5. Планировщик
+```
 */5 * * * * /postgres/scripts/logrotate/logrotate /postgres/scripts/logrotate/logrotate.conf --state /postgres/logrotate/scripts/logrotate-state
 ```
 ### Импорт логов
