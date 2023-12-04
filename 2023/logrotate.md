@@ -36,7 +36,7 @@ ALTER SYSTEM SET log_rotation_size = '500MB'; # вкл ротацию логов
 ALTER SYSTEM SET logging_collector = 'on'; # логирование в лог СУБД, рестарт СУБД! 
 # При нулевом значении смена файлов по времени не производится:
 ALTER SYSTEM SET log_rotation_age = '0'; # откл ротацию логов по времени
-ALTER SYSTEM SET log_directory = '/log/pg_log';
+ALTER SYSTEM SET log_directory = '/log/pg_log';se
 ALTER SYSTEM SET log_truncate_on_rotation = "on";
 ALTER SYSTEM SET log_statement = 'all';  - что пишем в журнал.
 
@@ -47,9 +47,14 @@ SELECT pg_reload_conf();
 vim /postgres/scripts/logrotate/logclean.sh
 chmod +x /postgres/scripts/logrotate/logclean.sh
 ```
-# 5. Планировщик
+### 5. Планировщик
 ```
 */5 * * * * /postgres/scripts/logrotate/logrotate /postgres/scripts/logrotate/logrotate.conf --state /postgres/logrotate/scripts/logrotate-state
+```
+### 6. Проверка работы
+```
+fallocate -l 500MB /log/pg_log/file1.gz
+fallocate -l 500MB /log/pg_log/file2.gz
 ```
 ### Импорт логов
 ```
