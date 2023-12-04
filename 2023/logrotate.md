@@ -42,26 +42,12 @@ ALTER SYSTEM SET log_statement = 'all';  - что пишем в журнал.
 
 SELECT pg_reload_conf();
 ```
-
-### Запуск от postgres:
-```
-
-```
-### Настройка конфига logrotate
-```
-
-```
+### 4. Создание logclean.sh
 ```
 vim /postgres/scripts/logrotate/logclean.sh
 chmod +x /postgres/scripts/logrotate/logclean.sh
 ```
-```
-chown postgres:postgres /postgres/scripts/logrotate/logrotate.conf
-chown postgres:postgres /postgres/scripts/logrotate/logclean.sh
-```
-```
-crontab -e
-# Сжатие логов
+# 5. Планировщик
 */5 * * * * /postgres/scripts/logrotate/logrotate /postgres/scripts/logrotate/logrotate.conf --state /postgres/logrotate/scripts/logrotate-state
 ```
 ### Импорт логов
