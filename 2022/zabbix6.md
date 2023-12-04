@@ -116,13 +116,13 @@ password=zabbix
 ```
 # Удаление предыдущего агента:
 apt-get purge --auto-remove zabbix-agent
-
 # Новая версия:
 wget http://repo.zabbix.com/zabbix/6.2/debian/pool/main/z/zabbix/zabbix-agent2_6.2.0-1%2Bdebian11_amd64.deb
 dpkg -i zabbix-agent2_6.2.0-1+debian11_amd64.deb
 # Ответ:
 dpkg: ошибка: в каталогах PATH не найдено 2 ожидаемые программы или исполняемых файла
 Замечание: В PATH суперпользователя обычно должны присутствовать /usr/local/sbin, /usr/sbin и /sbin
+```
 ### 8.2 Linux-agent2 REDOS
 ```
 yum search zabbix  # более полный показ
