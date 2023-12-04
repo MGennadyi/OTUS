@@ -32,11 +32,10 @@ vim /postgres/scripts/logrotate.conf
 ### 3. Правка конфигов postgresql.auto
 ```
 ALTER SYSTEM SET log_filename = 'postgresql-%Y-%m-%d_%H%M%S.log'
-
-ALTER SYSTEM SET log_rotation_size = '500MB';
-ALTER SYSTEM SET logging_collector = 'on';
+ALTER SYSTEM SET log_rotation_size = '500MB'; # вкл ротацию логов по размеру.
+ALTER SYSTEM SET logging_collector = 'on'; # логирование в лог СУБД, рестарт СУБД! 
 # При нулевом значении смена файлов по времени не производится:
-ALTER SYSTEM SET log_rotation_age = '0';
+ALTER SYSTEM SET log_rotation_age = '0'; # откл ротацию логов по времени
 ALTER SYSTEM SET log_directory = '/log/pg_log';
 ALTER SYSTEM SET log_truncate_on_rotation = "on";
 ALTER SYSTEM SET log_statement = 'all';  - что пишем в журнал.
