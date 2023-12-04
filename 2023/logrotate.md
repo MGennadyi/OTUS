@@ -12,7 +12,7 @@ chown -R postgres:postgres /log
 mkdir -p /postgres/scripts/logrotate
 chown -R postgres:postgres /postgres
 ```
-### Создание logrotate+logrotate.conf
+### 2. Создание logrotate+logrotate.conf
 ```
 cp /usr/sbin/logrotate /postgres/scripts/logrotate/
 vim /postgres/scripts/logrotate.conf
@@ -29,12 +29,12 @@ vim /postgres/scripts/logrotate.conf
     endscript
 }
 ```
-### 2. Правка конфигов postgresql.auto.confpostgresql.auto.conf
+### 3. Правка конфигов postgresql.auto
 ```
-vim /data/pg_data/postgresql.auto.conf
 ALTER SYSTEM SET log_filename = 'postgresql-%Y-%m-%d_%H%M%S.log'
-ALTER SYSTEM SET logging_collector = 'on';
+
 ALTER SYSTEM SET log_rotation_size = '500MB';
+ALTER SYSTEM SET logging_collector = 'on';
 # При нулевом значении смена файлов по времени не производится:
 ALTER SYSTEM SET log_rotation_age = '0';
 ALTER SYSTEM SET log_directory = '/log/pg_log';
@@ -44,18 +44,6 @@ ALTER SYSTEM SET log_statement = 'all';  - что пишем в журнал.
 SELECT pg_reload_conf();
 ```
 
-```
-root@zabbix:/home/mgb# logrotate --version
-logrotate 3.18.0
-
-    Default mail command:       /usr/bin/mail
-    Default compress command:   /bin/gzip
-    Default uncompress command: /bin/gunzip
-    Default compress extension: .gz
-    Default state file path:    /var/lib/logrotate/status
-    ACL support:                yes
-    SELinux support:            yes
-```
 ### Запуск от postgres:
 ```
 
