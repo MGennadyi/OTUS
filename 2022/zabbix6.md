@@ -112,7 +112,7 @@ Default language=RU
 login=Admin
 password=zabbix
 ```
-##### 8. Linux-Agent2
+### 8.1 Linux-Agent2 DEBIAN
 ```
 # Удаление предыдущего агента:
 apt-get purge --auto-remove zabbix-agent
@@ -123,13 +123,20 @@ dpkg -i zabbix-agent2_6.2.0-1+debian11_amd64.deb
 # Ответ:
 dpkg: ошибка: в каталогах PATH не найдено 2 ожидаемые программы или исполняемых файла
 Замечание: В PATH суперпользователя обычно должны присутствовать /usr/local/sbin, /usr/sbin и /sbin
-
+### 8.2 Linux-agent2 REDOS
+```
+yum search zabbix  # более полный показ
+zabbix-agent2.x86_64 : Zabbix agent 2
+yum install zabbix-agent2
+```
+### zabbix_agent2.conf
+```
 systemctl status zabbix-agent2
 systemctl stop zabbix-agent2
 vim /etc/zabbix/zabbix_agent2.conf
 # Server=192.168.5.161 - ОБОРОНЭНЕРГО больше для меня не существует
 # ServerActive=192.168.5.161
-Server=192.168.0.19
+Server=192.168.0.19  # Домашний сервер
 ServerActive=192.168.0.19
 Hostname=localhost
 systemctl restart zabbix-agent2
