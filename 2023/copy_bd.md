@@ -5,7 +5,9 @@ psql -c "SELECT pg_terminate_backend(pid) FROM pg_stat_activity WHERE datname='o
 ```
 ### Блокировка целевой БД test_test:
 ```
+# блокируем
 psql -U postgres -c "UPDATE pg_database SET datallowconn = false WHERE datname='test_test';"
+# снимаем блокировку
 psql -U postgres -c "UPDATE pg_database SET datallowconn = true WHERE datname='test_test';"
  ```
 ### dumpall
