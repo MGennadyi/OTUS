@@ -29,10 +29,10 @@ tail -n 10 $DUMPALLDIR/dumpall.dmp
 # Параметр -C = create. Без него надо указывать целевую БД!
 time pg_dump -C -h localhost -U postgres 'otus' > /backup/dump/otus.dmp
 ```
-### Замена инструкции в дампе: имя БД-источника на целевое имя БД-цель
+### Замена комманд в дампе: prod_sut на целевое имя БД=test_sut в дампе:
 ```
 sed -i "s/db_ist/bd_cel/g" bd_ist.bac
-sed -i "s/prod_sut/test_test/g" prod_sut.dmp
+sed -i "s/prod_sut/test_sut/g" /backup/pg_dump/prod_sut.dmp
 ```
 ### Создаю дамп целевой БД на целевом сервере
 ```
