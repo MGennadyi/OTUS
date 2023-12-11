@@ -444,7 +444,7 @@ root@wal-g2:/home/mgb#
 ### VACUUM
 ```
 \c бД
-VACUUM имя_табл
+VACUUM имя_табл;
 SELECT * FROM pg_stat_progress_vacuum \gx
 ```
 
