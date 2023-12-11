@@ -440,10 +440,12 @@ backlog 0
 backlog_wait_time 60000
 backlog_wait_time_actual 0
 root@wal-g2:/home/mgb#
-
-
-
 ```
-
+### VACUUM
+```
+\c бД
+VACUUM имя_табл
+SELECT * FROM pg_stat_progress_vacuum \gx
+```
 
 
