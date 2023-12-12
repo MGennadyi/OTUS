@@ -198,9 +198,13 @@ LIMIT 25;
 ```
 # кэширование таблиц, вставить поля heap_blks и idx_blks
 ```
-### Размер базы данных:
+### Размер одной базы:
 ```
 SELECT pg_size_pretty(pg_database_size('otus'));
+```
+### Размер всех баз:
+```
+select datname, pg_size_pretty(pg_database_size(datname)) from pg_database where not datname in ('postgres','template0','template1') order by pg_size_pretty desc;
 ```
 ### Обнаружение не использ-х индексов
 ```
