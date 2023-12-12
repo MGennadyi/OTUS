@@ -447,8 +447,8 @@ root@wal-g2:/home/mgb#
 ```
 ### VACUUM
 ```
-\c бД
-VACUUM имя_табл;
+\c otus
+VACUUM FULL VERBOSE имя_табл;
 SELECT * FROM pg_stat_progress_vacuum \gx
 ```
 
