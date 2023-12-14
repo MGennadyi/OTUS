@@ -101,7 +101,9 @@ postgrespro-std-15-client                       install
 postgrespro-std-15-contrib                      install
 postgrespro-std-15-libs:amd64                   install
 postgrespro-std-15-server                       install
-# Проверка установки. Пути указанные в строке инициализации:
+```
+### Проверка запуска службы:
+```
 systemctl status postgrespro-std-15.service
 ● postgrespro-std-15.service - Postgres Pro std 15 database server
      Loaded: loaded (/lib/systemd/system/postgrespro-std-15.service; disabled; vendor preset: enabled)
@@ -119,11 +121,9 @@ systemctl status postgrespro-std-15.service
              ├─1012 postgres: walwriter
              ├─1013 postgres: autovacuum launcher
              └─1014 postgres: logical replication launcher
-
-Oct 15 18:33:42 etcd systemd[1]: Starting Postgres Pro std 15 database server...
-Oct 15 18:33:42 etcd postgres[1007]: 2023-10-15 18:33:42.832 MSK [1007] LOG:  redirecting log output to logging collector process
-Oct 15 18:33:42 etcd postgres[1007]: 2023-10-15 18:33:42.832 MSK [1007] HINT:  Future log output will appear in directory "log".
-Oct 15 18:33:42 etcd systemd[1]: Started Postgres Pro std 15 database server.
+# Автозапуск/ручной запуск службы:
+systemctl enable postgrespro-std-15.service  # Loaded: enabled;
+systemctl disable postgrespro-std-15.service # Loaded: disabled;
 ```
 ### Запуск не получится:
 ```
