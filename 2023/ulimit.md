@@ -28,9 +28,16 @@ cpu time               (seconds, -t) unlimited
 max user processes              (-u) 1000
 virtual memory          (kbytes, -v) unlimited
 file locks                      (-x) unlimited
+```
+```
+# мягкие ограничения, используйте опцию -S:
+mgb@astra:~$ ulimit -S
+25000000
+# жестких ограничений используйте опцию -H:
+mgb@astra:~$ ulimit -H
+50000000
 
 ```
-
 
 
 
