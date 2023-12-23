@@ -13,6 +13,10 @@ vim /etc/security/limits.conf
 <domain> <type> <item> <value>
 postgres hard fsize unlimited  # Для пользователя
 @postgres hard fsize unlimited  # Для группы
+ulimit -f unlimited
+* hard fsize 50000000
+* soft fsize 25000000
+
 ```
  ### Изменение лимита навсегда:
 ```
