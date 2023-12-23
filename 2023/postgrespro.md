@@ -190,7 +190,7 @@ mkdir -p /data/pg_data
 chown -R postgres:postgres /data
 mkdir -p /wal/pg_wal
 chown -R postgres:postgres /wal
-mkdir /backup/wal_arc_archive
+mkdir -p /backup/wal_arc_archive
 chown -R postgres:postgres /backup
 mkdir -p /log/pg_log
 chown -R postgres:postgres /log/pg_log
