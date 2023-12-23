@@ -1,7 +1,18 @@
 # ulimit
 ### Настройка лимитов для пользователя
 ```
+# Просмотр для текущего пользователя:
+ulimit -a
+# Просмотр для конкретного пользователя:
+ulimit -a postgres
+```
+
+```
 vim /etc/security/limits.conf
+При редактировании необходимо включить четыре элемента:
+<domain> <type> <item> <value>
+postgres hard fsize unlimited  # Для пользователя
+@postgres hard fsize unlimited  # Для группы
 ```
  ### Изменение лимита навсегда:
 ```
@@ -15,7 +26,7 @@ mgb@astra:~$ ulimit -a postgres
 core file size          (blocks, -c) 0
 data seg size           (kbytes, -d) unlimited
 scheduling priority             (-e) 0
-file size               (blocks, -f) 25000000
+file size               (blocks, -f) 25000000 # =25GB
 pending signals                 (-i) 7548
 max locked memory       (kbytes, -l) 65536
 max memory size         (kbytes, -m) unlimited
@@ -36,9 +47,12 @@ mgb@astra:~$ ulimit -S
 # жестких ограничений используйте опцию -H:
 mgb@astra:~$ ulimit -H
 50000000
+```
+### Правка:
+```
+file size               (blocks, -f) unlimited
 
 ```
-
 
 
 
