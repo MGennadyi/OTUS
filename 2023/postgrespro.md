@@ -193,7 +193,7 @@ chown -R postgres:postgres /wal
 mkdir -p /backup/wal_arc_archive
 chown -R postgres:postgres /backup
 mkdir -p /log/pg_log
-chown -R postgres:postgres /log/pg_log
+chown -R postgres:postgres /log/
 mkdir -p /postgres/scripts
 chown -R postgres:postgres /postgres
 ```
