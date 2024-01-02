@@ -215,9 +215,9 @@ select * from test_main2;
 archive_command = 'test ! -f /backup/wal_arc_archive/%f && cp %p /backup/wal_arc_archive/%f'
 ```
 ```
-CREATE DATABASE ttt;
-ALTER DATABASE ttt RENAME TO qwerty;
-
+CREATE DATABASE demo_t WITH TEMPLATE  = template0;
+ALTER DATABASE demo_t OWNER TO ***;
+ALTER DATABASE demo_t RENAME TO qwerty;
 ```
 ### Перенос DEMO_SMALL.sql demo_big.sql
 ```
