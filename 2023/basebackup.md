@@ -214,17 +214,28 @@ select * from test_main2;
 ```
 archive_command = 'test ! -f /backup/wal_arc_archive/%f && cp %p /backup/wal_arc_archive/%f'
 ```
+###
+```
+
+```
 ### Создание БД demo_t demo_w demo_e :
 ```
+sed -i "s/demo/demo_t/g" /backup/demo-big-20170815.sql
 CREATE DATABASE demo_t WITH TEMPLATE  = template0;
 ALTER DATABASE demo_t OWNER TO ***;
 # ------------------
+sed -i "s/demo_t/demo_w/g" /backup/demo-big-20170815.sql
 CREATE DATABASE demo_w WITH TEMPLATE  = template0;
 ALTER DATABASE demo_w OWNER TO ***;
 #---------------------
+sed -i "s/demo_w/demo_e/g" /backup/demo-big-20170815.sql
 CREATE DATABASE demo_e WITH TEMPLATE  = template0;
 ALTER DATABASE demo_e OWNER TO ***;
 ALTER DATABASE demo_t RENAME TO qwerty;
+```
+### Правка исходного дампа demo_big.sql
+```
+sed -i "s/demo/demo_t/g" /backup/demo-big-20170815.sql
 ```
 ### Перенос DEMO_SMALL.sql demo_big.sql
 ```
@@ -238,6 +249,11 @@ chown postgres:postgres /home/mgb/demo_small.zip
 unzip demo_small.zip
 chown postgres:postgres /home/mgb/demo_small.sql
 chown postgres /home/mgb/demo_small.sql
+```
+### Загрузка  БД :
+```
+time psql -U postgres -f /backup/demo-big-20170815.sql >> /backup/demo-big-20170815.log 2>
+time psql -U postgres -f /backup/demo-big-20170815.sql >> /backup/demo_w.sql
 ```
 ### Предварительная загрузка данных:
 ```
