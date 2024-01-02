@@ -210,13 +210,20 @@ select * from test_main2;
  30
 (6 строк)
 ```
-### Работа с wal
+### Работа с wal. Архивная команда:
 ```
 archive_command = 'test ! -f /backup/wal_arc_archive/%f && cp %p /backup/wal_arc_archive/%f'
 ```
+### Создание БД demo_t demo_w demo_e :
 ```
 CREATE DATABASE demo_t WITH TEMPLATE  = template0;
 ALTER DATABASE demo_t OWNER TO ***;
+# ------------------
+CREATE DATABASE demo_w WITH TEMPLATE  = template0;
+ALTER DATABASE demo_w OWNER TO ***;
+#---------------------
+CREATE DATABASE demo_e WITH TEMPLATE  = template0;
+ALTER DATABASE demo_e OWNER TO ***;
 ALTER DATABASE demo_t RENAME TO qwerty;
 ```
 ### Перенос DEMO_SMALL.sql demo_big.sql
