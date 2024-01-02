@@ -218,17 +218,22 @@ archive_command = 'test ! -f /backup/wal_arc_archive/%f && cp %p /backup/wal_arc
 ```
 
 ```
-### Создание БД demo_t demo_w demo_e :
+### Создание БД demo; demo_t; demo_w; demo_e; :
 ```
+time psql -U postgres -f /backup/demo-big-20170815.sql >> /backup/demo.log 2>&1
+#--------------
 sed -i "s/demo/demo_t/g" /backup/demo-big-20170815.sql
+time psql -U postgres -f /backup/demo-big-20170815.sql >> /backup/demo_t.log 2>&1.log 2>&1
 CREATE DATABASE demo_t WITH TEMPLATE  = template0;
 ALTER DATABASE demo_t OWNER TO ***;
 # ------------------
 sed -i "s/demo_t/demo_w/g" /backup/demo-big-20170815.sql
+time psql -U postgres -f /backup/demo-big-20170815.sql >> /backup/demo_w.log 2>&1.log 2>&1
 CREATE DATABASE demo_w WITH TEMPLATE  = template0;
 ALTER DATABASE demo_w OWNER TO ***;
 #---------------------
 sed -i "s/demo_w/demo_e/g" /backup/demo-big-20170815.sql
+time psql -U postgres -f /backup/demo-big-20170815.sql >> /backup/demo_e.log 2>&1.log 2>&1
 CREATE DATABASE demo_e WITH TEMPLATE  = template0;
 ALTER DATABASE demo_e OWNER TO ***;
 ALTER DATABASE demo_t RENAME TO qwerty;
@@ -249,11 +254,6 @@ chown postgres:postgres /home/mgb/demo_small.zip
 unzip demo_small.zip
 chown postgres:postgres /home/mgb/demo_small.sql
 chown postgres /home/mgb/demo_small.sql
-```
-### Загрузка  БД :
-```
-time psql -U postgres -f /backup/demo-big-20170815.sql >> /backup/demo-big-20170815.log 2>
-time psql -U postgres -f /backup/demo-big-20170815.sql >> /backup/demo_w.sql
 ```
 ### Предварительная загрузка данных:
 ```
