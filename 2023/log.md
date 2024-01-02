@@ -9,6 +9,7 @@ SELECT pg_reload_conf();
 ```
 ##### Просмотр лог на ошибки:
 ```
+grep -E "ERROR|ОШИБКА|DETAIL|FATAL" /log/pg_log/postgresql-2024-01-02_191232.log
 grep -E "ERROR|ОШИБКА|DETAIL|FATAL" /var/log/postgresql/postgresql-13-main.log
 
 ```
