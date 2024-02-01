@@ -2,7 +2,7 @@
 ```
 export PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 ```
-###### 1. Установка Postgresql-14
+### 1. Установка Postgresql-14
 ```
 sudo sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list'
 wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
@@ -41,7 +41,7 @@ vim /etc/hosts
 10.128.0.68 haproxy2.ru-central1.internal	haproxy2
 10.128.0.69 keepalived.ru-central1.internal	keepalived
 ```
-###### 2. Установка WAL-G
+### 2. Установка WAL-G
 ```
 # v.1.1.2
 wget https://github.com/wal-g/wal-g/releases/download/v1.1.2-rc/wal-g-pg-ubuntu-20.04-amd64.tar.gz
@@ -91,7 +91,7 @@ ls -la /var/lib/postgresql/14/main/log
 
 chown -R postgres /var/lib/postgresql/14/main/log
 ```
-##### 5. Из-под postgres создать скрытый конфиг wal-g; подключение через linux-socket:
+### 5. Из-под postgres создать скрытый конфиг wal-g; подключение через linux-socket:
 ```
 # Бекапы не делаются из-под root, поэтому в домашнем каталоге должен быть:
 su postgres
@@ -415,7 +415,7 @@ vim /home/mgb/backup_wal-g.sh
 ?
 /usr/local/bin/wal-g backup-push /var/lib/postgresql/14/main /var/log/postgresql/walg_delete.log
 ```
-###### Скрипт del_wal-g.sh: Удаление старых резервных копий :
+### Скрипт del_wal-g.sh: Удаление старых резервных копий :
 ```
 touch /home/mgb/del_wal-g.sh
 chmod +x /home/mgb/del_wal-g.sh
