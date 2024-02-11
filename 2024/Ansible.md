@@ -17,11 +17,12 @@ sudo vi /etc/sysconfig/network-scripts/ifcfg-enp0s3
 ```
 
 ```
-yum install epel-release
+sudo yum install epel-release
 sudo yum update
 yum -y install ansible
 # Проверка версии
 rpm -qa | grep ansible
+ansible-2.9.27-1.el7.noarch
 ```
 
 ```
@@ -31,6 +32,13 @@ cat > inventory
 target1 ansible_host=192.168.0.18 ansible_ssh_pass=osboxes.org
 # модуль=ping -i=inventory
 ansible target1 -m ping -i inventory
+target1 | SUCCESS => {
+    "ansible_facts": {
+        "discovered_interpreter_python": "/usr/bin/python"
+    },
+    "changed": false,
+    "ping": "pong"
+}
 ```
 
 
