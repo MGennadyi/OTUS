@@ -14,8 +14,12 @@ ifconfig
 ### Активация сет.адаптер в автозагрузке
 ```
 sudo vi /etc/sysconfig/network-scripts/ifcfg-enp0s3
+=yes
 ```
-
+```
+# на контроллере ip=17 выполнить проброс ssh ключа командой:
+ssh 192.168.0.18
+```
 ```
 sudo yum install epel-release
 sudo yum update
@@ -40,7 +44,10 @@ target1 | SUCCESS => {
     "ping": "pong"
 }
 ```
+### Клониировать ansible-target1  в ansible-target2
+```
 
+```
 
 
 
