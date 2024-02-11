@@ -15,3 +15,25 @@ ifconfig
 ```
 sudo vi /etc/sysconfig/network-scripts/ifcfg-enp0s3
 ```
+
+```
+yum install epel-release
+```
+
+```
+mkdir project
+cd project/
+cat > inventory
+target1 ansible_host=192.168.018 ansible_ssh_pass=osboxes.org
+```
+
+
+
+
+
+
+
+
+
+
+
