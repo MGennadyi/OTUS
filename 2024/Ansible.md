@@ -49,6 +49,13 @@ target1 | SUCCESS => {
 ```
 ### SSH 1-й доступ, принимаем key. Откл. проверку key в ansible:
 ```
+[osboxes@ansiblecontroller project]$ ssh 192.168.0.19
+The authenticity of host '192.168.0.19 (192.168.0.19)' can't be established.
+ECDSA key fingerprint is SHA256:1iDFrvBhm6okZBYf+uNGsEDNx4tHOOR98hRBXPGfqlY.
+ECDSA key fingerprint is MD5:e7:f8:b0:07:1c:5b:4a:48:10:bc:f6:36:42:62:6c:e0.
+Are you sure you want to continue connecting (yes/no)?
+```
+```
 sudo vi /etc/ansible/ansible.cfg
 /host_key - поиск
 /host_key_checking = False - раскоментировать. Не рекомендуется. Лучше исп.key ssh
