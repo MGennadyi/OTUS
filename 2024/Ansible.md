@@ -51,8 +51,9 @@ target1 | SUCCESS => {
 ```
 sudo vi /etc/ansible/ansible.cfg
 /host_key - поиск
-/host_key_checking = False - раскоментировать. Не рекомендуется.
+/host_key_checking = False - раскоментировать. Не рекомендуется. Лучше исп.key ssh
 ```
+### YAML после: пробел
 
 
 
