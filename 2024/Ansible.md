@@ -46,9 +46,13 @@ target1 | SUCCESS => {
 ```
 ### Клониировать ansible-target1  в ansible-target2
 ```
-
 ```
-
+### SSH 1-й доступ, принимаем key. Откл. проверку key в ansible:
+```
+sudo vi /etc/ansible/ansible.cfg
+/host_key - поиск
+/host_key_checking = False - раскоментировать. Не рекомендуется.
+```
 
 
 
