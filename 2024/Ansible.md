@@ -61,7 +61,13 @@ sudo vi /etc/ansible/ansible.cfg
 /host_key_checking = False - раскоментировать. Не рекомендуется. Лучше исп.key ssh
 ```
 ### YAML после: пробел
-
+###
+```
+mkdir ansible-demo1
+cd ansible-demo1/
+в atom ansible-demo1/
+new folder exer1
+```
 
 
 
