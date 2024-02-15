@@ -42,15 +42,17 @@ ansible 2.9.27
 ```
 ### Рабочие папки:
 ```
-mkdir ~/"ansible-apache"
+mkdir -p ~/"ansible-apache"
 ~/ansible.cfg - в приоритете
 ```
 ### Рабочие папки:
 ```
 mkdir project
+cd ansible-apache/
 cd project/
 cat > inventory
 target1 ansible_host=192.168.0.18 ansible_ssh_pass=osboxes.org
+target1 ansible_host=192.168.0.18 ansible_ssh_pass=11111111
 # модуль=ping -i=inventory
 ansible target1 -m ping -i inventory
 target1 | SUCCESS => {
