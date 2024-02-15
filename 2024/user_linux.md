@@ -1,6 +1,8 @@
 #
 ###
 ```
+# Заходим под root:
+sudo su
 sudo adduser mgb
 sudo passwd mgb
 # Debian - добавить в группу sudo:
