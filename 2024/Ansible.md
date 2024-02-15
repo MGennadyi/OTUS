@@ -35,7 +35,17 @@ ansible 2.9.27
   executable location = /usr/bin/ansible
   python version = 2.7.5 (default, Nov 14 2023, 16:14:06) [GCC 4.8.5 20150623 (Red Hat 4.8.5-44)]
 ```
-
+### Конфиг
+```
+# По умолчанию:
+/etc/ansible/ansible.cfg
+```
+### Рабочие папки:
+```
+mkdir ~/"ansible-apache"
+~/ansible.cfg - в приоритете
+```
+### Рабочие папки:
 ```
 mkdir project
 cd project/
@@ -61,6 +71,9 @@ The authenticity of host '192.168.0.19 (192.168.0.19)' can't be established.
 ECDSA key fingerprint is SHA256:1iDFrvBhm6okZBYf+uNGsEDNx4tHOOR98hRBXPGfqlY.
 ECDSA key fingerprint is MD5:e7:f8:b0:07:1c:5b:4a:48:10:bc:f6:36:42:62:6c:e0.
 Are you sure you want to continue connecting (yes/no)?
+```
+```
+ssh mgb@192.168.0.19
 ```
 ```
 sudo vi /etc/ansible/ansible.cfg
