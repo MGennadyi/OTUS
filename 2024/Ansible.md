@@ -27,6 +27,13 @@ yum -y install ansible
 # Проверка версии
 rpm -qa | grep ansible
 ansible-2.9.27-1.el7.noarch
+[osboxes@ansiblecontroller ansible-demo1]$ ansible --version
+ansible 2.9.27
+  config file = /etc/ansible/ansible.cfg
+  configured module search path = [u'/home/osboxes/.ansible/plugins/modules', u'/usr/share/ansible/plugins/modules']
+  ansible python module location = /usr/lib/python2.7/site-packages/ansible
+  executable location = /usr/bin/ansible
+  python version = 2.7.5 (default, Nov 14 2023, 16:14:06) [GCC 4.8.5 20150623 (Red Hat 4.8.5-44)]
 ```
 
 ```
@@ -67,6 +74,13 @@ mkdir ansible-demo1
 cd ansible-demo1/
 в atom ansible-demo1/
 new folder exer1
+```
+```
+cp ../project/inventory .
+cat inventory
+[linux]
+target1 ansible_host=192.168.0.18 ansible_ssh_pass=osboxes.org
+target2 ansible_host=192.168.0.19 ansible_ssh_pass=osboxes.org
 ```
 
 
