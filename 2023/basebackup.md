@@ -485,6 +485,7 @@ touch /backup/restore/pg_data/recovery.signal  # Для v_12 и выше.
 mcedit backup/restore/pg_data/postgresql.auto.conf
 restore_command = 'cp /backup/restore/restore_wal/%f %p' # сохраненные wal после basebackup 
 recovery_target_time = '2023-10-24 15:01:00+03'
+recovery_target_timeline='current'
 ```
 
 
