@@ -495,6 +495,10 @@ recovery_target_timeline='current'
 ***********7n2:5432:*:postgres:***
 **.***.***.000:5432:*:postgres:***
 ```
+### Доступ без пароля при указании в pgpass
+```
+psql -h ****07n1 -U postgres -p 5433
+```
 
 
 
