@@ -74,8 +74,11 @@ ECDSA key fingerprint is SHA256:1iDFrvBhm6okZBYf+uNGsEDNx4tHOOR98hRBXPGfqlY.
 ECDSA key fingerprint is MD5:e7:f8:b0:07:1c:5b:4a:48:10:bc:f6:36:42:62:6c:e0.
 Are you sure you want to continue connecting (yes/no)?
 ```
+### Подкл: 
 ```
-ssh mgb@192.168.0.19
+# Connect to host/add new/ ввод команд ssh:
+ssh mgb@192.168.0.19 - выбрать место хранен.конфигур (верхн.строчку)
+в правом нижнем: подключиться/продолжить/ввод пароля
 ```
 ```
 sudo vi /etc/ansible/ansible.cfg
