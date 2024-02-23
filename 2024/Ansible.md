@@ -109,6 +109,8 @@ yum install dnf
 sudo dnf install git-all
 Complete!
 https://about.gitlab.com/install/#centos-7
+curl https://packages.gitlab.com/install/repositories/gitlab/gitlab-ce/script.rpm.sh | sudo bash
+sudo EXTERNAL_URL="https://gitlab.example.com" yum install -y gitlab-ce
 ```
 ### Windows
 ```
