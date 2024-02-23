@@ -103,7 +103,17 @@ cat inventory
 target1 ansible_host=192.168.0.18 ansible_ssh_pass=osboxes.org
 target2 ansible_host=192.168.0.19 ansible_ssh_pass=osboxes.org
 ```
-
+### CentOS
+```
+yum install dnf
+sudo dnf install git-all
+Complete!
+```
+### Windows
+```
+https://git-scm.com/download/win
+64-bit Git for Windows Setup.
+```
 
 
 
