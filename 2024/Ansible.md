@@ -108,9 +108,11 @@ target2 ansible_host=192.168.0.19 ansible_ssh_pass=osboxes.org
 yum install dnf
 sudo dnf install git-all
 Complete!
+https://about.gitlab.com/install/#centos-7
 ```
 ### Windows
 ```
+https://git-scm.com/download/win
 https://git-scm.com/download/win
 64-bit Git for Windows Setup.
 ```
