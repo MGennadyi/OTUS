@@ -118,6 +118,11 @@ gitlab Reconfigured!
 vim /etc/gitlab/initial_root_password
 102.168.0.17 root/4QXYKrEq3vKoPb7p9ujyWAgL8z08Loo+4pkB288lmJo=
 ```
+### Настройка Gitlab
+```
+Admin area/users: mgb/q12345678
+pass должен соответствовать уровню сложности
+```
 ### Windows
 ```
 https://git-scm.com/download/win
