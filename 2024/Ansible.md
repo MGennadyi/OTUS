@@ -111,6 +111,12 @@ Complete!
 https://about.gitlab.com/install/#centos-7
 curl https://packages.gitlab.com/install/repositories/gitlab/gitlab-ce/script.rpm.sh | sudo bash
 sudo EXTERNAL_URL="https://gitlab.example.com" yum install -y gitlab-ce
+external_url 'http://gitlab.dmosk.ru'
+vi /etc/gitlab/gitlab.rb
+gitlab-ctl reconfigure
+gitlab Reconfigured!
+vim /etc/gitlab/initial_root_password
+102.168.0.17 root/4QXYKrEq3vKoPb7p9ujyWAgL8z08Loo+4pkB288lmJo=
 ```
 ### Windows
 ```
