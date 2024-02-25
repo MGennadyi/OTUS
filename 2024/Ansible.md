@@ -5,7 +5,9 @@ mgb@ansible:~$ python3 --version
 Python 3.9.2
 apt install git python3-pip docker docker-compose
 apt install ansible  - dmosk.ru
-pip3 install ansible - Romnero
+apt install python3-pip  - Romnero
+pip3 install ansible     - Romnero
+ansible [core 2.15.9]
 ```
 ### CETNTOS 500Gb
 ```
