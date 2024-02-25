@@ -1,5 +1,9 @@
-### osboxes.org/centos
-### pass
+### DEBIAN 8 Gb установка
+```
+apt update
+
+```
+### CETNTOS 500Gb
 ```
 Username: osboxes
 Password: osboxes.org
