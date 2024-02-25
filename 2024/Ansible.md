@@ -9,6 +9,18 @@ pip3 install ansible     - Romnero
 ansible [core 2.15.9] - не последняя, при этом config file = None
 ps -aux | grep ansible
 apt install ansible  - dmosk.ru ansible [core 2.15.9]
+# https://docs.ansible.com/ansible/latest/installation_guide/installation_distros.html#installing-ansible-on-debian
+ UBUNTU_CODENAME=jammy  #Debian 12=jammy 11=focal 10=bionic
+UBUNTU_CODENAME=focal
+$ wget -O- "https://keyserver.ubuntu.com/pks/lookup?fingerprint=on&op=get&search=0x6125E2A8C77F2818FB7BD15B93C4A3FD7BB9C367" | sudo gpg --dearmour -o /usr/share/keyrings/ansible-archive-keyring.gpg
+$ echo "deb [signed-by=/usr/share/keyrings/ansible-archive-keyring.gpg] http://ppa.launchpad.net/ansible/ansible/ubuntu $UBUNTU_CODENAME main" | sudo tee /etc/apt/sources.list.d/ansible.list
+$ sudo apt update && sudo apt install ansible
+При обработке следующих пакетов произошли ошибки:
+ /tmp/apt-dpkg-install-HjDFe8/1-ansible-core_2.12.10-1ppa~focal_all.deb
+E: Sub-process /usr/bin/dpkg returned an error code (1)
+apt install ansible
+Уже установлен пакет ansible самой новой версии (5.10.0-1ppa~focal)
+apt --fix-broken install
 ```
 ### CETNTOS 500Gb
 ```
