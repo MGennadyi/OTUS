@@ -1,6 +1,9 @@
 ### DEBIAN 8 Gb установка
 ```
 apt update
+mgb@ansible:~$ python3 --version
+Python 3.9.2
+
 
 ```
 ### CETNTOS 500Gb
