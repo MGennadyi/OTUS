@@ -3,11 +3,12 @@
 apt update
 mgb@ansible:~$ python3 --version
 Python 3.9.2
-apt install git python3-pip docker docker-compose
-apt install ansible  - dmosk.ru
+apt install git python3-pip docker docker-compose   - Romnero
 apt install python3-pip  - Romnero
 pip3 install ansible     - Romnero
-ansible [core 2.15.9]
+ansible [core 2.15.9] - не последняя, при этом config file = None
+ps -aux | grep ansible
+apt install ansible  - dmosk.ru ansible [core 2.15.9]
 ```
 ### CETNTOS 500Gb
 ```
