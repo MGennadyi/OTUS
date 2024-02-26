@@ -1,4 +1,4 @@
-### DEBIAN 8 Gb установка
+### DEBIAN 8Gb-ssd
 ```
 apt update
 mgb@ansible:~$ python3 --version
@@ -22,7 +22,7 @@ apt install ansible
 Уже установлен пакет ansible самой новой версии (5.10.0-1ppa~focal)
 apt --fix-broken install
 ```
-### CETNTOS 500Gb
+### CENTOS 500Gb-hdd
 ```
 Username: osboxes
 Password: osboxes.org
