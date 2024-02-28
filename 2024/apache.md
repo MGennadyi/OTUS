@@ -34,9 +34,13 @@ sudo apt install nginx -y
 systemctl status nginx
 systemctl start nginx
 systemctl status nginx
+# Активация фаервола:
 sudo ufw status
 ip подставляем в браузер
+sudo ufw app list
+sudo ufw allow OpenSSH
 sudo ufw allow 22
+sudo ufw allow 'Apache Full'  # разрешает все 3 режима
 sudo ufw enable
 sudo ufw status
 sudo ufw allow 'Nginx Full'
