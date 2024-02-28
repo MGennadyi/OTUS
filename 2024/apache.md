@@ -37,7 +37,11 @@ cat server.key
 cat privet.key
 # вкл виртуального хоста:
 sudo a2ensite default-ssl.conf
+cd  /etc/apache2/sites-available/
 
+
+sudo systemctl reload apache2 # перечитать конфиг
+netstat -tlpn  # Проверка 443 порта
 sudo systemctl restart apache2
 ```
 ### Уст nginx
