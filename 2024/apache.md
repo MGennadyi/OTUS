@@ -28,13 +28,26 @@ systemctl status apache2
 curl localhost
 ip подставляем в браузер = стартовая страница apache2
 ```
+### Настройка apache
+```
+# Сертификаты:
+openssl reg -new  
+ls
+cat server.key
+cat privet.key
+# вкл виртуального хоста:
+sudo a2ensite default-ssl.conf
+
+sudo systemctl restart apache2
+```
 ### Уст nginx
 ```
 sudo apt install nginx -y
 systemctl status nginx
 systemctl start nginx
 systemctl status nginx
-# Активация фаервола:
+```
+### Активация фаервола:
 sudo ufw status
 ip подставляем в браузер
 sudo ufw app list
@@ -45,5 +58,8 @@ sudo ufw enable
 sudo ufw status
 sudo ufw allow 'Nginx Full'
 sudo ufw status
+```
+### Настройка nginx
+```
 vim /etc/nginx/nginx.conf
 ```
