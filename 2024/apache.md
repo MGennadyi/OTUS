@@ -55,8 +55,9 @@ sudo service apache start
 ```
 ###
 ```
-firma1.comp firma2.comp -создал папки
-sudo thunar  # файловый менеджер. Из загрузок копировал 2 сохраненнных сайта от авито и microsoft
+mkdir /var/www/firma1.comp
+mkdir /var/www/firma2.comp
+sudo thunar  # файловый менеджер. Из загрузок копировал 2 сохраненнных сайта от авито и microsoft. У обоих переименовал в index.html
 /var/www/firma1.comp/index.html
 /var/www/firma2.comp/index.html
 cp /etc/apache2/sites-available/000-default.conf /etc/apache2/sites-available/firma1.comp.conf
@@ -68,15 +69,18 @@ mcedit /etc/apache2/sites-available/firma2.comp.conf
 Servername firma2.comp            -добавить
 DocumentRoot /var/www/firma2.comp -изменить
 # Привязка конфига сайта к серверу apache2
+export PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 a2ensite firma1.comp
 a2ensite firma2.comp
+To activate the new configuration, you need to run:  systemctl reload apache2
+
 ```
 ###
 ```
 vim /etc/hosts
 192.168.0.17 firma1.comp
 192.168.0.17 firma2.comp
-
+sudo service apache2 restart
 ```
 ### Уст nginx
 ```
