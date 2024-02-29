@@ -44,6 +44,15 @@ sudo systemctl reload apache2 # перечитать конфиг
 netstat -tlpn  # Проверка 443 порта
 sudo systemctl restart apache2
 ```
+###
+```
+sudo service apache stop
+ubuntu.com/сохранить как/index.html/обновить - не сработает.
+sudo mc
+/var/www/html/index.html - переименовать в _index.html
+вставить из загрузок сохраненную ubuntu
+sudo service apache start
+```
 ### Уст nginx
 ```
 sudo apt install nginx -y
