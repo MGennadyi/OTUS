@@ -53,6 +53,17 @@ sudo mc
 вставить из загрузок сохраненную ubuntu
 sudo service apache start
 ```
+###
+```
+firma1.comp firma2.comp -создал папки
+sudo thunar  # файловый менеджер. Из загрузок копировал 2 сохраненнных сайта от авито и microsoft
+/var/www/firma1.comp/index.html
+/var/www/firma2.comp/index.html
+cp /etc/apache2/sites-available/000-default.conf /etc/apache2/sites-available/firma1.comp.conf
+cp /etc/apache2/sites-available/000-default.conf /etc/apache2/sites-available/firma2.comp.conf
+
+
+```
 ### Уст nginx
 ```
 sudo apt install nginx -y
