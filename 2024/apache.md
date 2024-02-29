@@ -61,7 +61,21 @@ sudo thunar  # файловый менеджер. Из загрузок копи
 /var/www/firma2.comp/index.html
 cp /etc/apache2/sites-available/000-default.conf /etc/apache2/sites-available/firma1.comp.conf
 cp /etc/apache2/sites-available/000-default.conf /etc/apache2/sites-available/firma2.comp.conf
-
+mcedit /etc/apache2/sites-available/firma1.comp.conf
+Servername firma1.comp            -добавить
+DocumentRoot /var/www/firma1.comp -изменить
+mcedit /etc/apache2/sites-available/firma2.comp.conf
+Servername firma2.comp            -добавить
+DocumentRoot /var/www/firma2.comp -изменить
+# Привязка конфига сайта к серверу apache2
+a2ensite firma1.comp
+a2ensite firma2.comp
+```
+###
+```
+vim /etc/hosts
+192.168.0.17 firma1.comp
+192.168.0.17 firma2.comp
 
 ```
 ### Уст nginx
