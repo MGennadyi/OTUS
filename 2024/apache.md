@@ -50,10 +50,11 @@ vim /var/www/demo/index.html
 cp /etc/apache2/sites-available/000-default.conf /etc/apache2/sites-available/test.conf
 cp /etc/apache2/sites-available/000-default.conf /etc/apache2/sites-available/demo.conf
 vim /etc/apache2/sites-available/test.conf
-ServerName test            -добавить ???
+ServerName test            -добавить имя ввода в строке браузера
+ServerAlias www.test
 DocumentRoot /var/www/test -изменить
 vim /etc/apache2/sites-available/demo.conf
-ServerName demo            -добавить
+ServerName demo            -добавить имя ввода в строке браузера
 DocumentRoot /var/www/demo -изменить
 # Привязка конфига сайта к серверу apache2
 export PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
@@ -64,6 +65,7 @@ To activate the new configuration, you need to run:  systemctl reload apache2
 ```
 ###
 ```
+sudo chmod -R 755 /var/www
 vim /etc/hosts
 192.168.0.17 firma1.comp
 192.168.0.17 firma2.comp
