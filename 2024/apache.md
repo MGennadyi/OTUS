@@ -1,9 +1,8 @@
 # Установка Apache
 ### 1. Подмена встроенного web-сайта на свой собственный
 ```
-apt install net-tools
+apt install net-tools curl -y
 netstat -tlpn
-Active Internet connections (only servers)
 Proto Recv-Q Send-Q Local Address           Foreign Address         State       PID/Program name
 tcp        0      0 0.0.0.0:22              0.0.0.0:*               LISTEN      498/sshd: /usr/sbin
 tcp        0      0 127.0.0.1:5432          0.0.0.0:*               LISTEN      521/postgres
@@ -14,18 +13,13 @@ tcp6       0      0 ::1:5432                :::*                    LISTEN      
 tcp6       0      0 ::1:6010                :::*                    LISTEN      1002/sshd: mgb@pts/
 tcp6       0      0 :::6432                 :::*                    LISTEN      478/pgbouncer
 ```
+### Уст Apache2 на Ubuntu
 ```
-root@wal-g2:/home/mgb# curl localhost
-curl: (7) Failed to connect to localhost port 80: В соединении отказано
-```
-### Уст ubuntu
-```
-# Проверка, что не установлен
 ifconfig
 ip подставляем в браузер
 sudo apt install apache2 -y
 systemctl status apache2
-curl localhost
+curl localhost # Просмотр кода стартовой страницы
 ip подставляем в браузер = стартовая страница apache2
 ```
 ### Настройка apache
@@ -38,41 +32,33 @@ cat privet.key
 # вкл виртуального хоста:
 sudo a2ensite default-ssl.conf
 cd  /etc/apache2/sites-available/
-
-
 sudo systemctl reload apache2 # перечитать конфиг
 netstat -tlpn  # Проверка 443 порта
 sudo systemctl restart apache2
 ```
-###
-```
-sudo service apache stop
-ubuntu.com/сохранить как/index.html/обновить - не сработает.
-sudo mc
-/var/www/html/index.html - переименовать в _index.html
-вставить из загрузок сохраненную ubuntu
-sudo service apache start
-```
-###
+### Публикация страницы
 ```
 mkdir /var/www/test
 mkdir /var/www/demo
 sudo thunar  # файловый менеджер. Из загрузок копировал 2 сохраненнных сайта от авито и microsoft. У обоих переименовал в index.html
-/var/www/test/index.html
+vim /var/www/test/index.html
 <h1>Helo world</h1>
-/var/www/demo/index.html
+<h2>Test</h2>
+vim /var/www/demo/index.html
+<h1>Helo world</h1>
+<h2>Demo</h2>
 cp /etc/apache2/sites-available/000-default.conf /etc/apache2/sites-available/test.conf
 cp /etc/apache2/sites-available/000-default.conf /etc/apache2/sites-available/demo.conf
-mcedit /etc/apache2/sites-available/test.conf
-ServerName firma1.comp            -добавить
-DocumentRoot /var/www/firma1.comp -изменить
-mcedit /etc/apache2/sites-available/demo.comp.conf
-ServerName firma2.comp            -добавить
-DocumentRoot /var/www/firma2.comp -изменить
+vim /etc/apache2/sites-available/test.conf
+ServerName test            -добавить ???
+DocumentRoot /var/www/test -изменить
+vim /etc/apache2/sites-available/demo.conf
+ServerName demo            -добавить
+DocumentRoot /var/www/demo -изменить
 # Привязка конфига сайта к серверу apache2
 export PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
-a2ensite firma1.comp
-a2ensite firma2.comp
+a2ensite test
+a2ensite demo
 To activate the new configuration, you need to run:  systemctl reload apache2
 
 ```
