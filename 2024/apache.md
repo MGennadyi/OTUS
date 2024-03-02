@@ -22,6 +22,41 @@ systemctl status apache2
 curl localhost # Просмотр кода стартовой страницы
 ip подставляем в браузер = стартовая страница apache2
 ```
+
+### Публикация страницы
+```
+mkdir /var/www/test.loc
+mkdir /var/www/demo.loc
+vim /var/www/test.loc/index.html
+<h1>Helo world</h1>
+<h2>Test</h2>
+vim /var/www/demo.loc/index.html
+<h1>Helo world</h1>
+<h2>Demo</h2>
+cp /etc/apache2/sites-available/000-default.conf /etc/apache2/sites-available/test.loc.conf
+cp /etc/apache2/sites-available/000-default.conf /etc/apache2/sites-available/demo.loc.conf
+vim /etc/apache2/sites-available/test.loc.conf
+ServerName test.loc
+ServerAlias www.test
+DocumentRoot /var/www/test.loc
+vim /etc/apache2/sites-available/demo.loc.conf
+ServerAlias www.demo
+ServerName demo.loc
+DocumentRoot /var/www/demo.loc
+# Привязка конфига сайта к серверу apache2
+export PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+a2ensite test.loc
+a2ensite demo.loc
+To activate the new configuration, you need to run:  systemctl reload apache2
+```
+### Права
+```
+sudo chmod -R 775 /var/www
+vim /etc/hosts
+192.168.0.17 firma1.comp
+192.168.0.17 firma2.comp
+sudo service apache2 restart
+```
 ### Настройка apache
 ```
 # Сертификаты:
@@ -35,41 +70,6 @@ cd  /etc/apache2/sites-available/
 sudo systemctl reload apache2 # перечитать конфиг
 netstat -tlpn  # Проверка 443 порта
 sudo systemctl restart apache2
-```
-### Публикация страницы
-```
-mkdir /var/www/test
-mkdir /var/www/demo
-sudo thunar  # файловый менеджер. Из загрузок копировал 2 сохраненнных сайта от авито и microsoft. У обоих переименовал в index.html
-vim /var/www/test/index.html
-<h1>Helo world</h1>
-<h2>Test</h2>
-vim /var/www/demo/index.html
-<h1>Helo world</h1>
-<h2>Demo</h2>
-cp /etc/apache2/sites-available/000-default.conf /etc/apache2/sites-available/test.conf
-cp /etc/apache2/sites-available/000-default.conf /etc/apache2/sites-available/demo.conf
-vim /etc/apache2/sites-available/test.conf
-ServerName test            -добавить имя ввода в строке браузера
-ServerAlias www.test
-DocumentRoot /var/www/test -изменить
-vim /etc/apache2/sites-available/demo.conf
-ServerName demo            -добавить имя ввода в строке браузера
-DocumentRoot /var/www/demo -изменить
-# Привязка конфига сайта к серверу apache2
-export PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
-a2ensite test
-a2ensite demo
-To activate the new configuration, you need to run:  systemctl reload apache2
-
-```
-### Права
-```
-sudo chmod -R 775 /var/www
-vim /etc/hosts
-192.168.0.17 firma1.comp
-192.168.0.17 firma2.comp
-sudo service apache2 restart
 ```
 ### Уст nginx
 ```
