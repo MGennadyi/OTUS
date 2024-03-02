@@ -90,6 +90,10 @@ vim /etc/httpd/conf.d/site1.conf
 ```
 sudo mkdir /etc/httpd/sites-available
 sudo mkdir /etc/httpd/sites-enabled
+chown -R apache:apache /etc/httpd/sites-available
+chown -R apache:apache /etc/httpd/sites-enabled
+sudo chmod -R 777 /etc/httpd/sites-available
+sudo chmod -R 777 /etc/httpd/sites-enabled
 
 vim /etc/httpd/sites-available/site1.conf
 <VirtualHost *:80>
@@ -99,6 +103,8 @@ DocumentRoot /web/site1
 ErrorLog /web/site1/log/error.log
 CustomLog /web/site1/log/requests.log combined
 </VirtualHost>
+
+apachectl restart
 ```
 ### Публикация страницы
 ```
@@ -130,6 +136,7 @@ To activate the new configuration, you need to run:  systemctl reload apache2
 ```
 ### Centos исп. ln
 ```
+sudo ln -s /etc/httpd/sites-available/site1.conf /etc/httpd/sites-enabled/site1.conf
 sudo ln -s /etc/httpd/sites-available/a.example.com.conf /etc/httpd/sites-enabled/a.example.com.conf
 sudo ln -s /etc/httpd/sites-available/a.example.com.conf /etc/httpd/sites-enabled/b.example.com.conf
 ```
@@ -160,7 +167,7 @@ vim /web/site1/index.html
 ### Права
 ```
 chown -R www-data:www-data /var/www/
-sudo chmod -R 775 /var/www
+sudo chmod -R 777 /var/www
 vim /etc/hosts
 192.168.0.17 site1
 192.168.0.17 site2
