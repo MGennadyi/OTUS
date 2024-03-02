@@ -47,10 +47,30 @@ DocumentRoot /var/www/demo.loc
 export PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 a2ensite test.loc
 a2ensite demo.loc
+# Деактивируем дефолтный конфиг.
+sudo a2dissite 000-default.conf
 To activate the new configuration, you need to run:  systemctl reload apache2
+```
+### Centos исп. ln
+```
+sudo ln -s /etc/httpd/sites-available/a.example.com.conf /etc/httpd/sites-enabled/a.example.com.conf
+sudo ln -s /etc/httpd/sites-available/a.example.com.conf /etc/httpd/sites-enabled/b.example.com.conf
+```
+### html
+```
+<html>
+<head>
+<title>demo</title>
+</head>
+<body>
+<h1>Helo world</h1>
+<h2>Demo</h2>
+</body>
+</html>
 ```
 ### Права
 ```
+chown -R www-data:www-data /var/www/
 sudo chmod -R 775 /var/www
 vim /etc/hosts
 192.168.0.17 firma1.comp
