@@ -22,7 +22,38 @@ systemctl status apache2
 curl localhost # Просмотр кода стартовой страницы
 ip подставляем в браузер = стартовая страница apache2
 ```
-
+### Уст Apache2 Centos
+```
+yum install -y httpd
+systemctl enable httpd
+systemctl start httpd
+netstat -tulnp | grep httpd
+tcp6       0      0 :::80                   :::*                    LISTEN      3530/httpd
+---------------------
+mkdir /web
+mkdir -p /web/site1
+mkdir -p /web/site1/logs
+# Здесь все по другому:
+chown -R apache /web
+sudo chmod -R 777 /web
+vim /etc/httpd/conf/httpd.conf
+# Проверка в самом конце должно:
+IncludeOptional conf.d/*.conf
+# Создаем:
+vim /etc/httpd/conf.d/site1.conf
+<VirtualHost *:80>
+ ServerName site1.ru
+ ServerAlias www.site1.ru
+ DocumentRoot /web/site1.ru/www
+ <Directory /web/site1.ru/www>
+ Options FollowSymLinks
+ AllowOverride All
+ Require all granted
+ </Directory>
+ ErrorLog /web/site1.ru/logs/error.log
+ CustomLog /web/site1.ru/logs/access.log common
+</VirtualHost>
+```
 ### Публикация страницы
 ```
 mkdir -p /var/www/test.loc
