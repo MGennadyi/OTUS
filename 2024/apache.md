@@ -25,8 +25,8 @@ ip подставляем в браузер = стартовая страниц�
 
 ### Публикация страницы
 ```
-mkdir /var/www/test.loc
-mkdir /var/www/demo.loc
+mkdir -p /var/www/test.loc
+mkdir -p /var/www/demo.loc
 vim /var/www/test.loc/index.html
 <h1>Helo world</h1>
 <h2>Test</h2>
