@@ -29,12 +29,43 @@ systemctl enable httpd
 systemctl start httpd
 netstat -tulnp | grep httpd
 tcp6       0      0 :::80                   :::*                    LISTEN      3530/httpd
----------------------
+```
+### Создание страницы site1
+```
 mkdir /web
 mkdir -p /web/site1
-mkdir -p /web/site1/logs
+mkdir -p /web/site1/log
+mkdir -p /web/site2
+mkdir -p /web/site2/log
 # Здесь все по другому:
 chown -R apache:apache /web/
+vim /web/site1/index.html
+<html>
+<head>
+<title>Welcome to SITE1!</title>
+</head>
+<body>
+<h1>Success! </h1>
+</body>
+</html>
+```
+### Создание страницы site2
+```
+mkdir -p /web/site2
+mkdir -p /web/site2/log
+# Здесь все по другому:
+chown -R apache:apache /web/
+vim /web/site2/index.html
+<html>
+<head>
+<title>Welcome to SITE2!</title>
+</head>
+<body>
+<h1>Success! </h1>
+</body>
+</html>
+```
+
 sudo chmod -R 777 /web/
 vim /etc/httpd/conf/httpd.conf
 # Проверка в самом конце должно:
@@ -50,8 +81,22 @@ vim /etc/httpd/conf.d/site1.conf
  AllowOverride All
  Require all granted
  </Directory>
- ErrorLog /web/site1/logs/error.log
- CustomLog /web/site1/logs/access.log common
+ ErrorLog /web/site1/log/error.log
+ CustomLog /web/site1/log/access.log common
+</VirtualHost>
+```
+### 
+```
+sudo mkdir /etc/httpd/sites-available
+sudo mkdir /etc/httpd/sites-enabled
+
+vim /etc/httpd/sites-available/site1.conf
+<VirtualHost *:80>
+ServerName www.site1
+ServerAlias site1
+DocumentRoot /web/site1
+ErrorLog /web/site1/log/error.log
+CustomLog /web/site1/log/requests.log combined
 </VirtualHost>
 ```
 ### Публикация страницы
@@ -99,13 +144,25 @@ sudo ln -s /etc/httpd/sites-available/a.example.com.conf /etc/httpd/sites-enable
 </body>
 </html>
 ```
+### HTML2
+```
+vim /web/site1/index.html
+<html>
+<head>
+<title>Welcome to Example.com!</title>
+</head>
+<body>
+<h1>Success! The example.com virtual host is working!</h1>
+</body>
+</html>
+```
 ### Права
 ```
 chown -R www-data:www-data /var/www/
 sudo chmod -R 775 /var/www
 vim /etc/hosts
-192.168.0.17 firma1.comp
-192.168.0.17 firma2.comp
+192.168.0.17 site1
+192.168.0.17 site2
 sudo service apache2 restart
 ```
 ### Настройка apache
