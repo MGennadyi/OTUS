@@ -63,9 +63,9 @@ a2ensite demo
 To activate the new configuration, you need to run:  systemctl reload apache2
 
 ```
-###
+### Права
 ```
-sudo chmod -R 755 /var/www
+sudo chmod -R 775 /var/www
 vim /etc/hosts
 192.168.0.17 firma1.comp
 192.168.0.17 firma2.comp
