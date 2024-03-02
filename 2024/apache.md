@@ -68,6 +68,7 @@ vim /web/site2/index.html
 
 sudo chmod -R 777 /web/
 vim /etc/httpd/conf/httpd.conf
+```
 # Проверка в самом конце должно:
 IncludeOptional conf.d/*.conf
 # Создаем:
