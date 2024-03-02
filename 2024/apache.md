@@ -34,24 +34,24 @@ mkdir /web
 mkdir -p /web/site1
 mkdir -p /web/site1/logs
 # Здесь все по другому:
-chown -R apache /web
-sudo chmod -R 777 /web
+chown -R apache:apache /web/
+sudo chmod -R 777 /web/
 vim /etc/httpd/conf/httpd.conf
 # Проверка в самом конце должно:
 IncludeOptional conf.d/*.conf
 # Создаем:
 vim /etc/httpd/conf.d/site1.conf
 <VirtualHost *:80>
- ServerName site1.ru
- ServerAlias www.site1.ru
- DocumentRoot /web/site1.ru/www
- <Directory /web/site1.ru/www>
+ ServerName site1
+ ServerAlias www.site1
+ DocumentRoot /web/site1
+ <Directory /web/site1>
  Options FollowSymLinks
  AllowOverride All
  Require all granted
  </Directory>
- ErrorLog /web/site1.ru/logs/error.log
- CustomLog /web/site1.ru/logs/access.log common
+ ErrorLog /web/site1/logs/error.log
+ CustomLog /web/site1/logs/access.log common
 </VirtualHost>
 ```
 ### Публикация страницы
