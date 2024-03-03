@@ -194,27 +194,27 @@ systemctl reload apache2
 sudo ln -s /etc/httpd/sites-available/site1.conf /etc/httpd/sites-enabled/site1.conf
 sudo ln -s /etc/httpd/sites-available/site2.conf /etc/httpd/sites-enabled/site2.conf
 ```
-### html
+### html 1
 ```
+vim /web/site1/index.html
 <html>
 <head>
-<title>demo</title>
+<title>Welcome to SITE-1!</title>
 </head>
 <body>
-<h1>Helo world</h1>
-<h2>Demo</h2>
+<h1>Success! The virtual host is working!</h1>
 </body>
 </html>
 ```
 ### HTML2
 ```
-vim /web/site1/index.html
+vim /web/site2/index.html
 <html>
 <head>
-<title>Welcome to Example.com!</title>
+<title>Welcome to SITE-2!</title>
 </head>
 <body>
-<h1>Success! The example.com virtual host is working!</h1>
+<h1>Success! The virtual host is working!</h1>
 </body>
 </html>
 ```
