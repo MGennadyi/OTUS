@@ -39,6 +39,7 @@ tcp6       0      0 :::80                   :::*                    LISTEN      
 ```
 vim /etc/httpd/conf/httpd.conf # в самом конце должно:
 IncludeOptional conf.d/*.conf
+NameVirtualHost *:80  # в начале
 ```
 ### Создание страницы site1
 ```
@@ -77,8 +78,50 @@ vim /web/site2/index.html
 </body>
 </html>
 ```
+### Debian: Созд. вирт.хостов для каждого домена/поддомена. domain1.ru и domain2.ru:
+```
+vim /etc/apache2/sites-available/site1.conf
+<VirtualHost *:80>
+DocumentRoot “/web/site1”
+ServerName site1
+ServerAlias www.site1
 
-# Создаем:
+# enter other directives here, e.g. :
+
+<Directory /web/site1/>
+Options FollowSymLinks
+AllowOverride All
+Order allow,deny
+allow from all
+
+</Directory>
+ErrorLog /web/site1/log/site1-error.log
+CustomLog /web/site1/log/site1-access.log common
+</VirtualHost>
+```
+### Debian: Созд. вирт.хостов для каждого домена/поддомена domain2.ru:
+```
+vim /etc/apache2/sites-available/site2.conf
+<VirtualHost *:80>
+DocumentRoot “/web/site2”
+ServerName site2
+ServerAlias www.site2
+
+# enter other directives here, e.g. :
+
+<Directory /web/site2/>
+Options FollowSymLinks
+AllowOverride All
+Order allow,deny
+allow from all
+
+</Directory>
+ErrorLog /web/site2/log/site2-error.log
+CustomLog /web/site2/log/site2-access.log common
+</VirtualHost>
+```
+### Centos: Созд. вирт.хостов для каждого домена/поддомена. domain1.ru и domain2.ru:
+```
 vim /etc/httpd/conf.d/site1.conf
 <VirtualHost *:80>
  ServerName site1
@@ -93,6 +136,7 @@ vim /etc/httpd/conf.d/site1.conf
  CustomLog /web/site1/log/access.log common
 </VirtualHost>
 ```
+
 ### 
 ```
 sudo mkdir /etc/httpd/sites-available
