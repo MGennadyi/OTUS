@@ -1,5 +1,5 @@
 # Установка Apache
-### 1. Подмена встроенного web-сайта на свой собственный
+### 1. Уст сетевых утилит:
 ```
 apt install net-tools curl -y
 netstat -tlpn
@@ -13,14 +13,19 @@ tcp6       0      0 ::1:5432                :::*                    LISTEN      
 tcp6       0      0 ::1:6010                :::*                    LISTEN      1002/sshd: mgb@pts/
 tcp6       0      0 :::6432                 :::*                    LISTEN      478/pgbouncer
 ```
+```
+ifconfig      # ip подставляем в браузер
+url localhost # Просмотр кода стартовой страницы
+```
 ### Уст Apache2 на Ubuntu
 ```
-ifconfig
-ip подставляем в браузер
 sudo apt install apache2 -y
 systemctl status apache2
-curl localhost # Просмотр кода стартовой страницы
-ip подставляем в браузер = стартовая страница apache2
+```
+### Прверка Debian
+```
+vim /etc/apache2/apache2.conf   # в самом конце должно:
+IncludeOptional sites-enabled/*.conf
 ```
 ### Уст Apache2 Centos
 ```
@@ -29,6 +34,11 @@ systemctl enable httpd
 systemctl start httpd
 netstat -tulnp | grep httpd
 tcp6       0      0 :::80                   :::*                    LISTEN      3530/httpd
+```
+### Проверка Centos:
+```
+vim /etc/httpd/conf/httpd.conf # в самом конце должно:
+IncludeOptional conf.d/*.conf
 ```
 ### Создание страницы site1
 ```
@@ -39,6 +49,7 @@ mkdir -p /web/site2
 mkdir -p /web/site2/log
 # Здесь все по другому:
 chown -R apache:apache /web/
+sudo chmod -R 777 /web/
 vim /web/site1/index.html
 <html>
 <head>
@@ -55,6 +66,7 @@ mkdir -p /web/site2
 mkdir -p /web/site2/log
 # Здесь все по другому:
 chown -R apache:apache /web/
+sudo chmod -R 777 /web/
 vim /web/site2/index.html
 <html>
 <head>
@@ -66,11 +78,6 @@ vim /web/site2/index.html
 </html>
 ```
 
-sudo chmod -R 777 /web/
-vim /etc/httpd/conf/httpd.conf
-```
-# Проверка в самом конце должно:
-IncludeOptional conf.d/*.conf
 # Создаем:
 vim /etc/httpd/conf.d/site1.conf
 <VirtualHost *:80>
