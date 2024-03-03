@@ -270,3 +270,16 @@ sudo ufw status
 ```
 vim /etc/nginx/nginx.conf
 ```
+```
+192.168.0.141   site1
+192.168.0.141   site2
+grep -inRH "ServerName " /etc/apache2/ | grep "\s#"*
+vim /etc/apache2/apache2.conf 
+ServerName localhost
+
+      ♒      Options Indexes FollowSymLinks
+            AllowOverride All
+            Require all granted
+
+ systemctl restart apache2
+```
