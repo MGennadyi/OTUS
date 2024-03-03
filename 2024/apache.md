@@ -177,19 +177,22 @@ vim /etc/apache2/sites-available/demo.loc.conf
 ServerAlias www.demo
 ServerName demo.loc
 DocumentRoot /var/www/demo.loc
-# Привязка конфига сайта к серверу apache2
+```
+### Debian Привязка конфига сайта к серверу Apache2 через a2ensite:
+```
 export PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+a2ensite site1
+a2ensite site2
 a2ensite test.loc
 a2ensite demo.loc
 # Деактивируем дефолтный конфиг.
 sudo a2dissite 000-default.conf
-To activate the new configuration, you need to run:  systemctl reload apache2
+systemctl reload apache2
 ```
-### Centos исп. ln
+### Centos Привязка конфига сайта к серверу Apache2 через симлинк ln:
 ```
 sudo ln -s /etc/httpd/sites-available/site1.conf /etc/httpd/sites-enabled/site1.conf
-sudo ln -s /etc/httpd/sites-available/a.example.com.conf /etc/httpd/sites-enabled/a.example.com.conf
-sudo ln -s /etc/httpd/sites-available/a.example.com.conf /etc/httpd/sites-enabled/b.example.com.conf
+sudo ln -s /etc/httpd/sites-available/site2.conf /etc/httpd/sites-enabled/site2.conf
 ```
 ### html
 ```
