@@ -82,7 +82,7 @@ vim /web/site2/index.html
 ```
 vim /etc/apache2/sites-available/site1.conf
 <VirtualHost *:80>
-DocumentRoot “/web/site1”
+DocumentRoot /web/site1
 ServerName site1
 ServerAlias www.site1
 
@@ -103,7 +103,7 @@ CustomLog /web/site1/log/site1-access.log common
 ```
 vim /etc/apache2/sites-available/site2.conf
 <VirtualHost *:80>
-DocumentRoot “/web/site2”
+DocumentRoot /web/site2
 ServerName site2
 ServerAlias www.site2
 
