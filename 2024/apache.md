@@ -218,9 +218,15 @@ vim /web/site1/index.html
 </body>
 </html>
 ```
-### Права
+### Debian Права:
 ```
-chown -R www-data:www-data /var/www/
+chown www-data:www-data -R /web/*
+```
+### CentOS права:
+```
+chown apache:apache -R /web/*
+```
+```
 sudo chmod -R 777 /var/www
 vim /etc/hosts
 192.168.0.17 site1
