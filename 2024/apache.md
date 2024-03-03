@@ -227,7 +227,7 @@ chown www-data:www-data -R /web/*
 chown apache:apache -R /web/*
 ```
 ```
-sudo chmod -R 777 /var/www
+sudo chmod -R 777 /web
 vim /etc/hosts
 192.168.0.17 site1
 192.168.0.17 site2
