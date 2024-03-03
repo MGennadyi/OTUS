@@ -78,7 +78,7 @@ vim /web/site2/index.html
 </body>
 </html>
 ```
-### Debian: Созд. вирт.хостов для каждого домена/поддомена. domain1.ru и domain2.ru:
+### Debian: Созд. вирт.хостов для каждого домена/поддомена. domain1.ru:
 ```
 vim /etc/apache2/sites-available/site1.conf
 <VirtualHost *:80>
