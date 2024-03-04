@@ -132,6 +132,7 @@ vim /etc/httpd/conf.d/site1.conf
  AllowOverride All
  Require all granted
  </Directory>
+
  ErrorLog /web/site1/log/error.log
  CustomLog /web/site1/log/access.log common
 </VirtualHost>
@@ -277,9 +278,17 @@ grep -inRH "ServerName " /etc/apache2/ | grep "\s#"*
 vim /etc/apache2/apache2.conf 
 ServerName localhost
 
-      ♒      Options Indexes FollowSymLinks
+           Options Indexes FollowSymLinks
             AllowOverride All
             Require all granted
 
  systemctl restart apache2
+```
+```
+ping site1
+ping site2
+mkdir /var/www/html/site1
+mkdir /var/www/html/site2
+sudo chmod -R 777 /var/www/html/site1
+sudo chmod -R 777 /var/www/html/site2
 ```
