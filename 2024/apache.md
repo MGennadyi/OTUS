@@ -48,9 +48,9 @@ mkdir -p /web/site1
 mkdir -p /web/site1/log
 mkdir -p /web/site2
 mkdir -p /web/site2/log
-# Здесь все по другому:
-chown -R apache:apache /web/
-sudo chmod -R 777 /web/
+chown -R www-data:www-data /web/ - DEBIAN
+chown -R apache:apache /web/     - CENTOS
+sudo chmod -R 770 /web/
 vim /web/site1/index.html
 <html>
 <head>
@@ -67,7 +67,7 @@ mkdir -p /web/site2
 mkdir -p /web/site2/log
 # Здесь все по другому:
 chown -R apache:apache /web/
-sudo chmod -R 777 /web/
+sudo chmod -R 770 /web/
 vim /web/site2/index.html
 <html>
 <head>
