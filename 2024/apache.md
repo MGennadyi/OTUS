@@ -157,7 +157,7 @@ CustomLog /web/site1/log/requests.log combined
 
 apachectl restart
 ```
-### Index.html
+### Index.html обратитесь к серверу по имени домена (при этом А-запись домена должна быть настроена и указывать на ваш веб-сервер).
 ```
 touch /var/www/site1.loc/index.html
 <body><h1>OK!</h1></body>
@@ -223,20 +223,26 @@ vim /web/site2/index.html
 </body>
 </html>
 ```
-### Debian Права:
+### Debian Для установки правильных разрешений:
 ```
 chown www-data:www-data -R /web/*
+sudo chown -R www-data:www-data /var/www/site1.loc
 ```
 ### CentOS права:
 ```
 chown apache:apache -R /web/*
 ```
+### Настройка
 ```
-sudo chmod -R 777 /web
+nano /etc/apache2/ports.conf -80 порт открыт
+sudo chmod -R 770 /web
 vim /etc/hosts
+127.0.0.1 www.example1.com
+127.0.0.1 www.example2.com
 192.168.0.17 site1
 192.168.0.17 site2
 sudo service apache2 restart
+w3m www.example1.com - проверка
 ```
 ### Настройка apache
 ```
@@ -296,3 +302,37 @@ mkdir /var/www/html/site2
 sudo chmod -R 777 /var/www/html/site1
 sudo chmod -R 777 /var/www/html/site2
 ```
+### Уст php
+```
+apt-get install php
+root@ubun:/etc/apache2/sites-available# php --version
+PHP 8.1.2-1ubuntu2.14 (cli) (built: Aug 18 2023 11:41:11) (NTS)
+apt-get install php-gd
+apt-get install imagemagick php-imagick -y
+service apache2 reload
+```
+### Проверка php:
+```
+vim /var/www/examlpe.com/info.php
+<?php
+phpinfo();
+?>
+```
+```
+http://example.com/info.php
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
