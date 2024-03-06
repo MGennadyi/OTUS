@@ -21,6 +21,7 @@ url localhost # Просмотр кода стартовой страницы
 ```
 sudo apt install apache2 -y
 systemctl status apache2
+/var/www/html - страница заглушки
 ```
 ### Прверка Debian
 ```
@@ -78,15 +79,13 @@ vim /web/site2/index.html
 </body>
 </html>
 ```
-### Debian: Созд. вирт.хостов для каждого домена/поддомена. domain1.ru:
+### Debian: Созд. конфига вирт.хостов для каждого домена/поддомена. site1:
 ```
 vim /etc/apache2/sites-available/site1.conf
 <VirtualHost *:80>
 DocumentRoot /web/site1
 ServerName site1
 ServerAlias www.site1
-
-# enter other directives here, e.g. :
 
 <Directory /web/site1/>
 Options FollowSymLinks
@@ -157,6 +156,11 @@ CustomLog /web/site1/log/requests.log combined
 </VirtualHost>
 
 apachectl restart
+```
+### Index.html
+```
+touch /var/www/site1.loc/index.html
+<body><h1>OK!</h1></body>
 ```
 ### Публикация страницы
 ```
