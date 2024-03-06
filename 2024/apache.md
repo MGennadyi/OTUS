@@ -242,7 +242,7 @@ vim /etc/hosts
 192.168.0.17 site1
 192.168.0.17 site2
 sudo service apache2 restart
-w3m www.example1.com - проверка
+w3m www.site1.loc - проверка
 ```
 ### Настройка apache
 ```
