@@ -24,7 +24,7 @@ vim /postgres/scripts/logrotate.conf
     compress
     ifempty
     maxage 1
-    postgrorate
+    postrorate
                 /postgres/scripts/logrotate/logclean.sh
     endscript
 }
