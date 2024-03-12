@@ -18,7 +18,7 @@ cp /usr/sbin/logrotate /postgres/scripts/logrotate/
 vim /postgres/scripts/logrotate.conf
 /log/pg_log/*.log -rt|head -n -1|sed 's/^/\/log\/pg_log\//'
 {
-    rotate 99
+    rotate 1000
     size 500M
     missingok
     compress
