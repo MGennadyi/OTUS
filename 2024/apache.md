@@ -162,6 +162,20 @@ apachectl restart
 touch /var/www/site1.loc/index.html
 <body><h1>OK!</h1></body>
 ```
+### Замена дефолтной страницы:
+```
+cp /var/www/html/index.html /var/www/html/index_0.html
+> /var/www/html/index.html # Дятел для очистки
+vim /var/www/html/index.html
+<html>
+<head>
+<title>Welcome to SITE-1!</title>
+</head>
+<body>
+<h1>Success! The virtual host is working!</h1>
+</body>
+</html>
+```
 ### Публикация страницы
 ```
 mkdir -p /var/www/test.loc
@@ -234,7 +248,7 @@ chown apache:apache -R /web/*
 ```
 ### Настройка
 ```
-nano /etc/apache2/ports.conf -80 порт открыт
+vim /etc/apache2/ports.conf -80 порт открыт
 sudo chmod -R 770 /web
 vim /etc/hosts
 127.0.0.1 www.example1.com
@@ -266,6 +280,7 @@ systemctl start nginx
 systemctl status nginx
 ```
 ### Активация фаервола:
+```
 sudo ufw status
 ip подставляем в браузер
 sudo ufw app list
