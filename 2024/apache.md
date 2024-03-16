@@ -12,6 +12,8 @@ tcp6       0      0 :::22                   :::*                    LISTEN      
 tcp6       0      0 ::1:5432                :::*                    LISTEN      521/postgres
 tcp6       0      0 ::1:6010                :::*                    LISTEN      1002/sshd: mgb@pts/
 tcp6       0      0 :::6432                 :::*                    LISTEN      478/pgbouncer
+#-------------
+cat /etc/*-release # Работает везде!!!
 ```
 ```
 ifconfig      # ip подставляем в браузер
