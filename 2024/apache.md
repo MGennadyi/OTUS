@@ -136,7 +136,6 @@ vim /etc/httpd/conf.d/site1.conf
  CustomLog /web/site1/log/access.log common
 </VirtualHost>
 ```
-
 ### 
 ```
 sudo mkdir /etc/httpd/sites-available
@@ -165,16 +164,20 @@ touch /var/www/site1.loc/index.html
 ### Замена дефолтной страницы:
 ```
 cp /var/www/html/index.html /var/www/html/index_0.html
-> /var/www/html/index.html # Дятел для очистки
-vim /var/www/html/index.html
+> /var/www/html/index.html     # Дятел для очистки
+vim /var/www/html/index.html   # Вставка своего текста
 <html>
 <head>
-<title>Welcome to SITE-1!</title>
+<title>Welcome to SITE-0!</title>
 </head>
 <body>
 <h1>Success! The virtual host is working!</h1>
 </body>
 </html>
+#--------------
+apachectl restart # ошибка: domain name, using 127.0.1.1. Set the 'ServerName' wal-g2
+systemctl restart apache2 # норм! Работает как по 127.0.0.1 так и по ip снаружи!!!
+
 ```
 ### Публикация страницы
 ```
