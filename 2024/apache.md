@@ -328,22 +328,21 @@ sudo chmod -R 777 /var/www/html/site2
 ```
 ### Уст php
 ```
-apt-get install php
+apt-get install php php-mysql php-curl php-gd imagemagick php-imagick php-intl php-pear php-imap libapache2-mod-php php-cli php-json php-cgi php-gd php-zip php-mbstring php-xml php-xmlrpc-y # модулей куча
 root@ubun:/etc/apache2/sites-available# php --version
 PHP 8.1.2-1ubuntu2.14 (cli) (built: Aug 18 2023 11:41:11) (NTS)
-apt-get install php-gd
-apt-get install imagemagick php-imagick -y
+
 service apache2 reload
 ```
 ### Проверка php:
 ```
-vim /var/www/examlpe.com/info.php
+vim /var/www/html/index.php
 <?php
 phpinfo();
 ?>
 ```
 ```
-http://example.com/info.php
+
 ```
 
 
