@@ -179,7 +179,11 @@ vim /var/www/html/index.html   # Вставка своего текста
 #--------------
 apachectl restart # ошибка: domain name, using 127.0.1.1. Set the 'ServerName' wal-g2
 systemctl restart apache2 # норм! Работает как по 127.0.0.1 так и по ip снаружи!!!
-
+vim /var/www/html/index.php
+<?php
+phpinfo();
+?>
+192.168.0.18/index.php # Работает!
 ```
 ### Публикация страницы
 ```
