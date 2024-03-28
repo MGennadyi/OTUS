@@ -55,6 +55,8 @@ chmod +x /postgres/scripts/logrotate/logclean.sh
 ```
 fallocate -l 500MB /log/pg_log/file1.gz
 fallocate -l 500MB /log/pg_log/file2.gz
+fallocate -l 500MB /log/pg_log/file3.gz
+fallocate -l 500MB /log/pg_log/file4.gz
 ```
 ### Импорт логов
 ```
