@@ -124,6 +124,29 @@ postgres@zabbix:/home/mgb$ cat /postgres/scripts/logrotate.conf
         maxage 1
 }
 ```
+### Конфиг V_2
+```
+/log/pg_log/*.log -rt|head -n -1|sed 's/^/\/log\/pg_log\//'
+{
+    rotate 1000
+    size 500M
+    missingok
+    compress
+    ifempty
+    maxage 1
+    postrotate
+      /postgres/scripts/log_rotate/logclean.sh
+    endscript
+}
+
+/log/llog/*.log
+{
+    rotate 10
+    size 300K
+    missingok
+    notifempty
+}
+```
 
 
 
