@@ -23,7 +23,6 @@ vim /postgres/scripts/logrotate/logrotate.conf
     missingok
     compress
     ifempty
-    maxage 1
     postrotate
                 /postgres/scripts/logrotate/logclean.sh
     endscript
