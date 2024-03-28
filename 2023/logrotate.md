@@ -15,7 +15,7 @@ chown -R postgres:postgres /postgres
 ### 2. Создание logrotate+logrotate.conf
 ```
 cp /usr/sbin/logrotate /postgres/scripts/logrotate/
-vim /postgres/scripts/logrotate.conf
+vim /postgres/scripts/logrotate/logrotate.conf
 /log/pg_log/*.log -rt|head -n -1|sed 's/^/\/log\/pg_log\//'
 {
     rotate 1000
