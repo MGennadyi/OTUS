@@ -21,7 +21,7 @@ bash ./script.deb.sh
 apt install gitlab-ce
 # выдало окно: доступно новое ядро. Список служб для перезапуска.
 ```
-# Рекомендации после усьановки:
+# Рекомендации после установки:
 ```
 Thank you for installing GitLab!
 GitLab was unable to detect a valid hostname for your instance.
