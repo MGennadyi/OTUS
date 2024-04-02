@@ -43,6 +43,7 @@ external_url 'http://gitlab.dmosk.ru'
 ```
 # конфигурирование:
 ```
+# не быстро:
 gitlab-ctl reconfigure
 ```
 ### Рекомендации после конфигурирования:
