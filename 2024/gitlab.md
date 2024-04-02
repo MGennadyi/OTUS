@@ -1,5 +1,9 @@
 # GITLAB
-  ```
+###
+```
+apt install net-tools curl -y
+```
+ ```
 apt update
 # apt install postfix
 timedatectl set-timezone Europe/Moscow
