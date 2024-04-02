@@ -26,6 +26,16 @@ vi /etc/gitlab/gitlab.rb
 external_url 'http://gitlab.dmosk.ru'
 # gitlab.dmosk.ru — в DNS или прописано в hosts.
 ```
+# конфигурирование:
+```
+gitlab-ctl reconfigure
+```
+# Вход
+```
+http://gitlab.dmosk.ru
+# Пароль
+cat /etc/gitlab/initial_root_password | grep Password:
+```
 
 
 
