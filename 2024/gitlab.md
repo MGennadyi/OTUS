@@ -3,7 +3,8 @@
 apt update
 # apt install postfix
 timedatectl set-timezone Europe/Moscow
-apt install chrony
+apt install chrony -y
+# Для автоматической синхронизации времени:
 systemctl enable chrony
 apt install curl openssh-server ca-certificates -y
 curl https://packages.gitlab.com/install/repositories/gitlab/gitlab-ce/script.deb.sh | sudo bash
