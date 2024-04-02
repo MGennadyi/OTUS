@@ -21,7 +21,7 @@ bash ./script.deb.sh
 apt install gitlab-ce
 # выдало окно: доступно новое ядро. Список служб для перезапуска.
 ```
-# Рекомендации после установки:
+### Рекомендации после установки:
 ```
 Thank you for installing GitLab!
 GitLab was unable to detect a valid hostname for your instance.
@@ -41,7 +41,13 @@ external_url 'http://gitlab.dmosk.ru'
 ```
 gitlab-ctl reconfigure
 ```
-# Вход
+### Рекомендации после конфигурирования:
+```
+Username: root
+Password: You didn't opt-in to print initial root password to STDOUT.
+Password stored to /etc/gitlab/initial_root_password. This file will be cleaned up in first reconfigure run after 24 hours.
+```
+### Вход
 ```
 http://gitlab.dmosk.ru
 # Пароль
