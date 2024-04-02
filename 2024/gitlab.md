@@ -57,6 +57,10 @@ http://gitlab.dmosk.ru
 # Пароль
 cat /etc/gitlab/initial_root_password | grep Password:
 ```
+###
+```
+netstat -tulnp | grep gitlab
+```
 
 
 
