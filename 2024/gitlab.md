@@ -16,9 +16,19 @@ dist="focal"
 # Запускаем скрипт:
 bash ./script.deb.sh
 ```
-### Уст Gitlab
+### Уст. пакетов GitLab:
 ```
 apt install gitlab-ce
+# выдало окно: доступно новое ядро. Список служб для перезапуска.
+```
+# Рекомендации после усьановки:
+```
+Thank you for installing GitLab!
+GitLab was unable to detect a valid hostname for your instance.
+Please configure a URL for your GitLab instance by setting `external_url`
+configuration in /etc/gitlab/gitlab.rb file.
+Then, you can start your GitLab instance by running the following command:
+ sudo gitlab-ctl reconfigure
 ```
 ### Конфигурируем веб-адрес
 ```
