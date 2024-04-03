@@ -57,8 +57,14 @@ kube-system     kube-controller-manager-minikube            1/1     Running     
 kube-system     kube-proxy-65r4v                            1/1     Running     0             2m6s
 kube-system     kube-scheduler-minikube                     1/1     Running     0             2m18s
 kube-system     storage-provisioner                         1/1     Running     1 (94s ago)   2m15s
+```
+###
+```
+kubectl apply -f https://raw.githubusercontent.com/ansible/awx-operator/0.12.0/deploy/awx-operator.yaml
+
 
 ```
+
 
 
 
