@@ -13,7 +13,7 @@ apt install docker.io -y
 
 
 ```
-### Документация kubectl
+### Документация kubectl -командная строка для kubernetis:
 ```
 https://kubernetes.io/ru/docs/tasks/tools/install-kubectl/
 https://docs.ansible.com/automation-controller/4.0.0/html/administration/operator.html
@@ -21,7 +21,8 @@ https://gist.github.com/dmccuk/93db22e9b30d1963b8fca0de96fc82f0
 ```
 ### Уст. послед версию - не получилось
 ```
-sudo apt-get update && sudo apt-get install -y apt-transport-https
+# Уст. доп.пакеты:
+sudo apt install curl software-properties-common ca-certificates apt-transport-https -y
 curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
 echo "deb https://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee -a /etc/apt/sources.list.d/kubernetes.list
 sudo apt-get update
