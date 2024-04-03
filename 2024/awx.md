@@ -72,7 +72,7 @@ awx@gitlab:~$ kubectl get po
 NAME                            READY   STATUS    RESTARTS   AGE
 awx-operator-78fb784cb7-klbq9   1/1     Running   0          7m57s
 ```
-###
+### Create the deployment file:
 ```
 vim awx-demo.yaml
 apiVersion: awx.ansible.com/v1beta1
@@ -112,5 +112,13 @@ awx@gitlab:~$ minikube service list
 | kube-system   | kube-dns                           | No node port |                           |
 |---------------|------------------------------------|--------------|---------------------------|
 ```
-
+### Get the Admin user password:
+```
+kubectl get secret awx-demo-admin-password -o jsonpath="{.data.password}" | base64 --decode
+Eu02jpgI7k6x4QJb3kPOWaOjMIALYKOWawx@gitlab
+```
+### Создание доп.сервиса  LoadBalancer
+```
+kubectl expose deployment awx-demo --type=LoadBalancer --port=8080
+```
 
