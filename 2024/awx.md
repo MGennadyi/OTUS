@@ -13,6 +13,24 @@ apt install docker.io -y
 ```
 https://kubernetes.io/ru/docs/tasks/tools/install-kubectl/
 ```
+### Уст. послед версию - не получилось
+```
+sudo apt-get update && sudo apt-get install -y apt-transport-https
+curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
+echo "deb https://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee -a /etc/apt/sources.list.d/kubernetes.list
+sudo apt-get update
+sudo apt-get install -y kubectl
+```
+### Уст. kubectl с помощью стороннего пакетного менеджера SNAP - получилось
+```
+apt install snap
+snap install kubectl --classic
+kubectl 1.29.3 от Canonical✓ установлен
+kubectl version
+Client Version: v1.29.3
+Kustomize Version: v5.0.4-0.20230601165947-6ce0bf390ce3
+The connection to the server localhost:8080 was refused - did you specify the right host or port?
+```
 
 
 
