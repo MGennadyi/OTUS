@@ -1,12 +1,16 @@
 # Установка AWX 18 и выше в kubernetis по умолчанию. 
-### Уст через миникуб
+### Уст миникуб
 ```
 curl -Lo minikube https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64 \  && chmod +x minikube
 sudo cp minikube /usr/local/bin && rm minikube
 root@gitlab:/home/mgb# minikube version
 minikube version: v1.32.0
-minikube start - выдаст ошибку с выбором хранения->
+minikube start - выдаст ошибку, т.к. нет места хранения (контейнеров-old) подов->
 apt install docker.io -y
+```
+```
+
+
 
 ```
 ### Документация kubectl
