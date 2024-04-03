@@ -60,6 +60,8 @@ kube-system     storage-provisioner                         1/1     Running     
 ```
 ###
 ```
+https://github.com/ansible/awx-operator
+# определяем последнюю версию 2.14.0. На видео= 0.12.0  
 kubectl apply -f https://raw.githubusercontent.com/ansible/awx-operator/0.12.0/deploy/awx-operator.yaml
 
 
