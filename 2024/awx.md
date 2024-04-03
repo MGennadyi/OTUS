@@ -38,8 +38,26 @@ kubectl completion bash >/etc/bash_completion.d/kubectl
 minikube start
 "docker" driver should not be used with root privileges
 useradd -m -s /bin/bash awx
-id awx
-uid=1001(awx) gid=1001(awx) группы=1001(awx) - нет групп у awx
+id awx - было
+uid=1001(awx) gid=1001(awx) группы=1001(awx) - нет групп у awx -> исправляю:
+usermod -aG docker awx
+usermod -aG sudo awx
+id awx - стало
+uid=1001(awx) gid=1001(awx) группы=1001(awx),27(sudo),137(docker)
+minikube start --addons=ingress --cpus=2 --install-addons=true --kubernetes-version=stable --memory=6g   -долго
+awx@gitlab:~$ kubectl get po -A
+NAMESPACE       NAME                                        READY   STATUS      RESTARTS      AGE
+ingress-nginx   ingress-nginx-admission-create-xnd45        0/1     Completed   0             2m6s
+ingress-nginx   ingress-nginx-admission-patch-v7hhd         0/1     Completed   1             2m6s
+ingress-nginx   ingress-nginx-controller-7c6974c4d8-nslmq   1/1     Running     0             2m6s
+kube-system     coredns-5dd5756b68-vv4dt                    1/1     Running     0             2m6s
+kube-system     etcd-minikube                               1/1     Running     0             2m18s
+kube-system     kube-apiserver-minikube                     1/1     Running     0             2m18s
+kube-system     kube-controller-manager-minikube            1/1     Running     0             2m18s
+kube-system     kube-proxy-65r4v                            1/1     Running     0             2m6s
+kube-system     kube-scheduler-minikube                     1/1     Running     0             2m18s
+kube-system     storage-provisioner                         1/1     Running     1 (94s ago)   2m15s
+
 ```
 
 
