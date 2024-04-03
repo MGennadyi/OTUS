@@ -70,7 +70,22 @@ awx@gitlab:~$ kubectl get po
 NAME                            READY   STATUS    RESTARTS   AGE
 awx-operator-78fb784cb7-klbq9   1/1     Running   0          7m57s
 ```
-
+###
+```
+vim awx-demo.yaml
+apiVersion: awx.ansible.com/v1beta1
+kind: AWX
+metadata:
+  name: awx-demo
+spec:
+  service_type: nodeport
+  ingress_type: none
+  hostname: awx-demo.example.com
+```
+```
+kubectl apply -f awx-demo.yaml
+awx.awx.ansible.com/awx-demo created
+```
 
 
 
