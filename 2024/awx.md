@@ -96,8 +96,21 @@ watch kubectl get pods -l "app.kubernetes.io/managed-by=awx-operator"
 Каждые2,0с:        kubectl get pods -l app.kubernetes.io/managed-by=awx-operator     gitlab: Wed Apr  3 18:33:06 2024
 NAME                  READY   STATUS    RESTARTS   AGE
 awx-demo-postgres-0   1/1     Running   0          36m
-
 ```
-
+```
+awx@gitlab:~$ minikube service list
+|---------------|------------------------------------|--------------|---------------------------|
+|   NAMESPACE   |                NAME                | TARGET PORT  |            URL            |
+|---------------|------------------------------------|--------------|---------------------------|
+| default       | awx-demo-postgres                  | No node port |                           |
+| default       | awx-demo-service                   | http/80      | http://192.168.49.2:32705 |
+| default       | awx-operator-metrics               | No node port |                           |
+| default       | kubernetes                         | No node port |                           |
+| ingress-nginx | ingress-nginx-controller           | http/80      | http://192.168.49.2:32530 |
+|               |                                    | https/443    | http://192.168.49.2:30719 |
+| ingress-nginx | ingress-nginx-controller-admission | No node port |                           |
+| kube-system   | kube-dns                           | No node port |                           |
+|---------------|------------------------------------|--------------|---------------------------|
+```
 
 
