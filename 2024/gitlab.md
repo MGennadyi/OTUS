@@ -1,5 +1,5 @@
 # GITLAB
-###
+### UBUNTU ip=61
 ```
 apt install net-tools curl -y
 ```
