@@ -13,6 +13,7 @@ apt install docker.io -y
 ```
 https://kubernetes.io/ru/docs/tasks/tools/install-kubectl/
 https://docs.ansible.com/automation-controller/4.0.0/html/administration/operator.html
+https://gist.github.com/dmccuk/93db22e9b30d1963b8fca0de96fc82f0
 ```
 ### Уст. послед версию - не получилось
 ```
