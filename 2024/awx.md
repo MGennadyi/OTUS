@@ -87,8 +87,17 @@ spec:
 ```
 kubectl apply -f awx-demo.yaml
 awx.awx.ansible.com/awx-demo created
+awx@gitlab:~$ kubectl get pods -l "app.kubernetes.io/managed-by=awx-operator"
+NAME                  READY   STATUS    RESTARTS   AGE
+awx-demo-postgres-0   1/1     Running   0          14m
 ```
+```
+watch kubectl get pods -l "app.kubernetes.io/managed-by=awx-operator"
+Каждые2,0с:        kubectl get pods -l app.kubernetes.io/managed-by=awx-operator     gitlab: Wed Apr  3 18:33:06 2024
+NAME                  READY   STATUS    RESTARTS   AGE
+awx-demo-postgres-0   1/1     Running   0          36m
 
+```
 
 
 
