@@ -120,5 +120,16 @@ Eu02jpgI7k6x4QJb3kPOWaOjMIALYKOWawx@gitlab
 ### Создание доп.сервиса  LoadBalancer
 ```
 kubectl expose deployment awx-demo --type=LoadBalancer --port=8080
+# Засада
+Error from server (NotFound): deployments.apps "awx-demo" not found
+```
+### Просмотр сервисов:
+```
+awx@gitlab:~$ kubectl get svc
+NAME                   TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)             AGE
+awx-demo-postgres      ClusterIP   None             <none>        5432/TCP            53m
+awx-demo-service       NodePort    10.102.86.56     <none>        80:32705/TCP        53m
+awx-operator-metrics   ClusterIP   10.105.137.112   <none>        8383/TCP,8686/TCP   119m
+kubernetes             ClusterIP   10.96.0.1        <none>        443/TCP             136m
 ```
 
