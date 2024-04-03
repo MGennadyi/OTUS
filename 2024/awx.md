@@ -31,6 +31,16 @@ Client Version: v1.29.3
 Kustomize Version: v5.0.4-0.20230601165947-6ce0bf390ce3
 The connection to the server localhost:8080 was refused - did you specify the right host or port?
 ```
+### Включение автодополнения ввода kubectl
+```
+echo 'source <(kubectl completion bash)' >>~/.bashrc
+kubectl completion bash >/etc/bash_completion.d/kubectl
+minikube start
+"docker" driver should not be used with root privileges
+useradd -m -s /bin/bash awx
+id awx
+uid=1001(awx) gid=1001(awx) группы=1001(awx) - нет групп у awx
+```
 
 
 
