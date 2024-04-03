@@ -34,12 +34,15 @@ configuration in /etc/gitlab/gitlab.rb file.
 Then, you can start your GitLab instance by running the following command:
  sudo gitlab-ctl reconfigure
 ```
-### Конфигурируем веб-адрес
+### Конфигурируем веб-адрес для входа на gitlab:
 ```
 vi /etc/gitlab/gitlab.rb
-# Меняю:
-external_url 'http://gitlab.dmosk.ru'
-# gitlab.dmosk.ru — в DNS или прописано в hosts.
+# Меняю в строке адрес:
+external_url 'http://gitlab.dmosk.ru' на http://gitlab.local
+vim /etc/hosts
+192.168.0.61 gitlab.local - не работает по имени, только по ip.
+# Пароль для первого входа берем здесь:
+cat /etc/gitlab/initial_root_password | grep Password:
 ```
 # конфигурирование:
 ```
@@ -53,13 +56,7 @@ Username: root
 Password: You didn't opt-in to print initial root password to STDOUT.
 Password stored to /etc/gitlab/initial_root_password. This file will be cleaned up in first reconfigure run after 24 hours.
 ```
-### Вход
-```
-http://gitlab.dmosk.ru
-# Пароль
-cat /etc/gitlab/initial_root_password | grep Password:
-```
-###
+### Проверка занимаемых портов:
 ```
 netstat -tulnp | grep gitlab
 ```
