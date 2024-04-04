@@ -41,6 +41,7 @@ echo 'source <(kubectl completion bash)' >>~/.bashrc
 kubectl completion bash >/etc/bash_completion.d/kubectl
 ```
 ### Подготовка minikube к start:
+###### Создание user=awx и add group docker:
 ```
 minikube start
 "docker" driver should not be used with root privileges
