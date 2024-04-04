@@ -147,7 +147,7 @@ awx@gitlab:~$ minikube service list
 ### Get the Admin user password:
 ```
 kubectl get secret awx-demo-admin-password -o jsonpath="{.data.password}" | base64 --decode
-Eu02jpgI7k6x4QJb3kPOWaOjMIALYKOW
+KV6EPV4rGjFgusdzyrj8BM3nAtaXMY4z
 awx@gitlab
 ```
 ### Создание доп.сервиса  LoadBalancer
