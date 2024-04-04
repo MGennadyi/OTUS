@@ -43,8 +43,7 @@ kubectl completion bash >/etc/bash_completion.d/kubectl
 ### Подготовка minikube к start:
 ###### Создание user=awx и add group docker:
 ```
-minikube start
-"docker" driver should not be used with root privileges
+minikube start -> выдаст ошибку: "docker" driver should not be used with root privileges -> уходим от root:
 useradd -m -s /bin/bash awx
 id awx - было
 uid=1001(awx) gid=1001(awx) группы=1001(awx) - нет групп у awx -> исправляю:
