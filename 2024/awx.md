@@ -51,7 +51,19 @@ usermod -aG docker awx
 usermod -aG sudo awx
 id awx - стало
 uid=1001(awx) gid=1001(awx) группы=1001(awx),27(sudo),137(docker)
-minikube start --addons=ingress --cpus=2 --install-addons=true --kubernetes-version=stable --memory=6g   -долго
+su - awx # Далее все от awx
+minikube start --addons=ingress --cpus=2 --install-addons=true --kubernetes-version=stable --memory=8g   #-долго, 4g-не запустится
+#Ответ: Готово! kubectl настроен для использования кластера "minikube" и "default" пространства имён по умолчанию
+```
+### Прверка
+```
+awx@gitlab:~$ minikube kubectl -- get nodes
+    > kubectl.sha256:  64 B / 64 B [-------------------------] 100.00% ? p/s 0s
+    > kubectl:  47.56 MiB / 47.56 MiB [-------------] 100.00% 4.89 MiB p/s 9.9s
+NAME       STATUS   ROLES           AGE    VERSION
+minikube   Ready    control-plane   3m1s   v1.28.3
+```
+```
 awx@gitlab:~$ kubectl get po -A
 NAMESPACE       NAME                                        READY   STATUS      RESTARTS      AGE
 ingress-nginx   ingress-nginx-admission-create-xnd45        0/1     Completed   0             2m6s
