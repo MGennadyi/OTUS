@@ -55,7 +55,7 @@ su - awx # Далее все от awx
 minikube start --addons=ingress --cpus=2 --install-addons=true --kubernetes-version=stable --memory=8g   #-долго, 4g-не запустится
 #Ответ: Готово! kubectl настроен для использования кластера "minikube" и "default" пространства имён по умолчанию
 ```
-### Прверка
+### Прверка, какие kubernetis server уст. и используются:
 ```
 awx@gitlab:~$ minikube kubectl -- get nodes
     > kubectl.sha256:  64 B / 64 B [-------------------------] 100.00% ? p/s 0s
@@ -63,6 +63,7 @@ awx@gitlab:~$ minikube kubectl -- get nodes
 NAME       STATUS   ROLES           AGE    VERSION
 minikube   Ready    control-plane   3m1s   v1.28.3
 ```
+### Проверка pod:
 ```
 awx@gitlab:~$ kubectl get po -A
 NAMESPACE       NAME                                        READY   STATUS      RESTARTS      AGE
