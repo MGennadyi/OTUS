@@ -1,5 +1,5 @@
 # Установка AWX 18 и выше в kubernetis по умолчанию. 
-### Уст миникуб
+### Уст миникуб:
 ```
 curl -Lo minikube https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64 \  && chmod +x minikube
 sudo cp minikube /usr/local/bin && rm minikube
@@ -7,11 +7,6 @@ root@gitlab:/home/mgb# minikube version
 minikube version: v1.32.0
 minikube start - выдаст ошибку, т.к. нет места хранения (контейнеров-old) подов->
 apt install docker.io -y
-```
-```
-
-
-
 ```
 ### Документация kubectl -командная строка для kubernetis:
 ```
@@ -29,7 +24,7 @@ echo "deb https://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee -a /etc/
 sudo apt-get update
 sudo apt-get install -y kubectl
 ```
-### Уст. kubectl с помощью стороннего пакетного менеджера SNAP - получилось
+### Уст. kubectl с помощью стороннего пакетного менеджера SNAP - получилось:
 ```
 sudo apt install snapd
 sudo snap install core
@@ -44,6 +39,9 @@ The connection to the server localhost:8080 was refused - did you specify the ri
 ```
 echo 'source <(kubectl completion bash)' >>~/.bashrc
 kubectl completion bash >/etc/bash_completion.d/kubectl
+```
+### Подготовка minikube к start:
+```
 minikube start
 "docker" driver should not be used with root privileges
 useradd -m -s /bin/bash awx
