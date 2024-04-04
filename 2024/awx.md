@@ -15,7 +15,7 @@ https://docs.ansible.com/automation-controller/4.0.0/html/administration/operato
 https://gist.github.com/dmccuk/93db22e9b30d1963b8fca0de96fc82f0
 https://timeweb.cloud/tutorials/docker/kak-ustanovit-docker-na-ubuntu-22-04
 ```
-### Уст. послед версию - не получилось
+### Уст. послед версию - не получилось:
 ```
 # Уст. доп.пакеты:
 sudo apt install curl software-properties-common ca-certificates apt-transport-https -y
