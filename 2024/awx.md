@@ -67,22 +67,22 @@ minikube   Ready    control-plane   3m1s   v1.28.3
 ```
 awx@gitlab:~$ kubectl get po -A
 NAMESPACE       NAME                                        READY   STATUS      RESTARTS      AGE
-ingress-nginx   ingress-nginx-admission-create-xnd45        0/1     Completed   0             2m6s
-ingress-nginx   ingress-nginx-admission-patch-v7hhd         0/1     Completed   1             2m6s
-ingress-nginx   ingress-nginx-controller-7c6974c4d8-nslmq   1/1     Running     0             2m6s
-kube-system     coredns-5dd5756b68-vv4dt                    1/1     Running     0             2m6s
-kube-system     etcd-minikube                               1/1     Running     0             2m18s
-kube-system     kube-apiserver-minikube                     1/1     Running     0             2m18s
-kube-system     kube-controller-manager-minikube            1/1     Running     0             2m18s
-kube-system     kube-proxy-65r4v                            1/1     Running     0             2m6s
-kube-system     kube-scheduler-minikube                     1/1     Running     0             2m18s
-kube-system     storage-provisioner                         1/1     Running     1 (94s ago)   2m15s
+ingress-nginx   ingress-nginx-admission-create-qqrfc        0/1     Completed   0             10m
+ingress-nginx   ingress-nginx-admission-patch-dk88h         0/1     Completed   0             10m
+ingress-nginx   ingress-nginx-controller-7c6974c4d8-7wsdl   1/1     Running     0             10m
+kube-system     coredns-5dd5756b68-5pvgf                    1/1     Running     0             10m
+kube-system     etcd-minikube                               1/1     Running     0             10m
+kube-system     kube-apiserver-minikube                     1/1     Running     0             10m
+kube-system     kube-controller-manager-minikube            1/1     Running     0             10m
+kube-system     kube-proxy-n5f8r                            1/1     Running     0             10m
+kube-system     kube-scheduler-minikube                     1/1     Running     0             10m
+kube-system     storage-provisioner                         1/1     Running     1 (10m ago)   10m
 ```
-###
+### Уст оператора:
 ```
+# Смотрим RELEASES, справа: определяем последнюю версию 2.14.0. На видео= 0.12.0  - подставляю:
 https://github.com/ansible/awx-operator
-# определяем последнюю версию 2.14.0. На видео= 0.12.0  - подставляю:
-kubectl apply -f https://raw.githubusercontent.com/ansible/awx-operator/0.12.0/deploy/awx-operator.yaml
+kubectl apply -f https://raw.githubusercontent.com/ansible/awx-operator/2.14.0/deploy/awx-operator.yaml
 ```
 ###
 ```
