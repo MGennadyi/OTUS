@@ -1,15 +1,9 @@
 # Установка AWX 18 и выше в kubernetis по умолчанию. 
+### 0.repos for Kubernetes and Cubectl
 ```
 sudo apt update && sudo apt -y upgrade
-```
-### Уст миникуб:
-```
-curl -Lo minikube https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64 \  && chmod +x minikube
-sudo cp minikube /usr/local/bin && rm minikube
-root@gitlab:/home/mgb# minikube version
-minikube version: v1.32.0
-minikube start - выдаст ошибку, т.к. нет места хранения (контейнеров-old) подов->
-apt install docker.io -y
+curl -LO https://storage.googleapis.com/kubernetes-release/release/curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt/bin/linux/amd64/kubectl
+chmod +x ./kubectl
 ```
 ### Документация kubectl -командная строка для kubernetis:
 ```
@@ -28,7 +22,7 @@ echo "deb https://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee -a /etc/
 sudo apt-get update
 sudo apt-get install -y kubectl
 ```
-### Уст. kubectl с помощью стороннего пакетного менеджера SNAP - получилось:
+### 1. Уст. kubectl с помощью стороннего пакетного менеджера SNAP - получилось:
 ```
 sudo apt install snapd
 sudo snap install core
@@ -39,6 +33,18 @@ Client Version: v1.29.3
 Kustomize Version: v5.0.4-0.20230601165947-6ce0bf390ce3
 The connection to the server localhost:8080 was refused - did you specify the right host or port?
 ```
+### 2. Уст. docker
+```
+apt install docker.io -y
+```
+### 3. Уст миникуб:
+```
+curl -Lo minikube https://github.com/kubernetes/minikube/releases/download/v1.21.0/minikube-linux-amd64 && chmod +x minikube && sudo mv minikube /usr/local/bin/
+curl -Lo minikube https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64 && chmod +x minikube && sudo mv minikube /usr/local/bin/
+curl -Lo minikube https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64 && chmod +x minikube
+sudo cp minikube /usr/local/bin && rm minikube
+root@gitlab:/home/mgb# minikube version
+minikube version: v1.32.0
 ### Включение автодополнения ввода kubectl
 ```
 echo 'source <(kubectl completion bash)' >>~/.bashrc
@@ -55,6 +61,9 @@ usermod -aG docker awx
 usermod -aG sudo awx
 id awx - стало
 uid=1001(awx) gid=1001(awx) группы=1001(awx),27(sudo),137(docker)
+```
+### Рестарт сервер
+```
 su - awx # Далее все от awx
 minikube start --addons=ingress --cpus=2 --install-addons=true --kubernetes-version=stable --memory=8g   #-долго, 4g-не запустится
 #Ответ: Готово! kubectl настроен для использования кластера "minikube" и "default" пространства имён по умолчанию
