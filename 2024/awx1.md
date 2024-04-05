@@ -14,6 +14,7 @@ https://kubernetes.io/ru/docs/tasks/tools/install-kubectl/
 https://docs.ansible.com/automation-controller/4.0.0/html/administration/operator.html
 https://gist.github.com/dmccuk/93db22e9b30d1963b8fca0de96fc82f0
 https://timeweb.cloud/tutorials/docker/kak-ustanovit-docker-na-ubuntu-22-04
+https://docs.ansible.com/automation-controller/4.0.0/html/administration/operator.html
 ```
 ### Уст. послед версию - не получилось
 ```
@@ -135,11 +136,11 @@ awx@gitlab:~$ minikube service list
 |   NAMESPACE   |                NAME                | TARGET PORT  |            URL            |
 |---------------|------------------------------------|--------------|---------------------------|
 | default       | awx-demo-postgres                  | No node port |                           |
-| default       | awx-demo-service                   | http/80      | http://192.168.49.2:32705 |
+| default       | awx-demo-service                   | http/80      | http://192.168.49.2:30505 |
 | default       | awx-operator-metrics               | No node port |                           |
 | default       | kubernetes                         | No node port |                           |
-| ingress-nginx | ingress-nginx-controller           | http/80      | http://192.168.49.2:32530 |
-|               |                                    | https/443    | http://192.168.49.2:30719 |
+| ingress-nginx | ingress-nginx-controller           | http/80      | http://192.168.49.2:31595 |
+|               |                                    | https/443    | http://192.168.49.2:30798 |
 | ingress-nginx | ingress-nginx-controller-admission | No node port |                           |
 | kube-system   | kube-dns                           | No node port |                           |
 |---------------|------------------------------------|--------------|---------------------------|
