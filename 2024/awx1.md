@@ -130,7 +130,7 @@ spec:
   ingress_type: none
   hostname: awx-demo.example.com
 ```
-### Применение .yml
+### 9. Применение .yml
 ```
 kubectl apply -f awx-demo.yml
 awx.awx.ansible.com/awx-demo created
@@ -139,7 +139,9 @@ awx@gitlab:~$ kubectl get pods -l "app.kubernetes.io/managed-by=awx-operator"
 NAME                  READY   STATUS    RESTARTS   AGE
 awx-demo-postgres-0   1/1     Running   0          2m3s
 ```
+### Ждем пару минут
 ```
+kubectl get pods -l "app.kubernetes.io/managed-by=awx-operator"
 watch kubectl get pods -l "app.kubernetes.io/managed-by=awx-operator"
 Каждые2,0с:        kubectl get pods -l app.kubernetes.io/managed-by=awx-operator     gitlab: Wed Apr  3 18:33:06 2024
 NAME                  READY   STATUS    RESTARTS   AGE
@@ -160,7 +162,7 @@ awx@gitlab:~$ minikube service list
 | kube-system   | kube-dns                           | No node port |                           |
 |---------------|------------------------------------|--------------|---------------------------|
 ```
-### Get the Admin user password:
+### 10. Get the Admin user password:
 ```
 kubectl get secret awx-demo-admin-password -o jsonpath="{.data.password}" | base64 --decode
 KV6EPV4rGjFgusdzyrj8BM3nAtaXMY4z
