@@ -151,12 +151,20 @@ awx-demo-service       NodePort    10.102.86.56     <none>        80:32705/TCP  
 awx-operator-metrics   ClusterIP   10.105.137.112   <none>        8383/TCP,8686/TCP   119m
 kubernetes             ClusterIP   10.96.0.1        <none>        443/TCP             136m
 ```
-# HELM
+# 1. HELM
 ```
 curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
 chmod +x get_helm.sh
 ./get_helm.sh
-helm version
-
+helm version # version.BuildInfo{Version:"v3.14.3",
 ```
-
+# 2. Install the AWX chart
+```
+helm repo add awx-operator https://ansible.github.io/awx-operator/
+# Ответ: "awx-operator" has been added to your repositories
+helm repo update
+```
+### Install awx-operator via chart:
+```
+helm install ansible-awx-operator awx-operator/awx-operator -n awx --create-namespace
+```
