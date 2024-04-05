@@ -50,7 +50,7 @@ minikube version: v1.32.0
 echo 'source <(kubectl completion bash)' >>~/.bashrc
 kubectl completion bash >/etc/bash_completion.d/kubectl
 ```
-### Подготовка minikube к start:
+### 4. Подготовка minikube к start:
 ###### Создание user=awx и add group docker:
 ```
 minikube start -> выдаст ошибку: "docker" driver should not be used with root privileges -> уходим от root:
@@ -62,7 +62,8 @@ usermod -aG sudo awx
 id awx - стало
 uid=1001(awx) gid=1001(awx) группы=1001(awx),27(sudo),137(docker)
 ```
-### Рестарт сервер
+### 5. Рестарт сервер
+### 6. Старт minikube
 ```
 su - awx # Далее все от awx
 minikube start --addons=ingress --cpus=2 --install-addons=true --kubernetes-version=stable --memory=8g   #-долго, 4g-не запустится
@@ -91,10 +92,11 @@ kube-system     kube-proxy-65r4v                            1/1     Running     
 kube-system     kube-scheduler-minikube                     1/1     Running     0             2m18s
 kube-system     storage-provisioner                         1/1     Running     1 (94s ago)   2m15s
 ```
-###
+### 7. Уст. awx operator
 ```
 https://github.com/ansible/awx-operator
 # определяем последнюю версию 2.14.0. На видео= 0.12.0  - подставляю:
+kubectl apply -f https://raw.githubusercontent.com/ansible/awx-operator/0.13.0/deploy/awx-operator.yaml
 kubectl apply -f https://raw.githubusercontent.com/ansible/awx-operator/0.12.0/deploy/awx-operator.yaml
 # clusterrolebinding.rbac.authorization.k8s.io/awx-operator created
 kubectl apply -f https://raw.githubusercontent.com/ansible/awx-operator/2.14.0/deploy/awx-operator.yaml
@@ -105,7 +107,7 @@ awx@gitlab:~$ kubectl get po
 NAME                            READY   STATUS    RESTARTS   AGE
 awx-operator-78fb784cb7-l8xf5   1/1     Running   0          3m45s
 ```
-### Create the deployment file:
+### 8. Create the deployment file:
 ```
 vim awx-demo.yml
 apiVersion: awx.ansible.com/v1beta1
@@ -128,6 +130,7 @@ spec:
   ingress_type: none
   hostname: awx-demo.example.com
 ```
+### Применение .yml
 ```
 kubectl apply -f awx-demo.yml
 awx.awx.ansible.com/awx-demo created
