@@ -1,4 +1,7 @@
 # Установка AWX 18 и выше в kubernetis по умолчанию. 
+```
+sudo apt update && sudo apt -y upgrade
+```
 ### Уст миникуб:
 ```
 curl -Lo minikube https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64 \  && chmod +x minikube
