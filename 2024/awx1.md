@@ -111,6 +111,7 @@ kubectl apply -f https://raw.githubusercontent.com/ansible/awx-operator/0.13.0/d
 kubectl apply -f https://raw.githubusercontent.com/ansible/awx-operator/0.12.0/deploy/awx-operator.yaml
 # Ответ: clusterrolebinding.rbac.authorization.k8s.io/awx-operator created
 kubectl apply -f https://raw.githubusercontent.com/ansible/awx-operator/0.14.0/deploy/awx-operator.yaml - не работает
+# Ответ: clusterrolebinding.rbac.authorization.k8s.io/awx-operator created
 ```
 ### Проверка запуска контейнера:
 ```
@@ -121,6 +122,7 @@ awx-operator-78fb784cb7-l8xf5   1/1     Running   0          3m45s
 ### 8. Create the deployment file:
 ```
 vim awx-demo.yml
+---
 apiVersion: awx.ansible.com/v1beta1
 kind: AWX
 metadata:
