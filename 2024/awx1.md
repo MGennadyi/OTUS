@@ -256,10 +256,13 @@ spec:
   service_type: nodeport
 ```
 ```
-kubectl config set-context --current --namespace=awx
-```
-```
 kubectl apply -k .
+```
+```
+kubectl config set-context --current --namespace=awx
+# Ответ: Context "minikube" modified.
+```
+```
 awx@gitlab:~$ kubectl get pods -n awx
 NAME                                               READY   STATUS    RESTARTS   AGE
 awx-operator-controller-manager-6458cd4798-84v7w   2/2     Running   0          3m42s
