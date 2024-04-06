@@ -4,17 +4,24 @@
 sudo apt update && sudo apt -y upgrade
 curl -LO https://storage.googleapis.com/kubernetes-release/release/`curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt`/bin/linux/amd64/kubectl
 chmod +x ./kubectl
+sudo cp kubectl /usr/local/bin && rm kubectl
+kubectl version
+# Ответ:
+Client Version: v1.29.3
+Kustomize Version: v5.0.4-0.20230601165947-6ce0bf390ce3
+The connection to the server localhost:8080 was refused - did you specify the right host or port?
+==============================
 sudo cp minikube /usr/local/bin && rm minikube
 minikube version: v1.32.0
 ```
-### Уст. послед версию - не получилось
+### Уст.kubectl - не получилось
 ```
 # Уст. доп.пакеты:
 sudo apt install curl software-properties-common ca-certificates apt-transport-https -y
 curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
 echo "deb https://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee -a /etc/apt/sources.list.d/kubernetes.list
 sudo apt-get update
-sudo apt-get install -y kubectl
+sudo apt-get install -y kubectl # E: Невозможно найти пакет kubectl
 ```
 ### 1. Уст. kubectl с помощью стороннего пакетного менеджера SNAP - получилось:
 ```
