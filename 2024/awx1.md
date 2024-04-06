@@ -171,6 +171,14 @@ awx@gitlab:~$
 ```
 ### Создание доп.сервиса  LoadBalancer
 ```
+Step 2 - Create a Kubernetes deployment - нет на видео
+kubectl create deployment hello-minikube1 --image=k8s.gcr.io/echoserver:1.4
+kubectl create deployment awx-demo
+Step 3 - Create a Kubernetes service with type LoadBalancer
+
+kubectl expose deployment hello-minikube1 --type=LoadBalancer --port=8080
+```
+```
 kubectl expose deployment awx-demo --type=LoadBalancer --port=8080
 # Засада
 Error from server (NotFound): deployments.apps "awx-demo" not found
@@ -180,6 +188,7 @@ Error from server (NotFound): deployments.apps "awx-demo" not found
 awx@gitlab:~$ kubectl get svc
 NAME                   TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)             AGE
 awx-demo-postgres      ClusterIP   None             <none>        5432/TCP            130m
+hello-minikube1        NodePort    10.100.238.34    <none>        8080:31389/TCP   3s
 awx-demo-service       NodePort    10.108.249.137   <none>        80:31502/TCP        130m
 awx-operator-metrics   ClusterIP   10.108.57.167    <none>        8383/TCP,8686/TCP   133m
 kubernetes             ClusterIP   10.96.0.1        <none>        443/TCP             139m
