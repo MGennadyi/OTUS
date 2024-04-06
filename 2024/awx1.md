@@ -232,9 +232,21 @@ images:
     newTag: 2.14.0
 namespace: awx
 ```
+```
+vim kustomization.yml
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - github.com/ansible/awx-operator/config/default?ref=2.14.0
+  - awx-server.yaml
+images:
+  - name: quay.io/ansible/awx-operator
+    newTag: 2.14.0
+namespace: awx
+```
 ### 8.1 Create the deployment file:
 ```
-vim awx-sever.yaml
+vim awx-server.yaml
 ---
 apiVersion: awx.ansible.com/v1beta1
 kind: AWX
@@ -242,6 +254,9 @@ metadata:
   name: awx-server
 spec:
   service_type: nodeport
+```
+```
+kubectl config set-context --current --namespace=awx
 ```
 ```
 kubectl apply -k .
