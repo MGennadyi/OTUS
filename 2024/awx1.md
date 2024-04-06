@@ -1,5 +1,5 @@
 # Установка AWX 18 и выше в kubernetis по умолчанию. 
-### 0.repos for Kubernetes and Cubectl
+### 0.repos for Kubernetes and Cubectl - получилось:
 ```
 sudo apt update && sudo apt -y upgrade
 curl -LO https://storage.googleapis.com/kubernetes-release/release/`curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt`/bin/linux/amd64/kubectl
@@ -41,11 +41,14 @@ apt install docker.io -y
 ### 3. Уст миникуб:
 ```
 curl -Lo minikube https://github.com/kubernetes/minikube/releases/download/v1.21.0/minikube-linux-amd64 && chmod +x minikube && sudo mv minikube /usr/local/bin/
+# Предпочтительнее:
 curl -Lo minikube https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64 && chmod +x minikube && sudo mv minikube /usr/local/bin/
-curl -Lo minikube https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64 && chmod +x minikube
-sudo cp minikube /usr/local/bin && rm minikube
-root@gitlab:/home/mgb# minikube version
-minikube version: v1.32.0
+# Раздельные команды:
+curl -Lo minikube https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
+chmod +x minikube
+cp minikube /usr/local/bin
+rm minikube
+minikube version  # v1.32.0
 ```
 ### Включение автодополнения ввода kubectl
 ```
