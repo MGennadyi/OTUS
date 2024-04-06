@@ -2,7 +2,7 @@
 ### 0.repos for Kubernetes and Cubectl
 ```
 sudo apt update && sudo apt -y upgrade
-curl -LO https://storage.googleapis.com/kubernetes-release/release/curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt/bin/linux/amd64/kubectl
+curl -LO https://storage.googleapis.com/kubernetes-release/release/`curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt`/bin/linux/amd64/kubectl
 chmod +x ./kubectl
 ```
 ### Уст. послед версию - не получилось
