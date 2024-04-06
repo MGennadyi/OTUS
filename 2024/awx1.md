@@ -193,6 +193,8 @@ https://docs.ansible.com/automation-controller/4.0.0/html/administration/operato
 https://gist.github.com/dmccuk/93db22e9b30d1963b8fca0de96fc82f0
 https://timeweb.cloud/tutorials/docker/kak-ustanovit-docker-na-ubuntu-22-04
 https://docs.ansible.com/automation-controller/4.0.0/html/administration/operator.html
+https://github.com/ansible/awx-operator - изменена, ссылка на
+https://ansible.readthedocs.io/projects/awx-operator/en/latest/installation/basic-install.html
 ```
 
 
