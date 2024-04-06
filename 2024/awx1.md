@@ -213,6 +213,16 @@ Status:
                 loadbalancer emulator: no errors
 ```
 ```
+awx@gitlab:~$ minikube ip
+192.168.49.2
+docker stats
+CONTAINER ID   NAME       CPU %     MEM USAGE / LIMIT   MEM %     NET I/O          BLOCK I/O     PIDS
+395d8bbe9cba   minikube   21.31%    765MiB / 8GiB       9.34%     438MB / 14.8MB   0B / 4.23MB   449
+kubectl port-forward service/awx-demo --address 0.0.0.0 31502:80
+
+```
+ 
+```
 
 
 
