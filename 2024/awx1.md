@@ -232,7 +232,17 @@ images:
     newTag: 2.14.0
 namespace: awx
 ```
-
+### 8.1 Create the deployment file:
+```
+vim awx-sever.yaml
+---
+apiVersion: awx.ansible.com/v1beta1
+kind: AWX
+metadata:
+  name: awx-server
+spec:
+  service_type: nodeport
+```
 ```
 kubectl apply -k .
 awx@gitlab:~$ kubectl get pods -n awx
