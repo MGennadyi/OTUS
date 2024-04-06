@@ -69,7 +69,10 @@ minikube start -> выдаст ошибку: "docker" driver should not be used 
 useradd -m -s /bin/bash awx
 id awx - было
 uid=1001(awx) gid=1001(awx) группы=1001(awx) - нет групп у awx -> исправляю:
+# Включаем в группу docker sudo
 usermod -aG docker sudo awx
+# Заводим пароль:
+sudo passwd awx
 id awx - стало
 uid=1001(awx) gid=1001(awx) группы=1001(awx),27(sudo),137(docker)
 ```
@@ -193,6 +196,26 @@ awx-demo-service       NodePort    10.108.249.137   <none>        80:31502/TCP  
 awx-operator-metrics   ClusterIP   10.108.57.167    <none>        8383/TCP,8686/TCP   133m
 kubernetes             ClusterIP   10.96.0.1        <none>        443/TCP             139m
 # awx-demo-service - главный сервис
+```
+### minikube tunnel
+```
+awx@gitlab:~$  minikube tunnel
+[sudo] пароль для awx:
+Status:
+        machine: minikube
+        pid: 306031
+        route: 10.96.0.0/12 -> 192.168.49.2
+        minikube: Running
+        services: []
+    errors:
+                minikube: no errors
+                router: no errors
+                loadbalancer emulator: no errors
+```
+```
+
+
+
 ```
 ### Документация kubectl -командная строка для kubernetis:
 ```
