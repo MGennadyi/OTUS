@@ -37,6 +37,13 @@ The connection to the server localhost:8080 was refused - did you specify the ri
 ### 2. Уст. docker
 ```
 apt install docker.io -y
+docker version  # Ответ:
+Client:
+ Version:           24.0.5
+ API version:       1.43
+ Go version:        go1.20.3
+ Git commit:        24.0.5-0ubuntu1~22.04.1
+ Built:             Mon Aug 21 19:50:14 2023
 ```
 ### 3. Уст миникуб:
 ```
