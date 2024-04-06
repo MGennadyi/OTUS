@@ -93,7 +93,7 @@ minikube   Ready    control-plane   3m1s   v1.28.3
 ```
 ### Проверка pod:
 ```
-awx@gitlab:~$ kubectl get po -A
+awx@gitlab:~$ kubectl get pods -A
 NAMESPACE       NAME                                        READY   STATUS      RESTARTS      AGE
 ingress-nginx   ingress-nginx-admission-create-xnd45        0/1     Completed   0             2m6s
 ingress-nginx   ingress-nginx-admission-patch-v7hhd         0/1     Completed   1             2m6s
