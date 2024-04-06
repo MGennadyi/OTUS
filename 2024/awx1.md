@@ -220,16 +220,16 @@ CONTAINER ID   NAME       CPU %     MEM USAGE / LIMIT   MEM %     NET I/O       
 395d8bbe9cba   minikube   21.31%    765MiB / 8GiB       9.34%     438MB / 14.8MB   0B / 4.23MB   449
 kubectl port-forward service/awx-demo --address 0.0.0.0 31502:80
 ```
-### Уст. operator через kustomization.yml
+### Уст. operator через kustomization.yml -latest - не проходит
 ```
 vim kustomization.yml
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-  - github.com/ansible/awx-operator/config/default?ref=latest
+  - github.com/ansible/awx-operator/config/default?ref=2.14.0
 images:
   - name: quay.io/ansible/awx-operator
-    newTag: latest
+    newTag: 2.14.0
 namespace: awx
 ```
 
