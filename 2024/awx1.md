@@ -5,14 +5,6 @@ sudo apt update && sudo apt -y upgrade
 curl -LO https://storage.googleapis.com/kubernetes-release/release/curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt/bin/linux/amd64/kubectl
 chmod +x ./kubectl
 ```
-### Документация kubectl -командная строка для kubernetis:
-```
-https://kubernetes.io/ru/docs/tasks/tools/install-kubectl/
-https://docs.ansible.com/automation-controller/4.0.0/html/administration/operator.html
-https://gist.github.com/dmccuk/93db22e9b30d1963b8fca0de96fc82f0
-https://timeweb.cloud/tutorials/docker/kak-ustanovit-docker-na-ubuntu-22-04
-https://docs.ansible.com/automation-controller/4.0.0/html/administration/operator.html
-```
 ### Уст. послед версию - не получилось
 ```
 # Уст. доп.пакеты:
@@ -45,6 +37,7 @@ curl -Lo minikube https://storage.googleapis.com/minikube/releases/latest/miniku
 sudo cp minikube /usr/local/bin && rm minikube
 root@gitlab:/home/mgb# minikube version
 minikube version: v1.32.0
+```
 ### Включение автодополнения ввода kubectl
 ```
 echo 'source <(kubectl completion bash)' >>~/.bashrc
@@ -94,12 +87,11 @@ kube-system     storage-provisioner                         1/1     Running     
 ```
 ### 7. Уст. awx operator
 ```
-https://github.com/ansible/awx-operator
-# определяем последнюю версию 2.14.0. На видео= 0.12.0  - подставляю:
+https://github.com/ansible/awx-operator # определяем последнюю версию 2.14.0. На видео= 0.12.0  - подставляю:
 kubectl apply -f https://raw.githubusercontent.com/ansible/awx-operator/0.13.0/deploy/awx-operator.yaml
 kubectl apply -f https://raw.githubusercontent.com/ansible/awx-operator/0.12.0/deploy/awx-operator.yaml
-# clusterrolebinding.rbac.authorization.k8s.io/awx-operator created
-kubectl apply -f https://raw.githubusercontent.com/ansible/awx-operator/2.14.0/deploy/awx-operator.yaml
+# Ответ: clusterrolebinding.rbac.authorization.k8s.io/awx-operator created
+kubectl apply -f https://raw.githubusercontent.com/ansible/awx-operator/2.14.0/deploy/awx-operator.yaml - не работает
 ```
 ### Проверка запуска контейнера:
 ```
@@ -119,18 +111,7 @@ spec:
   ingress_type: none
   hostname: awx-demo.example.com
 ```
-```
----
-apiVersion: awx.ansible.com/v1beta1
-kind: AWX
-metadata:
-  name: awx-demo
-spec:
-  service_type: nodeport
-  ingress_type: none
-  hostname: awx-demo.example.com
-```
-### 9. Применение .yml
+### 9. Применение awx-demo.yml
 ```
 kubectl apply -f awx-demo.yml
 awx.awx.ansible.com/awx-demo created
@@ -183,7 +164,14 @@ awx-demo-service       NodePort    10.102.86.56     <none>        80:32705/TCP  
 awx-operator-metrics   ClusterIP   10.105.137.112   <none>        8383/TCP,8686/TCP   119m
 kubernetes             ClusterIP   10.96.0.1        <none>        443/TCP             136m
 ```
-
+### Документация kubectl -командная строка для kubernetis:
+```
+https://kubernetes.io/ru/docs/tasks/tools/install-kubectl/
+https://docs.ansible.com/automation-controller/4.0.0/html/administration/operator.html
+https://gist.github.com/dmccuk/93db22e9b30d1963b8fca0de96fc82f0
+https://timeweb.cloud/tutorials/docker/kak-ustanovit-docker-na-ubuntu-22-04
+https://docs.ansible.com/automation-controller/4.0.0/html/administration/operator.html
+```
 
 
 
