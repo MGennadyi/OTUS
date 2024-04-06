@@ -267,6 +267,13 @@ awx@gitlab:~$ kubectl get pods -n awx
 NAME                                               READY   STATUS    RESTARTS   AGE
 awx-operator-controller-manager-6458cd4798-84v7w   2/2     Running   0          3m42s
 ```
+
+```
+awx@gitlab:~$ kubectl port-forward service/awx-demo-service --address 0.0.0.0 30080:80
+Error from server (NotFound): services "awx-demo-service" not found
+
+```
+
 ### Документация kubectl -командная строка для kubernetis:
 ```
 https://kubernetes.io/ru/docs/tasks/tools/install-kubectl/
