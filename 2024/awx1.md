@@ -107,10 +107,10 @@ kube-system     storage-provisioner                         1/1     Running     
 ### 7. Уст. awx operator
 ```
 https://github.com/ansible/awx-operator # определяем последнюю версию 2.14.0. На видео= 0.12.0  - подставляю:
-kubectl apply -f https://raw.githubusercontent.com/ansible/awx-operator/0.13.0/deploy/awx-operator.yaml
+kubectl apply -f https://raw.githubusercontent.com/ansible/awx-operator/0.13.0/deploy/awx-operator.yaml  # работает
 kubectl apply -f https://raw.githubusercontent.com/ansible/awx-operator/0.12.0/deploy/awx-operator.yaml
 # Ответ: clusterrolebinding.rbac.authorization.k8s.io/awx-operator created
-kubectl apply -f https://raw.githubusercontent.com/ansible/awx-operator/2.14.0/deploy/awx-operator.yaml - не работает
+kubectl apply -f https://raw.githubusercontent.com/ansible/awx-operator/0.14.0/deploy/awx-operator.yaml - не работает
 ```
 ### Проверка запуска контейнера:
 ```
