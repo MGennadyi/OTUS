@@ -69,8 +69,7 @@ minikube start -> выдаст ошибку: "docker" driver should not be used 
 useradd -m -s /bin/bash awx
 id awx - было
 uid=1001(awx) gid=1001(awx) группы=1001(awx) - нет групп у awx -> исправляю:
-usermod -aG docker awx
-usermod -aG sudo awx
+usermod -aG docker sudo awx
 id awx - стало
 uid=1001(awx) gid=1001(awx) группы=1001(awx),27(sudo),137(docker)
 ```
