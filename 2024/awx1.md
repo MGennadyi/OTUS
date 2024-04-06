@@ -155,11 +155,11 @@ awx@gitlab:~$ minikube service list
 |   NAMESPACE   |                NAME                | TARGET PORT  |            URL            |
 |---------------|------------------------------------|--------------|---------------------------|
 | default       | awx-demo-postgres                  | No node port |                           |
-| default       | awx-demo-service                   | http/80      | http://192.168.49.2:30505 |
+| default       | awx-demo-service                   | http/80      | http://192.168.49.2:31502 |
 | default       | awx-operator-metrics               | No node port |                           |
 | default       | kubernetes                         | No node port |                           |
-| ingress-nginx | ingress-nginx-controller           | http/80      | http://192.168.49.2:31595 |
-|               |                                    | https/443    | http://192.168.49.2:30798 |
+| ingress-nginx | ingress-nginx-controller           | http/80      | http://192.168.49.2:32759 |
+|               |                                    | https/443    | http://192.168.49.2:30324 |
 | ingress-nginx | ingress-nginx-controller-admission | No node port |                           |
 | kube-system   | kube-dns                           | No node port |                           |
 |---------------|------------------------------------|--------------|---------------------------|
@@ -180,10 +180,11 @@ Error from server (NotFound): deployments.apps "awx-demo" not found
 ```
 awx@gitlab:~$ kubectl get svc
 NAME                   TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)             AGE
-awx-demo-postgres      ClusterIP   None             <none>        5432/TCP            53m
-awx-demo-service       NodePort    10.102.86.56     <none>        80:32705/TCP        53m
-awx-operator-metrics   ClusterIP   10.105.137.112   <none>        8383/TCP,8686/TCP   119m
-kubernetes             ClusterIP   10.96.0.1        <none>        443/TCP             136m
+awx-demo-postgres      ClusterIP   None             <none>        5432/TCP            130m
+awx-demo-service       NodePort    10.108.249.137   <none>        80:31502/TCP        130m
+awx-operator-metrics   ClusterIP   10.108.57.167    <none>        8383/TCP,8686/TCP   133m
+kubernetes             ClusterIP   10.96.0.1        <none>        443/TCP             139m
+# awx-demo-service - главный сервис
 ```
 ### Документация kubectl -командная строка для kubernetis:
 ```
