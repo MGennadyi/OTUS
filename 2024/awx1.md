@@ -80,10 +80,10 @@ uid=1001(awx) gid=1001(awx) группы=1001(awx),27(sudo),137(docker)
 ### 6. Старт minikube
 ```
 su - awx # Далее все от awx
-minikube start --addons=ingress --cpus=2 --install-addons=true --kubernetes-version=stable --memory=8g   #-долго, 4g-не запустится
+minikube start --addons=ingress --cpus=2 --install-addons=true --kubernetes-version=stable --memory=6g   #-долго, 4g-не запустится
 #Ответ: Готово! kubectl настроен для использования кластера "minikube" и "default" пространства имён по умолчанию
 ```
-### Прверка, какие kubernetis server уст. и используются:
+ ### Прверка, какие kubernetis server уст. и используются:
 ```
 awx@gitlab:~$ minikube kubectl -- get nodes
     > kubectl.sha256:  64 B / 64 B [-------------------------] 100.00% ? p/s 0s
@@ -219,12 +219,18 @@ docker stats
 CONTAINER ID   NAME       CPU %     MEM USAGE / LIMIT   MEM %     NET I/O          BLOCK I/O     PIDS
 395d8bbe9cba   minikube   21.31%    765MiB / 8GiB       9.34%     438MB / 14.8MB   0B / 4.23MB   449
 kubectl port-forward service/awx-demo --address 0.0.0.0 31502:80
-
 ```
- 
+### 
 ```
-
-
+vim kustomization.yml
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - github.com/ansible/awx-operator/config/default?ref=latest
+images:
+  - name: quay.io/ansible/awx-operator
+    newTag: latest
+namespace: awx
 
 ```
 ### Документация kubectl -командная строка для kubernetis:
