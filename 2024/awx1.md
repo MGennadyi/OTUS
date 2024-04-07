@@ -217,9 +217,9 @@ CONTAINER ID   NAME       CPU %     MEM USAGE / LIMIT   MEM %     NET I/O       
 395d8bbe9cba   minikube   21.31%    765MiB / 8GiB       9.34%     438MB / 14.8MB   0B / 4.23MB   449
 kubectl port-forward service/awx-demo --address 0.0.0.0 31502:80  # 
 ```
-### Уст. operator через kustomization.yaml - работает!!!
+### Уст. operator через kustomization.yaml - от  NetDevops -работает!!!
 ```
-# Подставить последнюю № версии: github.com/ansible/awx-operator/releases
+# Подставить последнюю № версии: github.com/ansible/awx-operator/releases или https://quay.io/repository/ansible/awx-operator?tab=tags&tag=latest
 vim kustomization.yaml
 ---
 apiVersion: kustomize.config.k8s.io/v1beta1
@@ -233,6 +233,8 @@ namespace: awx
 ```
 ```
 kubectl apply -k .
+# Ответ: namespase/awx created
+kubectl config set-context --current --namespace=awx
 ```
 ### Добавляем awx-server.yaml и awx.yaml Что сработает-неизвестно
 ```
@@ -314,6 +316,7 @@ https://timeweb.cloud/tutorials/docker/kak-ustanovit-docker-na-ubuntu-22-04
 https://docs.ansible.com/automation-controller/4.0.0/html/administration/operator.html
 https://github.com/ansible/awx-operator - изменена, ссылка на
 https://ansible.readthedocs.io/projects/awx-operator/en/latest/installation/basic-install.html
+https://github.com/ansible/awx-operator/blob/devel/docs/installation/basic-install.md - от NetDevops
 ```
 
 
