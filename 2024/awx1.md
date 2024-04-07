@@ -217,7 +217,7 @@ CONTAINER ID   NAME       CPU %     MEM USAGE / LIMIT   MEM %     NET I/O       
 395d8bbe9cba   minikube   21.31%    765MiB / 8GiB       9.34%     438MB / 14.8MB   0B / 4.23MB   449
 kubectl port-forward service/awx-demo --address 0.0.0.0 31502:80  # 
 ```
-### Уст. operator через kustomization.yaml - от  NetDevops -работает!!!
+### 8.0 Уст. operator через kustomization.yaml - от  NetDevops -работает!!!
 ```
 # Подставить последнюю № версии: github.com/ansible/awx-operator/releases или https://quay.io/repository/ansible/awx-operator?tab=tags&tag=latest
 vim kustomization.yaml
@@ -236,21 +236,7 @@ kubectl apply -k .
 # Ответ: namespase/awx created
 kubectl config set-context --current --namespace=awx
 ```
-### Добавляем awx-server.yaml и awx.yaml Что сработает-неизвестно
-```
----
-vim kustomization.yaml
-apiVersion: kustomize.config.k8s.io/v1beta1
-kind: Kustomization
-resources:
-  - github.com/ansible/awx-operator/config/default?ref=2.14.0
-  - awx-server.yaml
-  - awx.yaml
-images:
-  - name: quay.io/ansible/awx-operator
-    newTag: 2.14.0
-namespace: awx
-```
+
 ### 8.1 Create the deployment file:
 ```
 vim awx-server.yaml
@@ -261,6 +247,35 @@ metadata:
   name: awx-server
 spec:
   service_type: nodeport
+```
+```
+kubectl apply -k .
+kustomize build . | kubectl -f -
+```
+### 8.2 Create the deployment file: от NetDevops
+```
+vim awx-demo.yaml
+---
+apiVersion: awx.ansible.com/v1beta1
+kind: AWX
+metadata:
+  name: awx-demo
+spec:
+  service_type: nodeport
+```
+### 8.3 Добавляем awx-demo.yaml Что сработает-неизвестно
+```
+vim kustomization.yaml
+---
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - github.com/ansible/awx-operator/config/default?ref=2.14.0
+  - awx-demo.yaml
+images:
+  - name: quay.io/ansible/awx-operator
+    newTag: 2.14.0
+namespace: awx
 ```
 ```
 kubectl apply -k .
