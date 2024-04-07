@@ -237,7 +237,7 @@ kubectl apply -k .
 kubectl config set-context --current --namespace=awx
 ```
 
-### 8.1 Create the deployment file:
+### 8.1 Create the deployment file awx-server.yaml:
 ```
 vim awx-server.yaml
 ---
@@ -252,7 +252,7 @@ spec:
 kubectl apply -k .
 kustomize build . | kubectl -f -
 ```
-### 8.2 Create the deployment file: от NetDevops
+### 8.2 Create the deployment file awx-demo.yaml: от NetDevops
 ```
 vim awx-demo.yaml
 ---
@@ -263,7 +263,7 @@ metadata:
 spec:
   service_type: nodeport
 ```
-### 8.3 Добавляем awx-demo.yaml Что сработает-неизвестно
+### 8.3 Добавляем awx-demo.yaml в kustomization.yaml 
 ```
 vim kustomization.yaml
 ---
@@ -278,8 +278,8 @@ images:
 namespace: awx
 ```
 ```
-kubectl apply -k .
-kustomize build . | kubectl -f -
+kubectl apply -k .  # от NetDevops
+# kustomize build . | kubectl -f -
 ```
 ```
 kubectl config set-context --current --namespace=awx
@@ -305,6 +305,15 @@ kustomize build . | kubectl -f -
 awx@gitlab:~$ kubectl get pods -n awx
 NAME                                               READY   STATUS    RESTARTS   AGE
 awx-operator-controller-manager-6458cd4798-84v7w   2/2     Running   0          3m42s
+awx@awx:~$ kubectl get nodes -n awx -o wide
+NAME       STATUS   ROLES           AGE   VERSION   INTERNAL-IP    EXTERNAL-IP   OS-IMAGE             KERNEL-VERSION     CONTAINER-RUNTIME
+minikube   Ready    control-plane   25h   v1.28.3   192.168.49.2   <none>        Ubuntu 22.04.3 LTS   6.5.0-26-generic   docker://24.0.7
+awx@awx:~$ kubectl get svc -l "app.kubernetes.io/managed-by=awx-operator"
+NAME                TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)        AGE
+awx-demo-postgres   ClusterIP   None             <none>        5432/TCP       25h
+awx-demo-service    NodePort    10.108.249.137   <none>        80:31502/TCP   25h
+==============================
+INTERNAL-IP:31502 - от NetDevops
 ```
 ###
 ```
