@@ -264,6 +264,22 @@ kustomize build . | kubectl -f -
 kubectl config set-context --current --namespace=awx
 # Ответ: Context "minikube" modified.
 ```
+### От Calvin 2 сент 2022. ADD nodeport_port: 30080
+```
+vim awx.yml
+---
+apiVersion: awx.ansible.com/v1beta1
+kind: AWX
+metadata:
+  name: awx
+spec:
+  service_type: nodeport
+  nodeport_port: 30080
+```
+### Применяем:
+```
+kustomize build . | kubectl -f -
+```
 ```
 awx@gitlab:~$ kubectl get pods -n awx
 NAME                                               READY   STATUS    RESTARTS   AGE
