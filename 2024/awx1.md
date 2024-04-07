@@ -232,7 +232,7 @@ images:
     newTag: 2.14.0
 namespace: awx
 ```
-### Добавляем awx-server.yaml
+### Добавляем awx-server.yaml и awx.yaml Что сработает-неизвестно
 ```
 vim kustomization.yaml
 apiVersion: kustomize.config.k8s.io/v1beta1
@@ -240,6 +240,7 @@ kind: Kustomization
 resources:
   - github.com/ansible/awx-operator/config/default?ref=2.14.0
   - awx-server.yaml
+  - awx.yaml
 images:
   - name: quay.io/ansible/awx-operator
     newTag: 2.14.0
@@ -276,7 +277,7 @@ spec:
   service_type: nodeport
   nodeport_port: 30080
 ```
-### Применяем:
+### Применяем От Calvin:
 ```
 kustomize build . | kubectl -f -
 ```
