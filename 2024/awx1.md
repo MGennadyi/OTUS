@@ -220,9 +220,9 @@ CONTAINER ID   NAME       CPU %     MEM USAGE / LIMIT   MEM %     NET I/O       
 395d8bbe9cba   minikube   21.31%    765MiB / 8GiB       9.34%     438MB / 14.8MB   0B / 4.23MB   449
 kubectl port-forward service/awx-demo --address 0.0.0.0 31502:80
 ```
-### Уст. operator через kustomization.yml -latest - не проходит
+### Уст. operator через kustomization.yaml
 ```
-vim kustomization.yml
+vim kustomization.yaml
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
@@ -232,8 +232,9 @@ images:
     newTag: 2.14.0
 namespace: awx
 ```
+### Добавляем awx-server.yaml
 ```
-vim kustomization.yml
+vim kustomization.yaml
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
@@ -257,6 +258,7 @@ spec:
 ```
 ```
 kubectl apply -k .
+kustomize build . | kubectl -f -
 ```
 ```
 kubectl config set-context --current --namespace=awx
