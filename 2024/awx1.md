@@ -172,16 +172,13 @@ kubectl get secret awx-demo-admin-password -o jsonpath="{.data.password}" | base
 OaDtpysnI9asUvIsQDESxfBggr47UcBx
 awx@gitlab:~$
 ```
-### Создание доп.сервиса  LoadBalancer
+### Создание доп.сервиса  LoadBalancer - не работает!
 ```
-Step 2 - Create a Kubernetes deployment - нет на видео
+Step 2 - Create a Kubernetes deployment - шага №2 нет на видео. Почему?
 kubectl create deployment hello-minikube1 --image=k8s.gcr.io/echoserver:1.4
 kubectl create deployment awx-demo
-Step 3 - Create a Kubernetes service with type LoadBalancer
-
-kubectl expose deployment hello-minikube1 --type=LoadBalancer --port=8080
-```
-```
+Step 3 - Create a Kubernetes service with type LoadBalancer:
+kubectl expose deployment hello-minikube1 --type=LoadBalancer --port=8080 # Пример
 kubectl expose deployment awx-demo --type=LoadBalancer --port=8080
 # Засада
 Error from server (NotFound): deployments.apps "awx-demo" not found
@@ -218,12 +215,13 @@ awx@gitlab:~$ minikube ip
 docker stats
 CONTAINER ID   NAME       CPU %     MEM USAGE / LIMIT   MEM %     NET I/O          BLOCK I/O     PIDS
 395d8bbe9cba   minikube   21.31%    765MiB / 8GiB       9.34%     438MB / 14.8MB   0B / 4.23MB   449
-kubectl port-forward service/awx-demo --address 0.0.0.0 31502:80
+kubectl port-forward service/awx-demo --address 0.0.0.0 31502:80  # 
 ```
 ### Уст. operator через kustomization.yaml - работает!!!
 ```
 # Подставить последнюю № версии: github.com/ansible/awx-operator/releases
 vim kustomization.yaml
+---
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
@@ -233,8 +231,12 @@ images:
     newTag: 2.14.0
 namespace: awx
 ```
+```
+kubectl apply -k .
+```
 ### Добавляем awx-server.yaml и awx.yaml Что сработает-неизвестно
 ```
+---
 vim kustomization.yaml
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
