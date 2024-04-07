@@ -314,6 +314,7 @@ awx-demo-postgres   ClusterIP   None             <none>        5432/TCP       25
 awx-demo-service    NodePort    10.108.249.137   <none>        80:31502/TCP   25h
 ==============================
 INTERNAL-IP:31502 - от NetDevops
+ awx                  | awx-server-service                              | http/80      | http://192.168.49.2:31148  - открылось на ВМ!!!!
 ```
 ###
 ```
