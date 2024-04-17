@@ -40,10 +40,8 @@ Active: filed - то, что нужно!
 ```
 ### Установить новую версию:
 ```
-# 1
-sudo apt install patroni
-# 2
-python3 -m pip install --upgrade --user patroni[etcd]
+sudo apt install patroni -что верно-??? -на srv1
+python3 -m pip install --upgrade --user patroni[etcd] -на srv2
 sudo systemctl status patroni
 sudo systemctl cat patron
 [Unit]
