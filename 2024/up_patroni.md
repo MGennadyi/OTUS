@@ -29,8 +29,14 @@ Warning: result is broken permissions
 ### Проверяю:
 ```
 sudo systemctl status patroni
-Active: active (runing)   - во дела!
-
+Active: active (runing) - во дела, работает!
+```
+### Останавливаю patroni:
+```
+sudo systemctl stop patroni
+sudo systemctl start patroni
+sudo systemctl status patroni
+Active: filed - то, что нужно!
 ```
 ### Установить новую версию:
 ```
