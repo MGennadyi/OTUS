@@ -41,7 +41,10 @@ Active: filed - то, что нужно!
 ### Установить новую версию:
 ```
 sudo apt install patroni -что верно-??? -на srv1
-python3 -m pip install --upgrade --user patroni[etcd] -на srv2
+sudo python3 -m pip install --upgrade --user patroni[etcd] -на srv2
+Down patroni-3.3 Warning: patronictl are installed /root/.local/bin
+notice: to update run: python3 -m pip install --upgrade pip
+pip24.0
 sudo systemctl status patroni
 sudo systemctl cat patron
 [Unit]
