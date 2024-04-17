@@ -26,6 +26,12 @@ sudo python3 -m pip uninstall patroni[etcd]
 Successful unistalled patroni - 2.1.4
 Warning: result is broken permissions
 ```
+### Проверяю:
+```
+sudo systemctl status patroni
+Active: active (runing)   - во дела!
+
+```
 ### Установить новую версию:
 ```
 # 1
