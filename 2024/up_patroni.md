@@ -10,7 +10,8 @@ patronictl -c /etc/patroni.yml edit-config -s synchronous_mode=true synchronous_
 ```
 ### Проверка версии до обновления:
 ```
-/usr/local/bin/patroni --version
+/usr/local/bin/patroni --version # или так:
+patroni --version
 patroni 2.1.4
 ```
 ### ssh srv1
@@ -46,6 +47,10 @@ sudo systemctl cat patron
 ```
 ```
 sudo systemctl restart patroni
+```
+```
+patronictl -c /etc/patroni.yml version
+3.2.2
 ```
 
 
