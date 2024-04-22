@@ -70,7 +70,7 @@ echo 'source <(kubectl completion bash)' >>~/.bashrc
 kubectl completion bash >/etc/bash_completion.d/kubectl
 ```
 ### 4. Подготовка minikube к start:
-###### Создание user=awx и add group docker:
+###### Создание user=awx и add group docker: от RomNero
 ```
 minikube start -> выдаст ошибку: "docker" driver should not be used with root privileges -> уходим от root:
 useradd -m -s /bin/bash awx
@@ -109,7 +109,7 @@ minikube   Ready    control-plane   3m1s   v1.28.3
 ```
 ### Проверка pod:
 ```
-awx@gitlab:~$ kubectl get pods -A
+awx@gitlab:~$ kubectl get pods -A # -A отображает все компоненты
 NAMESPACE       NAME                                        READY   STATUS      RESTARTS      AGE
 ingress-nginx   ingress-nginx-admission-create-xnd45        0/1     Completed   0             2m6s
 ingress-nginx   ingress-nginx-admission-patch-v7hhd         0/1     Completed   1             2m6s
@@ -131,11 +131,11 @@ sudo snap install helm --classic
 helm repo add kubernetes-dashboard https://kubernetes.github.io/dashboard/
 helm upgrade --install kubernetes-dashboard kubernetes-dashboard/kubernetes-dashboard --create-namespace --namespace kubernetes-dashboard
 ```
-### 7. Уст. awx operator
+### 7. Уст. awx operator: last=2.14.0  -RomNero
 ```
-https://github.com/ansible/awx-operator # определяем последнюю версию 2.14.0. На видео= 0.12.0  - подставляю:
+https://github.com/ansible/awx-operator #  На видео= 0.12.0  - подставляю:
 kubectl apply -f https://raw.githubusercontent.com/ansible/awx-operator/0.13.0/deploy/awx-operator.yaml  # работает
-kubectl apply -f https://raw.githubusercontent.com/ansible/awx-operator/0.12.0/deploy/awx-operator.yaml
+kubectl apply -f https://raw.githubusercontent.com/ansible/awx-operator/0.12.0/deploy/awx-operator.yaml  # работает
 # Ответ: clusterrolebinding.rbac.authorization.k8s.io/awx-operator created
 kubectl apply -f https://raw.githubusercontent.com/ansible/awx-operator/0.14.0/deploy/awx-operator.yaml - не работает
 # Ответ: clusterrolebinding.rbac.authorization.k8s.io/awx-operator created
@@ -222,6 +222,20 @@ awx@awx:~$ kubectl get pods --show-labels
 NAME                           READY   STATUS    RESTARTS      AGE   LABELS
 awx-demo-postgres-0            1/1     Running   5 (96m ago)   16d   app.kubernetes.io/component=database,app.kubernetes.io/instance=postgres-awx-demo,app.kubernetes.io/managed-by=awx-operator,app.kubernetes.io/name=postgres,app.kubernetes.io/part-of=awx-demo,apps.kubernetes.io/pod-index=0,controller-revision-hash=awx-demo-postgres-79f76985cb,statefulset.kubernetes.io/pod-name=awx-demo-postgres-0
 awx-operator-dbcdf6499-jptzc   1/1     Running   7 (96m ago)   16d   name=awx-operator,pod-template-hash=dbcdf6499
+```
+### 7.1 set the current namespace for kubectl
+```
+kubectl config set-context --current --namespace=awx
+```
+```
+awx@awx:~$ kubectl get pods -n awx
+NAME                                               READY   STATUS      RESTARTS        AGE
+awx-operator-controller-manager-6458cd4798-84v7w   2/2     Running     6 (178m ago)    15d
+awx-server-migration-24.1.0-zv55f                  0/1     Completed   0               15d
+awx-server-postgres-0                              1/1     Running     3 (178m ago)    15d
+awx-server-postgres-15-0                           1/1     Running     3 (178m ago)    15d
+awx-server-task-8676c66657-djtrl                   4/4     Running     12 (178m ago)   15d
+awx-server-web-9d8c7499f-nw82s                     3/3     Running     9 (178m ago)    15d
 ```
 ### 8. Create the deployment file:
 ```
