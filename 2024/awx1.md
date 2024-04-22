@@ -131,9 +131,9 @@ sudo snap install helm --classic
 helm repo add kubernetes-dashboard https://kubernetes.github.io/dashboard/
 helm upgrade --install kubernetes-dashboard kubernetes-dashboard/kubernetes-dashboard --create-namespace --namespace kubernetes-dashboard
 ```
-### 7. Уст. awx operator: last=2.14.0  -RomNero
+### 7. Уст. awx operator: last=2.14.0 - не работает??
 ```
-https://github.com/ansible/awx-operator #  На видео= 0.12.0  - подставляю:
+https://github.com/ansible/awx-operator #  На видео- RomNero= 0.12.0  - подставляю:
 kubectl apply -f https://raw.githubusercontent.com/ansible/awx-operator/0.13.0/deploy/awx-operator.yaml  # работает
 kubectl apply -f https://raw.githubusercontent.com/ansible/awx-operator/0.12.0/deploy/awx-operator.yaml  # работает
 # Ответ: clusterrolebinding.rbac.authorization.k8s.io/awx-operator created
