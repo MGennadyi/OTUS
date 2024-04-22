@@ -216,7 +216,12 @@ Tolerations:                 node.kubernetes.io/not-ready:NoExecute op=Exists fo
                              node.kubernetes.io/unreachable:NoExecute op=Exists for 300s
 Events:                      <none>
 awx@awx:~$
-
+```
+```
+awx@awx:~$ kubectl get pods --show-labels
+NAME                           READY   STATUS    RESTARTS      AGE   LABELS
+awx-demo-postgres-0            1/1     Running   5 (96m ago)   16d   app.kubernetes.io/component=database,app.kubernetes.io/instance=postgres-awx-demo,app.kubernetes.io/managed-by=awx-operator,app.kubernetes.io/name=postgres,app.kubernetes.io/part-of=awx-demo,apps.kubernetes.io/pod-index=0,controller-revision-hash=awx-demo-postgres-79f76985cb,statefulset.kubernetes.io/pod-name=awx-demo-postgres-0
+awx-operator-dbcdf6499-jptzc   1/1     Running   7 (96m ago)   16d   name=awx-operator,pod-template-hash=dbcdf6499
 ```
 ### 8. Create the deployment file:
 ```
