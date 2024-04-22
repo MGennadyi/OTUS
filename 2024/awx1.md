@@ -84,7 +84,13 @@ minikube start --addons=ingress --cpus=2 --install-addons=true --kubernetes-vers
 #Ответ: Готово! kubectl настроен для использования кластера "minikube" и "default" пространства имён по умолчанию
 ```
 ```
-minikub status
+awx@awx:~$ minikube status
+minikube
+type: Control Plane
+host: Running
+kubelet: Running
+apiserver: Running
+kubeconfig: Configured
 ```
  ### Прверка, какие kubernetis server уст. и используются:
 ```
