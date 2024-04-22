@@ -288,12 +288,7 @@ awx@gitlab:~$ minikube service list
 ```
 ### 10.2 Создание доп.сервиса  LoadBalancer - не работает!
 ```
-Step 2 - Create a Kubernetes deployment - шага №2 нет на видео. Почему?
-kubectl create deployment hello-minikube1 --image=k8s.gcr.io/echoserver:1.4
-kubectl create deployment awx-demo
-Step 3 - Create a Kubernetes service with type LoadBalancer:
-kubectl expose deployment hello-minikube1 --type=LoadBalancer --port=8080 # Пример
-kubectl expose deployment awx-demo --type=LoadBalancer --port=8080
+kubectl expose deployment awx-demo --type=LoadBalancer --port=8080 # На видео работает Romnero
 # Засада
 Error from server (NotFound): deployments.apps "awx-demo" not found
 ```
