@@ -292,9 +292,8 @@ kubectl expose deployment awx-demo --type=LoadBalancer --port=8080 # На вид
 # Засада
 Error from server (NotFound): deployments.apps "awx-demo" not found
 ```
-### Просмотр сервисов:
 ```
-awx@gitlab:~$ kubectl get svc
+awx@gitlab:~$ kubectl get svc # На видео появился LoadBalancer=pending
 NAME                   TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)             AGE
 awx-demo-postgres      ClusterIP   None             <none>        5432/TCP            130m
 hello-minikube1        NodePort    10.100.238.34    <none>        8080:31389/TCP   3s
