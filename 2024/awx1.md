@@ -237,7 +237,7 @@ awx-server-postgres-15-0                           1/1     Running     3 (178m a
 awx-server-task-8676c66657-djtrl                   4/4     Running     12 (178m ago)   15d
 awx-server-web-9d8c7499f-nw82s                     3/3     Running     9 (178m ago)    15d
 ```
-### 8. Create the deployment file:
+### 8. Create the deployment file: конфликтует с другой установкой:
 ```
 vim awx-demo.yml
 ---
