@@ -314,6 +314,12 @@ CONTAINER ID   NAME       CPU %     MEM USAGE / LIMIT   MEM %     NET I/O       
 395d8bbe9cba   minikube   21.31%    765MiB / 8GiB       9.34%     438MB / 14.8MB   0B / 4.23MB   449
 kubectl port-forward service/awx-demo --address 0.0.0.0 31502:80  # 
 ```
+```
+awx@awx:~$ kubectl get pods --show-labels
+NAME                           READY   STATUS    RESTARTS      AGE   LABELS
+awx-demo-postgres-0            1/1     Running   5 (96m ago)   16d   app.kubernetes.io/component=database,app.kubernetes.io/instance=postgres-awx-demo,app.kubernetes.io/managed-by=awx-operator,app.kubernetes.io/name=postgres,app.kubernetes.io/part-of=awx-demo,apps.kubernetes.io/pod-index=0,controller-revision-hash=awx-demo-postgres-79f76985cb,statefulset.kubernetes.io/pod-name=awx-demo-postgres-0
+awx-operator-dbcdf6499-jptzc   1/1     Running   7 (96m ago)   16d   name=awx-operator,pod-template-hash=dbcdf6499
+```
 ### 8.0 Уст. operator через kustomization.yaml - от  NetDevops -работает!!!
 ```
 # Подставить последнюю № версии: github.com/ansible/awx-operator/releases или https://quay.io/repository/ansible/awx-operator?tab=tags&tag=latest
