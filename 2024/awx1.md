@@ -142,9 +142,81 @@ kubectl apply -f https://raw.githubusercontent.com/ansible/awx-operator/0.14.0/d
 ```
 ### Проверка запуска контейнера:
 ```
-awx@gitlab:~$ kubectl get po
-NAME                            READY   STATUS    RESTARTS   AGE
-awx-operator-78fb784cb7-l8xf5   1/1     Running   0          3m45s
+awx@awx:~$ kubectl get pods
+NAME                           READY   STATUS    RESTARTS      AGE
+awx-demo-postgres-0            1/1     Running   5 (63m ago)   16d
+awx-operator-dbcdf6499-jptzc   1/1     Running   7 (63m ago)   16d
+```
+```
+kubectl describe pod awx-operator-dbcdf6499-jptzc
+```
+```
+awx@awx:~$ kubectl describe pod awx-operator-dbcdf6499-jptzc
+Name:             awx-operator-dbcdf6499-jptzc
+Namespace:        default
+Priority:         0
+Service Account:  awx-operator
+Node:             minikube/192.168.49.2
+Start Time:       Sat, 06 Apr 2024 10:22:00 +0300
+Labels:           name=awx-operator
+                  pod-template-hash=dbcdf6499
+Annotations:      <none>
+Status:           Running
+IP:               10.244.0.55
+IPs:
+  IP:           10.244.0.55
+Controlled By:  ReplicaSet/awx-operator-dbcdf6499
+Containers:
+  awx-operator:
+    Container ID:   docker://28ee58921525230eb21b484f7a380c354a492397c47208f82a719e96b7c0d397
+    Image:          quay.io/ansible/awx-operator:0.13.0
+    Image ID:       docker-pullable://quay.io/ansible/awx-operator@sha256:80c3297ec966ad4064c1b9477ad7331281f67d6043c3c5efe8e74cac941aaa0b
+    Port:           <none>
+    Host Port:      <none>
+    State:          Running
+      Started:      Mon, 22 Apr 2024 15:15:39 +0300
+    Last State:     Terminated
+      Reason:       Error
+      Exit Code:    255
+      Started:      Tue, 16 Apr 2024 09:12:52 +0300
+      Finished:     Mon, 22 Apr 2024 15:14:54 +0300
+    Ready:          True
+    Restart Count:  7
+    Liveness:       http-get http://:6789/healthz delay=15s timeout=1s period=20s #success=1 #failure=3
+    Environment:
+      WATCH_NAMESPACE:
+      POD_NAME:            awx-operator-dbcdf6499-jptzc (v1:metadata.name)
+      OPERATOR_NAME:       awx-operator
+      ANSIBLE_GATHERING:   explicit
+      OPERATOR_VERSION:    0.13.0
+      ANSIBLE_DEBUG_LOGS:  false
+    Mounts:
+      /tmp/ansible-operator/runner from runner (rw)
+      /var/run/secrets/kubernetes.io/serviceaccount from kube-api-access-tv278 (ro)
+Conditions:
+  Type              Status
+  Initialized       True
+  Ready             True
+  ContainersReady   True
+  PodScheduled      True
+Volumes:
+  runner:
+    Type:       EmptyDir (a temporary directory that shares a pod's lifetime)
+    Medium:
+    SizeLimit:  <unset>
+  kube-api-access-tv278:
+    Type:                    Projected (a volume that contains injected data from multiple sources)
+    TokenExpirationSeconds:  3607
+    ConfigMapName:           kube-root-ca.crt
+    ConfigMapOptional:       <nil>
+    DownwardAPI:             true
+QoS Class:                   BestEffort
+Node-Selectors:              <none>
+Tolerations:                 node.kubernetes.io/not-ready:NoExecute op=Exists for 300s
+                             node.kubernetes.io/unreachable:NoExecute op=Exists for 300s
+Events:                      <none>
+awx@awx:~$
+
 ```
 ### 8. Create the deployment file:
 ```
