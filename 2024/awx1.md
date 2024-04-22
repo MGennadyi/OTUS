@@ -270,6 +270,7 @@ watch kubectl get pods -l "app.kubernetes.io/managed-by=awx-operator"
 NAME                  READY   STATUS    RESTARTS   AGE
 awx-demo-postgres-0   1/1     Running   0          36m
 ```
+### 10.1 Просмотр сервисов:
 ```
 awx@gitlab:~$ minikube service list
 |---------------|------------------------------------|--------------|---------------------------|
@@ -285,13 +286,7 @@ awx@gitlab:~$ minikube service list
 | kube-system   | kube-dns                           | No node port |                           |
 |---------------|------------------------------------|--------------|---------------------------|
 ```
-### 10. Get the Admin user password:
-```
-kubectl get secret awx-demo-admin-password -o jsonpath="{.data.password}" | base64 --decode
-OaDtpysnI9asUvIsQDESxfBggr47UcBx
-awx@gitlab:~$
-```
-### Создание доп.сервиса  LoadBalancer - не работает!
+### 10.2 Создание доп.сервиса  LoadBalancer - не работает!
 ```
 Step 2 - Create a Kubernetes deployment - шага №2 нет на видео. Почему?
 kubectl create deployment hello-minikube1 --image=k8s.gcr.io/echoserver:1.4
@@ -450,12 +445,21 @@ awx-server-postgres                               ClusterIP   None             <
 awx-server-postgres-15                            ClusterIP   None             <none>        5432/TCP       32m
 awx-server-service                                NodePort    10.101.157.19    <none>        80:31148/TCP   32m  - нужный сервис
 ```
+### port-forward service
 ```
 awx@gitlab:~$ kubectl port-forward service/awx-server-service --address 0.0.0.0 30080:80  -на видео
 kubectl port-forward service/awx-server-service --address 0.0.0.0 31148:80
 Error from server (NotFound): services "awx-demo-service" not found
 error: timed out waiting for the condition
 ```
+### 12. Get the Admin user password:
+```
+kubectl get secret awx-demo-admin-password -o jsonpath="{.data.password}" | base64 --decode
+OaDtpysnI9asUvIsQDESxfBggr47UcBx
+awx@gitlab:~$
+```
+
+
 
 ### Документация kubectl -командная строка для kubernetis:
 ```
