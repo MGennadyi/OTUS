@@ -14,14 +14,16 @@ The connection to the server localhost:8080 was refused - did you specify the ri
 sudo cp minikube /usr/local/bin && rm minikube
 minikube version: v1.32.0
 ```
-### Уст.kubectl - не получилось
+### 1. Уст.kubectl - получилось
 ```
 # Уст. доп.пакеты:
-sudo apt install curl software-properties-common ca-certificates apt-transport-https -y
-curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
-echo "deb https://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee -a /etc/apt/sources.list.d/kubernetes.list
-sudo apt-get update
-sudo apt-get install -y kubectl # E: Невозможно найти пакет kubectl
+apt install curl software-properties-common ca-certificates apt-transport-https -y
+curl -fsSLo /usr/share/keyrings/kubernetes-archive-keyring.gpg https://packages.cloud.google.com/apt/doc/apt-key.gpg 
+echo "deb [signed-by=/usr/share/keyrings/kubernetes-archive-keyring.gpg] https://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee /etc/apt/sources.list.d/kubernetes.list
+apt update
+apt install snap
+apt install kubectl # Не верно!!! command including --classic.
+snap install kubectl --classic  # Верно!!!
 ```
 ### 1. Уст. kubectl с помощью стороннего пакетного менеджера SNAP - получилось:
 ```
