@@ -34,6 +34,13 @@ Client Version: v1.29.3
 Kustomize Version: v5.0.4-0.20230601165947-6ce0bf390ce3
 The connection to the server localhost:8080 was refused - did you specify the right host or port?
 ```
+```
+awx@awx:~$ ls -lh /usr/local/bin
+итого 137M
+-rwxr-xr-x 1 root root 48M апр  6 09:31 kubectl
+-rwxr-xr-x 1 root root 90M апр  6 09:48 minikube
+
+```
 ### 2. Уст. docker
 ```
 apt install docker.io -y
@@ -114,6 +121,15 @@ kube-system     kube-controller-manager-minikube            1/1     Running     
 kube-system     kube-proxy-65r4v                            1/1     Running     0             2m6s
 kube-system     kube-scheduler-minikube                     1/1     Running     0             2m18s
 kube-system     storage-provisioner                         1/1     Running     1 (94s ago)   2m15s
+```
+### Уст Dashboard: не получилось
+```
+apt install snap
+sudo snap install helm --classic
+```
+```
+helm repo add kubernetes-dashboard https://kubernetes.github.io/dashboard/
+helm upgrade --install kubernetes-dashboard kubernetes-dashboard/kubernetes-dashboard --create-namespace --namespace kubernetes-dashboard
 ```
 ### 7. Уст. awx operator
 ```
