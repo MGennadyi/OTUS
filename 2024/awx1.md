@@ -241,16 +241,16 @@ awx-server-web-9d8c7499f-nw82s                     3/3     Running     9 (178m a
 ```
 vim awx-demo.yml
 ---
-apiVersion: awx.ansible.com/v1beta1
+apiVersion: awx.ansible.com/v_1
 kind: AWX
 metadata:
   name: awx-demo
 spec:
   service_type: nodeport
   ingress_type: none
-  hostname: awx-demo.example.com
+  hostname: awx-demo.com
 ```
-### 9. Применение awx-demo.yml
+### 9. Создание awx инстанса в моем кластере awx-demo.yml:
 ```
 kubectl apply -f awx-demo.yml
 awx.awx.ansible.com/awx-demo created
