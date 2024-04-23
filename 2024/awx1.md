@@ -109,6 +109,13 @@ awx@gitlab:~$ minikube kubectl -- get nodes
 NAME       STATUS   ROLES           AGE    VERSION
 minikube   Ready    control-plane   3m1s   v1.28.3
 ```
+```
+awx@gitlab:/home/mgb$ minikube kubectl -- get nodes
+    > kubectl.sha256:  64 B / 64 B [-------------------------] 100.00% ? p/s 0s
+    > kubectl:  49.07 MiB / 49.07 MiB [------------] 100.00% 10.91 MiB p/s 4.7s
+NAME       STATUS   ROLES           AGE     VERSION
+minikube   Ready    control-plane   3h57m   v1.30.0
+```
 ### Проверка pod:
 ```
 awx@gitlab:~$ kubectl get pods -A # -A отображает все компоненты
