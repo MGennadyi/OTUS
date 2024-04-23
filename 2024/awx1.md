@@ -14,7 +14,7 @@ The connection to the server localhost:8080 was refused - did you specify the ri
 sudo cp minikube /usr/local/bin && rm minikube
 minikube version: v1.32.0
 ```
-### 1. Уст.kubectl - получилось
+### 1. Уст.kubectl - RomNero -получилось
 ```
 # Уст. доп.пакеты:
 apt install curl software-properties-common ca-certificates apt-transport-https -y
@@ -79,7 +79,7 @@ useradd -m -s /bin/bash awx
 id awx - было
 uid=1001(awx) gid=1001(awx) группы=1001(awx) - нет групп у awx -> исправляю:
 # Включаем в группу docker sudo
-usermod -aG docker sudo awx
+sudo usermod -aG sudo awx
 # Заводим пароль:
 sudo passwd awx
 id awx - стало
