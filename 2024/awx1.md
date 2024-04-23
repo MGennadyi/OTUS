@@ -142,6 +142,7 @@ helm upgrade --install kubernetes-dashboard kubernetes-dashboard/kubernetes-dash
 ### 7. Уст. awx operator: last=2.14.0 - не работает??
 ```
 https://github.com/ansible/awx-operator #  На видео- RomNero= 0.12.0  - подставляю:
+kubectl apply -f https://raw.githubusercontent.com/ansible/awx-operator/0.12.0/deploy/awx-operator.yaml
 kubectl apply -f https://raw.githubusercontent.com/ansible/awx-operator/0.13.0/deploy/awx-operator.yaml  # работает
 kubectl apply -f https://raw.githubusercontent.com/ansible/awx-operator/0.12.0/deploy/awx-operator.yaml  # работает
 # Ответ: clusterrolebinding.rbac.authorization.k8s.io/awx-operator created
