@@ -263,6 +263,8 @@ spec:
 kubectl apply -f awx-demo.yml
 # Ответ: error: resource mapping not found for name: "awx-demo" namespace: "" from "awx-demo.yml": no matches for kind "AWX" in version "awx.ansible.com/v1beta"
 ensure CRDs are installed first
+# Удаление:
+kubectl delete -f awx-demo.yml
 
 awx.awx.ansible.com/awx-demo created
 awx@gitlab:~$ kubectl get pods -l "app.kubernetes.io/managed-by=awx-operator"
