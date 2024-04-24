@@ -79,6 +79,7 @@ id awx - было
 uid=1001(awx) gid=1001(awx) группы=1001(awx) - нет групп у awx -> исправляю:
 # Включаем в группу docker sudo
 sudo usermod -aG sudo awx
+sudo usermod -aG docker awx
 # Заводим пароль:
 sudo passwd awx
 id awx - стало
