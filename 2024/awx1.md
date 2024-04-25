@@ -43,7 +43,7 @@ awx@awx:~$ ls -lh /usr/local/bin
 -rwxr-xr-x 1 root root 90M апр  6 09:48 minikube
 
 ```
-### 2. Уст. docker
+### 2.1 Уст. docker
 ```
 apt install docker.io -y
 docker version  # Ответ:
@@ -55,6 +55,10 @@ Client:
  Built:             Mon Aug 21 19:50:14 2023
 root@gitlab:/home/mgb# docker -v
 Docker version 24.0.5, build 24.0.5-0ubuntu1~22.04.1
+```
+### 2.1 docker-compose
+```
+wget https://github.com/docker/compose/releases/download/1.29.0/docker-compose-Linux-x86_64
 ```
 ### 3. Уст миникуб:
 ```
