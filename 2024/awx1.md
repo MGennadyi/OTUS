@@ -59,6 +59,13 @@ Docker version 24.0.5, build 24.0.5-0ubuntu1~22.04.1
 ### 2.1 docker-compose
 ```
 wget https://github.com/docker/compose/releases/download/1.29.0/docker-compose-Linux-x86_64
+mv docker-compose-Linux-x86_64 /usr/bin/docker-compose
+chmod +x /usr/bin/docker-compose
+root@gitlab:/home/mgb# docker-compose version
+docker-compose version 1.29.0, build 07737305
+docker-py version: 5.0.0
+CPython version: 3.7.10
+OpenSSL version: OpenSSL 1.1.0l  10 Sep 2019
 ```
 ### 3. Уст миникуб:
 ```
