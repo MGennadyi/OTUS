@@ -67,6 +67,15 @@ docker-py version: 5.0.0
 CPython version: 3.7.10
 OpenSSL version: OpenSSL 1.1.0l  10 Sep 2019
 ```
+###
+```
+wget https://github.com/ansible/awx/archive/17.1.0.zip
+unzip 17.1.0.zip
+cd awx-17.1.0/installer/
+pwgen -N 1 -s 30
+iDtTi7HMNWNAmx8HTEjk6TaXeWrWMm
+
+```
 ### 3. Уст миникуб:
 ```
 curl -Lo minikube https://github.com/kubernetes/minikube/releases/download/v1.21.0/minikube-linux-amd64 && chmod +x minikube && sudo mv minikube /usr/local/bin/
