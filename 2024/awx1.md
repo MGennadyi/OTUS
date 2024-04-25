@@ -74,6 +74,14 @@ unzip 17.1.0.zip
 cd awx-17.1.0/installer/
 pwgen -N 1 -s 30
 iDtTi7HMNWNAmx8HTEjk6TaXeWrWMm
+admin_user=admin
+admin_password=mivo
+secret_key=iDtTi7HMNWNAmx8HTEjk6TaXeWrWMm
+ansible-playbook -i inventory install.yml
+localhost                  : ok=15   changed=7    unreachable=0 # Ответ
+root@gitlab:/home/mgb/awx-17.1.0/installer# docker images
+REPOSITORY   TAG       IMAGE ID       CREATED       SIZE
+centos       8         5d0da3dc9764   2 years ago   231MB
 
 ```
 ### 3. Уст миникуб:
