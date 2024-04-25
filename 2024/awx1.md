@@ -53,6 +53,8 @@ Client:
  Go version:        go1.20.3
  Git commit:        24.0.5-0ubuntu1~22.04.1
  Built:             Mon Aug 21 19:50:14 2023
+root@gitlab:/home/mgb# docker -v
+Docker version 24.0.5, build 24.0.5-0ubuntu1~22.04.1
 ```
 ### 3. Уст миникуб:
 ```
