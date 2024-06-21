@@ -83,6 +83,9 @@ apt install net-tools -y
 netstat -nlp | grep 5432
 psql -p 5432 -d otus -h 192.168.0.17 -U postgres
 ```
+````
+nmap 192.168.1.8 -p 22
+```
 ### Заполнение тестовыми данными на master:
 ```
 psql -p 5432
