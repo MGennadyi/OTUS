@@ -69,7 +69,7 @@ create replica and rewind users with password 12345  - на видео проп�
 CREATE USER replica with replication encrypted password '12345';  # на MASTER, на реплике все удалится.
 "CREATE USER rewind SUPERUSER encrypted PASSWORD '12345';  # не делал
 ```
-###### Проверка доступности себя и соседа:
+### Проверка доступности хоста: себя и соседа:
 ```
 # Через nc
 sudo -i -u postgres
