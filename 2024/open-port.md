@@ -52,3 +52,15 @@ sshd      1335   root    4u  IPv4  23218      0t0  TCP masterr:ssh->192.168.0.12
 sshd      1337    mgb    4u  IPv4  23170      0t0  TCP masterr:ssh->192.168.0.12:50994 (ESTABLISHED)
 sshd      1348    mgb    4u  IPv4  23218      0t0  TCP masterr:ssh->192.168.0.12:50998 (ESTABLISHED)
 ```
+### ss
+```
+[root@masterr mgb]# ss -lntu
+Netid            State             Recv-Q             Send-Q                                             Local Address:Port                          Peer Address:Port            Process
+udp              UNCONN            0                  0                                                      127.0.0.1:323                                0.0.0.0:*
+udp              UNCONN            0                  0                                                          [::1]:323                                   [::]:*
+udp              UNCONN            0                  0                              [fe80::a00:27ff:fedd:697a]%enp0s3:546                                   [::]:*
+tcp              LISTEN            0                  128                                                      0.0.0.0:22                                 0.0.0.0:*
+tcp              LISTEN            0                  100                                                    127.0.0.1:25                                 0.0.0.0:*
+tcp              LISTEN            0                  4096                                                           *:10050                                    *:*
+tcp              LISTEN            0                  128                                                         [::]:22                                    [::]:*
+```
