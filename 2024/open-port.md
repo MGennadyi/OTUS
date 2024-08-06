@@ -18,3 +18,18 @@ udp        0      0 127.0.0.1:323           0.0.0.0:*                           
 udp6       0      0 ::1:323                 :::*                                919/chronyd
 udp6       0      0 fe80::a00:27ff:fedd:546 :::*                                903/NetworkManager
 ```
+```
+yum install nmap
+```
+```
+[root@masterr mgb]# nmap -n -PN -sT -sU -p- 192.168.0.18
+Starting Nmap 7.80 ( https://nmap.org ) at 2024-08-06 17:42 MSK
+Nmap scan report for 192.168.0.18
+Host is up (0.00021s latency).
+Not shown: 131068 closed ports
+PORT      STATE SERVICE
+22/tcp    open  ssh
+10050/tcp open  zabbix-agent
+
+Nmap done: 1 IP address (1 host up) scanned in 4.55 seconds
+```
