@@ -1,5 +1,5 @@
 #
-###
+### add user
 ```
 # Заходим под root:
 sudo su
@@ -16,4 +16,9 @@ sudo usermod -aG wheel mgb
 sudo usermod -aG wheel student
 # Прверка:
 su - mgb
+```
+### nmtui - правка ip
+```
+
+
 ```
