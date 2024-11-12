@@ -19,6 +19,6 @@ su - mgb
 ```
 ### nmtui - правка ip
 ```
-
-
+sudo nmtui 
+sudo shutdown -r now
 ```
