@@ -22,10 +22,24 @@ su - mgb
 sudo dnf update -y
 sudo dnf upgrade -y
 ```
+### список доступных репозиториев YUM
+```
+sudo yum repolist
+идентификатор репозитория                                                                       имя репозитория
+base                                                                                            RedOS - Base
+kernels                                                                                         Kernels updates for RED OS 7.3
+updates                                                                                         RedOS - Updates
+```
 ### Изменения ip-адресов и имена хостов для клонирование ВМ
 ```
 sudo nmtui 
 sudo shutdown -r now
+```
+```
+sudo -i
+dnf install epel-release -y
+dnf search ansible
+ansible.noarch : Curated set of Ansible collections included in addition to ansible-core
 ```
 ### DEBIAN 8Gb-ssd
 ```
