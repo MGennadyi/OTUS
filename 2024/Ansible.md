@@ -44,6 +44,14 @@ ansible.noarch : Curated set of Ansible collections included in addition to ansi
 ### Уст. ansible с нужными пакетами:
 ```
 dnf install ansible.noarch -y
+# проверка:
+rpm -q ansible
+ansible-6.7.0-1.el7.noarch
+ansible --version
+```
+
+```
+for HOST in c9-server0{1,2}; do host $HOST; done
 ```
 ### DEBIAN 8Gb-ssd
 ```
