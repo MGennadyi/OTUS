@@ -1,11 +1,25 @@
 # ANSIBLE
 ### ADD USER
 ```
-
+# Заходим под root:
+sudo su
+sudo adduser mgb
+sudo passwd mgb
+sudo adduser awx
+sudo adduser student
+sudo passwd awx
+sudo passwd student
+# Debian - добавить в группу sudo:
+sudo usermod -aG sudo mgb
+# Centos - добавить в группу sudo:
+sudo usermod -aG wheel mgb
+sudo usermod -aG wheel student
+# Прверка:
+su - mgb
 ```
 ### Обновление
 ```
-dnf update
+sudo dnf update -y
 ```
 ### DEBIAN 8Gb-ssd
 ```
