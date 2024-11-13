@@ -21,6 +21,11 @@ su - mgb
 ```
 sudo dnf update -y
 ```
+### Изменения ip-адресов и имена хостов для клонирование ВМ
+```
+sudo nmtui 
+sudo shutdown -r now
+```
 ### DEBIAN 8Gb-ssd
 ```
 apt update
