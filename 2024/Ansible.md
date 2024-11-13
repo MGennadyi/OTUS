@@ -1,3 +1,12 @@
+# ANSIBLE
+### ADD USER
+```
+
+```
+### Обновление
+```
+dnf update
+```
 ### DEBIAN 8Gb-ssd
 ```
 apt update
@@ -22,12 +31,7 @@ apt install ansible
 Уже установлен пакет ansible самой новой версии (5.10.0-1ppa~focal)
 apt --fix-broken install
 ```
-### CENTOS 500Gb-hdd
-```
-Username: osboxes
-Password: osboxes.org
-Root Account Password: osboxes.org
-```
+
 ### ip
 ```
 ifconfig
@@ -86,9 +90,7 @@ target1 | SUCCESS => {
     "ping": "pong"
 }
 ```
-### Клониировать ansible-target1  в ansible-target2
-```
-```
+
 ### SSH 1-й доступ, принимаем key. Откл. проверку key в ansible:
 ```
 [osboxes@ansiblecontroller project]$ ssh 192.168.0.19
