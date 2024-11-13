@@ -41,6 +41,10 @@ dnf install epel-release -y
 dnf search ansible
 ansible.noarch : Curated set of Ansible collections included in addition to ansible-core
 ```
+### Уст. ansible с нужными пакетами:
+```
+dnf install ansible.noarch -y
+```
 ### DEBIAN 8Gb-ssd
 ```
 apt update
