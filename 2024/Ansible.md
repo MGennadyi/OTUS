@@ -79,6 +79,13 @@ id_rsa  id_rsa.pub
 #### .5 Подкл. под student к c9-server01:
 ```
 ssh student@c9-server01
+ssh student@c9-server02
+yes
+.6 exit
+```
+#### .7 Убедитесь, что отпечаток системы c9-server01 добавлен в файл known_hosts:
+```
+cat ~/.ssh/known_hosts
 ```
 ### DEBIAN 8Gb-ssd
 ```
