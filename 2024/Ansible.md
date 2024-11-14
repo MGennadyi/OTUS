@@ -17,7 +17,7 @@ sudo usermod -aG wheel student
 # Прверка:
 su - mgb
 ```
-### Обновление
+### Обновление пакетов
 ```
 sudo dnf update -y
 sudo dnf upgrade -y
@@ -32,7 +32,7 @@ updates                                                                         
 ```
 ### Изменения ip-адресов и имена хостов для клонирование ВМ
 ```
-sudo nmtui 
+sudo nmtui # предустановлена.
 sudo shutdown -r now
 ```
 ```
@@ -58,16 +58,27 @@ vim /etc/hosts
 ping -c1 c9-server01 # теперь проходит по имени
 for HOST in c9-server0{1,2}; do host $HOST; done
 ```
-### Проверка, что ssh в домашнем каталоге нет:
+#### .1 Проверка, что ssh в домашнем каталоге нет:
 ```
 ls -d ~/.ssh
 ls: невозможно получить доступ к '/home/student/.ssh': No such file or directory
 ```
-### Генарация ключа без passphrase:
+#### .2 Генарация ключа без passphrase:
 ```
 ssh-keygen
- ls ~/.ssh/
-id_rsa  id_rsa.pub  # ключи появились
+```
+#### .3 Проверка, что ssh в домашнем каталоге есть:
+```
+ls -d ~/.ssh
+```
+#### .4 Ключи появились
+```
+ls ~/.ssh/
+id_rsa  id_rsa.pub
+```
+#### .5 Подкл. под student к c9-server01:
+```
+ssh student@c9-server01
 ```
 ### DEBIAN 8Gb-ssd
 ```
