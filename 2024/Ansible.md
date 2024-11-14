@@ -49,7 +49,7 @@ rpm -q ansible
 ansible-6.7.0-1.el7.noarch
 ansible --version
 ```
-
+### Првка hosts
 ```
 vim /etc/hosts
 192.168.0.61 c9-server01
@@ -62,6 +62,12 @@ for HOST in c9-server0{1,2}; do host $HOST; done
 ```
 ls -d ~/.ssh
 ls: невозможно получить доступ к '/home/student/.ssh': No such file or directory
+```
+### Генарация ключа без passphrase:
+```
+ssh-keygen
+ ls ~/.ssh/
+id_rsa  id_rsa.pub  # ключи появились
 ```
 ### DEBIAN 8Gb-ssd
 ```
