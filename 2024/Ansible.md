@@ -119,27 +119,8 @@ apt install ansible
 Уже установлен пакет ansible самой новой версии (5.10.0-1ppa~focal)
 apt --fix-broken install
 ```
-
-### ip
+#### Проверка версии
 ```
-ifconfig
-192.168.122.1
-# Не моя сеть!!!
-```
-### Активация сет.адаптер в автозагрузке
-```
-sudo vi /etc/sysconfig/network-scripts/ifcfg-enp0s3
-=yes
-```
-```
-# на контроллере ip=17 выполнить проброс ssh ключа командой:
-ssh 192.168.0.18
-```
-```
-sudo yum install epel-release
-sudo yum update
-yum -y install ansible
-# Проверка версии
 rpm -qa | grep ansible
 ansible-2.9.27-1.el7.noarch
 [osboxes@ansiblecontroller ansible-demo1]$ ansible --version
@@ -150,9 +131,8 @@ ansible 2.9.27
   executable location = /usr/bin/ansible
   python version = 2.7.5 (default, Nov 14 2023, 16:14:06) [GCC 4.8.5 20150623 (Red Hat 4.8.5-44)]
 ```
-### Конфиг
+### Конфиг по умолчанию ??
 ```
-# По умолчанию:
 /etc/ansible/ansible.cfg
 ```
 ### Рабочие папки:
@@ -235,12 +215,6 @@ vim /etc/gitlab/initial_root_password
 ```
 Admin area/users: mgb/q12345678
 pass должен соответствовать уровню сложности
-```
-### Windows
-```
-https://git-scm.com/download/win
-https://git-scm.com/download/win
-64-bit Git for Windows Setup.
 ```
 
 
