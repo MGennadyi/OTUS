@@ -87,6 +87,14 @@ yes
 ```
 cat ~/.ssh/known_hosts
 ```
+#### .8 Выполнить команду hostname на c9-server01 и c9-server02, подключившись к ним по протоколу SSH от имени пользователя student (пароль: 12345).
+```
+for HOST in c9-server01 c9-server02; do ssh student@$HOST hostname; done
+student@c9-server01's password:
+c9-server01
+student@c9-server02's password:
+c9-server02
+```
 ### DEBIAN 8Gb-ssd
 ```
 apt update
