@@ -56,6 +56,7 @@ vim /etc/hosts
 192.168.0.62 c9-server02
 192.168.0.63 c9-client01
 ping -c1 c9-server01 # теперь проходит по имени
+for HOST in 1 2; do ping -c2 192.168.0.$HOST; done
 for HOST in c9-server0{1,2}; do host $HOST; done
 ```
 #### .1 Проверка, что ssh в домашнем каталоге нет:
@@ -66,6 +67,7 @@ ls: невозможно получить доступ к '/home/student/.ssh': 
 #### .2 Генарация ключа без passphrase:
 ```
 ssh-keygen
+sudo dnf install sshpass
 ```
 #### .3 Проверка, что ssh в домашнем каталоге есть:
 ```
@@ -94,6 +96,14 @@ student@c9-server01's password:
 c9-server01
 student@c9-server02's password:
 c9-server02
+```
+#### .9 Убедитесь, что отпечатки систем c9-server01 и c9-server02 добавлены в файл known_hosts
+```
+tail -n2 ~/.ssh/known_hosts
+```
+#### Скопировать открытый ключ RSA в профиль пользователей student (пароль: Pa$$w0rd) и root (пароль: Pa$$w0rd) на системы c9-server01, c9-server02:
+```
+for HOST in {student,root}@{c9-server0{1,2}}; \ > do ssh-copy-id $HOST; done
 ```
 ### DEBIAN 8Gb-ssd
 ```
