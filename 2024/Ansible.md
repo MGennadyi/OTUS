@@ -103,7 +103,8 @@ tail -n2 ~/.ssh/known_hosts
 ```
 #### Скопировать открытый ключ RSA в профиль пользователей student (пароль: Pa$$w0rd) и root (пароль: Pa$$w0rd) на системы c9-server01, c9-server02:
 ```
-for HOST in {student,root}@{c9-server0{1,2}}; \ > do ssh-copy-id $HOST; done
+for HOST in {student,root}@{c9-server0{1,2}}; \ > do ssh-copy-id $HOST; done -не верно -bash: синтаксическая ошибка рядом с неожиданным маркером «\ »
+for HOST in student@c9-server0{1,2}; do ssh-copy-id $HOST; done
 ```
 ### DEBIAN 8Gb-ssd
 ```
