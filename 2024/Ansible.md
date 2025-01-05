@@ -30,7 +30,7 @@ base                                                                            
 kernels                                                                                         Kernels updates for RED OS 7.3
 updates                                                                                         RedOS - Updates
 ```
-### Изменения ip-адресов и имена хостов для клонирование ВМ
+### Изменения ip-адресов и имена хостов для клонирование ВМ:
 ```
 sudo nmtui # предустановлена.
 sudo shutdown -r now
@@ -49,8 +49,9 @@ rpm -q ansible
 ansible-6.7.0-1.el7.noarch
 ansible --version
 ```
-### Првка hosts
+### Првка hosts:
 ```
+mcedit /etc/hosts
 vim /etc/hosts
 192.168.0.61 c9-server01
 192.168.0.62 c9-server02
