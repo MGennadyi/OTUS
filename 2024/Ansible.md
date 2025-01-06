@@ -35,15 +35,11 @@ updates                                                                         
 sudo nmtui # предустановлена.
 sudo shutdown -r now
 ```
-### Уст. по видео:
+### Уст. ansible с нужными пакетами на client01:
 ```
 sudo -i
 dnf install epel-release -y
 dnf search ansible
-ansible.noarch : Curated set of Ansible collections included in addition to ansible-core
-```
-### Уст. ansible с нужными пакетами на client01:
-```
 dnf install ansible.noarch -y
 # проверка:
 rpm -q ansible
