@@ -35,6 +35,7 @@ updates                                                                         
 sudo nmtui # предустановлена.
 sudo shutdown -r now
 ```
+### Уст. по видео:
 ```
 sudo -i
 dnf install epel-release -y
