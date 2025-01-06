@@ -45,6 +45,8 @@ dnf install ansible.noarch -y
 rpm -q ansible
 ansible-6.7.0-1.el7.noarch
 ansible --version
+===============
+sudo dnf install pip
 ```
 ### Првка hosts:
 ```
