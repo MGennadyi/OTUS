@@ -65,7 +65,7 @@ for HOST in c9-server0{1,2}; do host $HOST; done
 ls -d ~/.ssh
 ls: невозможно получить доступ к '/home/student/.ssh': No such file or directory
 ```
-#### .2 Генарация ключа без passphrase:
+#### .2 Генарация ключа (без passphrase):
 ```
 ssh-keygen
 sudo dnf install sshpass
