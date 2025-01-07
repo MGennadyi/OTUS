@@ -32,6 +32,7 @@ updates                                                                         
 ```
 ### Изменения ip-адресов и имена хостов для клонирование ВМ:
 ```
+sudo dnf install NetworkManager-tui -y
 sudo nmtui # предустановлена.
 sudo shutdown -r now
 ```
