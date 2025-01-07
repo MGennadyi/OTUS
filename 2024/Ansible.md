@@ -112,7 +112,7 @@ for HOST in student@c9-server0{1,2}; do ssh-copy-id $HOST; done
 ```
 apt update
 mgb@ansible:~$ python3 --version
-Python 3.9.2
+Python 3.11.10
 apt install git python3-pip docker docker-compose   - Romnero
 apt install python3-pip  - Romnero
 pip3 install ansible     - Romnero
