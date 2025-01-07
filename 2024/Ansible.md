@@ -77,6 +77,7 @@ ls -d ~/.ssh
 #### .4 Ключи появились
 ```
 ls ~/.ssh/
+# Ответ:
 id_rsa  id_rsa.pub
 ```
 #### .5 Подкл. под student к c9-server01:
