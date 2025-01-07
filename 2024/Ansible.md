@@ -215,6 +215,9 @@ dnf install pip -y
 yum install dnf # Уже был.
 sudo dnf install git-all -y
 Complete!
+sudo dnf install ansible.noarch -y
+# Ответ: Установлен:  ansible-9.2.0-1.red80.noarch        ansible-core-2.16.3-1.red80.noarch
+========================
 https://about.gitlab.com/install/#centos-7
 curl https://packages.gitlab.com/install/repositories/gitlab/gitlab-ce/script.rpm.sh | sudo bash
 sudo EXTERNAL_URL="https://gitlab.example.com" yum install -y gitlab-ce
