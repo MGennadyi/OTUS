@@ -211,8 +211,9 @@ target2 ansible_host=192.168.0.19 ansible_ssh_pass=osboxes.org
 ```
 ### CentOS
 ```
-yum install dnf
-sudo dnf install git-all
+dnf install pip -y
+yum install dnf # Уже был.
+sudo dnf install git-all -y
 Complete!
 https://about.gitlab.com/install/#centos-7
 curl https://packages.gitlab.com/install/repositories/gitlab/gitlab-ce/script.rpm.sh | sudo bash
