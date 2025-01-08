@@ -147,6 +147,14 @@ tail -n2 ~/.ssh/known_hosts
 for HOST in {student,root}@{c9-server0{1,2}}; \ > do ssh-copy-id $HOST; done -не верно -bash: синтаксическая ошибка рядом с неожиданным маркером «\ »
 for HOST in student@c9-server0{1,2}; do ssh-copy-id $HOST; done
 ```
+```
+echo '12345' > pass
+for HOST in server0{1.2},client02; do sshpass -f ./pass sshcopy=id -o 
+```
+### Запуск команды hostname на c9-server01 и c9-server02, подключившись по SSH от student (пароль: 12345).
+```
+for HOST in c9-server01 c9-server02; do ssh student@$HOST hostname; done
+```
 ### DEBIAN 8Gb-ssd
 ```
 apt update
