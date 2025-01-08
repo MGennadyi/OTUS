@@ -71,6 +71,7 @@ sudo dnf install pip
 sudo dnf install pip3
 dnf search ansible
 pip3 install ansible
+dnf install python3.12-pip
 ```
 #### Проверка версии ansible
 ```
