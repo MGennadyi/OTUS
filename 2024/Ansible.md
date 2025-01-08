@@ -57,7 +57,7 @@ root@c9-client01 ~]# sudo yum install ansible.noarch -y
 Последняя проверка окончания срока действия метаданных: 3:51:29 назад, Ср 08 янв 2025 10:46:07.
 Пакет ansible-9.2.0-1.red80.noarch уже установлен.
 ```
-### Redos Уст. ansible с нужными пакетами на client01:
+### Redos Уст. ansible с нужными пакетами на client01: на Redos не ставится:
 ```
 sudo -i
 dnf install epel-release -y
