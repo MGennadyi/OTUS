@@ -68,7 +68,9 @@ ansible-6.7.0-1.el7.noarch
 ansible --version
 ===============
 sudo dnf install pip
+sudo dnf install pip3
 dnf search ansible
+pip3 install ansible
 ```
 #### Проверка версии ansible
 ```
