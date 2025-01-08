@@ -48,7 +48,18 @@ sudo dnf install NetworkManager-tui -y
 sudo nmtui # предустановлена.
 sudo shutdown -r now
 ```
-### Уст. ansible с нужными пакетами на client01:
+### Првка hosts:
+```
+mcedit /etc/hosts
+vim /etc/hosts
+192.168.0.61 c9-server01
+192.168.0.62 c9-server02
+192.168.0.63 c9-client01
+ping -c1 c9-server01 # теперь проходит по имени
+for HOST in 1 2; do ping -c2 192.168.0.$HOST; done
+for HOST in c9-server0{1,2}; do host $HOST; done
+```
+### Redos Уст. ansible с нужными пакетами на client01:
 ```
 sudo -i
 dnf install epel-release -y
@@ -61,16 +72,25 @@ ansible --version
 ===============
 sudo dnf install pip
 ```
-### Првка hosts:
+#### Проверка версии ansible
 ```
-mcedit /etc/hosts
-vim /etc/hosts
-192.168.0.61 c9-server01
-192.168.0.62 c9-server02
-192.168.0.63 c9-client01
-ping -c1 c9-server01 # теперь проходит по имени
-for HOST in 1 2; do ping -c2 192.168.0.$HOST; done
-for HOST in c9-server0{1,2}; do host $HOST; done
+rpm -qa | grep ansible
+ansible-2.9.27-1.el7.noarch
+[osboxes@ansiblecontroller ansible-demo1]$ ansible --version
+ansible 2.9.27
+  config file = /etc/ansible/ansible.cfg
+  configured module search path = [u'/home/osboxes/.ansible/plugins/modules', u'/usr/share/ansible/plugins/modules']
+  ansible python module location = /usr/lib/python2.7/site-packages/ansible
+  executable location = /usr/bin/ansible
+  python version = 2.7.5 (default, Nov 14 2023, 16:14:06) [GCC 4.8.5 20150623 (Red Hat 4.8.5-44)]
+```
+```
+root@c9-client01 ~]# dnf info ansible-core
+Последняя проверка окончания срока действия метаданных: 4:25:43 назад, Ср 08 янв 2025 10:46:07.
+Установленные пакеты
+Имя          : ansible-core
+Версия       : 2.16.3
+Выпуск       : 1.red80
 ```
 #### .1 Проверка, что ssh в домашнем каталоге нет:
 ```
@@ -136,25 +156,10 @@ apt install ansible  - dmosk.ru ansible [core 2.15.9]
 UBUNTU_CODENAME=focal
 $ wget -O- "https://keyserver.ubuntu.com/pks/lookup?fingerprint=on&op=get&search=0x6125E2A8C77F2818FB7BD15B93C4A3FD7BB9C367" | sudo gpg --dearmour -o /usr/share/keyrings/ansible-archive-keyring.gpg
 $ echo "deb [signed-by=/usr/share/keyrings/ansible-archive-keyring.gpg] http://ppa.launchpad.net/ansible/ansible/ubuntu $UBUNTU_CODENAME main" | sudo tee /etc/apt/sources.list.d/ansible.list
-$ sudo apt update && sudo apt install ansible
-При обработке следующих пакетов произошли ошибки:
- /tmp/apt-dpkg-install-HjDFe8/1-ansible-core_2.12.10-1ppa~focal_all.deb
-E: Sub-process /usr/bin/dpkg returned an error code (1)
+$ sudo apt update && sudo apt upgrade
 apt install ansible
 Уже установлен пакет ansible самой новой версии (5.10.0-1ppa~focal)
 apt --fix-broken install
-```
-#### Проверка версии
-```
-rpm -qa | grep ansible
-ansible-2.9.27-1.el7.noarch
-[osboxes@ansiblecontroller ansible-demo1]$ ansible --version
-ansible 2.9.27
-  config file = /etc/ansible/ansible.cfg
-  configured module search path = [u'/home/osboxes/.ansible/plugins/modules', u'/usr/share/ansible/plugins/modules']
-  ansible python module location = /usr/lib/python2.7/site-packages/ansible
-  executable location = /usr/bin/ansible
-  python version = 2.7.5 (default, Nov 14 2023, 16:14:06) [GCC 4.8.5 20150623 (Red Hat 4.8.5-44)]
 ```
 ### Конфиг по умолчанию ??
 ```
