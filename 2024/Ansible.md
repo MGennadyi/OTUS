@@ -59,9 +59,8 @@ root@c9-client01 ~]# sudo yum install ansible.noarch -y
 ```
 ### Redos Уст. ansible с нужными пакетами на client01: на Redos не ставится:
 ```
-sudo -i
+sudo -i # 2 команды уст ansible:
 dnf install epel-release -y
-dnf search ansible
 dnf install ansible.noarch -y
 # проверка:
 rpm -q ansible
@@ -69,6 +68,7 @@ ansible-6.7.0-1.el7.noarch
 ansible --version
 ===============
 sudo dnf install pip
+dnf search ansible
 ```
 #### Проверка версии ansible
 ```
