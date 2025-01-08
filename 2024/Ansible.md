@@ -34,7 +34,7 @@ updates                                                                         
 ```
 ### Загрузите конфигурационный файл репозитория Ansible
 ```
-sudo wget -P /etc/yum.repos.d/ http://rpm.ll-100.local/repo/ansible29.repo # материалы занятия
+sudo wget -P /etc/yum.repos.d/ http://rpm.ll-100.local/repo/ansible29.repo # -По материалам занятия
 sudo wget -P /etc/yum.repos.d/ https://dl.rockylinux.org/pub/rocky/8/Devel/aarch64/os/Packages/c/centos-release-ansible-29-1-2.el8.noarch.rpm
 sudo yum update -y
 sudo yum upgrade -y
@@ -75,14 +75,19 @@ sudo dnf install pip
 #### Проверка версии ansible
 ```
 rpm -qa | grep ansible
-ansible-2.9.27-1.el7.noarch
-[osboxes@ansiblecontroller ansible-demo1]$ ansible --version
-ansible 2.9.27
+# Ответ:
+ansible-core-2.16.3-1.red80.noarch
+ansible-9.2.0-1.red80.noarch
+[root@c9-client01 ~]# ansible --version
+ansible [core 2.16.3]
   config file = /etc/ansible/ansible.cfg
-  configured module search path = [u'/home/osboxes/.ansible/plugins/modules', u'/usr/share/ansible/plugins/modules']
-  ansible python module location = /usr/lib/python2.7/site-packages/ansible
-  executable location = /usr/bin/ansible
-  python version = 2.7.5 (default, Nov 14 2023, 16:14:06) [GCC 4.8.5 20150623 (Red Hat 4.8.5-44)]
+  configured module search path = ['/root/.ansible/plugins/modules', '/usr/share/ansible/plugins/modules']
+  ansible python module location = /usr/lib/python3.11/site-packages/ansible
+  ansible collection location = /root/.ansible/collections:/usr/share/ansible/collections
+  executable location = /bin/ansible
+  python version = 3.11.10 (main, Sep  9 2024, 00:00:00) [GCC 12.4.1 20240730 (RED SOFT 12.4.0-1)] (/usr/bin/python3)
+  jinja version = 3.1.3
+  libyaml = True
 ```
 ```
 root@c9-client01 ~]# dnf info ansible-core
