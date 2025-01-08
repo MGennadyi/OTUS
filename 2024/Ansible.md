@@ -72,6 +72,7 @@ sudo dnf install pip3
 dnf search ansible
 pip3 install ansible
 dnf install python3.12-pip
+# ansible из пакетов
 ```
 #### Проверка версии ansible
 ```
@@ -256,7 +257,16 @@ vim /etc/gitlab/initial_root_password
 Admin area/users: mgb/q12345678
 pass должен соответствовать уровню сложности
 ```
-
+### Конфиг
+```
+vi ansible.cfg
+[default]
+inventory=./hosts
+```
+### Просмотр конфига:
+```
+ansible-config view -v # Параметр -v покажет путь к конфигу
+```
 
 
 
