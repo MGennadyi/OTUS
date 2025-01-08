@@ -21,6 +21,8 @@ su - mgb
 ```
 sudo dnf update -y
 sudo dnf upgrade -y
+# В минимальном сервере yum нет:
+dnf install yum -y
 ```
 ### список доступных репозиториев YUM
 ```
@@ -29,6 +31,16 @@ sudo yum repolist
 base                                                                                            RedOS - Base
 kernels                                                                                         Kernels updates for RED OS 7.3
 updates                                                                                         RedOS - Updates
+```
+### Загрузите конфигурационный файл репозитория Ansible
+```
+sudo wget -P /etc/yum.repos.d/ http://rpm.ll-100.local/repo/ansible29.repo # материалы занятия
+sudo wget -P /etc/yum.repos.d/ https://dl.rockylinux.org/pub/rocky/8/Devel/aarch64/os/Packages/c/centos-release-ansible-29-1-2.el8.noarch.rpm
+sudo yum update -y
+sudo yum upgrade -y
+root@c9-client01 ~]# sudo yum install ansible.noarch -y
+Последняя проверка окончания срока действия метаданных: 3:51:29 назад, Ср 08 янв 2025 10:46:07.
+Пакет ansible-9.2.0-1.red80.noarch уже установлен.
 ```
 ### Изменения ip-адресов и имена хостов для клонирование ВМ:
 ```
