@@ -108,6 +108,7 @@ root@c9-client01 ~]# dnf info ansible-core
 ```
 #### .1 Проверка, что в домашнем каталоге student ssh нет :
 ```
+sudo -i -u student
 ls -d ~/.ssh
 ls: невозможно получить доступ к '/home/student/.ssh': No such file or directory
 ```
@@ -130,12 +131,14 @@ id_ed25519  id_ed25519.pub
 ```
 ssh student@c9-server01
 ssh student@c9-server02
-yes
+yes + ввод пароля !!!!
 .6 exit
 ```
 #### .7 Убедитесь, что отпечаток системы c9-server01 добавлен в файл known_hosts:
 ```
 cat ~/.ssh/known_hosts
+c9-server01 ecdsa-sha2-nistp256
+c9-server02 ssh-ed25519 
 ```
 #### .8 Выполнить команду hostname на c9-server01 и c9-server02, подключившись к ним по протоколу SSH от имени пользователя student (пароль: 12345).
 ```
@@ -149,10 +152,22 @@ c9-server02
 ```
 tail -n2 ~/.ssh/known_hosts
 ```
-#### Скопировать открытый ключ RSA в профиль пользователей student (пароль: Pa$$w0rd) и root (пароль: Pa$$w0rd) на системы c9-server01, c9-server02:
+#### Скопировать открытый ключ RSA в профиль пользователей student (пароль: 12345) и root (пароль: 12345) на c9-server01, c9-server02:
 ```
 for HOST in {student,root}@{c9-server0{1,2}}; \ > do ssh-copy-id $HOST; done -не верно -bash: синтаксическая ошибка рядом с неожиданным маркером «\ »
+# Для одного пользователя student:
 for HOST in student@c9-server0{1,2}; do ssh-copy-id $HOST; done
+# Для нескольких пользователей сразу: student, root:
+for HOST in {student,root}@c9-server0{1,2}; do ssh-copy-id $HOST; done
+```
+### 11. Проверка подключения к c9-server01 c9-server02 от student и root с ключа RSA, т.е. без пароля:
+```
+for HOST in {student,root}@c9-server0{1,2}; do ssh $HOST 'echo "$(whoami) on $(uname -n)"'; done
+# Ответ:
+student on c9-server01
+student on c9-server02
+root on c9-server01
+root on c9-server02
 ```
 ```
 echo '12345' > pass
