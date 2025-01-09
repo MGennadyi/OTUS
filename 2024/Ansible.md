@@ -41,6 +41,13 @@ ping -c1 c9-server01 # теперь проходит по имени
 for HOST in 1 2; do ping -c2 192.168.0.$HOST; done
 for HOST in c9-server0{1,2}; do host $HOST; done
 ```
+### Хост c9-server01=ip adress 192.168.0.61
+```
+dnf install dnsutils -y
+[root@c9-client01 ~]# nslookup c9-server01
+Name:   c9-server01
+Address: 192.168.0.61
+```
 ### Список доступных репозиториев YUM
 ```
 sudo yum repolist
@@ -99,7 +106,7 @@ root@c9-client01 ~]# dnf info ansible-core
 Версия       : 2.16.3
 Выпуск       : 1.red80
 ```
-#### .1 Проверка, что ssh в домашнем каталоге нет:
+#### .1 Проверка, что в домашнем каталоге student ssh нет :
 ```
 ls -d ~/.ssh
 ls: невозможно получить доступ к '/home/student/.ssh': No such file or directory
