@@ -169,13 +169,13 @@ student on c9-server02
 root on c9-server01
 root on c9-server02
 ```
-```
-echo '12345' > pass
-for HOST in server0{1.2},client02; do sshpass -f ./pass sshcopy=id -o 
-```
-### Запуск команды hostname на c9-server01 и c9-server02, подключившись по SSH от student (пароль: 12345).
+### 3.1 Убедитесь, что пользователь student состоит в группе wheel на системах c8-server01, c8-server02 и c7-server01.
 ```
 for HOST in c9-server01 c9-server02; do ssh student@$HOST hostname; done
+```
+### Убедитесь что sudo требует ввода пароля группы wheel:
+```
+for HOST in root@{c9-server0{1,2},c9-client01}; do ssh $HOST 'echo "$(hostname):"; grep ^.wheel /etc/sudoers'; done
 ```
 ### DEBIAN 8Gb-ssd
 ```
