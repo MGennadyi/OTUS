@@ -152,9 +152,8 @@ c9-server02
 ```
 tail -n2 ~/.ssh/known_hosts
 ```
-#### 10. Скопировать открытый ключ RSA в профиль пользователей student (пароль: 12345) и root (пароль: 12345) на c9-server01, c9-server02:
+#### 10. Копирование открытый ключ RSA в профиль пользователей student (пароль: 12345) и root (пароль: 12345) на c9-server01, c9-server02:
 ```
-for HOST in {student,root}@{c9-server0{1,2}}; \ > do ssh-copy-id $HOST; done -не верно -bash: синтаксическая ошибка рядом с неожиданным маркером «\ »
 # Для одного пользователя student:
 for HOST in student@c9-server0{1,2}; do ssh-copy-id $HOST; done
 # Для нескольких пользователей сразу: student, root:
