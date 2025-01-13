@@ -183,6 +183,18 @@ root@c9-client01's password:
 c9-client01:
 %wheel  ALL=(ALL)       ALL
 ```
+### Добавление sudo, для student (повышать привилегии без ввода пароля):
+```
+for HOST in root@{c9-server0{1,2},c9-client01}; do ssh $HOST 'echo "student ALL=(ALL) NOPASSWD: ALL" /etc/sudoers.d/student' ; done
+student ALL=(ALL) NOPASSWD: ALL /etc/sudoers.d/student
+student ALL=(ALL) NOPASSWD: ALL /etc/sudoers.d/student
+root@c9-client01's password:
+student ALL=(ALL) NOPASSWD: ALL /etc/sudoers.d/student
+```
+### Проверка bicome-повышение привелегий:
+```
+ansible -a "cat /etc/shadow" all -b
+```
 ### DEBIAN 8Gb-ssd
 ```
 apt update
