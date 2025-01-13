@@ -199,7 +199,7 @@ ansible -a "cat /etc/shadow" all -b
 ```
 for HOST in root@{c9-server0{1,2},c9-client01}; do ssh $HOST 'echo "$(uname -n): $(head -n1 /etc/shadow)"'; done
 ```
-###
+### Команда ansible проверяет, что управляемые узлы присутствуют в инвентаризации:
 ```
 ls -lh /etc/ansible/
 sudo mcedit /etc/ansible/hosts
@@ -214,7 +214,21 @@ c9-server02
     192.168.0.61
     192.168.0.62
 ```
+```
+ansible -m ping all
+```
+```
+mkdir ~/lab01
+cd ~/lab01
+vim playbook.yml
+---
+- name: ANSIBLE SIMPLE PLAYBOOK
+  hosts: c8-server01
+  tasks: - name: PING HOSTS
+  ping:
+...
 
+```
 ### DEBIAN 8Gb-ssd
 ```
 apt update
