@@ -199,6 +199,21 @@ ansible -a "cat /etc/shadow" all -b
 ```
 for HOST in root@{c9-server0{1,2},c9-client01}; do ssh $HOST 'echo "$(uname -n): $(head -n1 /etc/shadow)"'; done
 ```
+###
+```
+ls -lh /etc/ansible/
+sudo mcedit /etc/ansible/hosts
+c9-server01
+c9-server02
+192.168.0.61
+192.168.0.62
+[student@c9-client01 ~]$ ansible --list-hosts all
+  hosts (4):
+    c9-server01
+    c9-server02
+    192.168.0.61
+    192.168.0.62
+```
 
 ### DEBIAN 8Gb-ssd
 ```
