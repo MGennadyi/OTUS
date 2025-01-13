@@ -175,6 +175,13 @@ for HOST in c9-server01 c9-server02; do ssh student@$HOST hostname; done
 ### Убедитесь что sudo требует ввода пароля группы wheel:
 ```
 for HOST in root@{c9-server0{1,2},c9-client01}; do ssh $HOST 'echo "$(hostname):"; grep ^.wheel /etc/sudoers'; done
+c9-server01:
+%wheel  ALL=(ALL)       ALL
+c9-server02:
+%wheel  ALL=(ALL)       ALL
+root@c9-client01's password:
+c9-client01:
+%wheel  ALL=(ALL)       ALL
 ```
 ### DEBIAN 8Gb-ssd
 ```
