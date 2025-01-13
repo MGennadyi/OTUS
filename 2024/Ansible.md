@@ -195,6 +195,11 @@ student ALL=(ALL) NOPASSWD: ALL /etc/sudoers.d/student
 ```
 ansible -a "cat /etc/shadow" all -b
 ```
+### Проверка student на повышение привилегии без запроса пароля: чтение первую строку в файле /etc/shadow:
+```
+for HOST in root@{c9-server0{1,2},c9-client01}; do ssh $HOST 'echo "$(uname -n): $(head -n1 /etc/shadow)"'; done
+```
+
 ### DEBIAN 8Gb-ssd
 ```
 apt update
