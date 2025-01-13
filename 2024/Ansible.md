@@ -41,7 +41,7 @@ ping -c1 c9-server01 # теперь проходит по имени
 for HOST in 1 2; do ping -c2 192.168.0.$HOST; done
 for HOST in c9-server0{1,2}; do host $HOST; done
 ```
-### Хост c9-server01=ip adress 192.168.0.61
+### Проверка соответстия DNS и IP:
 ```
 dnf install dnsutils -y
 [root@c9-client01 ~]# nslookup c9-server01
