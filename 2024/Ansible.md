@@ -353,17 +353,27 @@ ansible-config view -v # Параметр -v покажет путь к конф
 ```
 mkdir lab03-ex01
 cd lab03-ex01/
-vim ll-100
+vim ll-100  # файл инвентаризации Ansible
 vim ansible.cfg
 ```
 ###
 ```
+[student@c9-client01 lab03-ex01]$ HOST=c9-server01
+[student@c9-client01 lab03-ex01]$ ssh student@$HOST
+Last login: Thu Jan 30 19:05:22 2025 from 192.168.0.63
+[student@c9-server01 ~]$ exit
+выход
+Connection to c9-server01 closed.
+[student@c9-client01 lab03-ex01]$ HOST=c9-server02
+[student@c9-client01 lab03-ex01]$ ssh student@$HOST
+Last login: Thu Jan 30 19:06:10 2025 from 192.168.0.63
+===============================================
 [root@c9-client01 ~]# systemctl status firewalld
 ○ firewalld.service - firewalld - dynamic firewall daemon
      Loaded: loaded (/usr/lib/systemd/system/firewalld.service; disabled; preset: disabled)
      Active: inactive (dead)
        Docs: man:firewalld(1)
-=========================
+========================================
 [root@c9-server01 ~]# systemctl status firewalld
 Unit firewalld.service could not be found.
 ==========================================
@@ -376,6 +386,9 @@ target     prot opt source               destination
 
 Chain OUTPUT (policy ACCEPT)
 target     prot opt source               destination
+==================================
+[root@c9-server01 ~]# service iptables stop
+Redirecting to /bin/systemctl stop iptables.service
 ```
 
 
