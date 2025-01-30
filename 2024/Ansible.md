@@ -351,10 +351,43 @@ ansible-config view -v # Параметр -v покажет путь к конф
 ```
 ###
 ```
+# На student@c9-client01
 mkdir lab03-ex01
 cd lab03-ex01/
 vim ll-100  # файл инвентаризации Ansible
 vim ansible.cfg
+[defaults]
+inventory   = ll-100
+remote_user = root
+ansible-config view # Проверка
+mcedit ll-100
+[web]
+c9-server01
+ansible --list-hosts web # Проверка
+ansible -m ping web
+```
+###
+```
+---
+- name: WEB SERVER SETUP
+  hosts: web
+  tasks:
+    - name: INSTALL WEB SERVER
+      command: yum install httpd -y
+
+    - name: ENABLE & START WEB SERVER
+      command: systemctl enable httpd --now
+
+#    - name: ALLOW ACCESS TO WEB SERVER
+#      command: firewall-cmd --add-service=http --permanent
+
+#    - name: RELOAD FIREWALL
+#      command: firewall-cmd --complete-reload...
+...
+```
+ansible-playbook web.yml
+c9-server01                : ok=3    changed=2    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+```
 ```
 ### Доступность по SSH
 ```
