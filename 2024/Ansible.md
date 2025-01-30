@@ -349,6 +349,13 @@ inventory=./hosts
 ```
 ansible-config view -v # Параметр -v покажет путь к конфигу
 ```
+###
+```
+mkdir lab03-ex01
+cd lab03-ex01/
+vim ll-100
+vim ansible.cfg
+```
 
 
 
