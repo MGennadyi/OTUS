@@ -384,10 +384,12 @@ ansible -m ping web
 #    - name: RELOAD FIREWALL
 #      command: firewall-cmd --complete-reload...
 ...
+### Запуск без firewall
 ```
 ansible-playbook web.yml
 c9-server01                : ok=3    changed=2    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
 ```
+### Задание 3: Создание рабочей книги с несколькими сценариями
 ```
 ### Доступность по SSH
 ```
