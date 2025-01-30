@@ -356,6 +356,28 @@ cd lab03-ex01/
 vim ll-100
 vim ansible.cfg
 ```
+###
+```
+[root@c9-client01 ~]# systemctl status firewalld
+○ firewalld.service - firewalld - dynamic firewall daemon
+     Loaded: loaded (/usr/lib/systemd/system/firewalld.service; disabled; preset: disabled)
+     Active: inactive (dead)
+       Docs: man:firewalld(1)
+=========================
+[root@c9-server01 ~]# systemctl status firewalld
+Unit firewalld.service could not be found.
+==========================================
+[root@c9-server02 ~]# sudo iptables -L
+Chain INPUT (policy ACCEPT)
+target     prot opt source               destination
+
+Chain FORWARD (policy ACCEPT)
+target     prot opt source               destination
+
+Chain OUTPUT (policy ACCEPT)
+target     prot opt source               destination
+```
+
 
 
 
