@@ -366,7 +366,7 @@ c9-server01
 ansible --list-hosts web # Проверка
 ansible -m ping web
 ```
-###
+### Создано 2 ВМ под 1 ip !!!!
 ```
 ---
 - name: WEB SERVER SETUP
