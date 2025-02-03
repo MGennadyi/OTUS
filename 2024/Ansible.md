@@ -366,8 +366,9 @@ c9-server01
 ansible --list-hosts web # Проверка
 ansible -m ping web
 ```
-### Создано 2 ВМ под 1 ip !!!!
+### Задание 2: Создание рабочей книги:   mcedit web.yml
 ```
+# Проблема firewall оключил: Создано 2 ВМ под 1 ip!:
 ---
 - name: WEB SERVER SETUP
   hosts: web
@@ -384,12 +385,22 @@ ansible -m ping web
 #    - name: RELOAD FIREWALL
 #      command: firewall-cmd --complete-reload...
 ...
+```
+# Проверка синтаксиса web.yml
+ansible-playbook web.yml --syntax-check
+```
 ### Запуск без firewall
 ```
 ansible-playbook web.yml
 c9-server01                : ok=3    changed=2    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
 ```
+```
+# Проверка что получилось web.yml
+curl http://c9-server01
+```
 ### Задание 3: Создание рабочей книги с несколькими сценариями
+```
+
 ```
 ### Доступность по SSH
 ```
