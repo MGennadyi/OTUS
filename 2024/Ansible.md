@@ -385,8 +385,8 @@ ansible -m ping web
 #    - name: RELOAD FIREWALL
 #      command: firewall-cmd --complete-reload...
 ...
+### Проверка синтаксиса web.yml
 ```
-# Проверка синтаксиса web.yml
 ansible-playbook web.yml --syntax-check
 ```
 ### Запуск без firewall
