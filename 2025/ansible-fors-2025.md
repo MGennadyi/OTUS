@@ -17,13 +17,23 @@ user@al-1:~$
 ### Создание рабочей директории
 ```
 # Ansible в учебной ВМ уже установлен.
+ansible --version  [core 2.18.3]
 mkdir -p ~/ansible/
 ```
 ```
 host2 ansible_host=al-2 ansible_user=user ansible_ssh_password=11111111
 ```
 ```
-ansible -i inventory all -m ping
+user@al-1:~$ ansible -i inventory all -m ping
+host2 | FAILED! => {
+    "msg": "to use the 'ssh' connection type with passwords or pkcs11_provider, you must install the sshpass program"
+}
+sudo apt install sshpass
+```
+```
+vim ~/.ansible.cfg
+[defaults]
+interpreter_python=auto_silent
 ```
 ### !!!
 
