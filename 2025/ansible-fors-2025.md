@@ -30,8 +30,9 @@ host2 | FAILED! => {
 }
 sudo apt install sshpass
 ```
+#### Для устранения вывода лишних сообщений:
 ```
-vim ~/.ansible.cfg
+vim ~/ansible.cfg
 [defaults]
 interpreter_python=auto_silent
 ```
