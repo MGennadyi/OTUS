@@ -16,11 +16,14 @@ user@al-1:~$
 ```
 ### Создание рабочей директории
 ```
-# Ansible уже установлен
+# Ansible в учебной ВМ уже установлен.
 mkdir -p ~/ansible/
 ```
 ```
-
+host2 ansible_host=al-2 ansible_user=user ansible_ssh_password=11111111
+```
+```
+ansible -i inventory all -m ping
 ```
 ### !!!
 
