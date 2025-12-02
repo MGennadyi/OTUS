@@ -32,9 +32,15 @@ vim ~/ansible.cfg
 [defaults]
 interpreter_python=auto_silent
 ```
-### !!!
+### Добавление переменных:
+```
+[server]
+host2 ansible_host=al-2
 
-
+[server:vars]
+ansible_user=user
+ansible_ssh_password=11111111
+```
 ### Создание рабочей директории
 ```
 # Ansible в учебной ВМ уже установлен.
