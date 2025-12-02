@@ -1,4 +1,4 @@
-### ANSIBLE-2025
+### ANSIBLE-2025 AstraLinux al-1 al-2
 ### ADD USER
 ```
 # Заходим под root:
@@ -37,9 +37,10 @@ interpreter_python=auto_silent
 [server]
 host2 ansible_host=al-2
 
-[server:vars]
+[all:vars]
 ansible_user=user
 ansible_ssh_password=11111111
+ansible_ssh_args=' -o StrictHostKeyChecking=no'
 ```
 ### Создание рабочей директории
 ```
