@@ -14,6 +14,11 @@ sudo usermod -aG wheel user
 su - mgb
 user@al-1:~$
 ```
+### Установка VSCode через скачивание:
+```
+https://code.visualstudio.com/Download
+sudo apt install ./code......
+```
 ### Первый учебный инвентори:
 ```
 host2 ansible_host=al-2 ansible_user=user ansible_ssh_password=11111111
