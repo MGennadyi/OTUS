@@ -22,6 +22,11 @@ sudo apt install ./code......
 add folder to workspace
 explorer
 ```
+### Установкка git
+```
+sudo apt install git
+вставить образ/удалить образ
+```
 ### Первый учебный инвентори:
 ```
 host2 ansible_host=al-2 ansible_user=user ansible_ssh_password=11111111
