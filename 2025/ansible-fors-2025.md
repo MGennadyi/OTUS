@@ -20,6 +20,7 @@ https://code.visualstudio.com/Download
 cd /загрузки
 sudo apt install ./code......
 add folder to workspace
+explorer
 ```
 ### Первый учебный инвентори:
 ```
