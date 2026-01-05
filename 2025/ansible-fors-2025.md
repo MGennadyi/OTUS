@@ -19,6 +19,7 @@ user@al-1:~$
 https://code.visualstudio.com/Download
 cd /загрузки
 sudo apt install ./code......
+add folder to workspace
 ```
 ### Первый учебный инвентори:
 ```
