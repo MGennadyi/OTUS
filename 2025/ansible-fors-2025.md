@@ -17,6 +17,7 @@ user@al-1:~$
 ### Установка VSCode через скачивание:
 ```
 https://code.visualstudio.com/Download
+cd /загрузки
 sudo apt install ./code......
 ```
 ### Первый учебный инвентори:
