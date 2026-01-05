@@ -1,4 +1,4 @@
-### ANSIBLE-2025 AstraLinux al-1 al-2
+### ANSIBLE-2025 AstraLinux VM: al-1 al-2. По видео от Лосева
 ### ADD USER
 ```
 # Заходим под root:
