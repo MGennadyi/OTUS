@@ -26,6 +26,7 @@ explorer
 ```
 sudo apt install git
 вставить образ/удалить образ
+по git Open integrated terminal
 ```
 ### Первый учебный инвентори:
 ```
