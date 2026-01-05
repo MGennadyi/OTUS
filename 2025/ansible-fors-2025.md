@@ -27,6 +27,7 @@ explorer
 sudo apt install git
 вставить образ/удалить образ
 по git Open integrated terminal
+git init - инициализация нового репозитория /home/user/project/git/.git
 ```
 ### Первый учебный инвентори:
 ```
