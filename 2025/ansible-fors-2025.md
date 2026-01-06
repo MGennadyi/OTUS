@@ -22,9 +22,9 @@ sudo apt install ./code......
 add folder to workspace
 explorer
 ```
-### Установкка git
+### Установкка Git
 ```
-sudo apt install git
+sudo apt install git -y
 вставить образ/удалить образ
 по git Open integrated terminal
 git init - инициализация нового репозитория /home/user/project/git/.git
