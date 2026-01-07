@@ -42,6 +42,8 @@ git commit -m 'first commit' - выдаст ошибку, т.к. Git не нас
 # Конфигурирую: определить владельца
 git config --global user.email "ser_stiven@mail.ru"
 git config --global user.name "mgb"
+git log - показывает список коммитов
+git add 01 # - добавляет директорию в отслеживание.
 ```
 ### Первый учебный инвентори:
 ```
