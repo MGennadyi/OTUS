@@ -38,7 +38,10 @@ git status
 cat ./$1/*
 chmode +x show
 git add show
-git commit -m 'first commit' - выдаст ошибку, т.к. Got не настроен
+git commit -m 'first commit' - выдаст ошибку, т.к. Git не настроен
+# Конфигурирую: определить владельца
+git config --global user.email "ser_stiven@mail.ru"
+git config --global user.name "mgb"
 ```
 ### Первый учебный инвентори:
 ```
