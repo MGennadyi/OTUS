@@ -56,6 +56,11 @@ git init
 git add * # закомитить все файлы в текущей директории
 git commit -m 'init'
 ```
+### Просмотр рецептов
+```
+cd Projects/git
+./show 01
+```
 ### Клонироание репозитория ansible из github.com
 ```
 cd .. # выхожу в папку Projects и клонирую
