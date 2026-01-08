@@ -64,6 +64,7 @@ cd Projects/git
 ### Клонироание репозитория ansible из github.com
 ```
 cd .. # выхожу в папку Projects и клонирую
+github.com/ansible/ansible.git - зеленая кнопка Code - copy url
 git clone https://github.com/ansible/ansible.git # руками
 cd ~/Projects/git
 git log
