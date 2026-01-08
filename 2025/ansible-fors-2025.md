@@ -67,7 +67,7 @@ cd .. # вхожу в папку Projects и клонирую
 github.com/ansible/ansible.git - зеленая кнопка Code - copy url
 git clone https://github.com/ansible/ansible.git # руками
 cd ~/Projects/git
-git log
+git log # git чекаутнет удаленную репу.
 ```
 ### манипуляция историей
 ```
