@@ -68,6 +68,7 @@ github.com/ansible/ansible.git - зеленая кнопка Code - copy url
 git clone https://github.com/ansible/ansible.git # руками
 cd ~/Projects/git
 git log # git чекаутнет удаленную репу.
+add folder to workspace -> ansible -> open integrated termonal
 ```
 ### манипуляция историей
 ```
