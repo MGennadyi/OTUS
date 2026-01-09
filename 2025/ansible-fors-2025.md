@@ -95,6 +95,10 @@ git switch -c recipe02 # -создаю новый бранч и переключ
 git branch # -позволяет смотреть бранчи
 по 01 -> copy -> past = 01copy # -Сохраняем структуру файлов
 F2 -> 02
+вношу изменения в код name и process
+git commit -m 'name'
+git add 02 # - выполнить чуть раньше ???
+git commit -m 'process'
 ```
 ### Первый учебный инвентори:
 ```
