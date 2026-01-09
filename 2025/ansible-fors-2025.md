@@ -70,6 +70,10 @@ cd ~/Projects/git
 git log # git чекаутнет удаленную репу.
 add folder to workspace -> ansible -> open integrated termonal
 ```
+### Создание ветки для бранчей под именем polaris
+```
+git switch -c polaris
+```
 ### Манипуляция историей, точки возврата через хеш коммита
 ```
 git log # будет показан хеш
