@@ -99,6 +99,9 @@ F2 -> 02
 git commit -m 'name'
 git add 02 # - выполнить чуть раньше ???
 git commit -m 'process'
+git switch master
+git merge recipe02
+git log q
 ```
 ### Первый учебный инвентори:
 ```
