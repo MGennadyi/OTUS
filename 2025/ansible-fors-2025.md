@@ -84,6 +84,8 @@ git diff # -показывает разницу между последним к
 ```
 git switch -c polaris
 git status # Ответ: текущая ветка polaris
+git commit -am '01 fix' # -коммит в бранче
+git switch master # возврат на ветку мастер
 ```
 ### Первый учебный инвентори:
 ```
