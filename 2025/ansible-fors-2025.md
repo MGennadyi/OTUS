@@ -70,9 +70,9 @@ cd ~/Projects/git
 git log # git чекаутнет удаленную репу.
 add folder to workspace -> ansible -> open integrated termonal
 ```
-### манипуляция историей
+### Манипуляция историей, точки возврата через хеш коммита
 ```
-git checkout ffdcc6c # возврат на коммит через его хеш 
+git checkout ffdcc6c # первые 6 символов хеша
 возвращаю мою директорию в состояние этого коммита
 git checkout master
 возвращаюсь в настоящее
