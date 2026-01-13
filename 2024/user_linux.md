@@ -16,6 +16,7 @@ sudo usermod -aG wheel mgb
 sudo usermod -aG wheel student
 # Прверка:
 su - mgb
+cat /etc/passwd | grep mgb
 ```
 ### nmtui - правка ip
 ```
